@@ -12,7 +12,7 @@ redirect_from:
 **2022-Present** Adj. Professor of Neuroscience and Psychology, [College Year in Athens]( ), Athens, Greece  
 **2024** Adj. Professor of Cognitive Neuroscience, [Panteion University, Psychology Department]( ), Athens, Greece  
 **2022-2024** Adj. Professor of Computational Neuroscience, [Open University of Cyprus]( ), Nicosia, Cyprus  
-**2021-2023** Visiting Researcher, [sponsored by David Chalmers]( ), [New York University, Philosophy Department]( ), New York, USA  
+**2021-2023** Visiting Researcher, [David Chalmers]( ), [New York University, Philosophy Department]( ), New York, USA  
 **2018-2021** Postdoc, [Xiao-Jing Wang Lab]( ), [New York University, Center for Neural Science]( ), New York, USA  
 **2016-2018** Postdoc [Xiao-Jing Wang Lab]( ), [New York Unviversity of Shanghai]( ), Shanghai, China  
 **2014-2016** Postdoc [Alex Roxin Lab]( ), [Centre de Recerca Matematica]( ), Bellaterra, Spain  
