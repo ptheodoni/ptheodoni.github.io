@@ -1,64 +1,25 @@
 ---
 layout: archive
-title: "CV"
+title: "Short CV"
 permalink: /cv/
 author_profile: true
 redirect_from:
   - /resume
 ---
 
-{% include base_path %}
 
-Education
-======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
+**2022-Present** MA in Philosophy, [University of Athens, Philosophy Department]( ), Athens, Greece  
+**2022-Present** Adj. Professor of Neuroscience and Psychology, [College Year in Athens]( ), Athens, Greece  
+**2024** Adj. Professor of Cognitive Neuroscience, [Panteion University, Department of Psychology]( ), Athens, Greece  
+**2022-2024** Adj. Professor of Computational Neuroscience, [Open University of Cyprus, MSc Cognitive Systems]( ), Nicosia, Cyrpus  
+**2021-2023** Visiting Researcher, sponsored by [David Chalmers]( ), [New York University, Philosophy Department]( ), New York City, USA  
+**2018-2021** Postdoc, [Xiao-Jing Wang Lab]( ), [New York University, Center for Neural Science (NYU CNS)]( ), New York City, USA  
+**2016-2018** Postdoc [Xiao-Jing Wang Lab]( ), [New York Unviversity of Shanghai (NYU Shanghai)]( ), Shanghai, China  
+**2014-2016** Postdoc [Alex Roxin Lab]( ), [Centre de Recerca Matematica (CRM)]( ), Bellaterra, Spain  
+**2008-2014** PhD in Theoretical and Computational Neuroscience [Gustavo Deco Lab]( ), [University Pompeu Fabra]( ), Barcelona, Spain  
+**2007-2008** Research Fellow, [National Center for Scientific Research Demokritos]( ), Athens, Greece  
+**2005-2007** MSc in Condensed Matter Physics, [University of Athens, Department of Physics]( ), Athens, Greece  
+**2001-2002** Erasmus, [University of Seville, Faculty of Physics]( ), Seville, Spain  
+**1999-2005** BSc in Physics, [University of Athens, Department of Physics]( ), Athens, Greece  
 
-Work experience
-======
-* Spring 2024: Academic Pages Collaborator
-  * Github University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
-
-* Fall 2015: Research Assistant
-  * Github University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
-
-* Summer 2015: Research Assistant
-  * Github University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
-  
-Skills
-======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
-
-Publications
-======
-  <ul>{% for post in site.publications reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Talks
-======
-  <ul>{% for post in site.talks reversed %}
-    {% include archive-single-talk-cv.html  %}
-  {% endfor %}</ul>
-  
-Teaching
-======
-  <ul>{% for post in site.teaching reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Service and leadership
-======
-* Currently signed in to 43 different slack teams
+[click here to download long version](https://www.dropbox.com/scl/fi/cd69hkfiir9quqotaxauh/Theodoni-CV-2024-November.pdf?rlkey=j9rhj4e99l7lp98thwdqne1j2&st=yv45t8dq&dl=0)
