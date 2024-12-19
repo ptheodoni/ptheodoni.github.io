@@ -7,15 +7,15 @@ redirect_from:
   - /resume
 ---
 
-
-**2022-Present** MA in Philosophy, [University of Athens, Philosophy Department]( ), Athens, Greece  
+**2023-Present** External Professor, [University of Athens, Department of History and Philosophy of Science]( ), Athens, Greece  
+**2022-Present** MA in Philosophy, [University of Athens, Department of Philosophy]( ), Athens, Greece  
 **2022-Present** Adj. Professor of Neuroscience and Psychology, [College Year in Athens]( ), Athens, Greece  
 **2024** Adj. Professor of Cognitive Neuroscience, [Panteion University, Department of Psychology]( ), Athens, Greece  
-**2022-2024** Adj. Professor of Computational Neuroscience, [Open University of Cyprus, MSc Cognitive Systems]( ), Nicosia, Cyrpus  
+**2022-2024** Adj. Professor of Computational Neuroscience, [Open University of Cyprus]( ), Nicosia, Cyprus  
 **2021-2023** Visiting Researcher, sponsored by [David Chalmers]( ), [New York University, Philosophy Department]( ), New York City, USA  
-**2018-2021** Postdoc, [Xiao-Jing Wang Lab]( ), [New York University, Center for Neural Science (NYU CNS)]( ), New York City, USA  
-**2016-2018** Postdoc [Xiao-Jing Wang Lab]( ), [New York Unviversity of Shanghai (NYU Shanghai)]( ), Shanghai, China  
-**2014-2016** Postdoc [Alex Roxin Lab]( ), [Centre de Recerca Matematica (CRM)]( ), Bellaterra, Spain  
+**2018-2021** Postdoc, [Xiao-Jing Wang Lab]( ), [New York University, Center for Neural Science]( ), New York City, USA  
+**2016-2018** Postdoc [Xiao-Jing Wang Lab]( ), [New York Unviversity of Shanghai]( ), Shanghai, China  
+**2014-2016** Postdoc [Alex Roxin Lab]( ), [Centre de Recerca Matematica]( ), Bellaterra, Spain  
 **2008-2014** PhD in Theoretical and Computational Neuroscience [Gustavo Deco Lab]( ), [University Pompeu Fabra]( ), Barcelona, Spain  
 **2007-2008** Research Fellow, [National Center for Scientific Research Demokritos]( ), Athens, Greece  
 **2005-2007** MSc in Condensed Matter Physics, [University of Athens, Department of Physics]( ), Athens, Greece  
