@@ -16,7 +16,7 @@ redirect_from:
 **2018-2021** Postdoc, [Xiao-Jing Wang Lab]( ), [New York University, Center for Neural Science]( ), New York, USA  
 **2016-2018** Postdoc [Xiao-Jing Wang Lab]( ), [New York Unviversity of Shanghai]( ), Shanghai, China  
 **2014-2016** Postdoc [Alex Roxin Lab]( ), [Centre de Recerca Matematica]( ), Bellaterra, Spain  
-**2008-2014** PhD in Theoretical and Computational Neuroscience [Gustavo Deco Lab]( ), [University Pompeu Fabra]( ), Barcelona, Spain  
+**2008-2014** PhD in Theoretical/Computational Neuroscience [Gustavo Deco Lab]( ), [University Pompeu Fabra]( ), Barcelona, Spain  
 **2007-2008** Research Fellow, [National Center for Scientific Research Demokritos]( ), Athens, Greece  
 **2005-2007** MSc in Condensed Matter Physics, [University of Athens, Physics Department]( ), Athens, Greece  
 **2001-2002** Erasmus, [University of Seville, Faculty of Physics]( ), Seville, Spain  
