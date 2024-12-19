@@ -21,12 +21,12 @@ repository               : "academicpages/academicpages.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "profile.png"
-  name             : "Panagiota Theodoni - Παναγιώτα Θεοδώνη"
+  avatar           : "profilepic.gif"
+  name             : "Παναγιώτα Θεοδώνη"
   pronouns         : "she/her"  
-  bio              : "Researcher & Faculty"
+  bio              : "Researcher, Faculty"
   location         : "Athens, Greece"
-  employer         : "freelancer"
+  employer         : #"freelancer"
   uri              : # URL
   email            : "ptheodoni@gmail.com" 
 
