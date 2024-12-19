@@ -12,11 +12,11 @@ redirect_from:
 **2022-Present** Adj. Professor of Neuroscience and Psychology, [College Year in Athens]( ), Athens, Greece  
 **2024** Adj. Professor of Cognitive Neuroscience, [Panteion University, Psychology Department]( ), Athens, Greece  
 **2022-2024** Adj. Professor of Computational Neuroscience, [Open University of Cyprus]( ), Nicosia, Cyprus  
-**2021-2023** Visiting Researcher, [David Chalmers]( ), [New York University, Philosophy Department]( ), New York, USA  
-**2018-2021** Postdoc, [Xiao-Jing Wang]( ), [New York University, Center for Neural Science]( ), New York, USA  
-**2016-2018** Postdoc [Xiao-Jing Wang]( ), [New York Unviversity of Shanghai]( ), Shanghai, China  
-**2014-2016** Postdoc [Alex Roxin]( ), [Centre de Recerca Matematica]( ), Bellaterra, Spain  
-**2008-2014** PhD in Theoretical/Computational Neuroscience [Gustavo Deco]( ), [University Pompeu Fabra]( ), Barcelona, Spain  
+**2021-2023** Visiting Researcher, [David Chalmers]( ), [New York University, Philosophy Department]( ), New York City, USA  
+**2018-2021** Postdoc, [Xiao-Jing Wang]( ), [New York University, Center for Neural Science]( ), New York City, USA  
+**2016-2018** Postdoc, [Xiao-Jing Wang]( ), [New York Unviversity of Shanghai]( ), Shanghai, China  
+**2014-2016** Postdoc, [Alex Roxin]( ), [Centre de Recerca Matematica]( ), Bellaterra, Spain  
+**2008-2014** PhD in Theoretical/Computational Neuroscience, [Gustavo Deco]( ), [University Pompeu Fabra]( ), Barcelona, Spain  
 **2007-2008** Research Fellow, [National Center for Scientific Research Demokritos]( ), Athens, Greece  
 **2005-2007** MSc in Condensed Matter Physics, [University of Athens, Physics Department]( ), Athens, Greece  
 **2001-2002** Erasmus, [University of Seville, Faculty of Physics]( ), Seville, Spain  
