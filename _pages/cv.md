@@ -7,12 +7,12 @@ redirect_from:
   - /resume
 ---
 
+**2024** Adj. Prof of Cognitive Neuroscience, [Panteion University of Social and Political Sciences, Department of Psychology](https://psychology.panteion.gr ), Athens, Greece  
+**2022,2024** Adj. Prof of Computational Neuroscience, [Open University of Cyprus, Faculty of Pure and Applied Sciences](https://www.ouc.ac.cy/index.php/en/university/university-faculties/university-faculties-sthee), Nicosia, Cyprus  
 **2023-Present** External Faculty, [University of Athens, Department of History and Philosophy of Science](https://en.phs.uoa.gr), Athens, Greece  
 **2022-Present** MA in Philosophy, [University of Athens, Philosophy Department](http://en.philosophymaster.philosophy.uoa.gr), Athens, Greece  
 **2022-Present** Adj. Prof of Neuroscience and Psychology, [College Year in Athens](https://cyathens.org/course/consciousness/), Athens, Greece  
-**2024** Adj. Prof of Cognitive Neuroscience, [Panteion University of Social and Political Sciences, Department of Psychology](https://psychology.panteion.gr ), Athens, Greece  
-**2022,2024** Adj. Prof of Computational Neuroscience, [Open University of Cyprus, Faculty of Pure and Applied Sciences](https://www.ouc.ac.cy/index.php/en/university/university-faculties/university-faculties-sthee), Nicosia, Cyprus  
-**2021-2023** Visiting Researcher, [New York University, Philosophy Department](https://as.nyu.edu/departments/philosophy.html), New York City, USA  
+**2021-2023** Visiting Researcher, [New York University, Department of Philosophy](https://as.nyu.edu/departments/philosophy.html), New York City, USA  
 **2018-2021** Postdoc, [New York University, Center for Neural Science]( ), New York City, USA  
 **2016-2018** Postdoc, [New York Unviversity of Shanghai](https://shanghai.nyu.edu), Shanghai, China  
 **2014-2016** Postdoc, [Centre de Recerca Matemàtica](https://www.crm.cat), Bellaterra, Spain  
