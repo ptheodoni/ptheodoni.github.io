@@ -10,8 +10,8 @@
 locale                   : "en-US"
 title                    : "Panagiota Theodoni"
 title_separator          : "-"
-name                     : &name "Παναγιώτα Θεοδώνη"
-description              : &description "freelance researcher and faculty"
+name                     : &name "Panagiota Theodoni"
+description              : &description "researcher and faculty"
 url                      : https://ptheodoni.github.io
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "academicpages/academicpages.github.io"
@@ -24,8 +24,7 @@ author:
   avatar           : "profilepic.gif"
   name             : "Παναγιώτα Θεοδώνη"
   pronouns         : "she/her"  
-  bio              : "multidimentional"  
-                     "citizen of the world"
+  bio              : "multidimensional citizen of the world"
   location         : "Athens, Greece"
   employer         : #"freelancer"
   uri              : # URL
