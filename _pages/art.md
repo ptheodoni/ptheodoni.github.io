@@ -8,7 +8,7 @@ author_profile: true
 
 welcome to my artistic side  
 
-[phipsika.blogspot.com](phipsika.blogspot.com)  
+[phipsika.blogspot.com](https://phipsika.blogspot.com/)  
 
 
 
