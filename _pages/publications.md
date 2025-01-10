@@ -34,52 +34,52 @@ Pre-prints
 =====
 [*A mesoscale connectome-based model of conscious access in the monkey cortex*](https://www.biorxiv.org/content/10.1101/2022.02.20.481230v4)  
 Ulysse Klatzmann, Sean Froudist-Walsh, Daniel P. Bliss, **Panagiota Theodoni**, Jorge Mejías, Meiqi Niu, Lucija Rapan, Daniel S. Margulies, Nicola Palomero-Gallagher, Claire Sergent, Stanislas Dehaene, Xiao-Jing Wang  
-*bioRxiv (2024)*
+*bioRxiv (2024)*  
 
 Peer-reviewed
 =====
 
 [*Structural attributes and principles of the neocortical connectome in the marmoset monkey*](https://academic.oup.com/cercor/article/32/1/15/6323479?login=false)  
 **Panagiota Theodoni**, Piotr Majka, David H. Reser, Daniel K. Wójcik, Marcello G. P. Rosa, Xiao-Jing Wang  
-*Cerebral Cortex (2022)*
+*Cerebral Cortex (2022)*  
 
 [*Open access resource for cellular-resolution analyses of corticocortical connectivity in the marmoset monkey*](https://www.nature.com/articles/s41467-020-14858-0)  
 Piotr Majka, Shi Bai, Sophia Bakola, Sylwia Bednarek, Jonathan M. Chan, Natalia Jermakow, Lauretta Passarelli, David H. Reser,  
 **Panagiota Theodoni**, Katrina H. Worthy, Xiao-Jing Wang, Daniel K. Wójcik, Partha P. Mitra, Marcello G. P. Rosa  
-*Nature Communications (2020)*
+*Nature Communications (2020)*  
 
 [Theta-modulation drives the emergence of network-wide connectivity patterns underlying replay in a model of hippocampal place cells*](https://elifesciences.org/articles/37388)  
 **Panagiota Theodoni**, Bernat Rovira, Yingxue Wang, Alex Roxin  
-*eLife (2018)*
+*eLife (2018)*  
 
 [*Cortical microcircuit dynamics mediating binocular rivalry: The role of adaptation in inhibition*](https://www.frontiersin.org/journals/human-neuroscience/articles/10.3389/fnhum.2011.00145/full)  
 **Panagiota Theodoni**, Theofanis I. Panagiotaropoulos, Vishal Kapoor, Nikos K. Logothetis, Gustavo Deco  
 *Frontiers in Human Neuroscience (2011)*  
 *Special Research topic "Binocular rivalry: a gateway to consciousness"*  
 
-[*Neuronal adaptation effects in decision making*](https://www.jneurosci.org/content/31/1/234.full)
+[*Neuronal adaptation effects in decision making*](https://www.jneurosci.org/content/31/1/234.full)  
 **Panagiota Theodoni**, Gyula Kovács, Mark W. Greenlee, Gustavo Deco  
-*The Journal of Neuroscience (2011)*
+*The Journal of Neuroscience (2011)*  
 
-[*Efficient infrared emission from patterned thin metal films on a Si photonic crystal*](https://onlinelibrary.wiley.com/doi/abs/10.1002/pssa.200780200)
+[*Efficient infrared emission from patterned thin metal films on a Si photonic crystal*](https://onlinelibrary.wiley.com/doi/abs/10.1002/pssa.200780200)  
 ***Panagiota Theodoni***, V. Em. Vamvakas, Th. Speliotis, M. Chatzichristidi, P. Bayiati, I. Raptis, Nikolaos Papanikolaou  
-*Physica Status Solidi (a) (2008)*
+*Physica Status Solidi (a) (2008)*  
 
-[*Efficient infrared emission from periodically patterned thin metal films on a Si photonic crystal*](https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=edd2caf831a6887b11b9b2bca53b8f4d8dbfd605)
+[*Efficient infrared emission from periodically patterned thin metal films on a Si photonic crystal*](https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=edd2caf831a6887b11b9b2bca53b8f4d8dbfd605)  
 **Panagiota Theodoni**, P. Bayiati, M. Chatzichristidi, Th. Speliotis, V. Em. Vamvakas, I. Raptis, Nikolaos Papanikolaou  
-*Microelectronic Engineering (2008)*
+*Microelectronic Engineering (2008)*  
 
 PhD Thesis
 =====
 [*Fluctuations in perceptual decisions: (ortical micro-circuit dynamics mediating alternations in conscious visual perception)*](https://www.tdx.cat/bitstream/handle/10803/145642/tpt.pdf?sequence=1&isAllowed=y)  
-*Universitat Pompeu Fabra (2014)*
+*Universitat Pompeu Fabra (2014)*  
 
 MSc Thesis
 =====
 [*Optical properties of metal-dielectric microstructures*](https://e29ee4f1-a452-49eb-bd5a-7f0182a76ea7.filesusr.com/ugd/ee0a28_69842fe2673c405ba3488b08589c89e8.pdf)  
-*National and Kapodistrian University of Athens, Department of Physics (2007)*
+*National and Kapodistrian University of Athens, Department of Physics (2007)*  
 
 BSc Thesis
 =====
 [*Development of thin films under ultra-high vacuum conditions*](https://e29ee4f1-a452-49eb-bd5a-7f0182a76ea7.filesusr.com/ugd/ee0a28_3a437173d14d4341aa688a3f3361d65f.pdf)  
-*National and Kapodistrian University of Athens, Department of Physics (2005)*
+*National and Kapodistrian University of Athens, Department of Physics (2005)*  
