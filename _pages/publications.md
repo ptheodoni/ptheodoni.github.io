@@ -9,12 +9,12 @@ author_profile: true
 
 In progress
 =====
-***A multi-regional neural network model for consciousness**  
+***A multi-regional neural network model for consciousness***  
 2023 [talk](https://www.youtube.com/watch?v=LMjNXLBUmIY&t=29s): Models of Consciousness 4 Conference (MOC4), Mathematical Institute, University of Oxford, UK  
 2023 poster: Association for the Scientific Study of Consciousness Conference (ASSC 26) NYU, New York City, NY, USA  
 2023 talk and poster: 6th Panhellenic Conference of Cognitive Science, Hellenic Cognitive Science Society, Xylokastro, Greece  
 
-***On the Foundations of Inter-Subjective Science: The problem of closing the Loop***  
+***On the Foundations of Inter-Subjective Science: The Problem of Closing the Loop***  
 2023 [talk](https://www.youtube.com/watch?v=LMjNXLBUmIY&t=29s): Models of Consciousness 4 Conference (MOC4), Mathematical Institute, University of Oxford, UK  
 2023: Cognitive Science Speakers Series, Fall 2023, CUNY Graduate Center, NYC, USA    
 2023: Seminar of Master’s & PhD students, and postdocs, Fall 2023, National and Kapodistrian University of Athens, Department of History and Philosophy of Science, Athens, Greece  
