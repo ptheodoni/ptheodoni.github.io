@@ -4,7 +4,7 @@ collection: teaching
 type: "tutorial"
 permalink: 2014-matlab
 venue: "Summer Course"
-date: 2014
+date: 2014-06-01
 location: "Barcelona, Spain"
 ---
 
