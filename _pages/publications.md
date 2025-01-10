@@ -44,11 +44,10 @@ Peer-reviewed
 *Cerebral Cortex (2022)*  
 
 [*Open access resource for cellular-resolution analyses of corticocortical connectivity in the marmoset monkey*](https://www.nature.com/articles/s41467-020-14858-0)  
-Piotr Majka, Shi Bai, Sophia Bakola, Sylwia Bednarek, Jonathan M. Chan, Natalia Jermakow, Lauretta Passarelli, David H. Reser,  
-**Panagiota Theodoni**, Katrina H. Worthy, Xiao-Jing Wang, Daniel K. Wójcik, Partha P. Mitra, Marcello G. P. Rosa  
+Piotr Majka, Shi Bai, Sophia Bakola, Sylwia Bednarek, Jonathan M. Chan, Natalia Jermakow, Lauretta Passarelli, David H. Reser, **Panagiota Theodoni**, Katrina H. Worthy, Xiao-Jing Wang, Daniel K. Wójcik, Partha P. Mitra, Marcello G. P. Rosa  
 *Nature Communications (2020)*  
 
-[Theta-modulation drives the emergence of network-wide connectivity patterns underlying replay in a model of hippocampal place cells*](https://elifesciences.org/articles/37388)  
+[*Theta-modulation drives the emergence of network-wide connectivity patterns underlying replay in a model of hippocampal place cells*](https://elifesciences.org/articles/37388)  
 **Panagiota Theodoni**, Bernat Rovira, Yingxue Wang, Alex Roxin  
 *eLife (2018)*  
 
