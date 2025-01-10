@@ -2,7 +2,7 @@
 title: "Spanish Language"
 collection: teaching
 type: "foreign language"
-permalink: 2002-physics
+permalink: 2005-spanish
 venue: "institution of languages"
 date: 2005-01-01
 location: "Athens, Greece"
