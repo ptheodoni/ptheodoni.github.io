@@ -23,8 +23,8 @@ main:
   - title: "CV"
     url: /cv/
 
-# - title: "Yotta Art"
-#    url: /art/
+  - title: "Yotta Art"
+    url: /art/
 
 #  - title: "Videos"
 #    url: /videos/
