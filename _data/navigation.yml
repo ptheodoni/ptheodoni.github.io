@@ -14,14 +14,23 @@ main:
   - title: "Teaching"
     url: /teaching/    
     
-  - title: "Portfolio"
-    url: /portfolio/
+  - title: "News"
+    url: /News/
         
-  - title: "Blog Posts"
+  - title: "Letters"
     url: /year-archive/
     
   - title: "CV"
     url: /cv/
+
+  - title: "Yotta Art"
+    url: /art/
+
+  - title: "Videos"
+    url: /videos/
+
+   - title: "Resources"
+    url: /resources/   
     
-  - title: "Guide"
-    url: /markdown/
+#  - title: "B"
+#    url: /markdown/
