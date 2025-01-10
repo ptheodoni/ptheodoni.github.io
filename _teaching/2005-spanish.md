@@ -4,9 +4,10 @@ collection: teaching
 type: "foreign language"
 permalink: 2002-physics
 venue: "institution of languages"
-date: 2003-01-01
+date: 2005-01-01
 location: "Athens, Greece"
 ---
-**2003-2007**
+**2005-2007**
 
-Physics, Mathematics, Chemistry, and Biology (secondary education) private Tutor, Athens, Greece
+Spanish language Teacher, language school, Athens, Greece
+and Spanish language private tutor
