@@ -18,19 +18,19 @@ main:
     url: /News/
         
   - title: "Letters"
-    url: /year-archive/
+    url: /letters/
     
   - title: "CV"
     url: /cv/
 
-  - title: "Yotta Art"
-    url: /art/
+# - title: "Yotta Art"
+#    url: /art/
 
-  - title: "Videos"
-    url: /videos/
+#  - title: "Videos"
+#    url: /videos/
 
-   - title: "Resources"
-    url: /resources/   
+#   - title: "Resources"
+#    url: /resources/   
     
 #  - title: "B"
 #    url: /markdown/
