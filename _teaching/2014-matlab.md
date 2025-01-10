@@ -5,7 +5,7 @@ type: "tutorial"
 permalink: 2014-matlab
 venue: "Summer Course"
 date: 2014
-location: "Barcelon, Spain"
+location: "Barcelona, Spain"
 ---
 
 **Summer 2014**  
