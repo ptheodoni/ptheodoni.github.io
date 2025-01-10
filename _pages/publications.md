@@ -16,8 +16,8 @@ In progress
 
 ***On the Foundations of Inter-Subjective Science: The Problem of Closing the Loop***  
 2023 [talk](https://www.youtube.com/watch?v=LMjNXLBUmIY&t=29s): Models of Consciousness 4 Conference (MOC4), Mathematical Institute, University of Oxford, UK  
-2023: Cognitive Science Speakers Series, Fall 2023, CUNY Graduate Center, NYC, USA    
-2023: Seminar of Master’s & PhD students, and postdocs, Fall 2023, National and Kapodistrian University of Athens, Department of History and Philosophy of Science, Athens, Greece  
+2023 talk: Cognitive Science Speakers Series, Fall 2023, CUNY Graduate Center, NYC, USA    
+2023 talk: Seminar of Master’s & PhD students, and postdocs, Fall 2023, National and Kapodistrian University of Athens, Department of History and Philosophy of Science, Athens, Greece  
 
 
 forthcoming
