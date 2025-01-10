@@ -11,3 +11,5 @@ location: "Athens, Greece"
 **March - April 2025**  
 forthcoming
 
+<img src='/images/Σεμινάριο-Συνειδηση-1.png'>
+
