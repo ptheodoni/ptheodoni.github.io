@@ -4,7 +4,7 @@ collection: teaching
 type: "Graduate Course and MSc Thesis"
 permalink: 2022-2025-consciousness
 venue: "National and Kapodistrian University of Athens, Department of History and Philosophy of Science"
-date: 2025-01-01
+date: 2023-01-01
 location: "Athens, Greece"
 ---
 
