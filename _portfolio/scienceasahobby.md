@@ -1,6 +1,6 @@
 ---
 title: "Science as a Hobby"
-excerpt: "<br/><img src='/images/scienceasahobby1.jpg'>"
+excerpt: "<br/><img src='/images/scienceasahobby1.jpg width="200"'>"
 collection: portfolio
 ---
 
@@ -11,3 +11,11 @@ The next step, if the first goes well, will be to invite more scientists and phi
 And the goal is to have centers where people can go and practice science as a hobby.  
 Anyone can do it, they don't need to be professional scientists in order to learn how to do research.  
 That's the idea. So far it has received enthusiastic positive comments and people want me to keep doing it. Let's see how it goes.*
+
+
+Episode 5
+----
+**ChatGPToids**  
+Tuesday, February 7, 2023  
+<sm/><img src='/images/SciHob5.png' width="200">
+
