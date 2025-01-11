@@ -1,6 +1,6 @@
 ---
 title: "Science as a Hobby"
-excerpt: "<br/><img src='/images/scienceasahobby1.jpg width="200"'>"
+excerpt: "<br/><img src='/images/scienceasahobby1.jpg'>"
 collection: portfolio
 ---
 
