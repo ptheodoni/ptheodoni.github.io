@@ -11,3 +11,7 @@ Also, there is still plenty of room for development in terms of equity, diversit
 Neurotheoria (Νευροθεωρία)'s mission is to spread the word to the Greek community about theoretical and computational neuroscience, physics, philosophy (and their interaction) and relevant academic issues (including equity, diversity, open access).  
 
 Disclaimer: some posts could be about my scientific journey and/or commented based on my personal opinion/view.*
+
+[Neurotheoria on facebook](https://www.facebook.com/neurotheoria/)  
+[Neurotheoria on twitter](https://x.com/neurotheoria?fbclid=IwY2xjawHvMnZleHRuA2FlbQIxMAABHQ0xCi_Vh3V9_kYsSqIZgM9jXDigfbh-_S6GvuBz6klsXURT_Lyk0rTw4A_aem_5VYPWJT_IDfm1exEtnQpkw)
+
