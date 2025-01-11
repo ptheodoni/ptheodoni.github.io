@@ -136,7 +136,7 @@ Neuroscience School of Advanced Studies, Venice, Italy
 
 March 2021
 ------
-[***Science Communication Workshop***[(https://journalism.nyu.edu/about-us/science-communication-workshops-nyu/)  
+[***Science Communication Workshop***](https://journalism.nyu.edu/about-us/science-communication-workshops-nyu/)  
 New York University by Prof [Brook Borel](https://brookeborel.com/), New York, USA  
 
 ​
@@ -167,7 +167,7 @@ Cold Spring Harbor Asia, Suzhou, China
 
 July 2010
 ------
-**Brain Imaging and its applications***  
+***Brain Imaging and its applications***  
 Marie Curie FP7, European Initial Training Network CODDE, Great Malvern, UK  
 
 June 2010
@@ -183,7 +183,7 @@ Marie Curie FP7, European Initial Training Network CODDE, Schloss Rauischholzhau
 
 June 2004
 ------
-***16th Summer School in Advanced Physics***
+***16th Summer School in Advanced Physics***  
 Department of Physics, University of Crete, Crete, Greece  
 
 July 2003
