@@ -150,20 +150,20 @@ July-August 2011
 ------
 [***Methods in Computational Neuroscience***](https://www.mbl.edu/education/advanced-research-training-courses/course-offerings/methods-computational-neuroscience)  
 Marine Biological Laboratory, Woods Hole, Massachusetts, USA  
-*My project was with [Haim Sompolinsky](https://www.mcb.harvard.edu/directory/haim-sompolinsky/)*
+*My project was with Prof. [Haim Sompolinsky](https://www.mcb.harvard.edu/directory/haim-sompolinsky/)*
 
 October 2010
 ------
 [***Advanced Modeling of Neuroimaging Data***](https://www.maastrichtuniversity.nl/meta/412943/advanced-fmri)   
 Faculty of Psychology and Neuroscience, University of Maastricht, Maastricht, The Netherlands  
-*invited by Prof. [Reiner Goebel[(https://www.maastrichtuniversity.nl/rw-goebel)*
+*invited by Prof. [Reiner Goebel](https://www.maastrichtuniversity.nl/rw-goebel)*
 
 July 2010
 ------
 [***Computational and Cognitive Neurobiology***](http://www.ccnss.org/ccn_2010/index.html)   
 Cold Spring Harbor Asia, Suzhou, China  
 *the first year the Computational and Cognitive Neuroscience Summer School was held*  
-*my project with [Xiao-Jing Wang](https://as.nyu.edu/faculty/xiaojing-wang.html)*
+*my project with Prof. [Xiao-Jing Wang](https://as.nyu.edu/faculty/xiaojing-wang.html)*
 
 July 2010
 ------
