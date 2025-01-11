@@ -136,4 +136,4 @@ Yota talking about [what NMA volunteers did to ensure accessibility and inclusiv
 The [first video](https://www.youtube.com/watch?v=s4kBB1OMs0Q) of [Neuromatch Academy](https://www.neuromatchacademy.org/) -an online, open, free/low cost & inclusive summer course in computational neuroscience- [co-organized by Panagiota Theodoni](https://neuromatch.io/neuroscience/) is on!
 
 **Apr 22**  
-Neurotheoria (Νευροθεωρία), founded by Panagiota Theodoni, is born and the first post is made
+[Neurotheoria (Νευροθεωρία)](https://www.facebook.com/neurotheoria/posts/118271319840804), founded by Panagiota Theodoni, is born and the first post is made
