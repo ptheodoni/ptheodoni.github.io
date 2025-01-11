@@ -21,7 +21,7 @@ in neuroscience
 
 ​
 in philosophy
------
+----
 (in current decreasing priority)  
 - foundations of science  
 - philosophy of science: quantum theories of consciousness  
@@ -44,6 +44,6 @@ analysis of the marmoset cortico-cortical connectivity, and their comparison acr
 
 
 **in physics:**
------
+----
 - the formation of thin films  
 - photonic crystals, both experimentally and theoretically  
