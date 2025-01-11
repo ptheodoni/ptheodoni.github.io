@@ -21,7 +21,7 @@ in neuroscience
 
 ​
 in philosophy
-----
+-----
 (in current decreasing priority)  
 - foundations of science  
 - philosophy of science: quantum theories of consciousness  
