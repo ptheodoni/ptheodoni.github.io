@@ -101,7 +101,7 @@ Postdoctoral Researcher in [Alex Roxin's lab](https://sites.google.com/site/alex
 
 ​from November 2008 to May 2014
 ------
-I received my Ph.D. (2014) in [Gustavo Deco's lab](https://www.upf.edu/web/cns/gustavo) at the [Center for Brain and Cognition](https://www.upf.edu/web/cbc), of [Pompeu Fabra Universitat](https://www.upf.edu/web/cbc), as a [Marie Curie Early Stage Researcher](http://www.optimaldecisions.org/people/Panagiota.html), Barcelona, Spain
+I received my Ph.D. (2014) in [Gustavo Deco's lab](https://www.upf.edu/web/cns/gustavo) at the [Center for Brain and Cognition](https://www.upf.edu/web/cbc), of [Pompeu Fabra Universitat](https://www.upf.edu/web/cbc), as a [Marie Curie Early Stage Researcher](http://www.optimaldecisions.org/people/Panagiota.html), Barcelona, Spain  
 *My PhD comittee was [Nikos Logothetis]([https://scholar.google.com/citations?user=aK4K5e8AAAAJ&hl=en](https://www.icpbr.ac.cn/lab/logothetis/people/202307/t20230712_170621.html)), [Rubén Moreno-Βote](https://www.upf.edu/web/ruben-moreno-bote) and [Nava Rubin](https://www.cns.nyu.edu/~nava/MyPubs/)*
 
 from June 2007 to March 2008
@@ -120,7 +120,7 @@ During my undergraduate studies (2001-2002), I spent one year at the [Faculty of
 
 from September to ​1999 to October 2005
 ------
-My undergraduate studies (B.Sc., 2005) were in physics at the [Department of Physics](https://en.phys.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/National_and_Kapodistrian_University_of_Athens), Athens, Greece
+My undergraduate studies (B.Sc., 2005) were in physics at the [Department of Physics](https://en.phys.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/National_and_Kapodistrian_University_of_Athens), Athens, Greece  
 *My BSc Thesis supervisor was Prof. [Emmanuel Syskakis](http://scholar.uoa.gr/esysk/home)*
 
 ​
@@ -142,13 +142,15 @@ New York University by Prof [Brook Borel](https://brookeborel.com/), New York, U
 ​
 January-March 2019
 ------
-***Improving Deep Neural Networks. Structural Machine Learning Projects. Neural Networks and Deep Learning***  
+***[Improving Deep Neural Networks](https://www.coursera.org/account/accomplishments/verify/5ES3HTKHFCAA) - [Structural Machine Learning Projects](https://www.coursera.org/account/accomplishments/verify/SQ76FEZQ7D8M) - [Neural Networks and Deep Learning](https://www.coursera.org/account/accomplishments/verify/VT2SDXVJ8XTB)***  
 Coursera, deeplearning.ai
+
 
 July-August 2011
 ------
-***Methods in Computational Neuroscience***  
+[***Methods in Computational Neuroscience***](https://www.mbl.edu/education/advanced-research-training-courses/course-offerings/methods-computational-neuroscience)  
 Marine Biological Laboratory, Woods Hole, Massachusetts, USA  
+*My project was with [Haim Sompolinsky](https://www.mcb.harvard.edu/directory/haim-sompolinsky/)*
 
 October 2010
 ------
