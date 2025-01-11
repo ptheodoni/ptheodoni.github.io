@@ -29,9 +29,8 @@ and the “Neuroscience of Science”
 Oxford, UK
 
 February  
-Talking about ***ChatGTPoids***  
-at the open mic of Sant Mark's Theater in  
-East Village Manhattan within the science-social project Science as a Hobby, NYC, USA
+Talking about ***ChatGTPoids*** at the open mic of Sant Mark's Theater in East Village Manhattan within the science-social project Science as a Hobby, NYC, USA
+[video](https://video.wixstatic.com/video/ee0a28_6bd1e3b5810d48bc860d179bb701880d/1080p/mp4/file.mp4)
 
 
 2022
