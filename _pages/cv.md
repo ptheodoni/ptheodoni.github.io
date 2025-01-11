@@ -102,11 +102,18 @@ Postdoctoral Researcher in [Alex Roxin's lab](https://sites.google.com/site/alex
 ​from November 2008 to May 2014
 ------
 I received my Ph.D. (2014) in [Gustavo Deco's lab](https://www.upf.edu/web/cns/gustavo) at the [Center for Brain and Cognition](https://www.upf.edu/web/cbc), of [Pompeu Fabra Universitat](https://www.upf.edu/web/cbc), as a [Marie Curie Early Stage Researcher](http://www.optimaldecisions.org/people/Panagiota.html), Barcelona, Spain
+My PhD comittee was [Nikos Logothetis]([https://scholar.google.com/citations?user=aK4K5e8AAAAJ&hl=en](https://www.icpbr.ac.cn/lab/logothetis/people/202307/t20230712_170621.html)), [Rubén Moreno-Βote](https://www.upf.edu/web/ruben-moreno-bote) and [Nava Rubin](https://www.cns.nyu.edu/~nava/MyPubs/).
 
+from June 2007 to March 2008
+-----
+External Research Fellow (Theoretical/Computational and Experimental Physics), with PI [Nikos Papanikolaou[(https://inn.demokritos.gr/person/nikolaos-papanikolaou/), Institute of Microelectronics, [National Center for Scientific Research Demokritos](https://www.demokritos.gr/el/), Athens, Greece 
 
-2005 - 2007
+from September 2005 to December 2007
 ------
-My graduate studies (M.Sc.m, 2007) were in condensed matter physics, at the Department of Physics of the University of Athens (NKUA), Athens, Greece  
+My graduate studies (M.Sc.m, 2007) were in condensed matter physics, at the [Department of Physics](https://en.phys.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/National_and_Kapodistrian_University_of_Athens), Athens, Greece  
+My MSc Thesis supervisors were [Nikolaos Stefanou[(http://scholar.uoa.gr/nstefan/home) from the NKUA Dept of Physics and [Nikos Papanikolaou[(https://inn.demokritos.gr/person/nikolaos-papanikolaou/) from the [National Center for Scientific Research Demokritos](https://www.demokritos.gr/el/)
+
+
 
 ​2001 - 2002
 ------
