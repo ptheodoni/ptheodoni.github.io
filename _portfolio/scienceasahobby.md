@@ -1,8 +1,9 @@
 ---
 title: "Science as a Hobby"
-excerpt: "<br/><img src='/images/scienceasahobby1.jpg'>"
+excerpt: ""
 collection: portfolio
 ---
+<br/><img src='/images/scienceasahobby1.jpg' width="200">  
 
 *"Science as a Hobby" is a project to bridge the gap between Society and Academia by providing direct public interactive access to academic and scientific research.  
 The initial approach is via Open Mics in New York City, where I go on stage and offer my knowledge to the people there in an interactive way.  
