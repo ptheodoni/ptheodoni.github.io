@@ -16,7 +16,7 @@ Adjunct Professor for Spring 2025, at [College Year in Athens](https://cyathens.
 **September**  
 Adjunct Professor for Fall 2024 at [College Year in Athens](https://cyathens.org/), Athens, Greece to teach the undergraduate course ["Consciousness" (history, philosophy, and (neuro)science of consciousness)](https://cyathens.org/course/consciousness/) of the Neuroscience and Psychology Disciplines.
 
-Adjunct Professor at the [Open University of Cyprus](https://www.ouc.ac.cy/index.php/en/), teaching online the Graduate course [COS514 "Computational Neuroscience"](https://www.ouc.ac.cy/index.php/en/studies/master/cos/modules-cos/3062-cos514) at the [MSc "Cognitive Systems"](https://www.ouc.ac.cy/index.php/en/studies/master/cos), Nicosia, Cyprus
+Adjunct Professor for Fall 2024 at the [Open University of Cyprus](https://www.ouc.ac.cy/index.php/en/), teaching online the Graduate course [COS514 "Computational Neuroscience"](https://www.ouc.ac.cy/index.php/en/studies/master/cos/modules-cos/3062-cos514) at the [MSc "Cognitive Systems"](https://www.ouc.ac.cy/index.php/en/studies/master/cos), Nicosia, Cyprus
 
 **March**  
 Adjunct Professor for Spring 2024 at [Panteion University of Social and Political Sciences](https://www.panteion.gr/en/), [Department of Psychology](https://psychology.panteion.gr/), Athens, Greece, to teach two undergraduate courses:  
