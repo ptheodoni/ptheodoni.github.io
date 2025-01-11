@@ -14,7 +14,7 @@ Adjunct Professor for Spring 2025, at [College Year in Athens](https://cyathens.
 2024
 -----
 **December 22**  
-I gave a talk at the Symposium "Philosophy and Psychology discuss about virtues as tools of education and training" with the tile ["co-living in harmony with AI"](https://ptheodoni.github.io/talks/2024-12-22-talk-3))  
+I gave a talk at the Symposium "Philosophy and Psychology discuss about virtues as tools of education and training" with the tile ["co-living in harmony with AI"](https://ptheodoni.github.io/talks/2024-12-22-talk-3)), Heraklion, Crete
 
 **September**  
 Adjunct Professor for Fall 2024 at [College Year in Athens](https://cyathens.org/), Athens, Greece to teach the undergraduate course ["Consciousness" (history, philosophy, and (neuro)science of consciousness)](https://cyathens.org/course/consciousness/) of the Neuroscience and Psychology Disciplines.
