@@ -94,14 +94,15 @@ from June ​2016 to July 2018
 Global Postdoctoral Researcher in [Xiao-Jing Wang's lab](https://www.cns.nyu.edu/wanglab/) at [New York University of Shanghai (NYU Shanghai)](https://shanghai.nyu.edu/) and the [NYU-ECNU Institute for Brain and Cognitive Science at NYU Shanghai](https://bcs.shanghai.nyu.edu/en), Shanghai, China  
 
 
-2014-2016
+from March 2014 to December 2015
 ------
 Postdoctoral Researcher in [Alex Roxin's lab](https://sites.google.com/site/alexanderroxin/home) at the [Centre de Recerca Matemàtica](https://www.crm.cat/?glang=en&gurl=Pages%2Fdefault.aspx), Bellaterra (Barcelona), Spain  
 
 
-​2008 - 2014
+​from November 2008 to May 2014
 ------
-I received my Ph.D. (2014) at the Center for Brain and Cognition, of Pompeu Fabra Universitat, in Gustavo Deco's lab, as a Marie Curie Early Stage Researcher, Barcelona, Spain
+I received my Ph.D. (2014) in [Gustavo Deco's lab](https://www.upf.edu/web/cns/gustavo) at the [Center for Brain and Cognition](https://www.upf.edu/web/cbc), of [Pompeu Fabra Universitat](https://www.upf.edu/web/cbc), as a [Marie Curie Early Stage Researcher](http://www.optimaldecisions.org/people/Panagiota.html), Barcelona, Spain
+
 
 2005 - 2007
 ------
