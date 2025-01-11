@@ -32,9 +32,9 @@ main:
   - title: "Other Projects"
     url: /portfolio/
 
-  - title: "Resources"
-    url: /resources/  
-
   - title: "Yotta Art"
     url: /art/
+
+  - title: "Resources"
+    url: /resources/  
 
