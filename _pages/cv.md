@@ -111,17 +111,17 @@ External Research Fellow (Theoretical/Computational and Experimental Physics), w
 from September 2005 to December 2007
 ------
 My graduate studies (M.Sc.m, 2007) were in condensed matter physics, at the [Department of Physics](https://en.phys.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/National_and_Kapodistrian_University_of_Athens), Athens, Greece  
-My MSc Thesis supervisors were [Nikolaos Stefanou[(http://scholar.uoa.gr/nstefan/home) from the NKUA Dept of Physics and [Nikos Papanikolaou[(https://inn.demokritos.gr/person/nikolaos-papanikolaou/) from the [National Center for Scientific Research Demokritos](https://www.demokritos.gr/el/)
+My MSc Thesis supervisors were Prof. [Nikolaos Stefanou](http://scholar.uoa.gr/nstefan/home) from the NKUA Dept of Physics and Dr. [Nikos Papanikolaou[(https://inn.demokritos.gr/person/nikolaos-papanikolaou/) from the [National Center for Scientific Research Demokritos](https://www.demokritos.gr/el/)
 
 
-
-​2001 - 2002
+from September ​2001 to June 2002
 ------
-During my undergraduate studies (2001-2002), I spent one year at the Faculty of Physics of the Universidad de Sevilla, as a Socrates / Erasmus student, Seville, Spain
+During my undergraduate studies (2001-2002), I spent one year at the [Faculty of Physics](https://fisica.us.es/estructura-y-organizacion/departamentos) of the [Universidad de Sevilla](https://en.wikipedia.org/wiki/University_of_Seville), as a Socrates / Erasmus student, Seville, Spain
 
-​1999 - 2005
+from September to ​1999 to October 2005
 ------
-My undergraduate studies (B.Sc., 2005) were in physics at the Department of Physics of the University of Athens (NKUA), Athens, Greece
+My undergraduate studies (B.Sc., 2005) were in physics at the [Department of Physics](https://en.phys.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/National_and_Kapodistrian_University_of_Athens), Athens, Greece
+My BSc Thesis supervisor was Prof. [Emmanuel Syskakis](http://scholar.uoa.gr/esysk/home)
 
 ​
 
