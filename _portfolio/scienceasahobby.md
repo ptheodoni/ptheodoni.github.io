@@ -53,3 +53,4 @@ Monday, Feb 21, 2022
 *At the Open Mic, at Chispa café/bar in Bushwick, Brooklyn, NY, USA.  
 It was the first time and it was about introducing the idea to the audience and getting their feedback, which was very fruitful.  
 There was some intro on the science of neuroscience and the science of consciousness.*
+
