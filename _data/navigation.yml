@@ -17,8 +17,8 @@ main:
   - title: "Talks"
     url: /talks/    
 
-#  - title: "Videos"
-#    url: /videos/
+  - title: "Videos"
+    url: /videos/
 
   - title: "Teaching"
     url: /teaching/    
