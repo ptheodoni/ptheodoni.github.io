@@ -6,39 +6,33 @@ author_profile: true
 ---
 
 neuroscience
-====
-
+=====
 [Online Resources for Systems and Computational Neuroscience](https://www.simonsfoundation.org/collaborations/global-brain/online-resources-for-systems-and-computational-neuroscience/)  
 [WorldWideNeuro](https://www.world-wide.org/Neuro/)
 
-​
 math/physics 
-====
+=====
 [ΔΑΔΑ Research Seminars](https://researchseminars.org/)
 
-​
 philosophy
-====
+=====
 [PhilPapers](https://philpapers.org/)
 [Stanford Encyclopedia of Philosophy](https://plato.stanford.edu/index.html)
 
-​
 academics​
-====
+=====
 [BiasWatchNeuro](https://biaswatchneuro.com/information-and-links/)
 [Black in Neuro](https://blackinneuro.com/)
 [Queer in Neuro](https://x.com/queerinneuro?lang=el)
 [Growing up in Science](https://www.cns.nyu.edu/events/growingupinscience/)
 
-
 family
-====
+=====
 ​[ο Γεώργιος Θεοδώνης θυμάται και γράφει](http://georgiostheodonis.blogspot.com/)  
 my father's website, by my brother and me
 
-​
 languages
-====
+=====
 [el camino pa'lante](https://sites.google.com/site/sites/system/errors/WebspaceNotFound?path=%2Felcaminopalante1%2F)  
 a ~2005 attempt of mine of a website that openly and freely teaches Spanish, before Duolingo was a thing. there is also info for Arabic
 
