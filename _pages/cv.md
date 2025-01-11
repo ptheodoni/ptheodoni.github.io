@@ -154,13 +154,16 @@ Marine Biological Laboratory, Woods Hole, Massachusetts, USA
 
 October 2010
 ------
-***Advanced Modeling of Neuroimaging Data***  
+[***Advanced Modeling of Neuroimaging Data***](https://www.maastrichtuniversity.nl/meta/412943/advanced-fmri)   
 Faculty of Psychology and Neuroscience, University of Maastricht, Maastricht, The Netherlands  
+*invited by Prof. [Reiner Goebel[(https://www.maastrichtuniversity.nl/rw-goebel)*
 
 July 2010
 ------
-***Computational and Cognitive Neurobiology***  
-(the first year the Computational and Cognitive Neuroscience Summer School was held) Cold Spring Harbor Asia, Suzhou, China  
+[***Computational and Cognitive Neurobiology***](http://www.ccnss.org/ccn_2010/index.html)   
+Cold Spring Harbor Asia, Suzhou, China  
+*the first year the Computational and Cognitive Neuroscience Summer School was held*  
+*my project with [Xiao-Jing Wang](https://as.nyu.edu/faculty/xiaojing-wang.html)*
 
 July 2010
 ------
@@ -169,7 +172,7 @@ Marie Curie FP7, European Initial Training Network CODDE, Great Malvern, UK
 
 June 2010
 ------
-***4th Computational Neuroscience Summer School***  
+[***4th Computational Neuroscience Summer School***](http://neurobot.bio.auth.gr/2007/ottawa-computational-neuroscience-summer-school/)  
 University of Ottawa, Centre for Neural Dynamics, Ottawa, Canada  
 
 
