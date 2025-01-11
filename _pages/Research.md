@@ -30,7 +30,7 @@ in philosophy
 
 ​
 Previously, I have worked on
-====
+===
 
 
 **in neuroscience:**
