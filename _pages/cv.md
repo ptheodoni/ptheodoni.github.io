@@ -30,192 +30,131 @@ Academic Journey
 
 Currently, Spring 2025
 ------
-I am an Adjunct Professor at the College Year in Athens, teaching the Undergraduate course "Consciousness", Athens, Greece  
-+  
-a Guest Lecturer and MSc Thesis Supervisor at the M.A. in Cognitive Science  
-at the Department of History and Philosophy of Science  
-of the University of Athens (NKUA), Athens, Greece  
-+  
-a Graduate student of the M.A. in Philosophy at the Department of Philosophy  
-of the University of Athens (NKUA), Athens, Greece  
+- Adjunct Professor at the [College Year in Athens](https://cyathens.org/), teaching the Undergraduate course ["Consciousness"](https://cyathens.org/course/consciousness/), Athens, Greece
+- Guest Lecturer and MSc Thesis Supervisor at the [MSc in Cognitive Science](https://cogsci.phs.uoa.gr/) at the [Department of History and Philosophy of Science](https://en.phs.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
+- Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/)  
+of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
+- Independent Researcher
 
 Fall 2024
 ------
-​I was an Adjunct Professor at the Open University of Cyprus and the University of Cyprus, teaching  
-at the MSc "Cognitive Systems" the Graduate course "Computational Neuroscience", online, Cyprus  
-+  
-an Adjunct Professor at the College Year in Athens, teaching the Undergraduate course "Consciousness", Athens, Greece  
-+   
-a Guest Lecturer and MSc Thesis Supervisor at the M.A. in Cognitive Science  
-at the Department of History and Philosophy of Science  
-of the University of Athens (NKUA), Athens, Greece  
-+  
-a Graduate student of the M.A. in Philosophy at the Department of Philosophy  
-of the University of Athens (NKUA), Athens, Greece  
+- Adjunct Professor at the Open University of Cyprus and the University of Cyprus, teaching at the MSc "Cognitive Systems" the Graduate course "Computational Neuroscience", online, Cyprus
+- Adjunct Professor at the College Year in Athens, teaching the Undergraduate course "Consciousness", Athens, Greece
+- Guest Lecturer and MSc Thesis Supervisor at the M.A. in Cognitive Science at the Department of History and Philosophy of Science of the University of Athens (NKUA), Athens, Greece
+- Graduate student of the M.A. in Philosophy at the Department of Philosophy of the University of Athens (NKUA), Athens, Greece  
+- Independent Researcher
 
 Spring 2024
 ------
-I was an Adjunct Professor at the Panteion University of Social and Political Sciences, Department of Psychology, teaching two undergraduate courses:  
-Introduction Research Methods in Cognitive Neuroscience  
-Psychology and Neurobiology of Language, Athens, Greece  
-+  
-an Adjunct Professor at the College Year in Athens, teaching the Undergraduate course "Consciousness", Athens, Greece (September 2023 - present)   
-+   
-a Guest Lecturer and MSc Thesis Supervisor at the M.A. in Cognitive Science  
-at the Department of History and Philosophy of Science  
-of the University of Athens (NKUA), Athens, Greece   
-+   
-a Graduate student of the M.A. in Philosophy at the Department of Philosophy  
-of the University of Athens (NKUA), Athens, Greece   
+- Adjunct Professor at the [Panteion University of Social and Political Sciences](https://www.panteion.gr/en/), [Department of Psychology](https://psychology.panteion.gr/), teaching two undergraduate courses: (1) Introduction Research Methods in Cognitive Neuroscience (2) Psychology and Neurobiology of Language, Athens, Greece
+- Adjunct Professor at the College Year in Athens, teaching the Undergraduate course "Consciousness", Athens, Greece (September 2023 - present)
+- Guest Lecturer and MSc Thesis Supervisor at the M.A. in Cognitive Science at the Department of History and Philosophy of Science of the University of Athens (NKUA), Athens, Greece 
+- Graduate student of the M.A. in Philosophy at the Department of Philosophy of the University of Athens (NKUA), Athens, Greece
+- Independent Researcher  
 
-​
-From September 2021 to August 2023)
+​Fall 2023  
 ------
-I was a Visiting Scholar at the Department of Philosophy,
-Center for Mind, Brain and Consciousness, sponsored by David Chalmers  
-New York University  (NYU), New York City, USA 
+- Adjunct Professor at the Open University of Cyprus and the University of Cyprus, teaching at the MSc "Cognitive Systems" the Graduate course "Computational Neuroscience", online, Cyprus
+- an Adjunct Professor at the College Year in Athens, teaching the Undergraduate course "Consciousness", Athens, Greece
+- Independent Researcher
 
-​
-From September 2022 to January 2023  
+From September 2021 to August 2023
 ------
-I was an Adjunct Professor at the Open University of Cyprus and the University of Cyprus, teaching  
-at the MSc "Cognitive Systems" the Graduate course "Computational Neuroscience", online, Cyprus  
-+  
-an Adjunct Professor at the College Year in Athens, teaching the Undergraduate course "Consciousness", Athens, Greece  
+Visiting Scholar at the Department of Philosophy, Center for Mind, Brain and Consciousness, sponsored by David Chalmers, New York University  (NYU), New York City, USA 
 
-​
 2018-2021
 ------
-I was a Postdoctoral Researcher at the Center for Neural Science, of New York University (NYU)  
-in Xiao-Jing Wang's lab, New York City, USA  
+Postdoctoral Researcher at the Center for Neural Science, of New York University (NYU) in Xiao-Jing Wang's lab, New York City, USA  
 
-​
-2016-2018
+​2016-2018
 ------
-I was a Global Postdoctoral Researcher at NYU SH  
-and NYU NY at the New York University of Shanghai and  
-NYU-ECNU Institute for Brain and Cognitive Science at NYU Shanghai,  
-in Xiao-Jing Wang's lab, Shanghai, China  
+Global Postdoctoral Researcher at NYU SH and NYU NY at the New York University of Shanghai and NYU-ECNU Institute for Brain and Cognitive Science at NYU Shanghai, in Xiao-Jing Wang's lab, Shanghai, China  
 
-​
 2014-2016
 ------
-I was a Postdoctoral Researcher at the Centre de Recerca Matemàtica,  
-in Alex Roxin's lab, Bellaterra (Barcelona), Spain  
+Postdoctoral Researcher at the Centre de Recerca Matemàtica, in Alex Roxin's lab, Bellaterra (Barcelona), Spain  
 
-​
-2008 - 2014
+​2008 - 2014
 ------
-I received my Ph.D. (2014) at the Center for Brain and Cognition,   
-of Pompeu Fabra Universitat, in Gustavo Deco's lab,  
-as a Marie Curie Early Stage Researcher, Barcelona, Spain
+I received my Ph.D. (2014) at the Center for Brain and Cognition, of Pompeu Fabra Universitat, in Gustavo Deco's lab, as a Marie Curie Early Stage Researcher, Barcelona, Spain
 
-​
 2005 - 2007
 ------
-My graduate studies (M.Sc.m, 2007) were in condensed matter physics,  
-at the Department of Physics of the University of Athens (NKUA), Athens, Greece  
+My graduate studies (M.Sc.m, 2007) were in condensed matter physics, at the Department of Physics of the University of Athens (NKUA), Athens, Greece  
 
-​
-2001 - 2002
+​2001 - 2002
 ------
-During my undergraduate studies (2001-2002), I spent one year at the  
-Faculty of Physics of the Universidad de Sevilla, as a Socrates / Erasmus student, Seville, Spain
+During my undergraduate studies (2001-2002), I spent one year at the Faculty of Physics of the Universidad de Sevilla, as a Socrates / Erasmus student, Seville, Spain
 
 ​1999 - 2005
 ------
-My undergraduate studies (B.Sc., 2005) were in physics  
-at the Department of Physics of the University of Athens (NKUA), Athens, Greece
+My undergraduate studies (B.Sc., 2005) were in physics at the Department of Physics of the University of Athens (NKUA), Athens, Greece
 
 ​
 
-​
 also, I have attended the following Schools  
------
-
-​
+===
 
 May 2022
 ------
 ***Consciousness***  
-Neuroscience School of Advanced Studies  
-Venice, Italy  
-
+Neuroscience School of Advanced Studies, Venice, Italy  
 
 March 2021
 ------
 ***Science Communication Workshop***  
-New York University by Prof Brook Borel  
-New York, USA  
+New York University by Prof Brook Borel, New York, USA  
 
 ​
 January-March 2019
 ------
-***Improving Deep Neural Networks
-Structural Machine Learning Projects
-Neural Networks and Deep Learning***  
+***Improving Deep Neural Networks. Structural Machine Learning Projects. Neural Networks and Deep Learning***  
 Coursera, deeplearning.ai
-
 
 July-August 2011
 ------
 ***Methods in Computational Neuroscience***  
-Marine Biological Laboratory, Woods Hole  
-Massachusetts, USA  
-
+Marine Biological Laboratory, Woods Hole, Massachusetts, USA  
 
 October 2010
 ------
 ***Advanced Modeling of Neuroimaging Data***  
-Faculty of Psychology and Neuroscience, University of Maastricht  
-Maastricht, The Netherlands  
+Faculty of Psychology and Neuroscience, University of Maastricht, Maastricht, The Netherlands  
 
 July 2010
 ------
 ***Computational and Cognitive Neurobiology***  
-(the first year the Computational and Cognitive Neuroscience Summer School was held)  
-Cold Spring Harbor Asia  
-Suzhou, China  
+(the first year the Computational and Cognitive Neuroscience Summer School was held) Cold Spring Harbor Asia, Suzhou, China  
 
-​
 July 2010
 ------
 **Brain Imaging and its applications***  
-Marie Curie FP7, European Initial Training Network CODDE  
-Great Malvern, UK  
+Marie Curie FP7, European Initial Training Network CODDE, Great Malvern, UK  
 
 June 2010
 ------
 ***4th Computational Neuroscience Summer School***  
-University of Ottawa, Centre for Neural Dynamics  
-Ottawa, Canada  
+University of Ottawa, Centre for Neural Dynamics, Ottawa, Canada  
 
 
 August 2009
 ------
 ***Computational Vision***  
-Marie Curie FP7, European Initial Training Network CODDE  
-Schloss Rauischholzhausen, Hessia, Germany   
-
+Marie Curie FP7, European Initial Training Network CODDE, Schloss Rauischholzhausen, Hessia, Germany   
 
 June 2004
 ------
 ***16th Summer School in Advanced Physics***
-Department of Physics, University of Crete  
-Crete, Greece  
-
+Department of Physics, University of Crete, Crete, Greece  
 
 July 2003
 ------
 ***Summer School in Materials***  
-National Center of Scientific Research “Demokritos”  
-Athens, Greece  
-
+National Center of Scientific Research “Demokritos”, Athens, Greece  
 
 March-May 2001
 ------
 ***C++ Programming Course***  
-Union of Greek Physicists  
-Athens, Greece  
+Union of Greek Physicists, Athens, Greece  
 
 ​
