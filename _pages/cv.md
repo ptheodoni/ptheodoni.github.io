@@ -36,6 +36,7 @@ Currently, Spring 2025
 of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
 - Independent Researcher
 
+
 Fall 2024
 ------
 - Adjunct Professor at the [Open University of Cyprus](https://www.ouc.ac.cy/index.php/en/), teaching online the Graduate course [COS514 "Computational Neuroscience"](https://www.ouc.ac.cy/index.php/en/studies/master/cos/modules-cos/3062-cos514) at the [MSc "Cognitive Systems"](https://www.ouc.ac.cy/index.php/en/studies/master/cos), Nicosia, Cyprus
@@ -45,35 +46,58 @@ Fall 2024
 of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
 - Independent Researcher
 
+
 Spring 2024
 ------
 - Adjunct Professor at the [Panteion University of Social and Political Sciences](https://www.panteion.gr/en/), [Department of Psychology](https://psychology.panteion.gr/), teaching two undergraduate courses: (1) Introduction Research Methods in Cognitive Neuroscience (2) Psychology and Neurobiology of Language, Athens, Greece
-- Adjunct Professor at the College Year in Athens, teaching the Undergraduate course "Consciousness", Athens, Greece (September 2023 - present)
-- Guest Lecturer and MSc Thesis Supervisor at the M.A. in Cognitive Science at the Department of History and Philosophy of Science of the University of Athens (NKUA), Athens, Greece 
-- Graduate student of the M.A. in Philosophy at the Department of Philosophy of the University of Athens (NKUA), Athens, Greece
-- Independent Researcher  
+- Adjunct Professor at the [College Year in Athens](https://cyathens.org/), teaching the Undergraduate course ["Consciousness"](https://cyathens.org/course/consciousness/), Athens, Greece
+- Guest Lecturer and MSc Thesis Supervisor at the [MSc in Cognitive Science](https://cogsci.phs.uoa.gr/) at the [Department of History and Philosophy of Science](https://en.phs.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
+- Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/)  
+of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
+- Independent Researcher
+
 
 ​Fall 2023  
 ------
-- Adjunct Professor at the Open University of Cyprus and the University of Cyprus, teaching at the MSc "Cognitive Systems" the Graduate course "Computational Neuroscience", online, Cyprus
-- an Adjunct Professor at the College Year in Athens, teaching the Undergraduate course "Consciousness", Athens, Greece
+- Adjunct Professor at the [College Year in Athens](https://cyathens.org/), teaching the Undergraduate course ["Consciousness"](https://cyathens.org/course/consciousness/), Athens, Greece
+- Guest Lecturer and MSc Thesis Supervisor at the [MSc in Cognitive Science](https://cogsci.phs.uoa.gr/) at the [Department of History and Philosophy of Science](https://en.phs.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
+- Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/)  
+of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
 - Independent Researcher
+
+Spring 2023
+------
+- Visiting Researcher, sponsored by [David Chalmers](https://consc.net/), at the [Department of Philosophy](https://en.wikipedia.org/wiki/New_York_University_Department_of_Philosophy), [Center for Mind, Brain and Consciousness](https://wp.nyu.edu/consciousness/), [New York University](https://en.wikipedia.org/wiki/New_York_University)  [(NYU)](https://nyu.edu/), New York City, USA
+- Guest Lecturer and MSc Thesis Supervisor at the [MSc in Cognitive Science](https://cogsci.phs.uoa.gr/) at the [Department of History and Philosophy of Science](https://en.phs.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
+- Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/)  
+of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
+
+Fall 2022
+------
+- Visiting Researcher, sponsored by [David Chalmers](https://consc.net/), at the [Department of Philosophy](https://en.wikipedia.org/wiki/New_York_University_Department_of_Philosophy), [Center for Mind, Brain and Consciousness](https://wp.nyu.edu/consciousness/), [New York University](https://en.wikipedia.org/wiki/New_York_University)  [(NYU)](https://nyu.edu/), New York City, USA
+- Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/)  
+of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
+
 
 From September 2021 to August 2023
 ------
-Visiting Scholar at the Department of Philosophy, Center for Mind, Brain and Consciousness, sponsored by David Chalmers, New York University  (NYU), New York City, USA 
+Visiting Researcher, sponsored by [David Chalmers](https://consc.net/), at the [Department of Philosophy](https://en.wikipedia.org/wiki/New_York_University_Department_of_Philosophy), [Center for Mind, Brain and Consciousness](https://wp.nyu.edu/consciousness/), [New York University](https://en.wikipedia.org/wiki/New_York_University)  [(NYU)](https://nyu.edu/), New York City, USA
 
-2018-2021
-------
-Postdoctoral Researcher at the Center for Neural Science, of New York University (NYU) in Xiao-Jing Wang's lab, New York City, USA  
 
-​2016-2018
+from November 2018 to August 2021
 ------
-Global Postdoctoral Researcher at NYU SH and NYU NY at the New York University of Shanghai and NYU-ECNU Institute for Brain and Cognitive Science at NYU Shanghai, in Xiao-Jing Wang's lab, Shanghai, China  
+Postdoctoral Research Associate in [Xiao-Jing Wang's lab](https://www.cns.nyu.edu/wanglab/) at the [Center for Neural Science](https://as.nyu.edu/cns.html), of [New York University](https://en.wikipedia.org/wiki/New_York_University)  [(NYU)](https://nyu.edu/), New York City, USA
+
+
+from June ​2016 to July 2018
+------
+Global Postdoctoral Researcher in [Xiao-Jing Wang's lab](https://www.cns.nyu.edu/wanglab/) at [New York University of Shanghai (NYU Shanghai)](https://shanghai.nyu.edu/) and the [NYU-ECNU Institute for Brain and Cognitive Science at NYU Shanghai](https://bcs.shanghai.nyu.edu/en), Shanghai, China  
+
 
 2014-2016
 ------
-Postdoctoral Researcher at the Centre de Recerca Matemàtica, in Alex Roxin's lab, Bellaterra (Barcelona), Spain  
+Postdoctoral Researcher in [Alex Roxin's lab](https://sites.google.com/site/alexanderroxin/home) at the [Centre de Recerca Matemàtica](https://www.crm.cat/?glang=en&gurl=Pages%2Fdefault.aspx), Bellaterra (Barcelona), Spain  
+
 
 ​2008 - 2014
 ------
