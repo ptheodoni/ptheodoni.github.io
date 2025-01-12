@@ -11,7 +11,7 @@ Currently, I am working on
  
 
 in neuroscience
-----
+------
 (in current decreasing priority)  
 - a large-scale multi-regional neural network model of distributed conscious content  
 - a local neural network model to explain noise correlation of neural activity in the prefrontal cortex
@@ -21,7 +21,7 @@ in neuroscience
 
 ​
 in philosophy
-----
+------
 (in current decreasing priority)  
 - foundations of science  
 - philosophy of science: quantum theories of consciousness  
@@ -35,11 +35,14 @@ Previously, I have worked on
 
 **in neuroscience:**
 ----
-local neural network models
--  for perceptual decision-making
+local neural network models for
+-  perceptual decision-making
 -  conscious perception
 -  learning
--  episodic memory  
+-  episodic memory
+large scale multi-regional neural network models for
+- conscious access
+
 analysis of the marmoset cortico-cortical connectivity, and their comparison across species  
 
 
