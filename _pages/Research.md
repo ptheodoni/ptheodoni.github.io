@@ -39,8 +39,9 @@ local neural network models for
 -  perceptual decision-making
 -  conscious perception
 -  learning
--  episodic memory  
-large scale multi-regional neural network models for  
+-  episodic memory
+  
+Large-scale multi-regional neural network models for  
 - conscious access
 
 analysis of the marmoset cortico-cortical connectivity, and their comparison across species  
