@@ -27,12 +27,11 @@ in philosophy
 - foundations of science  
 - philosophy of science: quantum theories of consciousness  
 - history of philosophy: ancient Greek women philosophers  
-- philosophy of mind: no report paradigm  
+- philosophy of mind: no report paradigm
 
 ​
 Previously, I have worked on
-===
-
+====
 
 **in neuroscience:**
 ----
