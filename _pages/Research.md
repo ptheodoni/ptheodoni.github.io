@@ -6,9 +6,11 @@ author_profile: true
 ---
 
 
+
 Currently, I am working on
 ====
  
+
 
 in neuroscience
 ------
@@ -21,6 +23,7 @@ in neuroscience
 
 
 ​
+
 in philosophy  
 ------
 (in current decreasing priority)  
@@ -30,8 +33,10 @@ in philosophy
 - philosophy of mind: no report paradigm
 
 ​
+
 Previously, I have worked on
 ====
+
 
 **in neuroscience:**
 ----
@@ -45,6 +50,7 @@ Large-scale multi-regional neural network models for
 - conscious access
 
 analysis of the marmoset cortico-cortical connectivity, and their comparison across species  
+
 
 
 **in physics:**
