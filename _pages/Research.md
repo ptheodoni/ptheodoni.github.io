@@ -49,5 +49,5 @@ analysis of the marmoset cortico-cortical connectivity, and their comparison acr
 
 **in physics:**
 ----
-- the formation of thin films  
-- photonic crystals, both experimentally and theoretically  
+- formation of thin films (experiment)
+- photonic crystals (both experiment and theory, simulations) 
