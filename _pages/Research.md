@@ -17,10 +17,11 @@ in neuroscience
 - a local neural network model to explain noise correlation of neural activity in the prefrontal cortex
 - a consensus marmoset-macaque cortical parcellation and the comparison of their mesoscale connectomes  
 - a large-scale multi-regional neural network model of the marmoset for working   memory, in comparison to that of the macaque  
-- modeling social decision-making (game theory) - theory of mind  
+- modeling social decision-making (game theory) - theory of mind
+
 
 ​
-in philosophy
+in philosophy  
 ------
 (in current decreasing priority)  
 - foundations of science  
