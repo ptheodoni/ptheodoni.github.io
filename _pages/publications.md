@@ -36,7 +36,7 @@ Peer-reviewed
 =====
 
 [*A dynamic bifurcation mechanism explains cortex-wide neural correlates of conscious access*](https://www.cell.com/cell-reports/fulltext/S2211-1247(25)00143-3?fbclid=IwY2xjawJoyeVleHRuA2FlbQIxMQABHhevRxODh9a6azIVh1h2QCN1mTR9fDX2efLIEChuIAyBYXfgQv2lW3zYEpS6_aem_ciaQ0NhHgoh_rv024x4ovQ)  
-Ulysse Klatzmann1, Sean Froudist-Walsh, Daniel P. Bliss, **Panagiota Theodoni**, Jorge Mejías, Meiqi Niu6, Lucija Rapan, Nicola Palomero-Gallagher, Claire Sergent, Stanislas Dehaene, Xiao-Jing Wang  
+Ulysse Klatzmann, Sean Froudist-Walsh, Daniel P. Bliss, **Panagiota Theodoni**, Jorge Mejías, Meiqi Niu, Lucija Rapan, Nicola Palomero-Gallagher, Claire Sergent, Stanislas Dehaene, Xiao-Jing Wang  
 *Cell Reports (2025)*
 
 [*Structural attributes and principles of the neocortical connectome in the marmoset monkey*](https://academic.oup.com/cercor/article/32/1/15/6323479?login=false)  
