@@ -7,6 +7,10 @@ author_profile: true
 
 2025
 -----
+**Aril**  
+Our article on a consensus mapping of cortical parcellation between marmoset and macaque for between-species one-to-one comparison of anatomical inter-areal connectivity and multi-regional neural networks, here for working memory, is now under review in Neuron.
+
+Our article on a multi-regional network model for conscious access [A dynamic bifurcation mechanism explains cortex-wide neural correlates of conscious access](https://www.cell.com/cell-reports/fulltext/S2211-1247(25)00143-3?fbclid=IwY2xjawJoyeVleHRuA2FlbQIxMQABHhevRxODh9a6azIVh1h2QCN1mTR9fDX2efLIEChuIAyBYXfgQv2lW3zYEpS6_aem_ciaQ0NhHgoh_rv024x4ovQ) is now published in Cell Reports.
 
 **January**  
 Adjunct Professor for Spring 2025, at [College Year in Athens](https://cyathens.org/), Athens, Greece to teach the undergraduate course ["Consciousness" (history, philosophy, and (neuro)science of consciousness)](https://cyathens.org/course/consciousness/) of the Neuroscience and Psychology Disciplines.
