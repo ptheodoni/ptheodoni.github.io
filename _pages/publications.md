@@ -7,6 +7,7 @@ author_profile: true
 
 \+ equal contributions
 
+
 In progress
 =====
 ***A multi-regional neural network model for consciousness***  
@@ -24,20 +25,19 @@ forthcoming
 =====
 ***From comparative connectomics to large-scale working memory modeling in macaque and marmoset***  
 Loïc Magrou+, **Panagiota Theodoni+**, Amy F.T. Arnsten, Marcello G.P. Rosa, Xiao-Jing Wang  
-*in preparation for submission*  
+*under Review in Neuron*  
 
 ***Decorrelated discharge fluctuations in prefrontal microcircuits during visual consciousness***  
 **Panagiota Theodoni+**, Vishal Kapoor+, Gustavo Deco, Nikos K. Logothetis, Theofanis I. Panagiotaropoulos  
 *in preparation for submission*  
 
-Pre-prints
-=====
-[*A mesoscale connectome-based model of conscious access in the monkey cortex*](https://www.biorxiv.org/content/10.1101/2022.02.20.481230v4)  
-Ulysse Klatzmann, Sean Froudist-Walsh, Daniel P. Bliss, **Panagiota Theodoni**, Jorge Mejías, Meiqi Niu, Lucija Rapan, Daniel S. Margulies, Nicola Palomero-Gallagher, Claire Sergent, Stanislas Dehaene, Xiao-Jing Wang  
-*bioRxiv (2024)*  
 
 Peer-reviewed
 =====
+
+[*A dynamic bifurcation mechanism explains cortex-wide neural correlates of conscious access*](https://www.cell.com/cell-reports/fulltext/S2211-1247(25)00143-3?fbclid=IwY2xjawJoyeVleHRuA2FlbQIxMQABHhevRxODh9a6azIVh1h2QCN1mTR9fDX2efLIEChuIAyBYXfgQv2lW3zYEpS6_aem_ciaQ0NhHgoh_rv024x4ovQ)  
+Ulysse Klatzmann1, Sean Froudist-Walsh, Daniel P. Bliss, **Panagiota Theodoni**, Jorge Mejías, Meiqi Niu6, Lucija Rapan, Nicola Palomero-Gallagher, Claire Sergent, Stanislas Dehaene, Xiao-Jing Wang  
+*Cell Reports (2025)*
 
 [*Structural attributes and principles of the neocortical connectome in the marmoset monkey*](https://academic.oup.com/cercor/article/32/1/15/6323479?login=false)  
 **Panagiota Theodoni**, Piotr Majka, David H. Reser, Daniel K. Wójcik, Marcello G. P. Rosa, Xiao-Jing Wang  
