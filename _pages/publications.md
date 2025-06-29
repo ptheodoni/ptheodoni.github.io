@@ -23,9 +23,9 @@ In progress
 
 forthcoming
 =====
-***From comparative connectomics to large-scale working memory modeling in macaque and marmoset***  
+[*From comparative connectomics to large-scale working memory modeling in macaque and marmoset*](https://www.biorxiv.org/content/10.1101/2025.03.17.643781v1.abstract)  
 Loïc Magrou+, **Panagiota Theodoni+**, Amy F.T. Arnsten, Marcello G.P. Rosa, Xiao-Jing Wang  
-*under Review in Neuron*  
+*bioRxiv 2025 - under Review in Neuron*  
 
 ***Decorrelated discharge fluctuations in prefrontal microcircuits during visual consciousness***  
 **Panagiota Theodoni+**, Vishal Kapoor+, Gustavo Deco, Nikos K. Logothetis, Theofanis I. Panagiotaropoulos  
