@@ -7,11 +7,11 @@ redirect_from:
   - /resume
 ---
 
+**2022-Present** Adj. Prof of Computational Neuroscience, *Open University of Cyprus, Faculty of Pure and Applied Sciences, Cyprus*  
 **2023-Present** External Faculty, *University of Athens, Dept of History and Philosophy of Science, Athens, Greece*  
 **2022-Present** MA in Philosophy, *University of Athens, Dept of Philosophy, Athens, Greece*  
-**2022-Present** Adj. Prof of Neuroscience and Psychology, *College Year in Athens, Athens, Greece*  
+**2022-2025** Adj. Prof of Neuroscience and Psychology, *College Year in Athens, Athens, Greece*  
 **2024** Adj. Prof of Cognitive Neuroscience, *Panteion University of Social and Political Sciences, Dept of Psychology, Athens, Greece*  
-**2022,2024** Adj. Prof of Computational Neuroscience, *Open University of Cyprus, Faculty of Pure and Applied Sciences, Nicosia, Cyprus*  
 **2021-2023** Visiting Researcher, *New York University, Dept of Philosophy, New York City, USA*  
 **2018-2021** Postdoc, *New York University, Center for Neural Science, New York City, USA*  
 **2016-2018** Postdoc, *New York Unviversity of Shanghai, Shanghai, China*  
@@ -28,7 +28,15 @@ redirect_from:
 Academic Journey
 ====
 
-Currently, Spring 2025
+Currently, Fall 2025
+------
+- Adjunct Professor at the [Open University of Cyprus](https://www.ouc.ac.cy/index.php/en/), teaching online the Graduate course [COS514 "Computational Neuroscience"](https://www.ouc.ac.cy/index.php/en/studies/master/cos/modules-cos/3062-cos514) at the [MSc "Cognitive Systems"](https://www.ouc.ac.cy/index.php/en/studies/master/cos), Cyprus
+- Guest Lecturer and MSc Thesis Supervisor at the [MSc in Cognitive Science](https://cogsci.phs.uoa.gr/) at the [Department of History and Philosophy of Science](https://en.phs.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
+- Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/)  
+of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
+- Independent Researcher
+
+Spring 2025
 ------
 - Adjunct Professor at the [College Year in Athens](https://cyathens.org/), teaching the Undergraduate course ["Consciousness"](https://cyathens.org/course/consciousness/), Athens, Greece
 - Guest Lecturer and MSc Thesis Supervisor at the [MSc in Cognitive Science](https://cogsci.phs.uoa.gr/) at the [Department of History and Philosophy of Science](https://en.phs.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
@@ -39,7 +47,7 @@ of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_Univ
 
 Fall 2024
 ------
-- Adjunct Professor at the [Open University of Cyprus](https://www.ouc.ac.cy/index.php/en/), teaching online the Graduate course [COS514 "Computational Neuroscience"](https://www.ouc.ac.cy/index.php/en/studies/master/cos/modules-cos/3062-cos514) at the [MSc "Cognitive Systems"](https://www.ouc.ac.cy/index.php/en/studies/master/cos), Nicosia, Cyprus
+- Adjunct Professor at the [Open University of Cyprus](https://www.ouc.ac.cy/index.php/en/), teaching online the Graduate course [COS514 "Computational Neuroscience"](https://www.ouc.ac.cy/index.php/en/studies/master/cos/modules-cos/3062-cos514) at the [MSc "Cognitive Systems"](https://www.ouc.ac.cy/index.php/en/studies/master/cos), Cyprus
 - Adjunct Professor at the [College Year in Athens](https://cyathens.org/), teaching the Undergraduate course ["Consciousness"](https://cyathens.org/course/consciousness/), Athens, Greece
 - Guest Lecturer and MSc Thesis Supervisor at the [MSc in Cognitive Science](https://cogsci.phs.uoa.gr/) at the [Department of History and Philosophy of Science](https://en.phs.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
 - Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/)  
