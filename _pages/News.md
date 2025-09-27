@@ -7,6 +7,12 @@ author_profile: true
 
 2025
 -----
+**September**  
+Started Fall Semester at the Open University of Cyprus, MSc Cognitive Systems, teaching the Graduate Course Computational Neuroscience
+
+**July**  
+I gave a 2-hour lecture on Ancient Greek and Chinese Philosophy at the summer school for Chinese students on Greek Civilization organized by the Hellenic Mediterranean University, Greece, and the Ningbo University, China, [see](https://ptheodoni.github.io/talks/2025-07-1-talk-4)
+
 **March**  
 Our article on a consensus mapping of cortical parcellation between marmoset and macaque for between-species one-to-one comparison of anatomical inter-areal connectivity and multi-regional neural networks, here for working memory, is now under review in Neuron:  
 [From comparative connectomics to large-scale working memory modeling in macaque and marmoset - bioRxiv 2025](https://www.biorxiv.org/content/10.1101/2025.03.17.643781v1.abstract)
