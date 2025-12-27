@@ -1,4 +1,12 @@
------
+---
+collection: publications
+permalink: citations_phdthesis.md
+---
+
+articles citing  
+[*Fluctuations in perceptual decisions: (ortical micro-circuit dynamics mediating alternations in conscious visual perception)*](https://www.tdx.cat/bitstream/handle/10803/145642/tpt.pdf?sequence=1&isAllowed=y)  
+PhD Thesis Panagiota Theodoni  
+*Universitat Pompeu Fabra (2014)*  
 
 2025
 ===
