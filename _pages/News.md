@@ -7,7 +7,7 @@ author_profile: true
 
 2025
 -----
-**December**
+**December**  
 Our paper [*From comparative connectomics to large-scale working memory modeling in macaque and marmoset*](https://www.biorxiv.org/content/10.1101/2025.03.17.643781v1.abstract)  
 Loïc Magrou+, Panagiota Theodoni+, Amy F.T. Arnsten, Marcello G.P. Rosa, Xiao-Jing Wang, (+ equal contribution), is accepted in Cell Reports, soon to be published online
 
