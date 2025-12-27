@@ -1,5 +1,5 @@
 2025
-=====
+===
 [Perceptual multistability: a window for a multi-facet understanding of psychiatric disorders](https://arxiv.org/abs/2506.18176)  
 Shervin Safavi, Danaé Rolland, Philipp Sterzer, Renaud Jardri, Pantelis Leptourgos  
 arXiv 2025 
