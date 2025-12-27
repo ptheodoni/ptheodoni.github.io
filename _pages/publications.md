@@ -72,6 +72,7 @@ PhD Thesis
 =====
 [*Fluctuations in perceptual decisions: (ortical micro-circuit dynamics mediating alternations in conscious visual perception)*](https://www.tdx.cat/bitstream/handle/10803/145642/tpt.pdf?sequence=1&isAllowed=y)  
 *Universitat Pompeu Fabra (2014)*  
+[cited by](citations_phdthesis.md)
 
 MSc Thesis
 =====
