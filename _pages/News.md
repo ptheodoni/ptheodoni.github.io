@@ -5,6 +5,12 @@ permalink: /News/
 author_profile: true
 ---
 
+## 2026
+## ---- 
+**January**  
+Our paper [*From comparative connectomics to large-scale working memory modeling in macaque and marmoset*](https://www.cell.com/cell-reports/fulltext/S2211-1247(25)01619-5)  
+Loïc Magrou+, Panagiota Theodoni+, Amy F.T. Arnsten, Marcello G.P. Rosa, Xiao-Jing Wang, (+ equal contribution), is published in Cell Reports, on January 27, 2026 
+
 2025
 -----
 **December**  
