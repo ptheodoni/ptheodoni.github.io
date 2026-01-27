@@ -23,10 +23,6 @@ In progress
 
 forthcoming
 =====
-[*From comparative connectomics to large-scale working memory modeling in macaque and marmoset*](https://www.biorxiv.org/content/10.1101/2025.03.17.643781v1.abstract)  
-Loïc Magrou+, **Panagiota Theodoni+**, Amy F.T. Arnsten, Marcello G.P. Rosa, Xiao-Jing Wang  
-*bioRxiv 2025 - accepted in Cell Reports*  
-
 ***Decorrelated discharge fluctuations in prefrontal microcircuits during visual consciousness***  
 **Panagiota Theodoni+**, Vishal Kapoor+, Gustavo Deco, Nikos K. Logothetis, Theofanis I. Panagiotaropoulos  
 *in preparation for submission*  
@@ -34,6 +30,9 @@ Loïc Magrou+, **Panagiota Theodoni+**, Amy F.T. Arnsten, Marcello G.P. Rosa, Xi
 
 Peer-reviewed
 =====
+[*From comparative connectomics to large-scale working memory modeling in macaque and marmoset*](https://www.biorxiv.org/content/10.1101/2025.03.17.643781v1.abstract)  
+Loïc Magrou+, **Panagiota Theodoni+**, Amy F.T. Arnsten, Marcello G.P. Rosa, Xiao-Jing Wang  
+*Cell Reports (2026)*  
 
 [*A dynamic bifurcation mechanism explains cortex-wide neural correlates of conscious access*](https://www.cell.com/cell-reports/fulltext/S2211-1247(25)00143-3?fbclid=IwY2xjawJoyeVleHRuA2FlbQIxMQABHhevRxODh9a6azIVh1h2QCN1mTR9fDX2efLIEChuIAyBYXfgQv2lW3zYEpS6_aem_ciaQ0NhHgoh_rv024x4ovQ)  
 Ulysse Klatzmann, Sean Froudist-Walsh, Daniel P. Bliss, **Panagiota Theodoni**, Jorge Mejías, Meiqi Niu, Lucija Rapan, Nicola Palomero-Gallagher, Claire Sergent, Stanislas Dehaene, Xiao-Jing Wang  
