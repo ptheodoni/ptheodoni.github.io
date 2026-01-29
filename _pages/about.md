@@ -19,3 +19,7 @@ of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_Univ
 
 My main research interest is in the foundations of science.
 
+
+### New!
+Our paper From comparative connectomics to large-scale working memory modeling in macaque and marmoset
+Loïc Magrou+, Panagiota Theodoni+, Amy F.T. Arnsten, Marcello G.P. Rosa, Xiao-Jing Wang, (+ equal contribution), is published in Cell Reports, on January 27, 2026
