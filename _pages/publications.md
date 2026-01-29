@@ -13,9 +13,9 @@ In progress
 ***Similarities and differences in the structure and function of higher cortical circuits in marmosets and
 macaques: Models for mental disorders***  
 Mary Kate Joyce, Courtney Glavis-Bloom, Fenna Krienen, **Panagiota Theodoni**, Raymond Wong, Susheel Vijayraghavan, Stefan Everling, Angela Roberts  
-In preparation for the forthcoming Special Issue of Biological Psychiatry “New perspectives on the
+In preparation for the forthcoming Special Issue of *Biological Psychiatry* *“New perspectives on the
 higher cortical circuits mediating mental representations: Exceptional vulnerability in
-neuropsychiatric disorders”
+neuropsychiatric disorders”*
 
 ***A multi-regional neural network model for consciousness***  
 2023 [talk](https://www.youtube.com/watch?v=LMjNXLBUmIY&t=29s): Models of Consciousness 4 Conference (MOC4), Mathematical Institute, University of Oxford, UK  
