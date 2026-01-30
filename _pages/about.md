@@ -9,7 +9,7 @@ redirect_from:
 
 Hi there fellow human.. or are you not?
 
- I'm Yotta, from Athens, Greece; a physicist, theoretical & computational neuroscientist with a strong interest in philosophy.
+ I'm Yotta, from Athens, Greece; a physicist, theoretical & computational cognitive neuroscientist with a strong interest in philosophy.
 
 
 Currently, I am 
