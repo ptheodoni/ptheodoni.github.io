@@ -24,4 +24,6 @@ My main research interest is in the foundations of science.
 New! 
 ---
 Our paper [*From comparative connectomics to large-scale working memory modeling in macaque and marmoset*](https://www.cell.com/cell-reports/fulltext/S2211-1247(25)01619-5)  
-Loïc Magrou+, Panagiota Theodoni+, Amy F.T. Arnsten, Marcello G.P. Rosa, Xiao-Jing Wang. (+: equal contribution) is published in Cell Reports, January 2026 
+Loïc Magrou+, Panagiota Theodoni+, Amy F.T. Arnsten, Marcello G.P. Rosa, Xiao-Jing Wang  
+is published in *Cell Reports*, January 2026  
+(+: equal contribution)  
