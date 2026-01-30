@@ -5,7 +5,7 @@ permalink: /publications/
 author_profile: true
 ---
 
-\+ equal contributions
+\+: equal contributions
 
 
 In progress
