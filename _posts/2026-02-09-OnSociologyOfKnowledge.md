@@ -47,4 +47,5 @@ In the short term it falls on the shoulders of women to fight for it.
 
 We are used to think that in order for women to rise in power hierarchy need to fit in male created environments, to become like them: dominant and abusive. We see this often, in many fields. I've seen this a lot in academia. But it is not the sustainable way. We don't need to fit in men's environment, we need to change the environment.  
 
-The term “inclusion” that has been used a lot in the recent past in many industrial, academic and other environments is a deeply misleading and offensive term. We don't need to be included. Included where? By whom? It is our world as it is theirs. We demand to co-create it.  
+The term “inclusion” that has been used a lot in the recent past in many industrial, academic and other environments is a deeply misleading and offensive term. We don't need to be included. Included where? By whom? It is our world as it is theirs.  
+We demand to co-create it.  
