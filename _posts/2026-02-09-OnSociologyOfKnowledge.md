@@ -3,9 +3,9 @@ title: 'On the sociology of knowledge'
 date: 2026-02-09
 permalink: 2026-02-09-OnSociologyOfKnowledge
 tags:
-  - cool posts
-  - category1
-  - category2
+  - knowledge
+  - academia
+  - epistemology
 ---
 
 How is it that all these VIP "intellectuals" turn out to be so stupid, with such "poor judgment", as they or their friends say after they have been exposed to be associated with human trafficking and farming ring?  
