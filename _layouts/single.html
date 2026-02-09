@@ -78,7 +78,25 @@ layout: default
       {% include comments.html %}
     {% endif %}
   </article>
-
+  {% if page.giscus_comments %}
+  <div style="margin-top: 40px;">
+    <script src="https://giscus.app/client.js"
+        data-repo="ptheodoni/ptheodoni.github.io"
+        data-repo-id="R_kgDONfwAxQ"
+        data-category="General"
+        data-category-id="DIC_kwDONfwAxc4C2GiD"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+    </script>
+  </div>
+{% endif %}
   {% comment %}<!-- only show related on a post page when not disabled -->{% endcomment %}
   {% if page.id and page.related and site.related_posts.size > 0 %}
     <div class="page__related">
