@@ -1,4 +1,5 @@
 ---
+layout: post
 title: 'On the sociology of knowledge'
 date: 2026-02-09
 giscus_comments: true
