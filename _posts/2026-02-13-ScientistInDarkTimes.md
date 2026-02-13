@@ -10,7 +10,7 @@ tags:
   - history
 ---
 
-*(priliminary thoughst - under construction)*
+*(priliminary thoughts - under construction)*
 
 
 On politics  
