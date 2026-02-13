@@ -63,7 +63,7 @@ with human psychology and analyzing language. For example, who compares food wit
 Who finds funny to simulate sacrificing a baby to a devil? How can you walk a jerky beef?  
 and so on.
 
----
+
 On history  
 ---
 
@@ -83,8 +83,8 @@ For example, when the NYT write "Gazans are starving" and "Palestinians bombed I
 
 So maybe this is the only promising method for discerning facts from narrative and propaganda, as long as there are  people willing to meticulously do it.
 
----
-On religion
+
+On religion  
 ---
 
 Even the holy books must be rewritten. Is it possible for Judaism to get rid of Jewish Supremacy?
