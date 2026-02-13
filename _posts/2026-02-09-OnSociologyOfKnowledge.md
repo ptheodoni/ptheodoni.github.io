@@ -8,7 +8,7 @@ tags:
   - academia
   - epistemology
 ---
-*(priliminary thoughts)*
+*(priliminary thoughts - under construction)*
 
 How is it that all these VIP "intellectuals" turn out to be so stupid, with such "poor judgment", as they or their friends say after they have been exposed to be associated with human trafficking and farming ring?  
 
