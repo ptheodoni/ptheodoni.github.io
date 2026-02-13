@@ -14,10 +14,12 @@ Being a scientist in dark times.
 ---
 *(priliminary thoughst - under construction)*
 
-preliminary thoughts - under construction.
---
+
 Being a scientist in dark times.
 --
+
+On politics
+---
 As a scientist, in principle, you are comfortable with not knowing.
 you wait until scientists find ways to unlock nature’s mysteries.
 you try to do it yourself as well. You may build theories but you wait for the data
@@ -67,4 +69,36 @@ Who finds funny to simulate sacrificing a baby to a devil? How can you walk a je
 and so on.
 
 ---
+On history
+--
+
+An important and pressing question, that comes from philosophy of history,
+is how do we discern facts from narrative and propaganda.  
+
+How do we know that what Herodotus and Thucydides to today historians and media are saying has actually happened?  
+
+It's not about the physical findings, those are also made by people as stories are made by people.
+History is like fiction. And as we are living deeper into the AI digital world, it will be harder to tell what really happened.  
+
+Then, only nature changes, those beyond human control, are the only objective indicators? Sadly, this doesn't tell us much.  
+
+I see that maybe the only way to tell fiction from history is via understanding human psychology within context. The way language is used, who and when is using it, and in which context, is what matters.  
+
+For example, when the NYT write "Gazans are starving" and "Palestinians bombed Israel", they may think that they serve the Zionist propaganda, but they don't realize that they fall into contradiction which can be detected. When the perpetrators say we are ashamed of what we did, they most probably did it. Things said in private and confidentially, like in the Epstein files, are likely to be true. and so on.  
+
+So maybe this is the only promising method for discerning facts from narrative and propaganda, as long as there are  people willing to meticulously do it.
+
+---
+On religions
+---
+
+Even the holy books must be rewritten. Is it possible for Judaism to get rid of Jewish Supremacy?
+for Christianity and Islam to get rid of Men Superiority? Either religions will adapt to human and animal rights or they must all vanish.  
+
+You don't need religion, their stories, their rituals and the communities they build to believe in God, or Gods.
+Believing is a personal human right. Religions' only function is to create groups distinguished to others which inevitably promotes racism. With the absurd aftereffect of the non religious, secular Jews, and secular Christians, just in order to belong in a distinguished community.  
+
+And we don't need God(s) to be moral. On the contrary, we see over and over again how immoral religious people are.  
+
+It really amazes me how it is 2026 (even this number is religion based) and we are still talking about religions, and worse: we can't talk about religions. Humanity hasn't advanced yet as much as we think it has.
 
