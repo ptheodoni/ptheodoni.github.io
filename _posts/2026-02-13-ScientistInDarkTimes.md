@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 'Being a scientist in dark times.'
-date: 2026-02-09
+date: 2026-02-13
 giscus_comments: true
 permalink: 2026-02-13-ScientistInDarkTimes
 tags:
