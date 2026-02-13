@@ -15,9 +15,6 @@ Being a scientist in dark times.
 *(priliminary thoughst - under construction)*
 
 
-Being a scientist in dark times.
---
-
 On politics
 ---
 As a scientist, in principle, you are comfortable with not knowing.
