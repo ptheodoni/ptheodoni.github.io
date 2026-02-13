@@ -15,7 +15,7 @@ tags:
 
 On politics  
 ---
-As a scientist, in principle, you are comfortable with not knowing.
+As a scientist, in principle, you are curious, but comfortable with not knowing.
 you wait until scientists find ways to unlock nature’s mysteries.
 you try to do it yourself as well. You may build theories but you wait for the data, or you search for them,
 that will be meticulously mined from nature and prove a theory or not.
