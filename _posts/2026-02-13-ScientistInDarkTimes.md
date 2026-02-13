@@ -1,5 +1,5 @@
 ---
-title: 'On the sociology of knowledge'
+title: 'Being a scientist in dark times.'
 date: 2026-02-09
 giscus_comments: true
 permalink: 2026-02-13-ScientistInDarkTimes
