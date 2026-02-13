@@ -27,7 +27,7 @@ and if it lies you have a way and you are free to use it in order to understand 
 So you wait without knowing, actively researching.
 someday maybe you know or maybe you won’t,  it’s fine, no one is hurt, at least because of waiting.  
 
-What happens now though when your under research system lies, you can’t get data,
+What happens now though when your under research system lies, you can’t get data, you can't control it,
 it tries to stop you and silence you when you try to understand it,
 and in the mean time it does horrors that you witness day after day?  
 
