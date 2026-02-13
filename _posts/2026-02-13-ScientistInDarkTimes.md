@@ -66,8 +66,8 @@ Who finds funny to simulate sacrificing a baby to a devil? How can you walk a je
 and so on.
 
 ---
-On history
---
+On history  
+---
 
 An important and pressing question, that comes from philosophy of history,
 is how do we discern facts from narrative and propaganda.  
