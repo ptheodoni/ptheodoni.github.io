@@ -32,7 +32,7 @@ it tries to stop you and silence you when you try to understand it,
 and in the mean time it does horrors that you witness day after day?  
 
 This is the state of the system that we are trying to understand today,
-as human beings, but you happen to also be a scientist.  
+as human beings, but you happen also to be a scientist.  
 
 You could wait until it decides to show you itself, but you know this won’t happen.
 You could be ok with it, but waiting hurts defenseless people and yourself with which you are not ok.  
