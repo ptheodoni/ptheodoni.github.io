@@ -86,7 +86,7 @@ For example, when the NYT write "Gazans are starving" and "Palestinians bombed I
 So maybe this is the only promising method for discerning facts from narrative and propaganda, as long as there are  people willing to meticulously do it.
 
 ---
-On religions
+On religion
 ---
 
 Even the holy books must be rewritten. Is it possible for Judaism to get rid of Jewish Supremacy?
