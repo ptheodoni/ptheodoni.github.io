@@ -10,12 +10,10 @@ tags:
   - history
 ---
 
-Being a scientist in dark times.
----
 *(priliminary thoughst - under construction)*
 
 
-On politics
+On politics  
 ---
 As a scientist, in principle, you are comfortable with not knowing.
 you wait until scientists find ways to unlock nature’s mysteries.
