@@ -17,7 +17,7 @@ On politics
 ---
 As a scientist, in principle, you are comfortable with not knowing.
 you wait until scientists find ways to unlock nature’s mysteries.
-you try to do it yourself as well. You may build theories but you wait for the data
+you try to do it yourself as well. You may build theories but you wait for the data, or you search for them,
 that will be meticulously mined from nature and prove a theory or not.
 you don’t let yourself slip into fantasies, like God(s) and Satan(s), just to fill in the gaps.
 Same if you are researching the behavior, mind and brain of the people, as eg a neuroscientist.
