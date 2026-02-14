@@ -10,7 +10,7 @@ tags:
 ---
 *(priliminary thoughts - under construction)*
 
-How is it that all these VIP "intellectuals" turn out to be so stupid, with such "poor judgment", as they or their friends say after they have been exposed to be associated with human trafficking and farming ring?  
+How is it that all these VIP "intellectuals" turn out to be so stupid, with such "poor judgment", as they or their friends say after they have been exposed to be associated with the largest in history international human trafficking and farming ring?  
 
 It makes you think of what we haven't talked about enough that lies in the heart of epistemology. The sociology of knowledge. How is it that throughout history mostly famous in the realm of thinking and knowledge are men, and why some specific ones? Is it because what they say is indeed so deep, unique, and important for humanity or is it the result of the privilege of attention and money from their associates with similar privileges, and the structures they build, apparently based on the abuse, oppression of women and the burial of their thoughts?  
 
