@@ -7,6 +7,11 @@ author_profile: true
 
 2026
 ---- 
+**March**  
+Our paper **Comparisons of the structure and function of higher cortical circuits in marmosets and macaques: Models for mental health disorders** by Mary Kate P. Joyce, Raymond Ka Wong, Courtney Glavis-Bloom, Susheel
+Vijayraghavan, Judith Burkart, Panagiota Theodoni, Diego B. Piza, Claudia Perez-Cruz, Stefan
+Everling, and Angela C. Roberts, is submitted for review
+
 **January**  
 Our paper [*From comparative connectomics to large-scale working memory modeling in macaque and marmoset*](https://www.cell.com/cell-reports/fulltext/S2211-1247(25)01619-5)  
 Loïc Magrou+, Panagiota Theodoni+, Amy F.T. Arnsten, Marcello G.P. Rosa, Xiao-Jing Wang, (+ equal contribution), is published in Cell Reports, on January 27, 2026 
