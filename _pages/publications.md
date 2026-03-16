@@ -7,16 +7,19 @@ author_profile: true
 
 \+: equal contributions
 
+Forthcoming
+=====
+***Comparisons of the structure and function of higher cortical circuits in marmosets and macaques: Models for mental health disorders***  
+Mary Kate P. Joyce, Raymond Ka Wong, Courtney Glavis-Bloom, Susheel Vijayraghavan, Judith Burkart, **Panagiota Theodoni**, Diego B. Piza, Claudia Perez-Cruz, Stefan
+Everling, Angela C. Roberts  
+Submitted for review for the forthcoming Special Issue of *Biological Psychiatry* *“New perspectives on the higher cortical circuits mediating mental representations: Exceptional vulnerability in neuropsychiatric disorders”*
+
+***Decorrelated discharge fluctuations in prefrontal microcircuits during visual consciousness***  
+**Panagiota Theodoni+**, Vishal Kapoor+, Gustavo Deco, Nikos K. Logothetis, Theofanis I. Panagiotaropoulos  
+*in preparation for submission*  
 
 In progress
 =====
-***Similarities and differences in the structure and function of higher cortical circuits in marmosets and
-macaques: Models for mental disorders***  
-Mary Kate Joyce, Courtney Glavis-Bloom, Fenna Krienen, **Panagiota Theodoni**, Raymond Wong, Susheel Vijayraghavan, Stefan Everling, Angela Roberts  
-In preparation for the forthcoming Special Issue of *Biological Psychiatry* *“New perspectives on the
-higher cortical circuits mediating mental representations: Exceptional vulnerability in
-neuropsychiatric disorders”*
-
 ***A multi-regional neural network model for consciousness***  
 2023 [talk](https://www.youtube.com/watch?v=LMjNXLBUmIY&t=29s): Models of Consciousness 4 Conference (MOC4), Mathematical Institute, University of Oxford, UK  
 2023 poster: Association for the Scientific Study of Consciousness Conference (ASSC 26) NYU, New York City, NY, USA  
@@ -26,13 +29,6 @@ neuropsychiatric disorders”*
 2023 [talk](https://www.youtube.com/watch?v=LMjNXLBUmIY&t=29s): Models of Consciousness 4 Conference (MOC4), Mathematical Institute, University of Oxford, UK  
 2023 talk: Cognitive Science Speakers Series, Fall 2023, CUNY Graduate Center, NYC, USA    
 2023 talk: Seminar of Master’s & PhD students, and postdocs, Fall 2023, National and Kapodistrian University of Athens, Department of History and Philosophy of Science, Athens, Greece  
-
-
-forthcoming
-=====
-***Decorrelated discharge fluctuations in prefrontal microcircuits during visual consciousness***  
-**Panagiota Theodoni+**, Vishal Kapoor+, Gustavo Deco, Nikos K. Logothetis, Theofanis I. Panagiotaropoulos  
-*in preparation for submission*  
 
 
 Peer-reviewed
