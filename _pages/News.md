@@ -8,7 +8,7 @@ author_profile: true
 2026
 ---- 
 **March**  
-Our paper **Comparisons of the structure and function of higher cortical circuits in marmosets and macaques: Models for mental health disorders** by Mary Kate P. Joyce, Raymond Ka Wong, Courtney Glavis-Bloom, Susheel
+Our paper ***Comparisons of the structure and function of higher cortical circuits in marmosets and macaques: Models for mental health disorders*** by Mary Kate P. Joyce, Raymond Ka Wong, Courtney Glavis-Bloom, Susheel
 Vijayraghavan, Judith Burkart, Panagiota Theodoni, Diego B. Piza, Claudia Perez-Cruz, Stefan
 Everling, and Angela C. Roberts, is submitted for review
 
