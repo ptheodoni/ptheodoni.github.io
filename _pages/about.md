@@ -16,6 +16,7 @@ Currently, I am
 - Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/)  
 of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
 - Independent Researcher
+- Caregiver of my mom with dementia
 
 My main research interest is in the foundations of science.
 
