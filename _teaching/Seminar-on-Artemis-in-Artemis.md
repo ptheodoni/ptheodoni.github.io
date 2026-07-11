@@ -36,5 +36,5 @@ up to 4 participants per seminar
   
 
 
-<img src='/images/SeminarOnArtemis.png'>
+[<img src='/images/SeminarOnArtemis.png'>](https://calendly.com/ptheodoni/new-meeting?month=2026-07)  
 
