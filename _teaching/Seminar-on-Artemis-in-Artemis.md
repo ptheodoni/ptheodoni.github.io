@@ -18,17 +18,15 @@ Why did Heraclitus deposit his singular work, On Nature (Peri physeos), in the T
 
 As I am a local of Artemis, where one of Artemis' ancient Temples is, I am organizing an open-air seminar in the surrounding landscape, connecting mythology with philosophy and science.   
 
-July 2026 Cost: 40 euros per person  
-includes transfer to and from the Temple of Artemis  
-doesn't include the entrance fee:  Temple 5 euros, Museum 5 euros   
-up to 4 participants per seminar  
-  
-  
   
      
 [Calendar: Book your spot HERE](https://calendly.com/ptheodoni/new-meeting?month=2026-07)  
 -
 
+July 2026 Cost: 40 euros per person  
+includes transfer to and from the Temple of Artemis  
+doesn't include the entrance fee:  Temple 5 euros, Museum 5 euros   
+up to 4 participants per seminar  
 
   
   
