@@ -10,13 +10,22 @@ location: "Artemis, Greece"
 
 **July 2026 - Present**  
 
-[Calendar: Book your spot](https://calendly.com/ptheodoni/new-meeting?month=2026-07)
+July 2026 Cost: 40 euros per person 
 --
+includes transfer to and from the Temple of Artemis  
+doesn't include the entrance fee:  Temple 5 euros, Museum 5 euros 
 
 
+    
+[Calendar: Book your spot HERE](https://calendly.com/ptheodoni/new-meeting?month=2026-07)  
+-
 
 
+  
+  
+  
+  
 
 
-[<img src='/images/SeminarOnArtemis.png'>
-](https://calendly.com/ptheodoni/new-meeting?month=2026-07)
+<img src='/images/SeminarOnArtemis.png'>
+
