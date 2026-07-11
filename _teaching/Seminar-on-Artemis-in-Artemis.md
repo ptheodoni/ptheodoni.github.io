@@ -2,7 +2,7 @@
 title: "Seminar on Artemis in Artemis"
 collection: teaching
 type: "Seminar"
-permalink: 2025-Syneidisi-I
+permalink: Seminar-on-Artemis-in-Artemis
 venue: "outdoors"
 date: 2025-03-01
 location: "Artemis, Greece"
