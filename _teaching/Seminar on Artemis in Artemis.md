@@ -10,9 +10,14 @@ location: "Artemis, Greece"
 
 **July 2026 - Present**  
 
-Book your spot here
+Book your spot
+--
+
+here: **https://calendly.com/ptheodoni/new-meeting?month=2026-07**
+---
 
 
 
 
-<img src='/images/SeminarOnArtemis.png'>
+[<img src='/images/SeminarOnArtemis.png'>
+](https://calendly.com/ptheodoni/new-meeting?month=2026-07)
