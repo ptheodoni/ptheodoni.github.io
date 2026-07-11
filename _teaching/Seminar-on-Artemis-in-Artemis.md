@@ -8,6 +8,15 @@ date: 2026-07-11
 location: "Artemis, Greece"
 ---
 
+An open-air seminar on the mythology of Artemis and its connection to philosophy and science.
+
+Can Greek mythology be related to contemporary philosophy? Yes, it can, and it is, since our main philosophical questions are still unanswered and date back to when people were expressing their thoughts, even via mythology.  
+
+We are taught that philosophy came after mythology, but few see that people were doing philosophy through mythology.  
+
+Why did Heraclitus deposit his singular work, On Nature (Peri physeos), in the Temple of Artemis? How is the myth of Actaeon, the one whom Artemis transformed into a deer and ordered his dogs to eat him, related to the philosophy of science?  
+
+As I am a local of Artemis, where one of Artemis' ancient Temples is, I am organizing an open-air seminar in the surrounding landscape, connecting mythology with philosophy and science.   
 
 July 2026 Cost: 40 euros per person  
 includes transfer to and from the Temple of Artemis  
