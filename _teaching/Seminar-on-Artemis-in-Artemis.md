@@ -4,7 +4,7 @@ collection: teaching
 type: "Seminar"
 permalink: Seminar-on-Artemis-in-Artemis
 venue: "outdoors"
-date: 2025-03-01
+date: 2026-07-11
 location: "Artemis, Greece"
 ---
 
