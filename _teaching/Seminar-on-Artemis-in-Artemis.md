@@ -23,10 +23,11 @@ As I am a local of Artemis, where one of Artemis' ancient Temples is, I am organ
 [Calendar: Book your spot HERE](https://calendly.com/ptheodoni/new-meeting?month=2026-07)  
 -
 
-July 2026 Cost: 40 euros per person  
+July 2026 Cost: 50 euros per person  
 includes transfer to and from the Temple of Artemis  
 doesn't include the entrance fee:  Temple 5 euros, Museum 5 euros   
 up to 4 participants per seminar  
+discount: for groups of 4 participants, entrance to both the Temple and the Museum is included.
 
   
   
