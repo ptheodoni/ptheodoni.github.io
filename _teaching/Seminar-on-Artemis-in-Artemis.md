@@ -10,9 +10,7 @@ location: "Artemis, Greece"
 
 An open-air seminar exploring the mythology of Artemis and its profound connections to philosophy and science.  
 
-Can Greek mythology relate to contemporary philosophy? Absolutely.  
-Our core philosophical questions remain unanswered, dating back to a time when human thought was expressed through myth.  
-While we are traditionally taught that philosophy succeeded mythology, we rarely notice that early thinkers were actually doing philosophy through myth. 
+Can Greek mythology relate to contemporary philosophy? Absolutely. Our core philosophical questions remain unanswered, dating back to a time when human thought was expressed through myth. While we are traditionally taught that philosophy succeeded mythology, we rarely notice that early thinkers were actually doing philosophy through myth. 
 
 Why did Heraclitus deposit his singular work, On Nature (Peri physeos), in the Temple of Artemis?  
 How does the myth of Actaeon, who was transformed into a stag by Artemis and torn apart by his own hounds, connect to the philosophy of science?  
