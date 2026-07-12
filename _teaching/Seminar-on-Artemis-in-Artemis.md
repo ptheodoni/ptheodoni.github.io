@@ -20,7 +20,7 @@ How does the myth of Actaeon, who was transformed into a stag by Artemis and tor
 As a local of the Artemis region, home to one of her ancient Temples, I am organizing an open-air seminar in the surrounding landscape to bridge the worlds of mythology, philosophy, and science.  
 
 
-[Calendar: Book your spot HERE](https://calendly.com/ptheodoni/SeminarOnArtemis)  
+[Calendar: Book your spot HERE](https://calendly.com/ptheodoni/seminar-on-artemis)  
 -
 
 July 2026 Cost: 50 euros per person  
