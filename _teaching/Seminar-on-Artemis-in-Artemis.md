@@ -33,5 +33,5 @@ discount: for groups of 4 participants, entrance to both the Temple and the Muse
   
 
 
-[<img src='/images/SeminarOnArtemis.png'>](https://calendly.com/ptheodoni/new-meeting?month=2026-07)  
+<img src='/images/SeminaOnArtemis.png'>
 
