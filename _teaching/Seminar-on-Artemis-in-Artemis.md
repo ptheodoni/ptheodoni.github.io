@@ -25,7 +25,10 @@ July 2026 Cost: 50 euros per person
 includes transfer to and from the Temple of Artemis  
 doesn't include the entrance fee:  Temple 5 euros, Museum 5 euros   
 up to 4 participants per seminar  
-discount: for groups of 4 participants, entrance to both the Temple and the Museum is included.
+discount: for groups of 4 participants, entrance to both the Temple and the Museum is included.  
+.  
+if you want to combine it with a stay in Artemis for the night, or for more days,
+[you can stay at our short term rental studio, see here](https://www.trip.com/hotels/detail?cityId=280752&hotelId=134723170&checkIn=2026-07-13&checkOut=2026-07-14&adult=2&ages=&crn=1&hotelUniqueKey=H4sIAAAAAAAA_-Ni4mKQUjA0MDAwMjU1Mtc1SLRMNDczNdc1sTQ1NTbVNTYwsrQw0dizafGlr8ZGmlpcLibmluZmBoaGZqcYpQzNLQzNDI2NLYBiFnpmJsaWTmWeJSVOJZ4ejEFsJi6Ohs7OUXxSzK6hQYqF0rwPdD_IOSSxpubpRkRk7BMFAEhvFQR8AAAA)
 
   
   
