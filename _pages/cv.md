@@ -28,14 +28,21 @@ redirect_from:
 Academic Journey
 ====
 
-Currently, Fall 2025
+Spring 2025
+------
+- MSc Thesis Supervisor at the [MSc in Cognitive Science](https://cogsci.phs.uoa.gr/) at the [Department of History and Philosophy of Science](https://en.phs.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
+- Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/)  
+of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
+- Independent Researcher
+   
+Fall 2025
 ------
 - Adjunct Professor at the [Open University of Cyprus](https://www.ouc.ac.cy/index.php/en/), teaching online the Graduate course [COS514 "Computational Neuroscience"](https://www.ouc.ac.cy/index.php/en/studies/master/cos/modules-cos/3062-cos514) at the [MSc "Cognitive Systems"](https://www.ouc.ac.cy/index.php/en/studies/master/cos), Cyprus
 - Guest Lecturer and MSc Thesis Supervisor at the [MSc in Cognitive Science](https://cogsci.phs.uoa.gr/) at the [Department of History and Philosophy of Science](https://en.phs.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
 - Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/)  
 of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
 - Independent Researcher
-
+  
 Spring 2025
 ------
 - Adjunct Professor at the [College Year in Athens](https://cyathens.org/), teaching the Undergraduate course ["Consciousness"](https://cyathens.org/course/consciousness/), Athens, Greece
