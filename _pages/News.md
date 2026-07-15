@@ -7,6 +7,9 @@ author_profile: true
 
 2026
 ---- 
+**July**  
+Launched a new seminar for the public ["Mythology & Philosophy: Open-air seminar on Artemis, in Artemis"](https://ptheodoni.github.io/Seminar-on-Artemis-in-Artemis).
+
 **May**  
 Chrysi Serefidou, the graduate student of the MSc Cognitive Science of the University of Athens, whose thesis I supervised, submitted her master thesis on [Θεωρητικές προσεγγίσεις της συνειδητότητας μέσα από την κβαντική φυσική](https://pergamos.lib.uoa.gr/uoa/dl/object/5402181) (Theoretical approaches to consciousness through quantum physics)!   
 
