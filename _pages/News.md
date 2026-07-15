@@ -8,7 +8,7 @@ author_profile: true
 2026
 ---- 
 **May**  
-Chrysi Serefidou, the master student of the MSc Cognitive Science of the University of Athens, whose thesis I supervised, submitted her thesis on [Θεωρητικές προσεγγίσεις της συνειδητότητας μέσα από την κβαντική φυσική (Theoretical approaches to consciousness through quantum physics)](https://pergamos.lib.uoa.gr/uoa/dl/object/5402181)!   
+Chrysi Serefidou, the master student of the MSc Cognitive Science of the University of Athens, whose thesis I supervised, submitted her thesis on [Θεωρητικές προσεγγίσεις της συνειδητότητας μέσα από την κβαντική φυσική](https://pergamos.lib.uoa.gr/uoa/dl/object/5402181) (Theoretical approaches to consciousness through quantum physics)!   
 
 **March**  
 Our paper ***Comparisons of the structure and function of higher cortical circuits in marmosets and macaques: Models for mental health disorders*** by Mary Kate P. Joyce, Raymond Ka Wong, Courtney Glavis-Bloom, Susheel
