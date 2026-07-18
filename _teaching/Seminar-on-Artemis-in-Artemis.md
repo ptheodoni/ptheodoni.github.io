@@ -2,6 +2,7 @@
 title: "Seminar on Artemis in Artemis"
 collection: teaching
 type: "Seminar"
+giscus_comments: true
 permalink: Seminar-on-Artemis-in-Artemis
 venue: "outdoors"
 date: 2026-07-11
