@@ -38,5 +38,5 @@ if you want to combine it with a stay in Artemis for the night, or for more days
   
 
 
-[<img src='/images/SeminaOnArtemis.png'>](https://calendly.com/ptheodoni/seminar-on-artemis)  
+[<img src='/images/SeminarOnArtemis.png'>](https://calendly.com/ptheodoni/seminar-on-artemis)  
 
