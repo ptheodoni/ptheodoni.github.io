@@ -24,7 +24,7 @@ As a local of the Artemis region, home to one of her ancient Temples, I am organ
 
 July 2026 Cost: 30 euros per person  
 includes transfer to and from the Temple of Artemis  
-doesn't include the entrance fee:  Temple 5 euros, Museum 5 euros   
+doesn't include the entrance fees:  Temple 5 euros, Museum 5 euros   
 up to 4 participants per seminar  
 discount: for groups of 4 participants, entrance to the Temple is included.  
 .  
