@@ -3,9 +3,7 @@ title: "Noes"
 excerpt: ""
 collection: portfolio
 ---
-<img src='/images/noes_screenshot.png' width="400">  
-  
-[Noes](www.noes.gr)
+[<img src='/images/noes_screenshot.png' width="400">](https://www.noes.gr)  
 
 Bridging the gap between Academia, Science, and Society through Research, Publications, Seminars, and Consulting.  
 ---
