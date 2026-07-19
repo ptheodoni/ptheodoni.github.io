@@ -5,7 +5,7 @@ collection: portfolio
 ---
 <img src='/images/noes_screenshot.png' width="400">  
   
-[Noes] (www.noes.gr)
+[Noes](www.noes.gr)
 
 Bridging the gap between Academia, Science, and Society through Research, Publications, Seminars, and Consulting.  
 ---
