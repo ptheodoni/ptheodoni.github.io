@@ -3,7 +3,7 @@ title: "Noes"
 excerpt: ""
 collection: portfolio
 ---
-[<br/><img src='/images/noes_screenshot.png' width="400">](noes.gr)  
+[<br/><img src='/images/noes_screenshot.png' width="400">](www.noes.gr)  
 
 Έρευνα, Εκδόσεις, Σεμινάρια και Συμβουλευτική σε άμεση επαφή με την κοινωνία.  
 Γεφυρώνοντας την Επιστήμη, τη Φιλοσοφία και την Κοινωνία.  
