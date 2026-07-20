@@ -28,7 +28,7 @@ redirect_from:
 Academic Journey
 ====
 
-Spring 2025
+Spring 2026
 ------
 - MSc Thesis Supervisor at the [MSc in Cognitive Science](https://cogsci.phs.uoa.gr/) at the [Department of History and Philosophy of Science](https://en.phs.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
 - Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/)  
