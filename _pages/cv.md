@@ -8,8 +8,8 @@ redirect_from:
 ---
 
 **2022-Present** Adj. Prof of Computational Neuroscience, *Open University of Cyprus, Faculty of Pure and Applied Sciences, Cyprus*  
-**2023-Present** External Faculty, *University of Athens, Dept of History and Philosophy of Science, Athens, Greece*  
 **2022-Present** MA in Philosophy, *University of Athens, Dept of Philosophy, Athens, Greece*  
+**2023-2026** External Faculty, *University of Athens, Dept of History and Philosophy of Science, Athens, Greece*  
 **2022-2025** Adj. Prof of Neuroscience and Psychology, *College Year in Athens, Athens, Greece*  
 **2024** Adj. Prof of Cognitive Neuroscience, *Panteion University of Social and Political Sciences, Dept of Psychology, Athens, Greece*  
 **2021-2023** Visiting Researcher, *New York University, Dept of Philosophy, New York City, USA*  
@@ -27,6 +27,12 @@ redirect_from:
 
 Academic Journey
 ====
+Fall 2026
+------
+- Adjunct Professor at the [Open University of Cyprus](https://www.ouc.ac.cy/index.php/en/), teaching online the Graduate course [COS514 "Computational Neuroscience"](https://www.ouc.ac.cy/index.php/en/studies/master/cos/modules-cos/3062-cos514) at the [MSc "Cognitive Systems"](https://www.ouc.ac.cy/index.php/en/studies/master/cos), Cyprus  
+- Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/)  
+of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
+- Independent Researcher
 
 Spring 2026
 ------
