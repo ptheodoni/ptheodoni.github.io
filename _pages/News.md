@@ -7,6 +7,9 @@ author_profile: true
 
 2026
 ---- 
+**September**  
+Teaching again as Adjunct Professor, Fall 2026, online, the Graduate course [COS514 "Computational Neuroscience"](https://www.ouc.ac.cy/index.php/en/studies/master/cos/modules-cos/3062-cos514) at the [Open University of Cyprus](https://www.ouc.ac.cy/index.php/en/),  at the [MSc "Cognitive Systems"](https://www.ouc.ac.cy/index.php/en/studies/master/cos), Nicosia, Cyprus  
+
 **July**  
 Launched a new seminar for the public ["Mythology & Philosophy: Open-air seminar on Artemis, in Artemis"](https://ptheodoni.github.io/Seminar-on-Artemis-in-Artemis).
 
