@@ -8,6 +8,10 @@ author_profile: true
 2026
 ---- 
 **September**  
+Our paper ***Comparisons of the structure and function of higher cortical circuits in marmosets and macaques: Models for mental health disorders*** by Mary Kate P. Joyce, Raymond Ka Wong, Courtney Glavis-Bloom, Susheel
+Vijayraghavan, Judith Burkart, Panagiota Theodoni, Diego B. Piza, Claudia Perez-Cruz, Stefan
+Everling, and Angela C. Roberts, is accepted for publication in Biological Psychiatry  
+
 Teaching again as Adjunct Professor, Fall 2026, online, the Graduate course [COS514 "Computational Neuroscience"](https://www.ouc.ac.cy/index.php/en/studies/master/cos/modules-cos/3062-cos514) at the [Open University of Cyprus](https://www.ouc.ac.cy/index.php/en/),  at the [MSc "Cognitive Systems"](https://www.ouc.ac.cy/index.php/en/studies/master/cos), Nicosia, Cyprus  
 
 **July**  
