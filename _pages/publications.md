@@ -28,7 +28,7 @@ In progress
 
 Peer-reviewed
 =====
-***Comparisons of the structure and function of higher cortical circuits in marmosets and macaques: Models for mental health disorders***  
+[*Comparisons of the structure and function of higher cortical circuits in marmosets and macaques: Models for mental health disorders*](https://www.sciencedirect.com/science/article/pii/S0006322326015155?casa_token=bODuTLe7tWQAAAAA:mZPi7CI2qxLz0weAthtjDtu9w2mnHpNttWfDExp6eSnFylxbttTlRavzJRxu5G5_Zf2hqA8L#appsec1)    
 Mary Kate P. Joyce, Raymond Ka Wong, Courtney Glavis-Bloom, Susheel Vijayraghavan, Judith Burkart, **Panagiota Theodoni**, Diego B. Piza, Claudia Perez-Cruz, Stefan Everling, Angela C. Roberts  
 Special Issue *“New perspectives on the higher cortical circuits mediating mental representations: Exceptional vulnerability in neuropsychiatric disorders”*  
 *Biological Psychiatry (2026)*   
