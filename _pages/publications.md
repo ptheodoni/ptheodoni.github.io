@@ -9,11 +9,6 @@ author_profile: true
 
 Forthcoming
 =====
-***Comparisons of the structure and function of higher cortical circuits in marmosets and macaques: Models for mental health disorders***  
-Mary Kate P. Joyce, Raymond Ka Wong, Courtney Glavis-Bloom, Susheel Vijayraghavan, Judith Burkart, **Panagiota Theodoni**, Diego B. Piza, Claudia Perez-Cruz, Stefan
-Everling, Angela C. Roberts  
-Accepted at the forthcoming the Special Issue of *Biological Psychiatry* *“New perspectives on the higher cortical circuits mediating mental representations: Exceptional vulnerability in neuropsychiatric disorders”*
-
 ***Decorrelated discharge fluctuations in prefrontal microcircuits during visual consciousness***  
 **Panagiota Theodoni+**, Vishal Kapoor+, Gustavo Deco, Nikos K. Logothetis, Theofanis I. Panagiotaropoulos  
 *in preparation for submission*  
@@ -33,6 +28,11 @@ In progress
 
 Peer-reviewed
 =====
+***Comparisons of the structure and function of higher cortical circuits in marmosets and macaques: Models for mental health disorders***  
+Mary Kate P. Joyce, Raymond Ka Wong, Courtney Glavis-Bloom, Susheel Vijayraghavan, Judith Burkart, **Panagiota Theodoni**, Diego B. Piza, Claudia Perez-Cruz, Stefan Everling, Angela C. Roberts  
+Special Issue *“New perspectives on the higher cortical circuits mediating mental representations: Exceptional vulnerability in neuropsychiatric disorders”*  
+*Biological Psychiatry (2026)*   
+
 [*From comparative connectomics to large-scale working memory modeling in macaque and marmoset*](https://www.biorxiv.org/content/10.1101/2025.03.17.643781v1.abstract)  
 Loïc Magrou+, **Panagiota Theodoni+**, Amy F.T. Arnsten, Marcello G.P. Rosa, Xiao-Jing Wang  
 *Cell Reports (2026)*  
