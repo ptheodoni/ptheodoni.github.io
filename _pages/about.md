@@ -26,7 +26,7 @@ My main research interest is in the foundations of science.
 New! 
 ---
 Our paper [***Comparisons of the structure and function of higher cortical circuits in marmosets and macaques: Models for mental health disorders***](https://www.sciencedirect.com/science/article/pii/S0006322326015155?casa_token=bODuTLe7tWQAAAAA:mZPi7CI2qxLz0weAthtjDtu9w2mnHpNttWfDExp6eSnFylxbttTlRavzJRxu5G5_Zf2hqA8L#appsec1) by Mary Kate P. Joyce, Raymond Ka Wong, Courtney Glavis-Bloom, Susheel Vijayraghavan, Judith Burkart, Panagiota Theodoni, Diego B. Piza, Claudia Perez-Cruz, Stefan Everling, and Angela C. Roberts,  
-is published! in *Biological Psychiatry*, September 2026  
+is published in *Biological Psychiatry*, September 2026  
 
 Chrysi Serefidou, the graduate student of the MSc Cognitive Science of the University of Athens, whose master thesis I supervised, submitted her thesis on [Θεωρητικές προσεγγίσεις της συνειδητότητας μέσα από την κβαντική φυσική](https://pergamos.lib.uoa.gr/uoa/dl/object/5402181) (Theoretical approaches to consciousness through quantum physics), May 2026    
 
