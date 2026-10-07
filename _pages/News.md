@@ -8,12 +8,11 @@ author_profile: true
 2026
 ---- 
 **October**  
-Created and launched [Hanzi Link](www.hanzilink.com) !  
+Created and launched [Hanzi Link](www.hanzilink.com).  
 A Chinese character game · HSK 1–9, for Chinese language learners and native Chinese speakers.  
 
-Created and launched [FemMe Radio](www.femme-radio.gr) !  
-A 24/7 independent, non-profit, online radio station.  
-Logos, music, and dialogues on women’s emancipation and dismantling the patriarchy.  
+Created and launched [FemMe Radio](www.femme-radio.gr).  
+A 24/7 independent, non-profit, online radio station. Logos, music, and dialogues on women’s emancipation and dismantling the patriarchy.  
 
 **September**  
 Our paper [***Comparisons of the structure and function of higher cortical circuits in marmosets and macaques: Models for mental health disorders***](https://www.sciencedirect.com/science/article/pii/S0006322326015155?casa_token=bODuTLe7tWQAAAAA:mZPi7CI2qxLz0weAthtjDtu9w2mnHpNttWfDExp6eSnFylxbttTlRavzJRxu5G5_Zf2hqA8L#appsec1) by Mary Kate P. Joyce, Raymond Ka Wong, Courtney Glavis-Bloom, Susheel
