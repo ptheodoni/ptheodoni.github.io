@@ -3,7 +3,7 @@ title: "Hanzi Link"
 excerpt: ""
 collection: portfolio
 ---
-[<img src='/images/HanziLink.png' width="400">](https://www.hanzilink.com)  
+[<img src='/images/HanziLink.png' width="600">](https://www.hanzilink.com)  
 
 A Chinese character game · HSK 1–9
 ---
