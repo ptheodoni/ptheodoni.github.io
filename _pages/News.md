@@ -8,10 +8,10 @@ author_profile: true
 2026
 ---- 
 **October**  
-Created and launched [Hanzi Link](www.hanzilink.com).  
+Created and launched [Hanzi Link](https://ptheodoni.github.io/portfolio/hanzilink/).  
 A Chinese character game · HSK 1–9, for Chinese language learners and native Chinese speakers.  
 
-Created and launched [FemMe Radio](www.femme-radio.gr).  
+Created and launched [FemMe Radio](https://ptheodoni.github.io/portfolio/femmeradio/).  
 A 24/7 independent, non-profit, online radio station. Logos, music, and dialogues on women’s emancipation and dismantling the patriarchy.  
 
 **September**  
