@@ -3,7 +3,7 @@ title: "FemMe Radio"
 excerpt: ""
 collection: portfolio
 ---
-[<img src='/images/femmeradio.png' width="400">](https://www.femme-radio.gr)  
+[<img src='/images/femmeradio3.png' width="400">](https://www.femme-radio.gr)  
 
 Ανεξάρτητος, μη κερδοσκοπικός, διαδικτυακός ραδιοφωνικός σταθμος.  
 
