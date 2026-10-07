@@ -7,13 +7,13 @@ collection: portfolio
 
 Ανεξάρτητος, μη κερδοσκοπικός, διαδικτυακός ραδιοφωνικός σταθμος.  
 
-Λόγος, μουσική και διάλογοι για τη γυναικεία χειραφέτηση και την αποδόμηση της πατριαρχίας.  
+24/7 Λόγος, μουσική και διάλογοι για τη γυναικεία χειραφέτηση και την αποδόμηση της πατριαρχίας.  
 
 [FemMe Radio](https://www.femme-radio.gr)  
   
 
 An independent, non-profit, online radio station.  
 
-Logos, music, and dialogues on women’s emancipation and dismantling the patriarchy.  
+24/7 Logos, music, and dialogues on women’s emancipation and dismantling the patriarchy.  
 
 [FemMe Radio](https://www.femme-radio.gr)    
