@@ -29,7 +29,9 @@ How to play
 ---  
 You hold 10 (harder) or 20 (easier) Chinese characters, and the bot has the same number. For each character you see its pinyin (Chinese written phonetically in the Latin alphabet) and its meaning, and you can hear how it's pronounced. Tap it to learn more: what it's made of, its story, and example sentences. You can even learn to write it, stroke by stroke, which for me is the most fun part!  
 
-Place as many characters as you can on the board so that they form a real Chinese sentence, and collect points. The board must always read correctly, both across and down. If you get stuck, there's a hint, but it costs you half the points for that move. Otherwise you can swap characters or pass.  
+You can also practise your pronunciation: say the character or a sentence, and the game tells you whether you said it right and which tones to watch.  
+
+Place as many characters as you can on the board so that they form a real Chinese sentence, and collect points. The board must always read correctly, both across and down. If you get stuck, there's a hint, but it costs you half the points for that move. Otherwise, you can swap characters or pass.  
 
 The bot plays by the same rules, and you choose how strong it is. The first to reach the target score you chose at the start wins. The game also ends when nobody can make a move.  
 
@@ -71,6 +73,8 @@ Hanzi Link is in its test (beta) phase, so every comment helps!
 Πώς παίζεται  
 ---
 Έχεις στο χέρι σου 10 (πιο δύσκολο) ή 20 (πιο εύκολο) κινεζικούς χαρακτήρες, και άλλους τόσους έχει και το μποτ. Για κάθε χαρακτήρα βλέπεις πώς γράφεται σε πίνγιν (τη φωνητική γραφή των κινεζικών με λατινικά γράμματα) και τι σημαίνει, και ακούς πώς προφέρεται. Αν τον πατήσεις, μαθαίνεις περισσότερα: από τι αποτελείται, την ιστορία του και παραδείγματα. Μαθαίνεις ακόμα και να τον γράφεις, γραμμή-γραμμή, που για μένα είναι το πιο διασκεδαστικό!  
+
+Μπορείς επίσης να εξασκηθείς στην προφορά: λες τον χαρακτήρα ή μια πρόταση και το παιχνίδι σού λέει αν τα είπες σωστά, και πού να προσέξεις τον τόνο.  
 
 Τοποθετείς στο ταμπλό όσους περισσότερους χαρακτήρες μπορείς, ώστε να σχηματίζουν μια πραγματική κινεζική πρόταση, και μαζεύεις πόντους. Το ταμπλό πρέπει ανά πάσα στιγμή να διαβάζεται σωστά, και οριζόντια και κάθετα. Αν κολλήσεις, υπάρχει βοήθεια, που όμως σου κοστίζει τους μισούς πόντους της κίνησης. Αλλιώς μπορείς να αλλάξεις χαρακτήρες ή να πας πάσο.  
 
