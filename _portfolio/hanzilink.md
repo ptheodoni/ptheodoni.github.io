@@ -15,7 +15,7 @@ Can you beat the bot??
 
 It's free to play!  
 
-Hanzi Link is a Chinese language game for students learning Chinese and planning to take the HSK exams, as well as for Chinese speakers to practice or have fun!
+Hanzi Link is a Chinese language game (Mandarin and Cantonese) for students learning Chinese and planning to take the HSK exams, as well as for Chinese speakers to practice or have fun!
 
 The game is in English, Chinese, and Greek.
 It is now in its BETA version, and I'll really appreciate your feedback, especially if you try to install the app on your phone.
@@ -56,7 +56,7 @@ Hanzi Link is in its test (beta) phase, so every comment helps!
 
 Παίζεις δωρεάν!  
 
-Το Hanzi Link είναι ένα γλωσσικό παιχνίδι κινεζικών για όσους μαθαίνουν τη γλώσσα και προετοιμάζονται για τις εξετάσεις HSK, καθώς και για φυσικούς ομιλητές που θέλουν να εξασκηθούν ή απλώς να διασκεδάσουν!
+Το Hanzi Link είναι ένα γλωσσικό παιχνίδι κινεζικών (Μανδαρινικά και Καντονέζικα) για όσους μαθαίνουν τη γλώσσα και προετοιμάζονται για τις εξετάσεις HSK, καθώς και για φυσικούς ομιλητές που θέλουν να εξασκηθούν ή απλώς να διασκεδάσουν!
 
 Το παιχνίδι διατίθεται στα Αγγλικά, τα Κινέζικα και τα Ελληνικά.
 
