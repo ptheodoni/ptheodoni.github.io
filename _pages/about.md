@@ -16,8 +16,8 @@ Currently, I am
 - Caregiver of my mom with dementia
 - Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/)  
 of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University), Athens, Greece
-- Independent Researcher
-- Adjunct Professor of computational neuroscience, Open University of Cyprus
+- Principal Investigator at [NOES](https://noes.gr/en/research/theodoni-lab/)
+- Adjunct Professor of computational neuroscience, [Open University of Cyprus](https://www.ouc.ac.cy/), [MSc Cognitive Systems](https://www.ouc.ac.cy/index.php/en/studies/master/cos/modules-cos/3062-cos514)
 
 My main research interest is in the foundations of science.
 
