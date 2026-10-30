@@ -1,0 +1,36 @@
+---
+permalink: /
+title: "About me"
+author_profile: true
+redirect_from: 
+  - /about/
+  - /about.html
+---
+
+Hi there fellow human.. or are you not?
+
+ I'm Yotta, from Athens, Greece; a physicist, theoretical & computational cognitive neuroscientist with a strong interest in philosophy.
+
+
+Currently, I am 
+- Caregiver of my mom with dementia  
+- Principal Investigator at [NOES](https://noes.gr/en/research/theodoni-lab/)  
+- Adjunct Professor of computational neuroscience, [Open University of Cyprus](https://www.ouc.ac.cy/), [MSc Cognitive Systems](https://www.ouc.ac.cy/index.php/en/studies/master/cos)
+- Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University)
+
+My main research interest is in the foundations of science.
+
+
+  
+New! 
+---
+Our paper [***Comparisons of the structure and function of higher cortical circuits in marmosets and macaques: Models for mental health disorders***](https://www.sciencedirect.com/science/article/pii/S0006322326015155?casa_token=bODuTLe7tWQAAAAA:mZPi7CI2qxLz0weAthtjDtu9w2mnHpNttWfDExp6eSnFylxbttTlRavzJRxu5G5_Zf2hqA8L#appsec1) by Mary Kate P. Joyce, Raymond Ka Wong, Courtney Glavis-Bloom, Susheel Vijayraghavan, Judith Burkart, Panagiota Theodoni, Diego B. Piza, Claudia Perez-Cruz, Stefan Everling, and Angela C. Roberts,  
+is published in *Biological Psychiatry*, September 2026  
+
+Chrysi Serefidou, the graduate student of the MSc Cognitive Science of the University of Athens, whose master thesis I supervised, submitted her thesis on [Θεωρητικές προσεγγίσεις της συνειδητότητας μέσα από την κβαντική φυσική](https://pergamos.lib.uoa.gr/uoa/dl/object/5402181) (Theoretical approaches to consciousness through quantum physics), May 2026    
+
+
+Our paper [*From comparative connectomics to large-scale working memory modeling in macaque and marmoset*](https://www.cell.com/cell-reports/fulltext/S2211-1247(25)01619-5)  
+Loïc Magrou+, Panagiota Theodoni+, Amy F.T. Arnsten, Marcello G.P. Rosa, Xiao-Jing Wang  
+is published in *Cell Reports*, January 2026  
+(+: equal contribution)  

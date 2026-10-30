@@ -1,0 +1,40 @@
+# The following is the order of the links in the header of the website.
+#
+# Changing the order here will adjust the order and you can also add additional
+# links. Removing a link prevents it from showing in the header, but does not
+# prevent it from being included in the site.
+
+main:
+  - title: "News"
+    url: /News/
+
+  - title: "Research"
+    url: /Research/
+    
+  - title: "Publications"
+    url: /publications/
+
+  - title: "Talks"
+    url: /talks/    
+
+  - title: "Videos"
+    url: /videos/
+
+  - title: "Teaching"
+    url: /teaching/    
+    
+  - title: "CV"
+    url: /cv/
+
+  - title: "Letters"
+    url: /letters/
+
+  - title: "Other Projects"
+    url: /portfolio/
+
+  - title: "Yotta Art"
+    url: /art/
+
+  - title: "Resources"
+    url: /resources/  
+
