@@ -1,0 +1,1909 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Are You Human?</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Luckiest+Guy&family=Comic+Neue:wght@400;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a pop-art comic page (Lichtenstein). Light paper with cyan Ben-Day dots, rounded white
+   panels with ink borders and hard shadows; red action buttons, yellow selections; you = blue, AI = red. The stimulus panel stays plain white with black dots, like the model stimuli.
+   One deliberate look in both themes. */
+:root {
+  color-scheme: light;
+  --bg: #fbf6ea;
+  --halftone: rgba(0, 155, 222, 0.38);
+  --panel: #ffffff;
+  --ink: #141414;
+  --fg: #141414;
+  --muted: #4a4552;
+  --line: #141414;
+  --grid: #e7e1d2;
+  --action: #e8262d;
+  --action-hi: #ff4a4f;
+  --action-ink: #ffffff;
+  --yellow: #ffd60a;
+  --accent: #1d56d8;
+  --accent-ink: #141414;
+  --good: #1f9a5a;
+  --warn: #e8262d;
+  --display: "Bangers", "Impact", "Arial Black", sans-serif;
+  --body: "Comic Neue", "Comic Sans MS", "Trebuchet MS", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+[hidden] { display: none !important; }
+html, body { min-height: 100%; }
+body {
+  background: radial-gradient(var(--halftone) 2.2px, transparent 2.5px) 0 0 / 13px 13px, var(--bg);
+  color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 24px 56px;
+}
+.wrap { max-width: 940px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+header { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+h1 {
+  font-family: "Luckiest Guy", var(--display); font-weight: 400; font-size: clamp(2.9rem, 10vw, 5.6rem); line-height: 1; margin: 0;
+  color: var(--yellow); letter-spacing: 0.05em; transform: rotate(-2deg); text-wrap: balance;
+  -webkit-text-stroke: 2.5px var(--ink); text-shadow: 5px 5px 0 var(--action), 7px 7px 0 var(--ink);
+}
+.notbot { display: inline-flex; align-items: center; gap: 10px; background: #fff; border: 3px solid var(--ink); border-radius: 14px; padding: 8px 14px; box-shadow: 4px 4px 0 var(--ink); cursor: pointer; font-family: var(--body); font-weight: 700; font-size: 1.1rem; letter-spacing: 0; }
+.notbot input { width: 26px; height: 26px; accent-color: var(--good); }
+.notbot small { color: var(--muted); font-size: 0.85rem; }
+.bubble {
+  position: relative; background: var(--panel); border: 3px solid var(--ink); border-radius: 28px; padding: 10px 20px;
+  font-weight: 700; box-shadow: 4px 4px 0 var(--ink); max-width: 60ch; margin-top: 14px;
+}
+.bubble::after {
+  content: ""; position: absolute; left: 28px; top: -16px; width: 22px; height: 16px; background: var(--panel);
+  border-left: 3px solid var(--ink); border-top: 3px solid var(--ink); transform: skewX(30deg);
+}
+h2 { font-family: var(--display); font-weight: 400; font-size: 1.9rem; letter-spacing: 0.03em; margin: 0; text-wrap: balance; }
+h3 { font-family: var(--display); font-weight: 400; letter-spacing: 0.03em; }
+p { margin: 0; max-width: 68ch; }
+.muted { color: var(--muted); }
+.card {
+  background: var(--panel); border: 3px solid var(--ink); border-radius: 24px; padding: 24px;
+  box-shadow: 7px 7px 0 var(--ink); display: flex; flex-direction: column; gap: 16px; min-width: 0;
+}
+.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+label, .label { font-family: var(--display); font-size: 1.15rem; letter-spacing: 0.04em; color: var(--ink); }
+input[type="text"], input[type="number"] {
+  font: inherit; font-weight: 700; color: var(--fg); background: #fff; border: 3px solid var(--ink); border-radius: 14px; padding: 8px 14px; min-width: 0;
+}
+button {
+  font-family: var(--display); font-size: 1.25rem; letter-spacing: 0.04em; line-height: 1.1;
+  border: 3px solid var(--ink); border-radius: 16px; padding: 10px 20px; cursor: pointer;
+  background: var(--action); color: var(--action-ink); box-shadow: 4px 4px 0 var(--ink);
+  text-shadow: 1.5px 1.5px 0 var(--ink);
+  transition: transform 0.06s, box-shadow 0.06s, background 0.1s;
+}
+button:hover { background: var(--action-hi); }
+button:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
+button.ghost { background: #fff; color: var(--ink); text-shadow: none; }
+button.ghost:hover { background: var(--yellow); }
+button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+.tasks { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.task {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; padding: 16px 18px;
+  background: #fff; color: var(--ink); text-shadow: none; font-size: 1.7rem; border-radius: 22px;
+}
+.task small { font-family: var(--body); font-size: 0.95rem; font-weight: 700; letter-spacing: 0; }
+.task[aria-pressed="true"] { background: var(--yellow); }
+.task[aria-pressed="true"]::before { content: "✓ PLAY"; font-size: 0.95rem; background: var(--ink); color: var(--yellow); padding: 1px 8px; border-radius: 4px; }
+.task[aria-pressed="false"]::before { content: "SKIP"; font-size: 0.95rem; border: 2px solid var(--ink); padding: 0 8px; border-radius: 4px; }
+.durs { display: flex; flex-wrap: wrap; gap: 10px; }
+.durs button { font-size: 1.05rem; padding: 6px 14px; background: #fff; color: var(--ink); text-shadow: none; box-shadow: 3px 3px 0 var(--ink); border-radius: 999px; }
+.durs button[aria-pressed="true"] { background: var(--yellow); }
+.go { font-size: 2.1rem; padding: 10px 36px; background: var(--action); transform: rotate(-1.5deg); border-radius: 22px; }
+kbd { font-family: var(--mono); font-size: 0.8em; border: 2px solid var(--ink); border-radius: 4px; padding: 0 5px; background: #fff; }
+.stage { display: flex; flex-direction: column; gap: 14px; align-items: stretch; }
+.paper { background: #ffffff; border: 3px solid var(--ink); border-radius: 16px; overflow: hidden; display: flex; justify-content: center; }
+canvas { display: block; max-width: 100%; height: auto; }
+.progress { display: flex; justify-content: space-between; gap: 12px; font-family: var(--display); font-size: 1.15rem; letter-spacing: 0.03em; }
+.bar { height: 14px; background: #fff; border: 3px solid var(--ink); border-radius: 999px; overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 0; background: var(--yellow); transition: width 0.2s; }
+.answer { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; align-items: center; min-height: 56px; }
+.answer button { font-size: 1.6rem; min-width: 8rem; }
+.conf { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.conf button { background: #fff; color: var(--ink); text-shadow: none; font-size: 1.1rem; min-width: 7rem; border-radius: 999px; }
+.conf button span { font-family: var(--mono); font-size: 0.85rem; margin-right: 6px; }
+.prompt { text-align: center; font-family: var(--display); font-size: 1.7rem; letter-spacing: 0.03em; min-height: 1.5em; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.stat { border: 3px solid var(--ink); border-radius: 18px; padding: 12px; display: flex; flex-direction: column; gap: 2px; background: #fff; }
+.stat b { font-family: var(--mono); font-size: 1.4rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.stat small { color: var(--muted); font-weight: 700; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 0.95rem; }
+th, td { padding: 5px 10px; border-bottom: 2px solid var(--grid); text-align: right; }
+th:first-child, td:first-child { text-align: left; }
+th { font-family: var(--display); font-weight: 400; font-size: 1.05rem; letter-spacing: 0.04em; border-bottom: 3px solid var(--ink); }
+textarea { width: 100%; min-height: 120px; font-family: var(--mono); font-size: 0.75rem; color: var(--fg); background: #fff; border: 3px solid var(--ink); border-radius: 14px; padding: 8px; box-sizing: border-box; }
+.note { font-size: 0.9rem; color: var(--muted); font-weight: 700; }
+.summary { display: flex; flex-direction: column; gap: 8px; max-width: 70ch; }
+.summary p { margin: 0; }
+.charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.chart { border: 3px solid var(--ink); border-radius: 20px; padding: 10px 10px 6px; display: flex; flex-direction: column; gap: 4px; min-width: 0; background: #fff; box-shadow: 4px 4px 0 var(--ink); }
+.chart.wide { grid-column: 1 / -1; }
+.chart h3 { margin: 0; font-size: 1.3rem; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart .cap { font-size: 0.85rem; color: var(--muted); font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.85rem; font-weight: 700; color: var(--ink); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend svg { width: 24px; height: 12px; flex: none; overflow: visible; }
+svg .axis { stroke: var(--ink); stroke-width: 1.5; fill: none; }
+svg .grid { stroke: var(--grid); stroke-width: 1; }
+svg text { fill: var(--muted); font-family: var(--mono); font-size: 11px; }
+svg text.lab { font-family: var(--body); font-weight: 700; font-size: 12px; }
+svg .you { fill: var(--accent); stroke: var(--ink); stroke-width: 1; }
+svg .youline { stroke: var(--accent); stroke-width: 3; fill: none; }
+svg .ref { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 5 4; fill: none; }
+svg .band { fill: var(--yellow); opacity: 0.55; }
+svg .alt { fill: var(--warn); stroke: var(--ink); stroke-width: 1; }
+svg circle.open { fill: #fff; stroke-width: 2.5; }
+svg circle.you.open { stroke: var(--accent); }
+svg circle.alt.open { stroke: var(--warn); }
+svg .altline { stroke: var(--warn); stroke-width: 3; fill: none; }
+svg .altdashline { stroke: var(--warn); stroke-width: 3; stroke-dasharray: 7 5; fill: none; }
+svg .youdashline { stroke: var(--accent); stroke-width: 3; stroke-dasharray: 7 5; fill: none; }
+svg .fd { fill: var(--good); stroke: var(--ink); stroke-width: 1; }
+svg .fdline { stroke: var(--good); stroke-width: 3; fill: none; }
+.versus { display: flex; flex-direction: column; gap: 10px; }
+.versus .score { font-family: var(--display); font-size: 2.6rem; letter-spacing: 0.03em; -webkit-text-stroke: 1px var(--ink); }
+.versus .score .y { color: var(--accent); }
+.versus .score .a { color: var(--warn); }
+.chip { display: inline-block; font-family: var(--display); font-size: 0.95rem; letter-spacing: 0.04em; padding: 0 10px; border-radius: 999px; border: 2px solid var(--ink); }
+.chip.y { background: var(--accent); color: #fff; }
+.chip.a { background: var(--warn); color: #fff; }
+.chip.t { background: #fff; color: var(--ink); }
+.hero { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; }
+.hero .go { font-size: 2.4rem; }
+.hero p { font-weight: 700; max-width: 46ch; }
+.divider { border-top: 3px dashed var(--ink); margin: 6px 0 0; }
+.verdict { align-items: center; text-align: center; }
+#vArt { width: 100%; display: flex; justify-content: center; }
+.humantest { border: 3px solid var(--ink); border-radius: 18px; padding: 14px 16px; background: #fff; box-shadow: 4px 4px 0 var(--ink); }
+.humantest h3 { font-size: 1.5rem; }
+.humantest ul { margin: 10px 0 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 4px; }
+svg.comic { width: min(100%, 560px); height: auto; display: block; }
+#nextGame, #nextGame2 { background: var(--yellow); color: var(--ink); text-shadow: none; }
+#more, #nextGame, #allRes, #more2, #nextGame2, #allRes2 { font-size: 1.5rem; }
+.verdict .vs { font-family: var(--display); font-size: 2.2rem; letter-spacing: 0.03em; -webkit-text-stroke: 1px var(--ink); }
+.verdict .vs .y { color: var(--accent); } .verdict .vs .a { color: var(--warn); }
+.verdict p { font-weight: 700; margin: 0 auto; }
+.ladder { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.ladder span { font-family: var(--display); font-size: 1rem; letter-spacing: 0.04em; border: 2px solid var(--ink); border-radius: 999px; padding: 1px 12px; background: #fff; }
+.ladder span.won { background: var(--yellow); } .ladder span.lost { background: var(--warn); color: #fff; } .ladder span.now { outline: 3px dashed var(--ink); outline-offset: 2px; }
+.live { font-family: var(--display); letter-spacing: 0.04em; }
+.live .y { color: var(--accent); } .live .a { color: var(--warn); }
+.fx { font-family: var(--display); font-size: 2.2rem; letter-spacing: 0.04em; -webkit-text-stroke: 1px var(--ink); }
+.fx.hit { color: var(--yellow); text-shadow: 3px 3px 0 var(--ink); } .fx.miss { color: var(--warn); text-shadow: 3px 3px 0 var(--ink); }
+.arena { display: grid; grid-template-columns: 1fr; gap: 14px; align-items: stretch; }
+.race { display: flex; flex-direction: column; gap: 12px; border: 3px solid var(--ink); border-radius: 16px; padding: 8px 12px; background: #fff; box-shadow: 4px 4px 0 var(--ink); min-width: 0; }
+.race .head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 10px; font-family: var(--display); letter-spacing: 0.04em; font-size: 1.15rem; }
+.race .lead { font-size: 1.35rem; }
+.race .lead.y { color: var(--accent); } .race .lead.a { color: var(--warn); }
+.lanes { display: flex; flex-direction: column; gap: 12px; }
+.lane { display: grid; grid-template-columns: 2.6rem 1fr 3rem; align-items: center; gap: 8px; }
+.lane b { font-family: var(--display); font-weight: 400; font-size: 1.15rem; letter-spacing: 0.04em; }
+.lane .pts { font-family: var(--mono); font-weight: 600; font-size: 1.1rem; text-align: right; font-variant-numeric: tabular-nums; }
+.track { --p: 0%; --z: 0%; position: relative; height: 30px; border-radius: 999px; border: 2.5px solid var(--ink);
+  background: repeating-linear-gradient(90deg, #fbf6ea 0 22px, #f1ead6 22px 44px); overflow: visible; }
+.track .fill { position: absolute; top: 0; bottom: 0; left: 0; width: var(--p); border-radius: 999px; transition: width 0.6s cubic-bezier(.3,1.4,.5,1), height 0.6s cubic-bezier(.3,1.4,.5,1); }
+.track.y .fill { background: rgba(29, 86, 216, 0.35); }
+.track.a .fill { background: rgba(232, 38, 45, 0.35); }
+.track .runner { position: absolute; top: 50%; left: var(--p); width: 34px; height: 34px; margin-left: -17px; transform: translateY(-50%); border-radius: 50%;
+  border: 3px solid var(--ink); display: grid; place-items: center; font-family: var(--display); font-size: 0.8rem; color: #fff;
+  transition: left 0.6s cubic-bezier(.3,1.4,.5,1), bottom 0.6s cubic-bezier(.3,1.4,.5,1); box-shadow: 2px 2px 0 var(--ink); }
+.track.y .runner { background: var(--accent); } .track.a .runner { background: var(--warn); }
+.track .zero { position: absolute; top: -4px; bottom: -4px; left: var(--z); width: 0; border-left: 2px dashed var(--ink); }
+.track .gain { position: absolute; top: -30px; left: var(--g); z-index: 2; font-family: var(--display); font-size: 1.1rem; letter-spacing: 0.04em; padding: 0 8px; border: 2px solid var(--ink); border-radius: 999px; box-shadow: 2px 2px 0 var(--ink); animation: gain 1.1s ease-out forwards; pointer-events: none; white-space: nowrap; }
+.track .gain.up { background: var(--yellow); color: var(--ink); } .track .gain.down { background: var(--warn); color: #fff; }
+@keyframes gain { 0% { opacity: 0; transform: translate(-50%, 8px); } 15% { opacity: 1; transform: translate(-50%, 0); } 75% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -10px); } }
+/* wide screens: the race stands beside the picture, runners climb from bottom to top */
+@media (min-width: 760px) {
+  .wrap { max-width: 1120px; }
+  .arena.racing { grid-template-columns: 1fr 168px; }
+  .race { padding: 10px; gap: 8px; }
+  .race .head { flex-direction: column; align-items: center; text-align: center; font-size: 1rem; }
+  .race .lead { font-size: 1.15rem; line-height: 1.1; }
+  .lanes { flex-direction: row; justify-content: space-around; flex: 1; gap: 8px; }
+  .lane { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; justify-items: center; gap: 6px; }
+  .lane .pts { text-align: center; order: 3; }
+  .lane b { order: 1; }
+  .track { order: 2; height: auto; min-height: 220px; width: 30px; background: repeating-linear-gradient(0deg, #fbf6ea 0 22px, #f1ead6 22px 44px); }
+  .track .fill { top: auto; bottom: 0; left: 0; right: 0; width: auto; height: var(--p); }
+  .track .runner { top: auto; left: 50%; bottom: var(--p); margin-left: 0; margin-bottom: -17px; transform: translateX(-50%); }
+  .track .zero { top: auto; left: -6px; right: -6px; bottom: var(--z); width: auto; height: 0; border-left: 0; border-top: 2px dashed var(--ink); }
+  .track .gain { top: auto; left: 50%; bottom: calc(var(--g) + 20px); }
+}
+@media (prefers-reduced-motion: reduce) { .track .fill, .track .runner { transition: none; } .track .gain { animation: none; opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .bar > i, button { transition: none; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>Are you human?</h1>
+    <label class="notbot"><input type="checkbox" id="notbot"> <span>I'm not a robot</span> <small>Prove it: with numbers.</small></label>
+    <p class="bubble" id="bubble">Websites ask if you're a robot. We ask the opposite. Play against Meta's AI on the very same pictures: you may beat it, or lose, but only a human makes human mistakes.</p>
+  </header>
+
+  <section class="card" id="setup">
+    <div class="hero">
+      <button class="go" id="challenge" type="button">Challenge the AI!</button>
+      <p>Which side has more dots? Level 1 is 10 rounds. After each level you find out who won, then decide whether to go on: 10, 20, 60, 120 rounds, each level harder.</p>
+    </div>
+    <div class="divider"></div>
+    <span class="label">Or set up your own run</span>
+    <div class="tasks">
+      <button class="task" id="btnCmp" type="button" aria-pressed="true">Which side has more?<small id="subCmp">20 rounds · about 1 minute</small></button>
+      <button class="task" id="btnEst" type="button" aria-pressed="true">How many dots?<small id="subEst">20 rounds · about 2 minutes</small></button>
+      <button class="task" id="btnHeap" type="button" aria-pressed="true">Is it a heap?<small id="subHeap">20 rounds · about 1 minute · no right answer</small></button>
+      <button class="task" id="btnSym" type="button" aria-pressed="false">Which is bigger?<small id="subSym">20 rounds · 9.11 or 9.9?</small></button>
+      <button class="task" id="btnStr" type="button" aria-pressed="false">How many in a row?<small id="subStr">20 rounds · ●●●●● or 00000</small></button>
+      <button class="task" id="btnNl" type="button" aria-pressed="false">Where does it go?<small id="subNl">20 rounds · the number line</small></button>
+      <button class="task" id="btnPt" type="button" aria-pressed="false">Place the point<small id="subPt">20 rounds · two axes, no grid</small></button>
+      <button class="task" id="btnAn" type="button" aria-pressed="false">Read the chart<small id="subAn">20 rounds · bars, pies, circles, water</small></button>
+    </div>
+    <input id="doCmp" type="checkbox" checked hidden>
+    <input id="doEst" type="checkbox" checked hidden>
+    <input id="doHeap" type="checkbox" checked hidden>
+    <input id="doSym" type="checkbox" hidden><input id="doStr" type="checkbox" hidden><input id="doNl" type="checkbox" hidden><input id="doAn" type="checkbox" hidden><input id="doPt" type="checkbox" hidden>
+    <span class="label">How long do the dots stay?</span>
+    <div class="durs" id="durs">
+      <button type="button" data-dur="250" aria-pressed="false">0.25 s</button>
+      <button type="button" data-dur="500" aria-pressed="true">0.5 s</button>
+      <button type="button" data-dur="1000" aria-pressed="false">1 s</button>
+      <button type="button" data-dur="2000" aria-pressed="false">2 s</button>
+      <button type="button" data-dur="4000" aria-pressed="false">4 s</button>
+      <button type="button" data-dur="0" aria-pressed="false">Until I answer</button>
+      <button type="button" data-dur="-1" aria-pressed="false">Mixed</button>
+    </div>
+    <input id="dur" type="hidden" value="500">
+    <span class="label">How many rounds?</span>
+    <div class="durs" id="lens">
+      <button type="button" data-len="mini" aria-pressed="false">Mini · 10</button>
+      <button type="button" data-len="quick" aria-pressed="true">Quick · 20</button>
+      <button type="button" data-len="medium" aria-pressed="false">Medium · 60</button>
+      <button type="button" data-len="full" aria-pressed="false">Full · 120</button>
+    </div>
+    <input id="len" type="hidden" value="quick">
+    <p class="note">Short times force a glance; long times let you count. <b>Mixed</b> gives each round a different time (0.25 to 4 s) and shows where your glance turns into counting; it needs Medium or Full to say much. The number line, the points and the charts stay until you answer.</p>
+    <div class="row">
+      <div class="field"><label for="pid">Your initials</label><input id="pid" type="text" value="PT" maxlength="12" autocomplete="off" style="width: 8rem;"></div>
+      <button class="go" id="start">Start!</button>
+    </div>
+    <p class="note">Version 26 Oct · 13:00, place the point. Team pilot: nothing is sent anywhere, and closing the page discards the run. After each answer, press 1–4 to say how sure you were.</p>
+  </section>
+
+  <section class="card" id="run" hidden>
+    <div class="progress"><span id="taskName">Comparison</span><span class="row" style="gap:12px"><span id="count">1 / 120</span><button class="ghost" id="home" type="button" style="font-size:1rem;padding:4px 12px;box-shadow:2px 2px 0 var(--ink)">✕ Quit</button></span></div>
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="stage">
+      <div class="arena">
+        <div class="paper"><canvas id="cv" width="1024" height="512" aria-label="Stimulus"></canvas></div>
+        <div class="race" id="race" hidden aria-live="polite">
+          <div class="head"><span id="raceTitle">The race · level 1</span><span class="lead" id="raceLead">Go!</span></div>
+          <div class="lanes"><div class="lane"><b style="color: var(--accent)">You</b><div class="track y" id="trackY"><div class="fill"></div><div class="zero"></div><div class="runner">YOU</div></div><span class="pts" id="ptsY">0</span></div>
+          <div class="lane"><b style="color: var(--warn)">AI</b><div class="track a" id="trackA"><div class="fill"></div><div class="zero"></div><div class="runner">AI</div></div><span class="pts" id="ptsA">0</span></div></div>
+        </div>
+      </div>
+      <div class="prompt" id="prompt">Get ready</div>
+      <div class="answer" id="answerCmp" hidden>
+        <button id="bLeft" class="ghost">Left <kbd>F</kbd></button>
+        <button id="bRight" class="ghost">Right <kbd>J</kbd></button>
+      </div>
+      <div class="answer" id="answerHeap" hidden>
+        <button id="bYes" class="ghost">Yes, a heap <kbd>Y</kbd></button>
+        <button id="bNo" class="ghost">Not a heap <kbd>N</kbd></button>
+      </div>
+      <form class="answer" id="answerEst" hidden>
+        <input id="estInput" type="number" min="0" max="999" inputmode="numeric" aria-label="Your estimate" style="width: 8rem;">
+        <button type="submit">Enter <kbd>↵</kbd></button>
+      </form>
+      <div class="conf" id="confRow" hidden>
+        <button data-c="1"><span>1</span>Guessing</button>
+        <button data-c="2"><span>2</span>Unsure</button>
+        <button data-c="3"><span>3</span>Fairly sure</button>
+        <button data-c="4"><span>4</span>Sure</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card verdict" id="verdict" hidden>
+    <div class="ladder" id="vLadder"></div>
+    <div id="vArt"></div>
+    <div class="vs" id="vScore"></div>
+    <p id="vText"></p>
+    <div class="row" style="justify-content: center;">
+      <button class="go" id="vNext" type="button">Wanna continue?</button>
+      <button class="ghost" id="vStop" type="button">Stop, show my results</button>
+    </div>
+    <p class="note" id="vNote"></p>
+  </section>
+
+  <section class="card" id="results" hidden>
+    <div class="row" style="justify-content: space-between;"><h2 id="resTitle">You vs the AI</h2><span class="row"><button class="go" id="more" type="button" hidden>One more chance?</button><button class="go" id="nextGame" type="button" hidden>Next game</button><button class="ghost" id="allRes" type="button" hidden>See all my results</button></span></div>
+    <div class="versus" id="versus"></div>
+    <div class="stats" id="stats"></div>
+    <div id="summary" class="summary"></div>
+    <div class="charts" id="charts"></div>
+    <div class="tablewrap" id="tableDur"></div>
+    <div class="tablewrap" id="tableCmp"></div>
+    <div class="tablewrap" id="tableEst"></div>
+    <div class="tablewrap" id="tableX"></div>
+    <div class="field">
+      <label for="aiCsv">AI results: paste a CSV from run_models (comparison, estimation or heap)</label>
+      <textarea id="aiCsv" placeholder="trial_id,design,condition,n_left,n_right,ratio,larger_side,..."></textarea>
+      <div class="row"><button class="ghost" id="aiLoad">Compare with the AI</button><span class="note" id="aiStatus">No AI results loaded yet. They arrive once the models have run; paste each CSV here.</span></div>
+    </div>
+    <div class="field">
+      <label for="csvCmp">Comparison results (CSV for analysis/fit_comparison.py)</label>
+      <textarea id="csvCmp" readonly></textarea>
+      <div class="row"><button class="ghost" id="copyCmp">Copy comparison CSV</button></div>
+    </div>
+    <div class="field">
+      <label for="csvEst">Estimation results (CSV for analysis/fit_weber.py)</label>
+      <textarea id="csvEst" readonly></textarea>
+      <div class="row"><button class="ghost" id="copyEst">Copy estimation CSV</button></div>
+    </div>
+    <div class="field">
+      <label for="csvHeap">Heap results (CSV for analysis/fit_heap.py)</label>
+      <textarea id="csvHeap" readonly></textarea>
+      <div class="row"><button class="ghost" id="copyHeap">Copy heap CSV</button></div>
+    </div>
+    <div id="csvX"></div>
+    <p class="note">Paste each into a file in <code>results/</code>, e.g. <code>results/human_PT_comparison.csv</code>, then run the same analysis as for the models. Human adults typically show a Weber fraction around 0.1–0.25 and a subitizing range of about 4.</p>
+    <div class="row"><button class="go" id="more2" type="button" hidden>One more chance?</button><button class="go" id="nextGame2" type="button" hidden>Next game</button><button class="ghost" id="allRes2" type="button" hidden>See all my results</button><button id="again">Run again</button></div>
+  </section>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const cv = $("cv"), ctx = cv.getContext("2d");
+
+  // ---------- stimulus geometry (mirrors stimuli/*.py, in 512-px units per side) ----------
+  const SIDE = 512, FIELD_R = 220, GAP = 3;
+  // Seeded randomness: challenge images are drawn from fixed seeds, so the model can be shown the very same pictures.
+  const mulberry32 = a => () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  let rnd = Math.random;
+  function placeDots(n, r) {
+    for (let attempt = 0; attempt < 30; attempt++) {
+      const pts = []; let tries = 0;
+      while (pts.length < n && tries < 20000) {
+        tries++;
+        const a = rnd() * 2 * Math.PI, d = (FIELD_R - r) * Math.sqrt(rnd());
+        const x = SIDE / 2 + d * Math.cos(a), y = SIDE / 2 + d * Math.sin(a);
+        if (pts.every(([px, py]) => (x - px) ** 2 + (y - py) ** 2 >= (2 * r + GAP) ** 2)) pts.push([x, y]);
+      }
+      if (pts.length === n) return pts;
+    }
+    throw new Error("placement failed");
+  }
+  function drawDots(pts, r, offset) {
+    ctx.fillStyle = "#000";
+    for (const [x, y] of pts) { ctx.beginPath(); ctx.arc(offset + x, y, r, 0, 2 * Math.PI); ctx.fill(); }
+  }
+  function blank(withDivider) {
+    ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, cv.width, cv.height);
+    if (withDivider) { ctx.strokeStyle = "#aaa"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(SIDE, 20); ctx.lineTo(SIDE, SIDE - 20); ctx.stroke(); }
+  }
+  function fixation() {
+    blank(false); ctx.strokeStyle = "#000"; ctx.lineWidth = 3;
+    const cx = cv.width / 2, cy = cv.height / 2;
+    ctx.beginPath(); ctx.moveTo(cx - 14, cy); ctx.lineTo(cx + 14, cy); ctx.moveTo(cx, cy - 14); ctx.lineTo(cx, cy + 14); ctx.stroke();
+  }
+  function mask() {
+    for (let x = 0; x < cv.width; x += 16) for (let y = 0; y < cv.height; y += 16) {
+      ctx.fillStyle = Math.random() < 0.5 ? "#000" : "#fff"; ctx.fillRect(x, y, 16, 16);
+    }
+  }
+
+  // ---------- trial lists ----------
+  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  // round lengths: quick = 20 (equal area; 5 ratios at 20 dots + the 5 fixed-difference pairs, twice each),
+  // medium = 60 (all pairs, all three area conditions, once), full = 120 (twice)
+  const LENGTHS = { mini: { cmp: 10, est: 10, heap: 10 }, quick: { cmp: 20, est: 20, heap: 20 },
+                    medium: { cmp: 60, est: 40, heap: 32 }, full: { cmp: 120, est: 40, heap: 64 } };
+  function comparisonTrials(len) {
+    const T = [], ratios = [0.5, 0.6, 0.7, 0.8, 0.9];
+    const pairs = [];
+    for (const big of (len === "quick" || len === "mini" ? [20] : [10, 20, 40])) for (const r of ratios) pairs.push(["ratio", big, Math.round(big * r)]);
+    for (const big of [20, 40, 60, 80, 120]) pairs.push(["difference", big, big - 10]);
+    const conds = len === "quick" || len === "mini" ? ["equal_area"] : ["congruent", "equal_area", "incongruent"];
+    const reps = len === "medium" || len === "mini" ? 1 : 2;
+    for (const cond of conds)
+      for (const [design, big, small] of pairs)
+        for (let rep = 0; rep < reps; rep++) {
+          const leftBig = Math.random() < 0.5;
+          T.push({ design, condition: cond, n_left: leftBig ? big : small, n_right: leftBig ? small : big,
+                   ratio: +(small / big).toFixed(3), larger_side: leftBig ? "left" : "right",
+                   trial_id: `${design}_${cond}_${String(big).padStart(3, "0")}v${String(small).padStart(3, "0")}_h${rep}` });
+        }
+    return shuffle(T);
+  }
+  function radiiFor(t) {
+    const big = Math.max(t.n_left, t.n_right), small = Math.min(t.n_left, t.n_right);
+    const TOTAL = 40 * Math.PI * 49;
+    const area = n => t.condition === "congruent" ? n * Math.PI * 64 : t.condition === "equal_area" ? TOTAL
+      : TOTAL * (n === big ? small / big : 1);
+    return [t.n_left, t.n_right].map(n => Math.sqrt(area(n) / (n * Math.PI)));
+  }
+  function estimationTrials(len) {
+    const ns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20, 25, 32, 40, 50, 64, 80, 100], T = [];
+    if (len === "quick" || len === "mini") {   // one round per number, the two area conditions alternating
+      (len === "mini" ? [1, 3, 4, 6, 9, 15, 25, 40, 64, 100] : ns).forEach((n, i) => { const cond = i % 2 ? "constant_total_area" : "constant_dot_size";
+        T.push({ condition: cond, n, trial_id: `${cond}_n${String(n).padStart(3, "0")}_h0` }); });
+      return shuffle(T);
+    }
+    for (const cond of ["constant_dot_size", "constant_total_area"]) for (const n of ns)
+      T.push({ condition: cond, n, trial_id: `${cond}_n${String(n).padStart(3, "0")}_h0` });
+    return shuffle(T);
+  }
+  // ---------- the heap: grains of sand, piled or scattered ----------
+  const HEAP_NS = [1, 2, 3, 4, 6, 9, 13, 20, 30, 45, 70, 100, 150, 220, 330, 500];
+  function heapTrials(len) {
+    const sets = { mini: [3, 9, 30, 100, 330], quick: [1, 3, 6, 13, 20, 30, 70, 150, 220, 500] };
+    const ns = sets[len] || HEAP_NS, reps = len === "full" ? 2 : 1, T = [];
+    for (const arrangement of ["pile", "scatter"]) for (const n of ns) for (let r = 0; r < reps; r++)
+      T.push({ arrangement, n, rep: r, trial_id: `${arrangement}_n${String(n).padStart(3, "0")}_h${r}` });
+    return shuffle(T);
+  }
+  const HW = 640, HH = 400, GROUND = 360, G = 4;
+  function sampleGrains(n, inside, x0, y0, x1, y1) {
+    const cell = 2 * G * 0.95, grid = new Map(), pts = [];
+    const key = (i, j) => i * 100000 + j;
+    for (let tries = 0; pts.length < n && tries < 400000; tries++) {
+      const x = x0 + Math.random() * (x1 - x0), y = y0 + Math.random() * (y1 - y0);
+      if (!inside(x, y)) continue;
+      const i = Math.floor(x / cell), j = Math.floor(y / cell);
+      let ok = true;
+      for (let a = -1; a <= 1 && ok; a++) for (let b = -1; b <= 1 && ok; b++)
+        for (const [px, py] of grid.get(key(i + a, j + b)) || []) if ((x - px) ** 2 + (y - py) ** 2 < cell * cell) { ok = false; break; }
+      if (!ok) continue;
+      pts.push([x, y]);
+      const k = key(i, j); if (!grid.has(k)) grid.set(k, []); grid.get(k).push([x, y]);
+    }
+    return pts;
+  }
+  function heapPoints(t) {
+    if (t.n === 1) return [[t.arrangement === "pile" ? HW / 2 : HW / 2 + (Math.random() - 0.5) * 300, GROUND - G]];
+    if (t.arrangement === "pile") {
+      const area = t.n * (2 * G) ** 2 * 1.5, h = Math.max(2 * G, Math.sqrt(area * 0.6)), half = Math.max(2 * G, area / h), cx = HW / 2;
+      return sampleGrains(t.n, (x, y) => y >= GROUND - h * Math.max(0, 1 - Math.abs(x - cx) / half) && y <= GROUND - G * 0.6,
+                          cx - half, GROUND - h, cx + half, GROUND);
+    }
+    return sampleGrains(t.n, () => true, 40, GROUND - 120, HW - 40, GROUND - G * 0.6);
+  }
+  function drawHeap(t) {
+    ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, HW, HH);
+    ctx.strokeStyle = "#787878"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(20, GROUND + G); ctx.lineTo(HW - 20, GROUND + G); ctx.stroke();
+    const cols = ["#96703c", "#aa824b", "#825f32", "#b9965f"];
+    for (const [x, y] of heapPoints(t).sort((a, b) => a[1] - b[1])) {
+      const a = Math.random() * Math.PI, rx = G * (0.9 + Math.random() * 0.3), ry = G * (0.6 + Math.random() * 0.25);
+      ctx.beginPath(); ctx.ellipse(x, y, rx, ry, a, 0, 2 * Math.PI);
+      ctx.fillStyle = cols[Math.floor(Math.random() * cols.length)]; ctx.fill();
+      ctx.strokeStyle = "#5a411e"; ctx.lineWidth = 1; ctx.stroke();
+    }
+  }
+  const radiusEst = (t) => t.condition === "constant_dot_size" ? 9 : Math.sqrt(100 * Math.PI * 36 / (t.n * Math.PI));
+
+  const DURS = [250, 500, 1000, 2000, 4000];
+
+  // ---------- challenge mode: levels of 10, 10, 40, 60 rounds (10 → 20 → 60 → 120), each harder ----------
+  // The AI's answers: until Meta's results are loaded, a stand-in observer with Weber fraction AI_PRESET.w.
+  // After the runs, set AI_PRESET to the fitted model (name + w), or paste the model's comparison CSV on the results page.
+  const AI_PRESET = { name: "Stand-in AI", w: 0.19, simulated: true };
+  const LEVELS = [{ n: 10, maxR: 0.6, diff: false }, { n: 10, maxR: 0.7, diff: false },
+                  { n: 40, maxR: 0.8, diff: true }, { n: 60, maxR: 0.9, diff: true }];
+  const CHALLENGE_SEED = 20261026;
+  let CHALLENGE = null;
+  function challengeSet() {           // the same 120 images for every player and for the model
+    if (CHALLENGE) return CHALLENGE;
+    const r = mulberry32(CHALLENGE_SEED), conds = ["congruent", "equal_area", "incongruent"], out = [];
+    const sh = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+    LEVELS.forEach((L, k) => {
+      const pairs = [];
+      for (const big of [10, 20, 40]) for (const q of [0.5, 0.6, 0.7, 0.8, 0.9]) if (q <= L.maxR + 1e-9) pairs.push(["ratio", big, Math.round(big * q)]);
+      if (L.diff) for (const big of [20, 40, 60, 80, 120]) pairs.push(["difference", big, big - 10]);
+      let pool = [];
+      for (let i = 0; i < L.n; i++) {
+        if (!pool.length) pool = sh(pairs.slice());
+        const [design, big, small] = pool.pop(), cond = conds[i % 3], leftBig = r() < 0.5;
+        out.push({ design, condition: cond, n_left: leftBig ? big : small, n_right: leftBig ? small : big,
+                   ratio: +(small / big).toFixed(3), larger_side: leftBig ? "left" : "right", level: k + 1,
+                   seed: Math.floor(r() * 2 ** 31), trial_id: `ch_L${k + 1}_${String(i + 1).padStart(2, "0")}` });
+      }
+    });
+    return (CHALLENGE = out);
+  }
+  const challengeTrials = k => shuffle(challengeSet().filter(t => t.level === k + 1).map(t => ({ ...t })));
+  function drawComparison(t) {
+    if (t.seed != null) rnd = mulberry32(t.seed);
+    try { blank(true); const [rl, rr] = radiiFor(t); drawDots(placeDots(t.n_left, rl), rl, 0); drawDots(placeDots(t.n_right, rr), rr, SIDE); }
+    finally { rnd = Math.random; }
+  }
+  // for game/export_challenge.js: render the challenge images to PNG for the model
+  window.__beatAI = { challengeSet, render: id => { const t = challengeSet().find(x => x.trial_id === id);
+    cv.width = 2 * SIDE; cv.height = SIDE; drawComparison(t); return cv.toDataURL("image/png"); } };
+  // Per-image AI results for the challenge set: { trial_id: { p: share correct over repeats, q: mean confidence 0-1 } }.
+  // Filled by pasting the model's challenge CSV on the results page, or embed analysis/challenge_table.py output here.
+  let AI_TABLE = null;
+  const aiNow = () => AI_TABLE ? { name: AI_TABLE.model, w: AI_TABLE.w, simulated: false, perImage: true }
+    : ai.cmp.length >= 8 ? { name: ai.name, w: fitW(ai.cmp), simulated: false } : AI_PRESET;
+  // The AI's chance of being right on this image. From a model's results this is the mean over its repeated
+  // answers to the image (1 or 0 if it always answers the same); until then, the stand-in's Weber curve.
+  function aiChance(t) {
+    if (AI_TABLE && AI_TABLE.images[t.trial_id]) return AI_TABLE.images[t.trial_id].p;
+    const big = Math.max(t.n_left, t.n_right), small = Math.min(t.n_left, t.n_right);
+    return phi((big - small) / (aiNow().w * Math.hypot(big, small)));
+  }
+  // Points: right = 5, plus up to 5 more the less likely the AI is to get it (beat a sure-miss AI: 10; tie a sure-hit AI: 5).
+  // Wrong = 0. The AI earns points on the same rule against you, so both totals are comparable.
+  const points = (right, pOther) => right ? Math.round(5 + 5 * (1 - pOther)) : 0;
+  // The bet: a proper scoring rule, so saying how sure you really are earns the most on average.
+  // q = stated chance of being right; right: 20(1-(1-q)^2-0.75), wrong: 20(1-q^2-0.75) → guess 0/0, unsure +3/-4, fairly sure +4/-9, sure +5/-15.
+  // A milder bet menu that still rewards honesty: each option is the best one over a range of real confidence
+  // (guess/unsure below 60%, fairly sure 60-75%, sure above 75%), with smaller losses than a strict scoring rule.
+  const BETS = [[0, 0], [1, -1], [3, -4], [5, -10]];          // [if right, if wrong] for Guessing, Unsure, Fairly sure, Sure
+  const BET_Q = [0.5, 0.67, 0.83, 1];
+  const betPay = (q, right) => BETS[BET_Q.indexOf(q)][right ? 0 : 1];
+  const betIndex = q => q >= 0.92 ? 3 : q >= 0.75 ? 2 : q >= 0.58 ? 1 : 0;   // a stated confidence → the bet it stands for
+  const aiBet = (p, q) => { const [g, l] = BETS[betIndex(q)]; return p * g + (1 - p) * l; };   // the AI's expected bet on this image
+  const levelScore = k => { const rs = state.cmp.filter(r => r.level === k + 1);
+    return { you: rs.reduce((s, r) => s + r.correct, 0), ai: Math.round(rs.reduce((s, r) => s + r.ai_p, 0)), n: rs.length,
+             ptsYou: rs.reduce((s, r) => s + r.pts, 0), ptsAI: Math.round(rs.reduce((s, r) => s + r.ai_pts, 0)) }; };
+  const totalPts = () => state.cmp.filter(r => r.level).reduce((s, r) => s + r.pts, 0);
+  function liveScore() {
+    const c = state.challenge; if (!c) return "";
+    const s = levelScore(c.level);
+    return `<span class="live">Level ${c.level + 1} · <span class="y">you ${s.ptsYou}</span> – <span class="a">AI ${s.ptsAI}</span> points · total ${totalPts()}</span>`;
+  }
+  // the race: both runners on the same scale; it stretches as the points grow (and below zero after lost bets)
+  function race(gainY, gainA) {
+    const c = state.challenge, arena = $("race").parentElement;
+    if (!scoring()) { $("race").hidden = true; arena.classList.remove("racing"); return; }
+    arena.classList.add("racing");
+    const own = arrOf(state.queue[0].task).filter(r => Number.isFinite(r.pts));
+    const sc = c ? levelScore(c.level) : { ptsYou: own.reduce((t, r) => t + r.pts, 0), ptsAI: Math.round(own.reduce((t, r) => t + r.ai_pts, 0)), n: own.length };
+    const y = sc.ptsYou, a = sc.ptsAI;
+    const lo = Math.min(0, y, a), hi = Math.max(40, 1.3 * Math.max(y, a, 0));
+    const X = v => 100 * (v - lo) / (hi - lo);
+    for (const [id, v, pid, g] of [["trackY", y, "ptsY", gainY], ["trackA", a, "ptsA", gainA]]) {
+      const tr = $(id);
+      tr.style.setProperty("--p", `${X(v)}%`);
+      tr.style.setProperty("--z", `${X(0)}%`);
+      $(pid).textContent = v;
+      if (g) { const e = document.createElement("span"); e.className = `gain ${g > 0 ? "up" : "down"}`; e.style.setProperty("--g", `${X(v)}%`);
+               e.textContent = g > 0 ? `+${g}` : `−${-g}`; tr.appendChild(e); setTimeout(() => e.remove(), 1000); }
+    }
+    $("raceTitle").textContent = c && c.level ? `The race · total so far ${totalPts()}` : "The race";
+    const d = y - a;
+    $("raceLead").className = `lead ${d > 0 ? "y" : d < 0 ? "a" : ""}`;
+    $("raceLead").textContent = sc.n === 0 ? "Go!" : d > 0 ? `You lead by ${d}!` : d < 0 ? `AI leads by ${-d}` : "Neck and neck!";
+    $("race").hidden = false;
+  }
+  let best = 0; try { best = +localStorage.getItem("beatAI.best") || 0; } catch {}
+
+  // original pop-art panels: a round blue hero, a red robot, a starburst
+  function burst(cx, cy, r1, r2, k, fill) {
+    const p = []; for (let i = 0; i < 2 * k; i++) { const a = Math.PI * i / k - Math.PI / 2, r = i % 2 ? r2 : r1; p.push(`${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`); }
+    return `<polygon points="${p.join(" ")}" fill="${fill}" stroke="#141414" stroke-width="4" stroke-linejoin="round"/>`;
+  }
+  function robot(x, y, s, mood) {   // mood: happy | sad
+    const eye = mood === "happy" ? `<path d="M-14 -6 q6 -8 12 0 M4 -6 q6 -8 12 0" stroke="#141414" stroke-width="4" fill="none" stroke-linecap="round"/>`
+                                 : `<circle cx="-8" cy="-4" r="5" fill="#141414"/><circle cx="10" cy="-4" r="5" fill="#141414"/>`;
+    const mouth = mood === "happy" ? `<path d="M-12 12 q13 12 26 0" stroke="#141414" stroke-width="4" fill="none" stroke-linecap="round"/>`
+                                   : `<path d="M-10 18 q11 -10 22 0" stroke="#141414" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+    const arms = mood === "happy" ? `<path d="M-36 34 L-58 0 M38 34 L60 0" stroke="#141414" stroke-width="6" stroke-linecap="round"/>`
+                                  : `<path d="M-36 40 L-50 70 M38 40 L52 70" stroke="#141414" stroke-width="6" stroke-linecap="round"/>`;
+    return `<g transform="translate(${x} ${y}) scale(${s})">${arms}
+      <line x1="1" y1="-38" x2="1" y2="-56" stroke="#141414" stroke-width="4"/><circle cx="1" cy="-60" r="6" fill="#ffd60a" stroke="#141414" stroke-width="3"/>
+      <rect x="-30" y="-38" width="62" height="62" rx="14" fill="#e8262d" stroke="#141414" stroke-width="4"/>${eye}${mouth}
+      <rect x="-34" y="26" width="70" height="56" rx="12" fill="#e8262d" stroke="#141414" stroke-width="4"/>
+      <text x="1" y="62" text-anchor="middle" stroke="#141414" stroke-width="1" style="font-family: Bangers, Impact, sans-serif; font-size: 24px; fill: #fff">AI</text></g>`;
+  }
+  function hero(x, y, s, mood, crowned = mood === "happy") {      // mood: happy | sad
+    const face = mood === "happy"
+      ? `<path d="M-20 -8 q7 -9 14 0 M8 -8 q7 -9 14 0" stroke="#141414" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M-18 10 q19 22 38 0 z" fill="#141414"/>`
+      : `<circle cx="-12" cy="-6" r="5" fill="#141414"/><circle cx="14" cy="-6" r="5" fill="#141414"/><path d="M-14 22 q15 -14 30 0" stroke="#141414" stroke-width="4" fill="none" stroke-linecap="round"/>
+         <path d="M-12 2 q-4 10 0 14 q4 -4 0 -14 z" fill="#4fc3f7" stroke="#141414" stroke-width="2"/>`;
+    const arms = mood === "happy" ? `<path d="M-40 30 L-66 -14 M42 30 L68 -14" stroke="#141414" stroke-width="7" stroke-linecap="round"/>`
+                                  : `<path d="M-40 40 L-52 76 M42 40 L54 76" stroke="#141414" stroke-width="7" stroke-linecap="round"/>`;
+    const crown = crowned ? `<path d="M-26 -44 L-26 -66 L-13 -54 L1 -72 L15 -54 L28 -66 L28 -44 Z" fill="#ffd60a" stroke="#141414" stroke-width="4" stroke-linejoin="round"/>` : "";
+    return `<g transform="translate(${x} ${y}) scale(${s})">${arms}<circle cx="1" cy="10" r="46" fill="#1d56d8" stroke="#141414" stroke-width="4"/>
+      <circle cx="1" cy="4" r="32" fill="#fff" stroke="#141414" stroke-width="3"/>${face}${crown}</g>`;
+  }
+  function cloud(x, y) {
+    return `<g transform="translate(${x} ${y})"><path d="M-40 10 a18 18 0 0 1 10 -30 a24 24 0 0 1 44 -6 a18 18 0 0 1 28 22 a14 14 0 0 1 -4 24 h-70 a14 14 0 0 1 -8 -10 z" fill="#9aa3b2" stroke="#141414" stroke-width="4"/>
+      ${[-24, -6, 12, 30].map(dx => `<line x1="${dx}" y1="34" x2="${dx - 6}" y2="52" stroke="#4fc3f7" stroke-width="4" stroke-linecap="round"/>`).join("")}</g>`;
+  }
+  function comic(kind, say) {
+    const W = 560, H = 300, dots = `<pattern id="bd" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="6" cy="6" r="2.4" fill="rgba(0,155,222,0.45)"/></pattern>`;
+    const word = (t, x, y, fill, rot) => [["#141414", 4], [fill, 0]].map(([c, d]) => `<text x="${x + d}" y="${y + d}" text-anchor="middle" transform="rotate(${rot} ${x} ${y})" style="font-family: Bangers, Impact, sans-serif; font-size: ${t.length > 9 ? 46 : 64}px; fill: ${c}; stroke: #141414; stroke-width: 2.5px; letter-spacing: 2px">${t}</text>`).join("");
+    let art;
+    if (kind === "win") art = burst(150, 150, 140, 100, 14, "#ffd60a") + hero(150, 165, 1.25, "happy") + robot(430, 170, 0.95, "sad") + word("WINNER!", 400, 70, "#ffd60a", -6);
+    else if (kind === "lose") art = burst(420, 150, 140, 100, 14, "#ffd60a") + robot(420, 165, 1.2, "happy") + hero(150, 150, 1.05, "sad") + cloud(150, 44) + word("LOSER!", 165, 288, "#e8262d", -4);
+    else art = burst(280, 150, 150, 110, 16, "#ffd60a") + hero(170, 175, 1.0, "happy", false) + robot(390, 175, 0.95, "happy") + word(say || "TIE!", 280, 70, "#1d56d8", -4);
+    return `<svg class="comic" viewBox="0 0 ${W} ${H}" role="img" aria-label="${kind === "win" ? "You win" : kind === "lose" ? "The AI wins" : say || "A tie"}"><defs>${dots}</defs>
+      <rect x="2" y="2" width="${W - 4}" height="${H - 4}" rx="22" fill="#fbf6ea" stroke="#141414" stroke-width="4"/><rect x="2" y="2" width="${W - 4}" height="${H - 4}" rx="22" fill="url(#bd)"/>${art}</svg>`;
+  }
+  function showVerdict() {
+    const c = state.challenge, k = c.level, s = levelScore(k), A = aiNow();
+    c.results[k] = s;
+    const kind = s.ptsYou > s.ptsAI ? "win" : s.ptsYou < s.ptsAI ? "lose" : "tie";
+    const total = LEVELS.slice(0, k + 1).reduce((a, L) => a + L.n, 0);
+    $("vLadder").innerHTML = LEVELS.map((L, i) => { const r = c.results[i]; const cls = r ? (r.ptsYou > r.ptsAI ? "won" : r.ptsYou < r.ptsAI ? "lost" : "") : "";
+      return `<span class="${cls}${i === k ? " now" : ""}">Level ${i + 1} · ${LEVELS.slice(0, i + 1).reduce((a, x) => a + x.n, 0)}</span>`; }).join("");
+    $("vArt").innerHTML = comic(kind);
+    const tot = totalPts(), isBest = tot > best;
+    if (isBest) { best = tot; try { localStorage.setItem("beatAI.best", String(tot)); } catch {} }
+    $("vScore").innerHTML = `<span class="y">You ${s.ptsYou}</span> – <span class="a">${s.ptsAI} AI</span> <small style="font-size:1rem">points · right: you ${s.you}, AI ${s.ai} of ${s.n}</small>
+      <div style="font-size:1.3rem">Total ${tot} points${isBest ? " · NEW BEST!" : best ? ` · your best ${best}` : ""}</div>`;
+    const last = k === LEVELS.length - 1, next = LEVELS[k + 1];
+    const lines = { win: [`You beat the AI on level ${k + 1}!`, "Too easy? The next level has closer numbers."],
+                    lose: [`The AI beat you on level ${k + 1}. Loser!`, "But are your mistakes human ones? You'll see at the end. Wanna take revenge?"],
+                    tie: [`Level ${k + 1} is a tie.`, "Someone has to win. Play on?"] }[kind];
+    if (last) {
+      const wins = c.results.filter(r => r.ptsYou > r.ptsAI).length, losses = c.results.filter(r => r.ptsYou < r.ptsAI).length;
+      $("vText").textContent = `All ${total} rounds done. Levels won: you ${wins}, AI ${losses}. ${wins > losses ? "You are the champion!" : wins < losses ? "The AI takes the crown, this time." : "A draw over the whole game."}`;
+      $("vNext").hidden = true; $("vStop").textContent = "Show my results";
+    } else {
+      $("vText").textContent = `${lines[0]} ${lines[1]}`;
+      $("vNext").hidden = false; $("vNext").textContent = `Wanna continue? Level ${k + 2} · ${next.n} more rounds`;
+      $("vStop").textContent = "Stop, show my results";
+    }
+    $("vNote").textContent = A.simulated ? `Right answer: 5 points, up to 10 the less likely the AI is to get it. The AI scores the same way against you. The AI here is a stand-in that judges like a model with Weber fraction ${A.w}; Meta's model takes its place once its results are in.`
+                                         : A.perImage ? `The AI here is ${A.name}: its points come from its own answers and confidence on these very images.`
+                                         : `The AI here answers like ${A.name}, from its results on the same task (w = ${A.w.toFixed(2)}).`;
+    awaiting = "verdict"; show("verdict");
+  }
+  function startLevel(k) {
+    state.challenge.level = k;
+    const trials = challengeTrials(k);
+    trials.forEach((t, i) => { t.display_ms = state.dur === -1 ? DURS[i % DURS.length] : state.dur; });
+    state.queue = [{ task: "comparison", trials }]; state.idx = 0;
+    show("run"); race(0, 0); bubble("challenge"); k === 0 ? intro() : nextTrial();
+  }
+  // ================= three more games: numbers, rows of symbols, the number line =================
+  // Each mirrors a model experiment (7, 8, 9) and uses the same items, so the AI's answers can be loaded item by item.
+  const SYM_POOL = [["grid_0000","grid","3298","2812","A","0.85264","1","1","486",""],["grid_0001","grid","3214","2777","A","0.86403","1","1","437",""],["grid_0002","grid","2013","2014","B","0.9995","4","3","1",""],["grid_0003","grid","5744","3181","A","0.5538","1","0","2563",""],["grid_0004","grid","4155","4145","A","0.99759","3","3","10",""],["grid_0005","grid","2917","2920","B","0.99897","3","3","3",""],["grid_0006","grid","5367","5373","B","0.99888","3","3","6",""],["grid_0007","grid","4088","4144","B","0.98649","2","2","56",""],["grid_0008","grid","9604","5919","A","0.61631","1","0","3685",""],["grid_0009","grid","8353","5717","A","0.68442","1","0","2636",""],["grid_0010","grid","7850","9387","B","0.83626","1","1","1537",""],["grid_0011","grid","7909","9011","B","0.87771","1","1","1102",""],["grid_0012","grid","6857","6862","B","0.99927","3","3","5",""],["grid_0013","grid","9156","9160","B","0.99956","3","3","4",""],["grid_0014","grid","1974","1994","B","0.98997","3","2","20",""],["grid_0015","grid","3838","3843","B","0.9987","3","3","5",""],["grid_0016","grid","7804","6878","A","0.88134","1","1","926",""],["grid_0017","grid","3472","4780","B","0.72636","1","0","1308",""],["grid_0018","grid","2862","2857","A","0.99825","3","3","5",""],["grid_0019","grid","8763","8820","B","0.99354","2","3","57",""],["grid_0020","grid","7319","7323","B","0.99945","3","3","4",""],["grid_0021","grid","7528","7521","A","0.99907","4","3","7",""],["grid_0022","grid","5106","4965","A","0.97239","1","2","141",""],["grid_0023","grid","2677","1861","A","0.69518","1","0","816",""],["grid_0024","grid","5192","4685","A","0.90235","1","1","507",""],["grid_0025","grid","6966","6691","A","0.96052","2","2","275",""],["grid_0026","grid","8634","8996","B","0.95976","2","2","362",""],["grid_0027","grid","3361","2674","A","0.7956","1","0","687",""],["grid_0028","grid","1278","1378","B","0.92743","2","1","100",""],["grid_0029","grid","6442","5670","A","0.88016","1","1","772",""],["grid_0030","grid","4650","4690","B","0.99147","3","3","40",""],["grid_0031","grid","4614","4714","B","0.97879","2","2","100",""],["grid_0032","grid","4172","4152","A","0.99521","3","3","20",""],["grid_0033","grid","2473","2673","B","0.92518","2","1","200",""],["grid_0034","grid","2968","2964","A","0.99865","4","3","4",""],["grid_0035","grid","2391","2691","B","0.88852","2","1","300",""],["grid_0036","grid","5847","5851","B","0.99932","3","3","4",""],["grid_0037","grid","7553","8099","B","0.93258","1","1","546",""],["grid_0038","grid","4486","5126","B","0.87515","1","1","640",""],["grid_0039","grid","6341","5249","A","0.82779","1","1","1092",""],["grid_0040","grid","9465","9466","B","0.99989","4","3","1",""],["grid_0041","grid","3754","3454","A","0.92009","2","1","300",""],["grid_0042","grid","9492","9494","B","0.99979","4","3","2",""],["grid_0043","grid","5537","4134","A","0.74661","1","0","1403",""],["grid_0044","grid","9782","9282","A","0.94889","2","1","500",""],["grid_0045","grid","7384","7444","B","0.99194","2","3","60",""],["grid_0046","grid","3248","3246","A","0.99938","4","3","2",""],["grid_0047","grid","8017","4942","A","0.61644","1","0","3075",""],["grid_0048","grid","3518","4366","B","0.80577","1","1","848",""],["grid_0049","grid","5146","3248","A","0.63117","1","0","1898",""],["grid_0050","grid","8076","8070","A","0.99926","4","3","6",""],["grid_0051","grid","8514","8216","A","0.965","2","2","298",""],["grid_0052","grid","9477","5840","A","0.61623","1","0","3637",""],["grid_0053","grid","2716","4744","B","0.57251","1","0","2028",""],["grid_0054","grid","3974","5430","B","0.73186","1","0","1456",""],["grid_0055","grid","3443","3447","B","0.99884","4","3","4",""],["grid_0056","grid","4519","5056","B","0.89379","1","1","537",""],["grid_0057","grid","5750","5759","B","0.99844","4","3","9",""],["grid_0058","grid","9385","9376","A","0.99904","3","3","9",""],["grid_0059","grid","4125","4525","B","0.9116","2","1","400",""],["grid_0060","grid","6966","6389","A","0.91717","2","1","577",""],["grid_0061","grid","5909","5984","B","0.98747","3","2","75",""],["grid_0062","grid","4362","4780","B","0.91255","2","1","418",""],["grid_0063","grid","7629","7581","A","0.99371","2","3","48",""],["grid_0064","grid","5603","5597","A","0.99893","2","3","6",""],["grid_0065","grid","3382","3322","A","0.98226","3","2","60",""],["grid_0066","grid","6983","6783","A","0.97136","2","2","200",""],["grid_0067","grid","6146","6080","A","0.98926","2","2","66",""],["grid_0068","grid","2064","2061","A","0.99855","4","3","3",""],["grid_0069","grid","6351","6417","B","0.98971","2","2","66",""],["grid_0070","grid","3350","3423","B","0.97867","2","2","73",""],["grid_0071","grid","7731","7734","B","0.99961","4","3","3",""],["grid_0072","grid","5262","5190","A","0.98632","2","2","72",""],["grid_0073","grid","6672","6708","B","0.99463","2","3","36",""],["grid_0074","grid","3976","4016","B","0.99004","1","3","40",""],["grid_0075","grid","8304","8075","A","0.97242","2","2","229",""],["grid_0076","grid","8755","8754","A","0.99989","4","3","1",""],["grid_0077","grid","7065","7952","B","0.88846","2","1","887",""],["grid_0078","grid","4781","4177","A","0.87367","2","1","604",""],["grid_0079","grid","1087","1387","B","0.78371","2","0","300",""],["grid_0080","grid","6394","6694","B","0.95518","2","2","300",""],["grid_0081","grid","8192","7979","A","0.974","1","2","213",""],["grid_0082","grid","1142","1172","B","0.9744","3","2","30",""],["grid_0083","grid","5078","4879","A","0.96081","1","2","199",""],["grid_0084","grid","1601","1661","B","0.96388","3","2","60",""],["grid_0085","grid","1644","1624","A","0.98783","3","2","20",""],["grid_0086","grid","7411","7371","A","0.9946","2","3","40",""],["grid_0087","grid","6884","6928","B","0.99365","2","3","44",""],["grid_0088","grid","8866","9228","B","0.96077","1","2","362",""],["grid_0089","grid","3083","3107","B","0.99228","2","3","24",""],["grid_0090","grid","1365","1746","B","0.78179","2","0","381",""],["grid_0091","grid","8437","8380","A","0.99324","2","3","57",""],["grid_0092","grid","4893","4041","A","0.82587","2","1","852",""],["grid_0093","grid","4931","4231","A","0.85804","2","1","700",""],["grid_0094","grid","5027","4978","A","0.99025","1","3","49",""],["grid_0095","grid","7984","8223","B","0.97094","1","2","239",""],["grid_0096","grid","9788","9831","B","0.99563","2","3","43",""],["grid_0097","grid","8408","8385","A","0.99726","2","3","23",""],["grid_0098","grid","2750","2790","B","0.98566","3","2","40",""],["grid_0099","grid","6011","5762","A","0.95858","1","2","249",""],["grid_0100","grid","2063","2663","B","0.77469","2","0","600",""],["grid_0101","grid","2797","2813","B","0.99431","2","3","16",""],["grid_0102","grid","1760","1101","A","0.62557","2","0","659",""],["grid_0103","grid","5379","5309","A","0.98699","3","2","70",""],["grid_0104","grid","3408","3498","B","0.97427","3","2","90",""],["grid_0105","grid","2473","2433","A","0.98383","3","2","40",""],["grid_0106","grid","5192","5102","A","0.98267","3","2","90",""],["grid_0107","grid","3877","3077","A","0.79365","2","0","800",""],["grid_0108","grid","9227","8805","A","0.95426","1","2","422",""],["grid_0109","grid","1204","1234","B","0.97569","3","2","30",""],["grid_0110","grid","2032","2629","B","0.77292","2","0","597",""],["grid_0111","grid","1294","1894","B","0.68321","2","0","600",""],["grid_0112","grid","8654","9067","B","0.95445","1","2","413",""],["grid_0113","grid","2785","2115","A","0.75943","2","0","670",""],["grid_0114","grid","1965","2020","B","0.97277","1","2","55",""],["grid_0115","grid","4023","3996","A","0.99329","1","3","27",""],["grid_0116","grid","9405","8941","A","0.95066","1","2","464",""],["grid_0117","grid","1030","1930","B","0.53368","2","0","900",""],["grid_0118","grid","8909","9327","B","0.95518","1","2","418",""],["grid_0119","grid","5981","6028","B","0.9922","1","3","47",""],["grid_0120","grid","2978","2381","A","0.79953","2","0","597",""],["grid_0121","grid","8956","9049","B","0.98972","1","2","93",""],["grid_0122","grid","9016","8992","A","0.99734","1","3","24",""],["grid_0123","grid","1492","1892","B","0.78858","2","0","400",""],["grid_0124","grid","1464","1064","A","0.72678","2","0","400",""],["grid_0125","grid","6000","5997","A","0.9995","1","3","3",""],["grid_0126","grid","2997","3001","B","0.99867","1","3","4",""],["grid_0127","grid","2993","3016","B","0.99237","1","3","23",""],["grid_0128","grid","1082","1002","A","0.92606","3","1","80",""],["grid_0129","grid","8984","9009","B","0.99722","1","3","25",""],["grid_0130","grid","5008","4988","A","0.99601","1","3","20",""],["grid_0131","grid","1371","1301","A","0.94894","3","1","70",""],["grid_0132","grid","6969","7024","B","0.99217","1","3","55",""],["grid_0133","grid","5996","6004","B","0.99867","1","3","8",""],["grid_0134","grid","1010","1080","B","0.93519","3","1","70",""],["grid_0135","grid","1002","1072","B","0.9347","3","1","70",""],["grid_0136","grid","1503","1583","B","0.94946","3","1","80",""],["grid_0137","grid","1393","1302","A","0.93467","3","1","91",""],["grid_0138","grid","1403","1483","B","0.94606","3","1","80",""],["grid_0139","grid","1700","1790","B","0.94972","3","1","90",""],["grid_0140","grid","1005","1095","B","0.91781","3","1","90",""],["grid_0141","grid","1073","1013","A","0.94408","3","1","60",""],["grid_0142","grid","1205","1285","B","0.93774","3","1","80",""],["grid_0143","grid","1086","1006","A","0.92634","3","1","80",""],["compat_0144","compat","31","59","B","0.5254","1","","28","1"],["compat_0145","compat","75","97","B","0.7732","1","","22","1"],["compat_0146","compat","72","98","B","0.7347","1","","26","1"],["compat_0147","compat","47","24","A","0.5106","1","","23","1"],["compat_0148","compat","52","89","B","0.5843","1","","37","1"],["compat_0149","compat","52","69","B","0.7536","1","","17","1"],["compat_0150","compat","75","51","A","0.68","1","","24","1"],["compat_0151","compat","61","95","B","0.6421","1","","34","1"],["compat_0152","compat","88","61","A","0.6932","1","","27","1"],["compat_0153","compat","85","97","B","0.8763","1","","12","1"],["compat_0154","compat","67","42","A","0.6269","1","","25","1"],["compat_0155","compat","56","89","B","0.6292","1","","33","1"],["compat_0156","compat","22","35","B","0.6286","1","","13","1"],["compat_0157","compat","25","57","B","0.4386","1","","32","1"],["compat_0158","compat","41","76","B","0.5395","1","","35","1"],["compat_0159","compat","39","24","A","0.6154","1","","15","1"],["compat_0160","compat","51","69","B","0.7391","1","","18","1"],["compat_0161","compat","81","97","B","0.8351","1","","16","1"],["compat_0162","compat","49","35","A","0.7143","1","","14","1"],["compat_0163","compat","41","79","B","0.519","1","","38","1"],["compat_0164","compat","62","98","B","0.6327","1","","36","1"],["compat_0165","compat","21","49","B","0.4286","1","","28","1"],["compat_0166","compat","56","34","A","0.6071","1","","22","1"],["compat_0167","compat","47","21","A","0.4468","1","","26","1"],["compat_0168","compat","43","66","B","0.6515","1","","23","1"],["compat_0169","compat","78","41","A","0.5256","1","","37","1"],["compat_0170","compat","31","48","B","0.6458","1","","17","1"],["compat_0171","compat","57","33","A","0.5789","1","","24","1"],["compat_0172","compat","53","87","B","0.6092","1","","34","1"],["compat_0173","compat","48","21","A","0.4375","1","","27","1"],["compat_0174","compat","41","53","B","0.7736","1","","12","1"],["compat_0175","compat","64","89","B","0.7191","1","","25","1"],["compat_0176","compat","87","54","A","0.6207","1","","33","1"],["compat_0177","compat","66","53","A","0.803","1","","13","1"],["compat_0178","compat","41","73","B","0.5616","1","","32","1"],["compat_0179","compat","52","87","B","0.5977","1","","35","1"],["compat_0180","compat","21","36","B","0.5833","1","","15","1"],["compat_0181","compat","79","61","A","0.7722","1","","18","1"],["compat_0182","compat","82","98","B","0.8367","1","","16","1"],["compat_0183","compat","79","65","A","0.8228","1","","14","1"],["compat_0184","compat","52","24","A","0.4615","1","","28","0"],["compat_0185","compat","91","69","A","0.7582","1","","22","0"],["compat_0186","compat","52","26","A","0.5","1","","26","0"],["compat_0187","compat","28","51","B","0.549","1","","23","0"],["compat_0188","compat","65","28","A","0.4308","1","","37","0"],["compat_0189","compat","47","64","B","0.7344","1","","17","0"],["compat_0190","compat","51","27","A","0.5294","1","","24","0"],["compat_0191","compat","27","61","B","0.4426","1","","34","0"],["compat_0192","compat","56","29","A","0.5179","1","","27","0"],["compat_0193","compat","49","61","B","0.8033","1","","12","0"],["compat_0194","compat","61","36","A","0.5902","1","","25","0"],["compat_0195","compat","59","92","B","0.6413","1","","33","0"],["compat_0196","compat","81","68","A","0.8395","1","","13","0"],["compat_0197","compat","71","39","A","0.5493","1","","32","0"],["compat_0198","compat","39","74","B","0.527","1","","35","0"],["compat_0199","compat","82","67","A","0.8171","1","","15","0"],["compat_0200","compat","37","55","B","0.6727","1","","18","0"],["compat_0201","compat","27","43","B","0.6279","1","","16","0"],["compat_0202","compat","67","81","B","0.8272","1","","14","0"],["compat_0203","compat","81","43","A","0.5309","1","","38","0"],["compat_0204","compat","83","47","A","0.5663","1","","36","0"],["compat_0205","compat","36","64","B","0.5625","1","","28","0"],["compat_0206","compat","81","59","A","0.7284","1","","22","0"],["compat_0207","compat","62","36","A","0.5806","1","","26","0"],["compat_0208","compat","29","52","B","0.5577","1","","23","0"],["compat_0209","compat","27","64","B","0.4219","1","","37","0"],["compat_0210","compat","86","69","A","0.8023","1","","17","0"],["compat_0211","compat","92","68","A","0.7391","1","","24","0"],["compat_0212","compat","48","82","B","0.5854","1","","34","0"],["compat_0213","compat","72","45","A","0.625","1","","27","0"],["compat_0214","compat","71","59","A","0.831","1","","12","0"],["compat_0215","compat","49","74","B","0.6622","1","","25","0"],["compat_0216","compat","29","62","B","0.4677","1","","33","0"],["compat_0217","compat","59","72","B","0.8194","1","","13","0"],["compat_0218","compat","59","91","B","0.6484","1","","32","0"],["compat_0219","compat","46","81","B","0.5679","1","","35","0"],["compat_0220","compat","92","77","A","0.837","1","","15","0"],["compat_0221","compat","74","56","A","0.7568","1","","18","0"],["compat_0222","compat","55","71","B","0.7746","1","","16","0"],["compat_0223","compat","91","77","A","0.8462","1","","14","0"],["decimals_0224","decimals","1.11","1.8","B","0.6167","trap","","0.69",""],["decimals_0225","decimals","1.89","1.2","A","0.6349","control","","0.69",""],["decimals_0226","decimals","1.4","1.36","A","0.9714","trap","","0.04",""],["decimals_0227","decimals","1.2","1.24","B","0.9677","control","","0.04",""],["decimals_0228","decimals","12.19","12.4","B","0.9831","trap","","0.21",""],["decimals_0229","decimals","12.51","12.3","A","0.9832","control","","0.21",""],["decimals_0230","decimals","12.34","12.8","B","0.9641","trap","","0.46",""],["decimals_0231","decimals","12.66","12.2","A","0.9637","control","","0.46",""],["decimals_0232","decimals","14.33","14.9","B","0.9617","trap","","0.57",""],["decimals_0233","decimals","14.87","14.3","A","0.9617","control","","0.57",""],["decimals_0234","decimals","13.13","13.2","B","0.9947","trap","","0.07",""],["decimals_0235","decimals","13.1","13.17","B","0.9947","control","","0.07",""],["decimals_0236","decimals","8.8","8.63","A","0.9807","trap","","0.17",""],["decimals_0237","decimals","8.77","8.6","A","0.9806","control","","0.17",""],["decimals_0238","decimals","19.13","19.9","B","0.9613","trap","","0.77",""],["decimals_0239","decimals","19.87","19.1","A","0.9612","control","","0.77",""],["decimals_0240","decimals","14.44","14.5","B","0.9959","trap","","0.06",""],["decimals_0241","decimals","14.16","14.1","A","0.9958","control","","0.06",""],["decimals_0242","decimals","1.7","1.31","A","0.7706","trap","","0.39",""],["decimals_0243","decimals","1.5","1.89","B","0.7937","control","","0.39",""],["decimals_0244","decimals","12.23","12.7","B","0.963","trap","","0.47",""],["decimals_0245","decimals","12.4","12.87","B","0.9635","control","","0.47",""],["decimals_0246","decimals","13.63","13.8","B","0.9877","trap","","0.17",""],["decimals_0247","decimals","13.1","13.27","B","0.9872","control","","0.17",""],["decimals_0248","decimals","6.4","6.21","A","0.9703","trap","","0.19",""],["decimals_0249","decimals","6.39","6.2","A","0.9703","control","","0.19",""],["decimals_0250","decimals","15.2","15.14","A","0.9961","trap","","0.06",""],["decimals_0251","decimals","15.56","15.5","A","0.9961","control","","0.06",""],["decimals_0252","decimals","7.28","7.3","B","0.9973","trap","","0.02",""],["decimals_0253","decimals","7.4","7.42","B","0.9973","control","","0.02",""],["decimals_0254","decimals","19.28","19.6","B","0.9837","trap","","0.32",""],["decimals_0255","decimals","19.1","19.42","B","0.9835","control","","0.32",""],["decimals_0256","decimals","8.15","8.2","B","0.9939","trap","","0.05",""],["decimals_0257","decimals","8.6","8.65","B","0.9942","control","","0.05",""],["decimals_0258","decimals","14.48","14.5","B","0.9986","trap","","0.02",""],["decimals_0259","decimals","14.22","14.2","A","0.9986","control","","0.02",""],["decimals_0260","decimals","9.13","9.4","B","0.9713","trap","","0.27",""],["decimals_0261","decimals","9.3","9.57","B","0.9718","control","","0.27",""],["decimals_0262","decimals","17.9","17.38","A","0.9709","trap","","0.52",""],["decimals_0263","decimals","17.1","17.62","B","0.9705","control","","0.52",""],["decimals_0264","decimals","14.3","14.15","A","0.9895","trap","","0.15",""],["decimals_0265","decimals","14.4","14.55","B","0.9897","control","","0.15",""],["decimals_0266","decimals","20.8","20.52","A","0.9865","trap","","0.28",""],["decimals_0267","decimals","20.78","20.5","A","0.9865","control","","0.28",""],["decimals_0268","decimals","8.58","8.6","B","0.9977","trap","","0.02",""],["decimals_0269","decimals","8.32","8.3","A","0.9976","control","","0.02",""],["decimals_0270","decimals","6.9","6.42","A","0.9304","trap","","0.48",""],["decimals_0271","decimals","6.68","6.2","A","0.9281","control","","0.48",""],["decimals_0272","decimals","11.4","11.33","A","0.9939","trap","","0.07",""],["decimals_0273","decimals","11.27","11.2","A","0.9938","control","","0.07",""],["decimals_0274","decimals","4.9","4.34","A","0.8857","trap","","0.56",""],["decimals_0275","decimals","4.4","4.96","B","0.8871","control","","0.56",""],["decimals_0276","decimals","14.29","14.5","B","0.9855","trap","","0.21",""],["decimals_0277","decimals","14.81","14.6","A","0.9858","control","","0.21",""],["decimals_0278","decimals","20.9","20.55","A","0.9833","trap","","0.35",""],["decimals_0279","decimals","20.1","20.45","B","0.9829","control","","0.35",""],["decimals_0280","decimals","15.5","15.43","A","0.9955","trap","","0.07",""],["decimals_0281","decimals","15.67","15.6","A","0.9955","control","","0.07",""],["decimals_0282","decimals","14.21","14.3","B","0.9937","trap","","0.09",""],["decimals_0283","decimals","14.49","14.4","A","0.9938","control","","0.09",""]];   // stimuli/symbolic/trials.csv: [id, part, a, b, larger, ratio, first_diff, ratio_bin, distance, compatible]
+  const XW = 1024, XH = 400;        // canvas for the three games
+  const xState = () => state.x || (state.x = { symbolic: [], strings: [], numberline: [], analog: [], coords: [] });
+  const XLEN = { mini: 10, quick: 20, medium: 60, full: 120 };
+  const sample = (pools, n) => {    // n items, cycling through the pools so every kind appears equally
+    const ps = pools.map(p => shuffle(p.slice())), out = [];
+    for (let i = 0; out.length < n; i++) { const p = ps[i % ps.length]; if (!p.length) { const k = i % ps.length; ps[k] = shuffle(pools[k].slice()); } out.push({ ...ps[i % ps.length].pop() }); }
+    return shuffle(out);
+  };
+  const centerText = (txt, y, px, color = "#141414", font = "IBM Plex Mono, ui-monospace, monospace") => {
+    ctx.fillStyle = color; ctx.font = `600 ${px}px ${font}`; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(txt, XW / 2, y);
+  };
+
+  const X = {
+    // ---- Experiment 7: which number is bigger? ----
+    symbolic: {
+      name: "Which is bigger?", task: "Numbers · which is bigger?", lens: { mini: 10, quick: 20, medium: 60, full: 120 }, conf: [50, 67, 83, 100],
+      bubble: "Two numbers, one blink. Which is bigger? Easy... or is it? 9.11 or 9.9? Some of these trip up the smartest AIs.",
+      title: "Which number is bigger?", help: "F (left) or J (right). Then 1–4: how sure.",
+      build(len) {
+        const items = SYM_POOL.map(([trial_id, part, a, b, larger, ratio, first_diff, ratio_bin, distance, compatible]) =>
+          ({ trial_id, part, a, b, larger, ratio: +ratio, first_diff, ratio_bin, distance: +distance, compatible, larger_side: larger === "A" ? "left" : "right" }));
+        const by = f => items.filter(f);
+        return sample([by(t => t.first_diff === "trap"), by(t => t.first_diff === "control"), by(t => t.compatible === "0"),
+                       by(t => t.compatible === "1"), by(t => t.part === "grid")], XLEN[len]);
+      },
+      draw(t) {
+        ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH);
+        ctx.strokeStyle = "#aaa"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(XW / 2, 30); ctx.lineTo(XW / 2, XH - 30); ctx.stroke();
+        const px = Math.min(120, 900 / (Math.max(t.a.length, t.b.length) * 2 * 0.62));
+        ctx.fillStyle = "#141414"; ctx.font = `600 ${px}px IBM Plex Mono, ui-monospace, monospace`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        ctx.fillText(t.a, XW / 4, XH / 2); ctx.fillText(t.b, 3 * XW / 4, XH / 2);
+      },
+      answer: "choice", prompt: "Which number is bigger?",
+      aiP(t) {                        // the AI's chance of being right on this item: its own record, or a stand-in
+        const own = ai.sym.filter(r => r.trial_id === t.trial_id);
+        if (own.length) return mean(own.map(r => r.correct));
+        return t.first_diff === "trap" ? 0.7 : 0.97;
+      },
+      csv(rows, model) {
+        return [["trial_id", "part", "a", "b", "larger", "ratio", "first_diff", "ratio_bin", "distance", "compatible", "reasoning", "model", "timestamp", "response", "choice", "correct", "confidence", "rt_ms", "display_ms"],
+          rows.map(r => ({ ...r, reasoning: "human", model, response: r.choice, choice: r.choice === "left" ? "A" : "B" }))];
+      },
+      results(rows, stats, out, said) {
+        const acc = rs => rs.length ? mean(rs.map(r => r.correct)) : NaN, rt = rs => { const c = rs.filter(r => r.correct); return c.length ? mean(c.map(r => r.rt_ms)) : NaN; };
+        const pct = v => Number.isFinite(v) ? `${Math.round(100 * v)}%` : "—", ms = v => Number.isFinite(v) ? `${Math.round(v)} ms` : "—";
+        const g = { trap: rows.filter(r => r.first_diff === "trap"), control: rows.filter(r => r.first_diff === "control"),
+                    inc: rows.filter(r => r.compatible === "0"), com: rows.filter(r => r.compatible === "1"), grid: rows.filter(r => r.part === "grid") };
+        stats.push(["Correct overall", pct(acc(rows)), `${rows.length} rounds`]);
+        stats.push(["9.11 vs 9.9 traps", pct(acc(g.trap)), `controls: ${pct(acc(g.control))}`]);
+        if (g.inc.length && g.com.length) stats.push(["Unit-decade effect", ms(rt(g.inc) - rt(g.com)), "slower when the units point the other way (47 vs 62)"]);
+        const tbl = [["Decimal trap: the shorter is bigger (9.9 vs 9.11)", g.trap], ["Decimal control: the longer is bigger", g.control],
+                     ["Two digits, units agree (42 vs 57)", g.com], ["Two digits, units disagree (47 vs 62)", g.inc],
+                     ...[1, 2, 3, 4].map(k => [`Four digits, first difference at digit ${k}`, g.grid.filter(r => +r.first_diff === k)])].filter(r => r[1].length);
+        out.table = `<table><thead><tr><th>Which is bigger?</th><th>Rounds</th><th>Correct</th><th>Time when right</th></tr></thead><tbody>${tbl.map(([k, rs]) => `<tr><td>${k}</td><td>${rs.length}</td><td>${pct(acc(rs))}</td><td>${ms(rt(rs))}</td></tr>`).join("")}</tbody></table>`;
+        // the distance effect: time when right against the ratio of the two numbers
+        const pts = [...new Set(rows.filter(r => r.correct).map(r => Math.round(r.ratio * 10) / 10))].sort((a, b) => a - b)
+          .map(q => [q, mean(rows.filter(r => r.correct && Math.round(r.ratio * 10) / 10 === q).map(r => r.rt_ms))]);
+        if (pts.length >= 2) {
+          const ys = pts.map(p => p[1]), lo = Math.max(0, Math.floor(Math.min(...ys) / 200) * 200), hi = Math.ceil(Math.max(...ys) / 200) * 200 + 200;
+          out.charts.push(card("Closer numbers, slower answers?", plot({ xmin: 0, xmax: 1, ymin: lo, ymax: hi, xticks: [0, 0.25, 0.5, 0.75, 1],
+            yticks: [lo, (lo + hi) / 2, hi].map(Math.round), xlabel: "smaller / bigger (closer →)", ylabel: "time when right (ms)",
+            series: [{ type: "line", cls: "youline", pts }, { type: "points", cls: "you", pts }] }),
+            [["dotline", "you", "you"]], "If you read the numbers as amounts, close pairs (ratio near 1) take longer: the distance effect, seen even with digits."));
+        }
+        said.push(`<p><b>Which is bigger.</b> ${g.trap.length ? `On the decimal traps (like 9.11 vs 9.9) you were right ${pct(acc(g.trap))} of the time${g.control.length ? `, against ${pct(acc(g.control))} on the matched controls` : ""}. Language models famously fall for "longer looks larger" here.` : ""}</p>`);
+      },
+    },
+
+    // ---- Experiment 8: rows of symbols ----
+    strings: {
+      name: "How many in a row?", task: "Rows · how many symbols?", lens: { mini: 10, quick: 20, medium: 40, full: 60 }, conf: [25, 50, 75, 100],
+      bubble: "●●●●●●● or 0000000: how many? Past four, the eye starts to guess. So does the AI, which reads text in chunks.",
+      title: "How many symbols in the row?", help: "Type a number, Enter. Then 1–4: how sure.",
+      KINDS: { dots_spaced: ["dots", n => Array(n).fill("●").join(" ")], dots_unspaced: ["dots", n => "●".repeat(n)],
+               stars: ["asterisks", n => "*".repeat(n)], zeros: ["zeros", n => "0".repeat(n)],
+               numeral_zeros: ["zeros", n => "1" + "0".repeat(n)], numeral_grouped: ["zeros", n => (10n ** BigInt(n)).toLocaleString("en-US")] },
+      build(len) {
+        const NS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20, 25, 32], NUM = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+        const mk = (cond, n) => { const [item, f] = this.KINDS[cond]; return { trial_id: `${cond}_n${String(n).padStart(3, "0")}`, condition: cond, n, item, text: f(n) }; };
+        const pools = ["dots_spaced", "dots_unspaced", "stars", "zeros"].map(c => NS.map(n => mk(c, n)))
+          .concat(["numeral_zeros", "numeral_grouped"].map(c => NUM.map(n => mk(c, n))));
+        return sample(pools, this.lens[len]);
+      },
+      draw(t) {
+        ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH);
+        const px = Math.max(16, Math.min(72, 960 / (t.text.length * 0.62)));
+        centerText(t.text, XH / 2, px);
+      },
+      answer: "estimate", prompt: t => t.condition.startsWith("numeral") ? "How many zeros?" : `How many ${t.item}?`,
+      aiPts(t) {                      // the AI's expected closeness points: its own answers, or a stand-in
+        const own = ai.est.filter(r => r.condition === t.condition && r.n === t.n);
+        if (own.length) return mean(own.map(r => closePts(r.estimate, t.n)));
+        if (t.n <= 3) return 10;
+        const sd = { numeral_grouped: 0.03, numeral_zeros: 0.12, dots_spaced: 0.08 }[t.condition] || 0.16;
+        let s = 0, w = 0; for (let z = -4; z <= 4; z += 0.1) { const d = Math.exp(-z * z / 2); s += d * closePts(Math.round(t.n * Math.exp(sd * z)), t.n); w += d; }
+        return s / w;
+      },
+      csv(rows, model) {
+        return [["trial_id", "condition", "n", "item", "text_stimulus", "modality", "reasoning", "model", "timestamp", "response", "estimate", "confidence", "rt_ms", "display_ms"],
+          rows.map(r => ({ ...r, text_stimulus: r.text, modality: "text", reasoning: "human", model, response: r.estimate }))];
+      },
+      results(rows, stats, out, said) {
+        const conds = [...new Set(rows.map(r => r.condition))];
+        const small = rows.filter(r => r.n <= 4), big = rows.filter(r => r.n > 4);
+        const pct = v => Number.isFinite(v) ? `${Math.round(100 * v)}%` : "—";
+        stats.push(["Exact, 1–4 symbols", pct(small.length ? mean(small.map(r => +(r.estimate === r.n))) : NaN), "a glance should do"]);
+        stats.push(["Exact, 5 or more", pct(big.length ? mean(big.map(r => +(r.estimate === r.n))) : NaN), "here the eye estimates"]);
+        const NAMES = { dots_spaced: "● ● ● spaced", dots_unspaced: "●●● joined", stars: "*** stars", zeros: "000 zeros", numeral_zeros: "1000 zeros of a number", numeral_grouped: "1,000 grouped" };
+        out.table = `<table><thead><tr><th>Row</th><th>Rounds</th><th>Exact</th><th>Estimate / true</th></tr></thead><tbody>${conds.map(c => { const rs = rows.filter(r => r.condition === c);
+          return `<tr><td>${NAMES[c] || c}</td><td>${rs.length}</td><td>${pct(mean(rs.map(r => +(r.estimate === r.n))))}</td><td>${mean(rs.map(r => r.estimate / r.n)).toFixed(2)}</td></tr>`; }).join("")}</tbody></table>`;
+        const pts = rows.map(r => [r.n, Math.max(0.8, r.estimate)]);
+        out.charts.push(card("Your counts of the rows", plot({ xmin: 0.8, xmax: 40, ymin: 0.8, ymax: 40, xlog: true, ylog: true, xticks: [1, 2, 4, 10, 20, 40], yticks: [1, 2, 4, 10, 20, 40],
+          xlabel: "symbols in the row", ylabel: "your answer", series: [{ type: "line", cls: "ref", pts: [[0.8, 0.8], [40, 40]] }, { type: "points", cls: "you", pts }] }),
+          [["dot", "you", "your answers"], ["dash", "", "exact"]], "Dots on the dashed line are exact. Above 4, spread around the line means you were estimating rather than counting."));
+        said.push(`<p><b>Rows of symbols.</b> Up to 4 you were exact ${pct(small.length ? mean(small.map(r => +(r.estimate === r.n))) : NaN)} of the time; from 5 on, ${pct(big.length ? mean(big.map(r => +(r.estimate === r.n))) : NaN)}. Spacing ("● ● ●") and grouping ("1,000,000") make counting easier for people, and for models that read text in chunks.</p>`);
+      },
+    },
+
+    // ---- Experiment 9: where does the number go on the line? ----
+    numberline: {
+      name: "Where does it go?", task: "Number line · where does it go?", lens: { mini: 10, quick: 20, medium: 40, full: 60 }, conf: [25, 50, 75, 100],
+      bubble: "A line from 0 to 20, 100 or 1000. Where does 523 go? Tap the spot. Children squeeze the big numbers together; do you? Does the AI?",
+      title: "Where does the number go on the line?", help: "Click or tap the spot on the line. Then 1–4: how sure.",
+      TARGETS: { 20: [1, 2, 3, 4, 5, 7, 9, 11, 13, 15, 17, 19],
+                 100: [2, 3, 4, 6, 8, 12, 17, 21, 25, 29, 33, 39, 43, 48, 52, 57, 61, 64, 72, 79, 81, 84, 90, 96],
+                 1000: [3, 7, 15, 20, 30, 40, 60, 80, 120, 170, 210, 250, 290, 330, 390, 430, 480, 520, 523, 570, 610, 640, 720, 790, 810, 840, 900, 960] },
+      L0: 112, L1: 912, LY: 250,
+      build(len) {
+        const pools = [20, 100, 1000].map(top => this.TARGETS[top].map(v => ({ trial_id: `line_${top}_${String(v).padStart(4, "0")}`, part: "number_line", scale: `0-${top}`, top, value: v })));
+        return sample(pools, this.lens[len]).map(t => ({ ...t, display_ms: 0 }));
+      },
+      draw(t, mark) {
+        ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH);
+        centerText(String(t.value), 110, 84, "#e8262d", "Bangers, Impact, sans-serif");
+        const { L0, L1, LY } = this;
+        ctx.strokeStyle = "#141414"; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(L0, LY); ctx.lineTo(L1, LY);
+        ctx.moveTo(L0, LY - 18); ctx.lineTo(L0, LY + 18); ctx.moveTo(L1, LY - 18); ctx.lineTo(L1, LY + 18); ctx.stroke();
+        ctx.fillStyle = "#141414"; ctx.font = "600 30px IBM Plex Mono, ui-monospace, monospace"; ctx.textAlign = "center"; ctx.textBaseline = "top";
+        ctx.fillText("0", L0, LY + 28); ctx.fillText(String(t.top), L1, LY + 28);
+        for (const [v, col, lab] of mark || []) {
+          const x = L0 + (L1 - L0) * v / t.top;
+          ctx.strokeStyle = col; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(x, LY - 34); ctx.lineTo(x, LY + 10); ctx.stroke();
+          if (lab) { ctx.fillStyle = col; ctx.font = "600 22px IBM Plex Mono, ui-monospace, monospace"; ctx.textBaseline = "bottom"; ctx.fillText(lab, x, LY - 38); }
+        }
+      },
+      answer: "line", prompt: t => `Where does ${t.value} go?`,
+      pts: (est, t) => Math.round(10 * Math.max(0, 1 - Math.abs(est - t.value) / t.top / 0.15)),   // 10 on the spot, 0 when 15% of the line away
+      aiPts(t) {
+        const own = ai.nl.filter(r => r.scale === t.scale && r.value === t.value);
+        if (own.length) return mean(own.map(r => this.pts(r.estimate, t)));
+        const sd = 0.035 * t.top; let s = 0, w = 0;    // stand-in: linear, like a trained adult, with a small scatter
+        for (let z = -4; z <= 4; z += 0.1) { const d = Math.exp(-z * z / 2); s += d * this.pts(t.value + sd * z, t); w += d; }
+        return s / w;
+      },
+      csv(rows, model) {
+        return [["trial_id", "part", "scale", "value", "linear_misread", "modality", "reasoning", "model", "timestamp", "response", "estimate", "confidence", "rt_ms", "display_ms", "task"],
+          rows.map(r => ({ ...r, linear_misread: "", modality: "placement", reasoning: "human", model, response: r.estimate, task: "placement" }))];
+      },
+      results(rows, stats, out, said) {
+        const pae = rs => mean(rs.map(r => Math.abs(r.estimate - r.value) / r.top));
+        stats.push(["Average miss", `${(100 * pae(rows)).toFixed(1)}% of the line`, "adults ≈ 3–6% on 0–1000 (Siegler & Opfer 2003)"]);
+        const tops = [...new Set(rows.map(r => r.top))].sort((a, b) => a - b);
+        out.table = `<table><thead><tr><th>Line</th><th>Rounds</th><th>Average miss</th><th>Small numbers pushed right?</th></tr></thead><tbody>${tops.map(top => { const rs = rows.filter(r => r.top === top), sm = rs.filter(r => r.value <= top / 4);
+          return `<tr><td>0–${top}</td><td>${rs.length}</td><td>${(100 * pae(rs)).toFixed(1)}%</td><td>${sm.length ? (mean(sm.map(r => (r.estimate - r.value) / top)) * 100).toFixed(1) + "% of the line" : "—"}</td></tr>`; }).join("")}</tbody></table>`;
+        const series = [{ type: "line", cls: "ref", pts: [[0, 0], [1, 1]] }], items = [["dash", "", "exactly right (linear)"]];
+        const logc = range(0.001, 1, 60).map(f => [f, Math.log(1 + 999 * f) / Math.log(1000)]);
+        series.push({ type: "line", cls: "altdashline", pts: logc }); items.push(["line", "altdash", "squeezed like a young child (log)"]);
+        series.push({ type: "points", cls: "you", pts: rows.map(r => [r.value / r.top, r.estimate / r.top]) }); items.push(["dot", "you", "your answers"]);
+        out.charts.push(card("Your number line", plot({ xmin: 0, xmax: 1, ymin: 0, ymax: 1, xticks: [0, 0.25, 0.5, 0.75, 1], yticks: [0, 0.25, 0.5, 0.75, 1],
+          xlabel: "true place (share of the line)", ylabel: "where you put it", series }), items,
+          "Trained adults sit on the straight line; young children bend toward the curve, giving small numbers too much room (Siegler & Opfer 2003)."));
+        said.push(`<p><b>Number line.</b> You missed by ${(100 * pae(rows)).toFixed(1)}% of the line on average. A straight-line pattern is what schooling produces; a curve would mean small numbers get more room than big ones.</p>`);
+      },
+    },
+
+    // ---- Experiment 10: reading analogue displays (bars, pies, circles, a glass of water) ----
+    analog: {
+      name: "Read the chart", task: "Charts · how much?", lens: { mini: 10, quick: 20, medium: 40, full: 60 }, conf: [25, 50, 75, 100],
+      bubble: "Bars, pie slices, circles, a glass of water. How much? Our eyes read lengths well and areas badly. And the AI?",
+      title: "Read the picture: what percentage?", help: "Type a number from 0 to 100, Enter. Then 1–4: how sure.",
+      ENC: ["position", "length", "angle", "area", "fill"],
+      PCTS: [12, 18, 25, 33, 40, 47, 55, 62, 70, 78, 85, 92],
+      Q: { position: "Two bars are marked with a dot. What percentage is the shorter marked bar of the taller one?",
+           length: "What percentage is the shorter bar of the longer one?",
+           angle: "Two slices of the pie are marked with a dot. What percentage is the smaller marked slice of the larger one?",
+           area: "What percentage is the area of the smaller circle of the area of the larger one?",
+           fill: "How full is the glass, as a percentage of its height?" },
+      SEED: 1010,
+      set() {                         // the fixed set: 5 kinds × 12 values, one seed each (the model gets these very images)
+        if (this._set) return this._set;
+        const r = mulberry32(this.SEED), out = [];
+        for (const enc of this.ENC) for (const pct of this.PCTS)
+          out.push({ trial_id: `analog_${enc}_${String(pct).padStart(2, "0")}`, part: "analog", encoding: enc, value: pct,
+                     question: this.Q[enc], seed: Math.floor(r() * 2 ** 31) });
+        return (this._set = out);
+      },
+      build(len) {
+        const pools = this.ENC.map(e => this.set().filter(t => t.encoding === e));
+        return sample(pools, this.lens[len]).map(t => ({ ...t, display_ms: 0 }));
+      },
+      draw(t) {
+        const r = mulberry32(t.seed), p = t.value / 100, ink = "#141414";
+        ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH);
+        ctx.lineWidth = 2; ctx.strokeStyle = ink;
+        const dot = (x, y) => { ctx.fillStyle = ink; ctx.beginPath(); ctx.arc(x, y, 7, 0, 2 * Math.PI); ctx.fill(); };
+        if (t.encoding === "position") {          // five bars on one baseline, two marked (Cleveland & McGill 1984, type 1)
+          const base = 350, Hmax = 200 + 60 * r(), w = 70, x0 = 262, gap = 30;
+          const hs = [0, 0, 0, 0, 0].map(() => (0.15 + 0.8 * r()) * Hmax);
+          const i = Math.floor(r() * 5); let j = Math.floor(r() * 4); if (j >= i) j++;
+          const bigFirst = r() < 0.5; hs[bigFirst ? i : j] = Hmax; hs[bigFirst ? j : i] = p * Hmax;
+          ctx.beginPath(); ctx.moveTo(x0 - 30, base); ctx.lineTo(x0 + 5 * (w + gap) + 10, base); ctx.moveTo(x0 - 30, base); ctx.lineTo(x0 - 30, base - 290); ctx.stroke();
+          hs.forEach((h, k) => { const x = x0 + k * (w + gap); ctx.fillStyle = "#cfd6e3"; ctx.fillRect(x, base - h, w, h); ctx.strokeRect(x, base - h, w, h); if (k === i || k === j) dot(x + w / 2, base - 18); });
+        } else if (t.encoding === "length") {     // two bars on different baselines, no common scale
+          const Hmax = 220 + 60 * r(), w = 90, big = r() < 0.5;
+          const hl = big ? Hmax : p * Hmax, hr = big ? p * Hmax : Hmax, bl = 360 - 50 * r(), br = 360 - 120 * r();
+          for (const [x, h, b] of [[380, hl, bl], [560, hr, br]]) { ctx.fillStyle = "#cfd6e3"; ctx.fillRect(x, b - h, w, h); ctx.strokeRect(x, b - h, w, h); }
+        } else if (t.encoding === "angle") {      // a pie of five slices, two marked
+          const cx = XW / 2, cy = XH / 2, R = 165, A = (0.2 + 0.1 * r()) * 2 * Math.PI, a = p * A;
+          const rest = 2 * Math.PI - A - a, cuts = [r(), r()].sort(), others = [cuts[0], cuts[1] - cuts[0], 1 - cuts[1]].map(f => Math.max(0.05, f) * rest);
+          const k = others.reduce((s, v) => s + v, 0); for (let q = 0; q < 3; q++) others[q] *= rest / k;
+          const slices = shuffle([["m", A], ["m", a], ["o", others[0]], ["o", others[1]], ["o", others[2]]]);
+          let th = -Math.PI / 2 + r() * 2 * Math.PI;
+          const fills = ["#cfd6e3", "#e9e3d3", "#d8e8d6", "#f0d9d6", "#dfd7ea"];
+          slices.forEach(([kind, ang], q) => {
+            ctx.fillStyle = fills[q]; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R, th, th + ang); ctx.closePath(); ctx.fill(); ctx.stroke();
+            if (kind === "m") dot(cx + 0.62 * R * Math.cos(th + ang / 2), cy + 0.62 * R * Math.sin(th + ang / 2));
+            th += ang;
+          });
+        } else if (t.encoding === "area") {       // two circles
+          const R = 120 + 30 * r(), rs = R * Math.sqrt(p), big = r() < 0.5;
+          for (const [x, rad] of [[330, big ? R : rs], [700, big ? rs : R]]) { ctx.fillStyle = "#cfd6e3"; ctx.beginPath(); ctx.arc(x, XH / 2, rad, 0, 2 * Math.PI); ctx.fill(); ctx.stroke(); }
+        } else {                                  // a glass of water
+          const w = 170 + 40 * r(), h = 300, x = XW / 2 - w / 2, y = 50;
+          ctx.fillStyle = "#4fa3e0"; ctx.fillRect(x, y + h * (1 - p), w, h * p);
+          ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + h); ctx.lineTo(x + w, y + h); ctx.lineTo(x + w, y); ctx.stroke();
+        }
+      },
+      answer: "estimate", prompt: t => t.question,
+      pts: (est, t) => Math.round(10 * Math.max(0, 1 - Math.abs(est - t.value) / 25)),   // 10 on the dot, 0 when 25 points off
+      aiPts(t) {
+        const own = ai.analog.filter(r => r.trial_id === t.trial_id);
+        if (own.length) return mean(own.map(r => this.pts(r.estimate, t)));
+        // stand-in: a human-like reader (power law, exponent and spread by kind; Cleveland & McGill 1984; Stevens 1957)
+        const [beta, sd] = { position: [1, 3], length: [1, 5], angle: [0.9, 7], area: [0.75, 8], fill: [1, 4] }[t.encoding];
+        const mu = t.encoding === "fill" ? t.value + 0.1 * (50 - t.value) : 100 * (t.value / 100) ** beta;
+        let s = 0, w = 0; for (let z = -4; z <= 4; z += 0.1) { const d = Math.exp(-z * z / 2); s += d * this.pts(mu + sd * z, t); w += d; }
+        return s / w;
+      },
+      csv(rows, model) {
+        return [["trial_id", "part", "encoding", "value", "question", "modality", "reasoning", "model", "timestamp", "response", "estimate", "confidence", "rt_ms", "display_ms"],
+          rows.map(r => ({ ...r, modality: "image", reasoning: "human", model, response: r.estimate }))];
+      },
+      results(rows, stats, out, said) {
+        const NAMES = { position: "bars on one baseline", length: "bars, no common baseline", angle: "pie slices", area: "circles (area)", fill: "a glass of water" };
+        const encs = this.ENC.filter(e => rows.some(r => r.encoding === e));
+        const err = rs => mean(rs.map(r => Math.abs(r.estimate - r.value)));
+        const cm = rs => mean(rs.map(r => Math.log2(Math.abs(r.estimate - r.value) + 0.125)));   // Cleveland & McGill's error
+        stats.push(["Average miss", `${err(rows).toFixed(1)} points`, "on a 0–100 scale"]);
+        out.table = `<table><thead><tr><th>Picture</th><th>Rounds</th><th>Average miss</th><th>Log error (C&amp;M)</th></tr></thead><tbody>${encs.map(e => { const rs = rows.filter(r => r.encoding === e);
+          return `<tr><td>${NAMES[e]}</td><td>${rs.length}</td><td>${err(rs).toFixed(1)}</td><td>${cm(rs).toFixed(2)}</td></tr>`; }).join("")}</tbody></table>`;
+        const series = [{ type: "line", cls: "ref", pts: [[0, 0], [100, 100]] }], items = [["dash", "", "exactly right"]];
+        series.push({ type: "line", cls: "altdashline", pts: range(1, 100, 50).map(v => [v, 100 * (v / 100) ** 0.75]) }); items.push(["line", "altdash", "typical for areas (exponent ≈ 0.75)"]);
+        series.push({ type: "points", cls: "you", pts: rows.map(r => [r.value, r.estimate]) }); items.push(["dot", "you", "your answers"]);
+        out.charts.push(card("How you read the pictures", plot({ xmin: 0, xmax: 100, ymin: 0, ymax: 100, xticks: [0, 25, 50, 75, 100], yticks: [0, 25, 50, 75, 100],
+          xlabel: "true percentage", ylabel: "your answer", series }), items,
+          "People read positions and lengths almost exactly, angles less well, and areas worst: small circles look bigger than they are (Cleveland & McGill 1984)."));
+        said.push(`<p><b>Reading pictures.</b> Your average miss was ${err(rows).toFixed(1)} points. ${encs.length > 1 ? `Best: ${NAMES[encs.reduce((a, b) => err(rows.filter(r => r.encoding === a)) <= err(rows.filter(r => r.encoding === b)) ? a : b)]}; hardest: ${NAMES[encs.reduce((a, b) => err(rows.filter(r => r.encoding === a)) >= err(rows.filter(r => r.encoding === b)) ? a : b)]}.` : ""}</p>`);
+      },
+    },
+
+    // ---- Experiment 9, part D: place a point on two axes (a coordinate plane with no grid) ----
+    coords: {
+      name: "Place the point", task: "Coordinates · place the point", lens: { mini: 10, quick: 20, medium: 40, full: 60 }, conf: [25, 50, 75, 100],
+      bubble: "Two axes, no grid, no ticks. Where is the point (3, 5)? Tap it. Your eye has to measure both directions at once.",
+      title: "Where is the point?", help: "Click or tap the spot. Then 1–4: how sure.",
+      TOPS: [10, 20, 100], N: 14, SEED: 909,
+      OX: 352, OY: 364, S: 320,              // origin and side of the plotting square (canvas units)
+      set() {
+        if (this._set) return this._set;
+        const r = mulberry32(this.SEED), out = [];
+        for (const top of this.TOPS) for (let i = 0; i < this.N; i++) {
+          const lo = top === 100 ? 3 : 1, hi = top === 100 ? 97 : top - 1, pick = () => lo + Math.floor(r() * (hi - lo + 1));
+          const x = pick(), y = pick();
+          out.push({ trial_id: `point_${top}_${String(x).padStart(2, "0")}_${String(y).padStart(2, "0")}`, part: "coords", scale: `0-${top}`, top, x, y, seed: Math.floor(r() * 2 ** 31) });
+        }
+        return (this._set = out);
+      },
+      build(len) {
+        const pools = this.TOPS.map(top => this.set().filter(t => t.top === top));
+        return sample(pools, this.lens[len]).map(t => ({ ...t, display_ms: 0 }));
+      },
+      px(t, x, y) { return [this.OX + this.S * x / t.top, this.OY - this.S * y / t.top]; },
+      axes(t) {
+        const { OX, OY, S } = this, ink = "#141414";
+        ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH);
+        ctx.strokeStyle = ink; ctx.lineWidth = 3; ctx.beginPath();
+        ctx.moveTo(OX, OY); ctx.lineTo(OX + S, OY); ctx.moveTo(OX, OY); ctx.lineTo(OX, OY - S);
+        ctx.moveTo(OX + S, OY - 10); ctx.lineTo(OX + S, OY + 10); ctx.moveTo(OX - 10, OY - S); ctx.lineTo(OX + 10, OY - S); ctx.stroke();
+        ctx.fillStyle = ink; ctx.font = "600 22px IBM Plex Mono, ui-monospace, monospace"; ctx.textBaseline = "top"; ctx.textAlign = "center";
+        ctx.fillText("0", OX - 14, OY + 6); ctx.fillText(String(t.top), OX + S, OY + 12);
+        ctx.textAlign = "right"; ctx.textBaseline = "middle"; ctx.fillText(String(t.top), OX - 16, OY - S);
+        ctx.font = "italic 600 20px IBM Plex Mono, ui-monospace, monospace"; ctx.textAlign = "left"; ctx.fillText("x", OX + S + 18, OY); ctx.textAlign = "center"; ctx.fillText("y", OX, OY - S - 22);
+      },
+      draw(t, marks) {                         // the human version: a target to place
+        this.axes(t);
+        ctx.fillStyle = "#e8262d"; ctx.font = "64px Bangers, Impact, sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        ctx.fillText(`(${t.x}, ${t.y})`, 170, XH / 2);
+        for (const [x, y, col, lab] of marks || []) {
+          const [cx, cy] = this.px(t, x, y);
+          ctx.fillStyle = col; ctx.beginPath(); ctx.arc(cx, cy, 8, 0, 2 * Math.PI); ctx.fill();
+          if (lab) { ctx.font = "600 18px IBM Plex Mono, ui-monospace, monospace"; ctx.textAlign = "left"; ctx.fillText(lab, cx + 12, cy - 12); }
+        }
+      },
+      drawModel(t) {                           // the model version: a red point to read off
+        this.axes(t);
+        const [cx, cy] = this.px(t, t.x, t.y);
+        ctx.fillStyle = "#e8262d"; ctx.beginPath(); ctx.arc(cx, cy, 8, 0, 2 * Math.PI); ctx.fill();
+      },
+      answer: "point", prompt: t => `Where is the point (${t.x}, ${t.y})?`,
+      err: (ex, ey, t) => Math.hypot(ex - t.x, ey - t.y) / t.top,
+      pts(ex, ey, t) { return Math.round(10 * Math.max(0, 1 - this.err(ex, ey, t) / 0.15)); },   // 10 on the spot, 0 when 15% of an axis away
+      aiPts(t) {
+        const own = ai.coords.filter(r => r.trial_id === t.trial_id);
+        if (own.length) return mean(own.map(r => this.pts(r.est_x, r.est_y, t)));
+        const sd = 0.03 * t.top; let s = 0, w = 0;   // stand-in: unbiased, 3% of the axis on each coordinate
+        for (let a = -3; a <= 3; a += 0.25) for (let b = -3; b <= 3; b += 0.25) { const d = Math.exp(-(a * a + b * b) / 2); s += d * this.pts(t.x + sd * a, t.y + sd * b, t); w += d; }
+        return s / w;
+      },
+      csv(rows, model) {
+        return [["trial_id", "part", "scale", "x", "y", "task", "modality", "reasoning", "model", "timestamp", "response", "est_x", "est_y", "confidence", "rt_ms", "display_ms"],
+          rows.map(r => ({ ...r, task: "placement", modality: "placement", reasoning: "human", model, response: `${r.est_x}, ${r.est_y}` }))];
+      },
+      results(rows, stats, out, said) {
+        const err = rs => mean(rs.map(r => this.err(r.est_x, r.est_y, r)));
+        const bias = (rs, k) => mean(rs.map(r => (r[`est_${k}`] - r[k]) / r.top));
+        stats.push(["Average miss (points)", `${(100 * err(rows)).toFixed(1)}% of an axis`, "straight-line distance"]);
+        const tops = [...new Set(rows.map(r => r.top))].sort((a, b) => a - b);
+        out.table = `<table><thead><tr><th>Axes</th><th>Rounds</th><th>Average miss</th><th>Shift in x</th><th>Shift in y</th></tr></thead><tbody>${tops.map(top => { const rs = rows.filter(r => r.top === top);
+          return `<tr><td>0–${top}</td><td>${rs.length}</td><td>${(100 * err(rs)).toFixed(1)}%</td><td>${(100 * bias(rs, "x")).toFixed(1)}%</td><td>${(100 * bias(rs, "y")).toFixed(1)}%</td></tr>`; }).join("")}</tbody></table>`;
+        const series = [{ type: "line", cls: "ref", pts: [[0, 0], [1, 1]] },
+          { type: "points", cls: "you", pts: rows.map(r => [r.x / r.top, r.est_x / r.top]) },
+          { type: "points", cls: "you open", pts: rows.map(r => [r.y / r.top, r.est_y / r.top]) }];
+        out.charts.push(card("Where you put the points", plot({ xmin: 0, xmax: 1, ymin: 0, ymax: 1, xticks: [0, 0.25, 0.5, 0.75, 1], yticks: [0, 0.25, 0.5, 0.75, 1],
+          xlabel: "true place (share of the axis)", ylabel: "where you put it", series }),
+          [["dot", "you", "x coordinate"], ["dot", "you open", "y coordinate"], ["dash", "", "exactly right"]],
+          "Each point gives two dots: filled for x, open for y. A shift of one colour off the line is a bias along that axis."));
+        said.push(`<p><b>Coordinates.</b> You missed by ${(100 * err(rows)).toFixed(1)}% of an axis on average; the shifts were ${(100 * bias(rows, "x")).toFixed(1)}% in x and ${(100 * bias(rows, "y")).toFixed(1)}% in y.</p>`);
+      },
+    },
+  };
+  const isX = task => task in X;
+  Object.assign(window.__beatAI, { peek: () => state.queue[0] && state.queue[0].trials[state.idx],   // for automated tests
+    analogSet: () => X.analog.set(),
+    coordsSet: () => X.coords.set(),
+    renderCoords: id => { const t = X.coords.set().find(x => x.trial_id === id); cv.width = XW; cv.height = XH; X.coords.drawModel(t); return cv.toDataURL("image/png"); },
+    renderAnalog: id => { const t = X.analog.set().find(x => x.trial_id === id); cv.width = XW; cv.height = XH; X.analog.draw(t); return cv.toDataURL("image/png"); } });
+
+  // ---------- run state ----------
+  let ai = { name: "", cmp: [], est: [], heap: [], sym: [], nl: [], analog: [], coords: [] };
+  function parseCSV(text) {
+    const rows = [], re = /("([^"]|"")*"|[^,\n\r]*)(,|\r?\n|$)/g;
+    let row = [], m;
+    while ((m = re.exec(text)) && m[0] !== "") {
+      let v = m[1]; if (v.startsWith('"')) v = v.slice(1, -1).replace(/""/g, '"');
+      row.push(v);
+      if (m[3] !== ",") { rows.push(row); row = []; }
+    }
+    if (row.length) rows.push(row);
+    const head = rows.shift() || [];
+    return rows.filter(r => r.length === head.length).map(r => Object.fromEntries(head.map((h, i) => [h.trim(), r[i]])));
+  }
+  let state = { phase: "setup", pid: "", dur: 500, queue: [], idx: 0, task: null, cmp: [], est: [], heap: [] };
+  let pending = null, t0 = 0, awaiting = null, timers = [];
+  const later = (ms, fn) => timers.push(setTimeout(fn, ms));
+  const confValue = (task, c) => isX(task) ? X[task].conf[c - 1] : task === "comparison" || task === "heap" ? [50, 67, 83, 100][c - 1] : [25, 50, 75, 100][c - 1];
+  const TASKNAME = { comparison: "Comparison · which side has more?", estimation: "Estimation · how many dots?", heap: "The heap · is it a heap?",
+                     symbolic: X.symbolic.task, strings: X.strings.task, numberline: X.numberline.task, analog: X.analog.task, coords: X.coords.task };
+  const arrOf = task => isX(task) ? xState()[task] : state[{ comparison: "cmp", estimation: "est", heap: "heap" }[task]];
+
+  const BUBBLES = {
+    setup: "Websites ask if you're a robot. We ask the opposite. Play against Meta's AI on the very same pictures: you may beat it, or lose, but only a human makes human mistakes.",
+    comparison: "Two clouds of dots, half a blink. Which side has more? No counting, trust your gut. The AI is staring at the very same picture.",
+    estimation: "How many dots? Way too fast to count, so guess! Your eyes against the machine's.",
+    heap: "One grain of sand is not a heap. A million grains is. So where does the heap begin? No right answer here: just yours, and the AI's.",
+    challenge: "Level up! Beat the AI on points and grab the crown.",
+    results: "The verdict is in! Here is how you did, and where you sit next to the AI.",
+    symbolic: X.symbolic.bubble, strings: X.strings.bubble, numberline: X.numberline.bubble, analog: X.analog.bubble, coords: X.coords.bubble,
+  };
+  const bubble = k => { $("bubble").textContent = BUBBLES[k]; };
+  function show(id) { for (const s of ["setup", "run", "verdict", "results"]) $(s).hidden = s !== id; }
+  function setProgress() {
+    const list = state.queue[0]; if (!list) return;
+    $("taskName").textContent = state.challenge ? `Challenge · level ${state.challenge.level + 1}` : TASKNAME[list.task];
+    $("count").textContent = `${state.idx + 1} / ${list.trials.length}`;
+    $("barFill").style.width = `${100 * state.idx / list.trials.length}%`;
+  }
+
+  function nextTrial() {
+    const list = state.queue[0];
+    if (!list) return finish();
+    if (state.idx >= list.trials.length) {
+      if (state.challenge) return showVerdict();
+      const doneTask = list.task;
+      state.queue.shift(); state.idx = 0; race(0, 0);
+      return finish(doneTask);
+    }
+    setProgress();
+    const t = list.trials[state.idx];
+    $("answerCmp").hidden = $("answerEst").hidden = $("answerHeap").hidden = $("confRow").hidden = true;
+    $("prompt").textContent = "";
+    if (isX(list.task)) { cv.width = XW; cv.height = XH; }
+    else if (list.task === "heap") { cv.width = HW; cv.height = HH; } else { cv.width = list.task === "comparison" ? 2 * SIDE : SIDE; cv.height = SIDE; }
+    fixation();
+    later(500, () => {
+      if (isX(list.task)) {
+        X[list.task].draw(t);
+      } else if (list.task === "heap") {
+        drawHeap(t);
+      } else if (list.task === "comparison") {
+        drawComparison(t);
+      } else {
+        blank(false);
+        const r = radiusEst(t); drawDots(placeDots(t.n, r), r, 0);
+      }
+      t0 = performance.now();
+      const ask = (still) => {
+        pending = { ...t };
+        if (isX(list.task)) {
+          const x = X[list.task], pr = typeof x.prompt === "function" ? x.prompt(t) : x.prompt;
+          if (x.answer === "choice") { $("prompt").textContent = pr; $("answerCmp").hidden = false; awaiting = "choice"; }
+          else if (x.answer === "estimate") { $("prompt").textContent = pr; $("answerEst").hidden = false; $("estInput").value = ""; $("estInput").focus(); awaiting = "estimate"; }
+          else if (x.answer === "point") { $("prompt").textContent = `${pr} Tap the spot.`; awaiting = "point"; }
+          else { $("prompt").textContent = `${pr} Tap the line.`; awaiting = "line"; }
+        } else if (list.task === "comparison") {
+          $("prompt").textContent = "Which side has more dots?";
+          $("answerCmp").hidden = false; awaiting = "choice";
+        } else if (list.task === "heap") {
+          $("prompt").textContent = "Is this a heap of sand?";
+          $("answerHeap").hidden = false; awaiting = "heap";
+        } else {
+          $("prompt").textContent = "How many dots?";
+          $("answerEst").hidden = false; $("estInput").value = ""; $("estInput").focus(); awaiting = "estimate";
+        }
+      };
+      if (t.display_ms === 0) { ask(true); return; }      // no limit: the dots stay until the answer
+      later(t.display_ms, () => {
+        mask();
+        later(150, () => { if (isX(list.task)) { ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH); } else if (list.task === "heap") { ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, HW, HH); } else blank(list.task === "comparison"); ask(false); });
+      });
+    });
+  }
+
+  function intro() {
+    const list = state.queue[0];
+    bubble(state.challenge ? "challenge" : list.task);
+    if (isX(list.task)) { cv.width = XW; cv.height = XH; }
+    else if (list.task === "heap") { cv.width = HW; cv.height = HH; } else { cv.width = list.task === "comparison" ? 2 * SIDE : SIDE; cv.height = SIDE; }
+    ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, cv.width, cv.height);
+    const title = isX(list.task) ? X[list.task].title : { comparison: "Which side has more dots?", estimation: "How many dots?", heap: "Is it a heap of sand?" }[list.task];
+    const help = isX(list.task) ? X[list.task].help : { comparison: "Answer with F (left) or J (right). Then 1–4: how sure.", estimation: "Type a number, Enter. Then 1–4: how sure.",
+                   heap: "Y (yes) or N (no). There is no right answer. Then 1–4: how sure." }[list.task];
+    ctx.fillStyle = "#1d2330"; ctx.font = "600 26px 'IBM Plex Sans', sans-serif"; ctx.textAlign = "center";
+    ctx.fillText(title, cv.width / 2, cv.height / 2 - 16);
+    ctx.font = "18px 'IBM Plex Sans', sans-serif"; ctx.fillStyle = "#5b6577";
+    ctx.fillText(help, cv.width / 2, cv.height / 2 + 20);
+    $("answerCmp").hidden = $("answerEst").hidden = $("answerHeap").hidden = $("confRow").hidden = true;
+    $("prompt").textContent = "Press Space or tap here to begin!";
+    awaiting = "begin"; setProgress();
+  }
+
+  // every "which side has more?" round is played against the AI: points, bets and the race (challenge and own runs)
+  const scoring = () => !!state.queue[0] && (state.queue[0].task === "comparison" || state.queue[0].task === "estimation" || isX(state.queue[0].task));
+  // How many dots: closeness points. Exact = 10, off by a factor of 2 (or more) = 0, in between on a log scale.
+  const closePts = (est, n) => Math.round(10 * Math.max(0, 1 - Math.abs(Math.log(Math.max(est, 0.5) / n)) / Math.LN2));
+  // The AI's expected closeness points for n dots: from its own estimates of that number when loaded,
+  // otherwise a stand-in that is exact up to 4 and log-normal beyond (spread 0.22, a typical adult-like value).
+  // The AI's chance of saying "heap": from its own answers for that arrangement and number when loaded,
+  // otherwise a stand-in (a pile becomes a heap around 15 grains, scattered sand around 60).
+  function aiHeapYes(arr, n) {
+    const own = ai.heap.filter(r => r.arrangement === arr && r.n === n);
+    if (own.length) return mean(own.map(r => +(r.answer === "yes")));
+    const t = arr === "pile" ? 15 : 60;
+    return 1 / (1 + Math.exp(-(Math.log(n) - Math.log(t)) / 0.45));
+  }
+  const aiHeapName = () => ai.heap.length ? ai.name : "the stand-in AI";
+  function aiEstPts(n) {
+    const own = ai.est.filter(r => r.n === n && !(r.condition in X.strings.KINDS));
+    if (own.length) return mean(own.map(r => closePts(r.estimate, n)));
+    if (n <= 4) return 10;
+    const sd = 0.22; let s = 0, w = 0;
+    for (let z = -4; z <= 4; z += 0.1) { const d = Math.exp(-z * z / 2); s += d * closePts(n * Math.exp(sd * z), n); w += d; }
+    return s / w;
+  }
+  function answerChoice(side) {
+    if (awaiting !== "choice") return;
+    pending.rt_ms = Math.round(performance.now() - t0);
+    pending.choice = side; pending.correct = side === pending.larger_side ? 1 : 0;
+    if (scoring()) {
+      const p = state.queue[0].task === "symbolic" ? X.symbolic.aiP(pending) : aiChance(pending), you = pending.correct;
+      pending.ai_p = +p.toFixed(3);
+      pending.pts = points(you, p);
+      pending.ai_pts = p * points(true, you);     // the AI's expected points against you on this image
+    }
+    $("answerCmp").hidden = true; askConf();
+  }
+  function answerHeap(yes) {
+    if (awaiting !== "heap") return;
+    pending.rt_ms = Math.round(performance.now() - t0);
+    pending.answer = yes ? "yes" : "no"; $("answerHeap").hidden = true; askConf();
+  }
+  function answerEstimate(v) {
+    if (awaiting !== "estimate" || !Number.isFinite(v) || v < 0) return;
+    pending.rt_ms = Math.round(performance.now() - t0);
+    pending.estimate = v;
+    const tk = state.queue[0].task;
+    if (scoring() && tk === "analog") { pending.pts = X.analog.pts(v, pending); pending.ai_pts = X.analog.aiPts(pending); pending.bet = 0; }
+    else if (scoring()) { pending.pts = closePts(v, pending.n); pending.ai_pts = tk === "strings" ? X.strings.aiPts(pending) : aiEstPts(pending.n); pending.bet = 0; }
+    $("answerEst").hidden = true; askConf();
+  }
+  function answerLine(e) {
+    if (awaiting !== "line") return;
+    const r = cv.getBoundingClientRect(), x = (e.clientX - r.left) * cv.width / r.width, y = (e.clientY - r.top) * cv.height / r.height;
+    const N = X.numberline, t = pending;
+    if (Math.abs(y - N.LY) > 110) return;                          // only taps near the line count
+    const v = Math.min(t.top, Math.max(0, (x - N.L0) / (N.L1 - N.L0) * t.top));
+    pending.rt_ms = Math.round(performance.now() - t0);
+    pending.estimate = +(t.top >= 1000 ? Math.round(v) : v.toFixed(1));
+    pending.pts = N.pts(pending.estimate, t); pending.ai_pts = N.aiPts(t); pending.bet = 0;
+    N.draw(t, [[pending.estimate, "#1d56d8", ""]]);
+    askConf();
+  }
+  cv.addEventListener("pointerdown", answerLine);
+  function answerPoint(e) {
+    if (awaiting !== "point") return;
+    const r = cv.getBoundingClientRect(), x = (e.clientX - r.left) * cv.width / r.width, y = (e.clientY - r.top) * cv.height / r.height;
+    const C = X.coords, t = pending;
+    if (x < C.OX - 30 || x > C.OX + C.S + 30 || y < C.OY - C.S - 30 || y > C.OY + 30) return;   // only taps near the plane count
+    const fx = Math.min(1, Math.max(0, (x - C.OX) / C.S)), fy = Math.min(1, Math.max(0, (C.OY - y) / C.S));
+    const round = v => t.top >= 100 ? Math.round(v) : +v.toFixed(1);
+    pending.rt_ms = Math.round(performance.now() - t0);
+    pending.est_x = round(fx * t.top); pending.est_y = round(fy * t.top);
+    pending.pts = C.pts(pending.est_x, pending.est_y, t); pending.ai_pts = C.aiPts(t); pending.bet = 0;
+    C.draw(t, [[pending.est_x, pending.est_y, "#1d56d8", ""]]);
+    askConf();
+  }
+  cv.addEventListener("pointerdown", answerPoint);
+  const CONF_LABELS = ["Guessing", "Unsure", "Fairly sure", "Sure"];
+  function askConf() {
+    const bet = false;   // confidence is not scored
+    $("confRow").querySelectorAll("button").forEach((b, i) => {
+      const w = Math.round(betPay(BET_Q[i], true)), l = Math.round(betPay(BET_Q[i], false));
+      b.innerHTML = `<span>${i + 1}</span>${CONF_LABELS[i]}${bet ? ` <small style="font-family:var(--mono);font-size:0.8rem">${w ? "+" + w : "±0"} / ${l ? "−" + -l : "±0"}</small>` : ""}`;
+    });
+    $("prompt").textContent = bet ? "How sure are you? Bet on it!" : "How sure are you?";
+    $("confRow").hidden = false; awaiting = "conf";
+  }
+  function answerConf(c) {
+    if (awaiting !== "conf") return;
+    const task = state.queue[0].task;
+    pending.confidence = confValue(task, c);
+    // Confidence is a plain rating, as in most metacognition studies (e.g. Fleming & Lau 2014): no points ride on it,
+    // so it measures how sure people feel rather than a betting strategy. (Wagering was tried here and dropped.)
+    if (task === "comparison") pending.bet = 0;
+    pending.timestamp = new Date().toISOString().slice(0, 19) + "Z";
+    arrOf(task).push(pending);
+    const done = pending; pending = null; awaiting = null; state.idx++;
+    if (task === "comparison" || task === "symbolic") {     // a quick comic hit: your result and the AI's on this round
+      $("confRow").hidden = true; setProgress();
+      const pc = Math.round(100 * done.ai_p);
+      const msg = done.correct ? (done.pts - done.bet >= 9 ? "BEAT THE AI!" : done.pts - done.bet >= 7 ? "POW! Tricky one!" : "POW! Right!") : "MISS!";
+      const base = done.pts - done.bet, sign = v => v > 0 ? `+${v}` : v < 0 ? `−${-v}` : "±0";
+      $("prompt").innerHTML = `<span class="fx ${done.correct ? "hit" : "miss"}">${msg} ${sign(base)}</span> <span class="live">· the AI gets this one ${pc}% of the time</span>`;
+      race(done.pts, Math.round(done.ai_pts));
+      later(1100, nextTrial);
+      return;
+    }
+    if (task === "coords") {
+      $("confRow").hidden = true; setProgress();
+      X.coords.draw(done, [[done.x, done.y, "#1f9a5a", `(${done.x}, ${done.y})`], [done.est_x, done.est_y, "#1d56d8", ""]]);
+      const msg = done.pts >= 9 ? "BULLSEYE!" : done.pts >= 6 ? "So close!" : done.pts >= 2 ? "Not bad!" : "WAY OFF!";
+      $("prompt").innerHTML = `<span class="fx ${done.pts >= 2 ? "hit" : "miss"}">${msg} +${done.pts}</span> <span class="live">· you put it at (${done.est_x}, ${done.est_y}) · the AI scores about ${Math.round(done.ai_pts)} here</span>`;
+      race(done.pts, Math.round(done.ai_pts));
+      later(1600, nextTrial);
+      return;
+    }
+    if (task === "numberline") {
+      $("confRow").hidden = true; setProgress();
+      X.numberline.draw(done, [[done.value, "#1f9a5a", `${done.value}`], [done.estimate, "#1d56d8", "you"]]);
+      const msg = done.pts >= 9 ? "BULLSEYE!" : done.pts >= 6 ? "So close!" : done.pts >= 2 ? "Not bad!" : "WAY OFF!";
+      $("prompt").innerHTML = `<span class="fx ${done.pts >= 2 ? "hit" : "miss"}">${msg} +${done.pts}</span> <span class="live">· you put it at ${done.estimate} · the AI scores about ${Math.round(done.ai_pts)} here</span>`;
+      race(done.pts, Math.round(done.ai_pts));
+      later(1600, nextTrial);
+      return;
+    }
+    if ((task === "estimation" || task === "strings" || task === "analog") && Number.isFinite(done.pts)) {
+      $("confRow").hidden = true; setProgress();
+      const msg = done.pts === 10 ? "BULLSEYE!" : done.pts >= 7 ? "So close!" : done.pts >= 3 ? "Not bad!" : "WAY OFF!";
+      $("prompt").innerHTML = `<span class="fx ${done.pts >= 3 ? "hit" : "miss"}">${msg} +${done.pts}</span> <span class="live">· it was ${task === "analog" ? done.value + "%" : done.n} · the AI scores about ${Math.round(done.ai_pts)} here</span>`;
+      race(done.pts, Math.round(done.ai_pts));
+      later(1400, nextTrial);
+      return;
+    }
+    nextTrial();
+  }
+
+  // ---------- analysis in the page ----------
+  function erf(x) { const s = Math.sign(x); x = Math.abs(x); const t = 1 / (1 + 0.3275911 * x);
+    const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return s * y; }
+  const phi = x => 0.5 * (1 + erf(x / Math.SQRT2));
+  function fitW(rows) {
+    let best = null, bestLL = -Infinity;
+    for (let k = 0; k < 400; k++) {
+      const w = Math.exp(Math.log(0.02) + k * (Math.log(3) - Math.log(0.02)) / 399);
+      let ll = 0;
+      for (const r of rows) { const a = Math.max(r.n_left, r.n_right), b = Math.min(r.n_left, r.n_right);
+        let p = phi((a - b) / (w * Math.hypot(a, b))); p = Math.min(Math.max(p, 1e-6), 1 - 1e-6); ll += Math.log(r.correct ? p : 1 - p); }
+      if (ll > bestLL) { bestLL = ll; best = w; }
+    }
+    return best;
+  }
+  const mean = a => a.reduce((s, x) => s + x, 0) / (a.length || 1);
+  const sd = a => { const m = mean(a); return Math.sqrt(a.reduce((s, x) => s + (x - m) ** 2, 0) / Math.max(1, a.length - 1)); };
+
+  function toCSV(rows, fields) {
+    const esc = v => { const s = v === undefined || v === null ? "" : String(v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+    return [fields.join(","), ...rows.map(r => fields.map(f => esc(r[f])).join(","))].join("\n");
+  }
+
+  // ---------- small SVG charts ----------
+  function plot(o) {
+    const W = o.w || 360, H = o.h || 230, L = 54, Rm = 12, T = 10, B = 40;
+    const tx = v => o.xlog ? Math.log(v) : v, ty = v => o.ylog ? Math.log(v) : v;
+    const X = v => L + (tx(v) - tx(o.xmin)) / (tx(o.xmax) - tx(o.xmin)) * (W - L - Rm);
+    const Y = v => H - B - (ty(v) - ty(o.ymin)) / (ty(o.ymax) - ty(o.ymin)) * (H - T - B);
+    const clampY = v => Math.min(Math.max(v, o.ymin), o.ymax);
+    let g = "";
+    for (const v of o.yticks) g += `<line class="grid" x1="${L}" x2="${W - Rm}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${L - 6}" y="${Y(v) + 4}" text-anchor="end">${v}</text>`;
+    for (const v of o.xticks) g += `<text x="${X(v)}" y="${H - B + 16}" text-anchor="middle">${v}</text>`;
+    g += `<line class="axis" x1="${L}" x2="${W - Rm}" y1="${H - B}" y2="${H - B}"/><line class="axis" x1="${L}" x2="${L}" y1="${T}" y2="${H - B}"/>`;
+    g += `<text class="lab" x="${(L + W - Rm) / 2}" y="${H - 6}" text-anchor="middle">${o.xlabel}</text>`;
+    g += `<text class="lab" transform="translate(12 ${(T + H - B) / 2}) rotate(-90)" text-anchor="middle">${o.ylabel}</text>`;
+    for (const b of o.bands || []) g += `<rect class="band" x="${X(b[0])}" y="${T}" width="${X(b[1]) - X(b[0])}" height="${H - B - T}"/>`;
+    for (const sr of o.series) {
+      const pts = sr.pts.filter(p => Number.isFinite(p[1]));
+      if (sr.type === "line") g += `<polyline class="${sr.cls}" points="${pts.map(p => `${X(p[0])},${Y(clampY(p[1]))}`).join(" ")}"/>`;
+      else g += pts.map(p => `<circle class="${sr.cls}" cx="${X(p[0])}" cy="${Y(clampY(p[1]))}" r="4"/>`).join("");
+    }
+    return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${o.xlabel} vs ${o.ylabel}">${g}</svg>`;
+  }
+  // legend under each chart: [kind, cls, label]; kind = dot | line | dotline | dash | band
+  function swatch(kind, cls) {
+    const line = c => `<line class="${c}" x1="1" x2="23" y1="6" y2="6"/>`;
+    const dot = c => `<circle class="${c}" cx="12" cy="6" r="4"/>`;
+    const inner = kind === "dot" ? dot(cls) : kind === "line" ? line(cls + "line") : kind === "dash" ? line("ref")
+      : kind === "band" ? `<rect class="band" x="1" y="1" width="22" height="10"/>` : line(cls + "line") + dot(cls);
+    return `<svg viewBox="0 0 24 12" aria-hidden="true">${inner}</svg>`;
+  }
+  const legend = items => `<div class="legend">${items.map(([k, c, t]) => `<span>${swatch(k, c)}${t}</span>`).join("")}</div>`;
+  const card = (title, svg, items, cap, wide) =>
+    `<div class="chart${wide ? " wide" : ""}"><h3>${title}</h3>${svg}${items ? legend(items) : ""}${cap ? `<div class="cap">${cap}</div>` : ""}</div>`;
+  const pCorrect = (a, b, w) => phi((a - b) / (w * Math.hypot(a, b)));
+  const range = (a, b, n) => Array.from({ length: n }, (_, i) => a + (b - a) * i / (n - 1));
+  const ADULT_W = 0.15;   // a typical adult value for this kind of task (reports range from about 0.11 to 0.25)
+
+  function weberScale(w, wAI) {
+    const W = 720, H = 168, L = 20, Rm = 20, y = 62;
+    const X = v => L + (Math.log(v) - Math.log(0.05)) / (Math.log(1.2) - Math.log(0.05)) * (W - L - Rm);
+    // a developmental sequence: acuity sharpens from infancy to adulthood
+    const refs = [[0.5, "6 months ≈ 0.5"], [0.4, "3 years ≈ 0.4"], [0.2, "6 years ≈ 0.2"], [0.11, "adults ≈ 0.11"]];
+    let g = `<rect class="band" x="${X(0.08)}" y="${y - 12}" width="${X(0.25) - X(0.08)}" height="24"/>`;
+    g += `<text class="lab" x="${(X(0.08) + X(0.25)) / 2}" y="${y + 30}" text-anchor="middle">adult values across studies ≈ 0.08–0.25</text>`;
+    g += `<line class="axis" x1="${L}" x2="${W - Rm}" y1="${y}" y2="${y}"/>`;
+    for (const v of [0.05, 0.1, 0.2, 0.5, 1]) g += `<line class="axis" x1="${X(v)}" x2="${X(v)}" y1="${y - 4}" y2="${y + 4}"/><text x="${X(v)}" y="${y + 50}" text-anchor="middle">${v}</text>`;
+    refs.forEach(([v, t], i) => { g += `<line class="ref" x1="${X(v)}" x2="${X(v)}" y1="${y - 16}" y2="${y + 16}"/><text class="lab" x="${X(v)}" y="${y - 22 - (i % 2) * 13}" text-anchor="middle">${t}</text>`; });
+    const xw = X(Math.min(Math.max(w, 0.05), 1.2));
+    g += `<path class="you" d="M${xw},${y - 2} l-7,-14 h14 z"/><text class="lab" x="${xw}" y="${y - 50}" text-anchor="middle" style="fill: var(--accent); font-weight: 700;">you: ${w >= 2.9 ? "> 1" : w.toFixed(2)}</text>`;
+    if (wAI !== undefined) {
+      const xa = X(Math.min(Math.max(wAI, 0.05), 1.2));
+      g += `<path class="alt" d="M${xa},${y + 2} l-7,14 h14 z"/><text class="lab" x="${xa}" y="${y + 66}" text-anchor="middle" style="fill: var(--warn); font-weight: 700;">${ai.name || "AI"}: ${wAI >= 2.9 ? "> 1" : wAI.toFixed(2)}</text>`;
+    }
+    g += `<text class="lab" x="${W / 2}" y="${H - 2}" text-anchor="middle">Weber fraction (log scale): smaller = sharper</text>`;
+    return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Your Weber fraction on the human scale">${g}</svg>`;
+  }
+
+  const byRatio = rows => [0.5, 0.6, 0.7, 0.8, 0.9].map(r => {
+    const s = rows.filter(x => x.design === "ratio" && Math.round(x.ratio * 10) / 10 === r);
+    return { r, acc: mean(s.map(x => x.correct)), conf: s.some(x => Number.isFinite(x.confidence)) ? mean(s.filter(x => Number.isFinite(x.confidence)).map(x => x.confidence)) / 100 : NaN };
+  });
+
+  function buildCharts() {
+    const out = [], said = [];
+    const hasAIc = ai.cmp.length > 0, hasAIe = ai.est.length > 0, nm = ai.name || "AI";
+    if (state.cmp.length) {
+      const w = fitW(state.cmp);
+      const wAI = hasAIc ? fitW(ai.cmp) : undefined;
+      out.push(card("Where you are on the human scale", weberScale(w, wAI),
+        [["band", "", "range of adult values reported in different studies"], ["dash", "", "typical value for each age"]],
+        "Each age is a different study and task, so the markers are approximate (Xu & Spelke 2000; Halberda & Feigenson 2008; values cited from memory, to be checked).", true));
+      const xs = range(0.45, 0.95, 40), yr = byRatio(state.cmp), ar = hasAIc ? byRatio(ai.cmp) : [];
+      out.push(card("Accuracy by ratio", plot({ xmin: 0.45, xmax: 0.95, ymin: 0.3, ymax: 1, xticks: [0.5, 0.6, 0.7, 0.8, 0.9], yticks: [0.4, 0.6, 0.8, 1],
+        xlabel: "ratio smaller / larger (harder →)", ylabel: "proportion correct",
+        series: [{ type: "line", cls: "ref", pts: xs.map(x => [x, pCorrect(1, x, ADULT_W)]) },
+                 { type: "line", cls: "youline", pts: xs.map(x => [x, pCorrect(1, x, w)]) },
+                 { type: "points", cls: "you", pts: yr.map(d => [d.r, d.acc]) },
+                 ...(hasAIc ? [{ type: "line", cls: "altline", pts: xs.map(x => [x, pCorrect(1, x, wAI)]) },
+                   { type: "points", cls: "alt", pts: ar.map(d => [d.r, d.acc]) }] : [])] }),
+        [["dot", "you", "your answers"], ["line", "you", "your fitted curve"], ...(hasAIc ? [["dotline", "alt", `${nm}: answers and curve`]] : []),
+         ["dash", "", `typical adult (w ≈ ${ADULT_W})`]]));
+      const bigs = [20, 40, 60, 80, 120], xb = range(20, 120, 40);
+      const fdOf = rows => bigs.map(b => [b, mean(rows.filter(x => x.design === "difference" && Math.max(x.n_left, x.n_right) === b).map(x => x.correct))]);
+      const fd = fdOf(state.cmp);
+      out.push(card("Fixed difference of 10", plot({ xmin: 15, xmax: 125, ymin: 0.3, ymax: 1, xticks: bigs, yticks: [0.4, 0.6, 0.8, 1],
+        xlabel: "larger set (20 vs 10 … 120 vs 110)", ylabel: "proportion correct",
+        series: [{ type: "line", cls: "ref", pts: xb.map(b => [b, pCorrect(b, b - 10, ADULT_W)]) },
+                 { type: "line", cls: "youline", pts: xb.map(b => [b, pCorrect(b, b - 10, w)]) },
+                 { type: "points", cls: "you", pts: fd },
+                 ...(hasAIc ? [{ type: "line", cls: "altline", pts: xb.map(b => [b, pCorrect(b, b - 10, wAI)]) },
+                   { type: "points", cls: "alt", pts: fdOf(ai.cmp) }] : [])] }),
+        [["dot", "you", "your answers"], ["line", "you", "your fitted curve"], ...(hasAIc ? [["dotline", "alt", `${nm}`]] : []),
+         ["dash", "", "typical adult"]],
+        "A curve that falls means perceiving; a flat, high one means counting."));
+      if (yr.some(d => Number.isFinite(d.conf))) {
+        out.push(card("How sure were you? (comparison)", plot({ xmin: 0.45, xmax: 0.95, ymin: 0.3, ymax: 1, xticks: [0.5, 0.6, 0.7, 0.8, 0.9], yticks: [0.4, 0.6, 0.8, 1],
+          xlabel: "ratio smaller / larger (harder →)", ylabel: "proportion",
+          series: [{ type: "line", cls: "fdline", pts: yr.map(d => [d.r, d.acc]) }, { type: "points", cls: "fd", pts: yr.map(d => [d.r, d.acc]) },
+                   { type: "line", cls: "youline", pts: yr.map(d => [d.r, d.conf]) }, { type: "points", cls: "you", pts: yr.map(d => [d.r, d.conf]) },
+                   ...(hasAIc && ar.some(d => Number.isFinite(d.conf)) ? [{ type: "line", cls: "altline", pts: ar.map(d => [d.r, d.conf]) }, { type: "points", cls: "alt", pts: ar.map(d => [d.r, d.conf]) }] : [])] }),
+          [["dotline", "you", "your confidence"], ["dotline", "fd", "how often you were right"],
+           ...(hasAIc && ar.some(d => Number.isFinite(d.conf)) ? [["dotline", "alt", `${nm}'s confidence`]] : [])],
+          "Confidence 1–4 is shown as 50, 67, 83, 100%. When the blue line sits on the green one, your confidence matches your accuracy."));
+      }
+      const accAll = mean(state.cmp.map(r => r.correct));
+      const band = accAll < 0.6 ? "close to chance overall, so treat this run as unreliable (too fast, or answers at random)"
+        : w <= 0.15 ? "like a typical adult" : w <= 0.25 ? "within the range reported for adults, near the value for 6-year-olds"
+        : w <= 0.45 ? "broader than most adults, closer to young children" : "much broader than the adult range";
+      said.push(`<p><b>Comparison.</b> Your Weber fraction is <b>${w >= 2.9 ? "above 1" : w.toFixed(2)}</b>: ${band}.` + (accAll >= 0.6 ? ` A w of ${w.toFixed(2)} means you pick the larger of two sets 3 times out of 4 when they differ by about ${Math.round(w * 95)}%.` : "") + `</p>`);
+      const fdSlope = fd[fd.length - 1][1] - fd[0][1];
+      if (accAll >= 0.6) said.push(`<p>On the fixed-difference pairs your accuracy went from ${Math.round(100 * fd[0][1])}% (20 vs 10) to ${Math.round(100 * fd[fd.length - 1][1])}% (120 vs 110): ${fdSlope < -0.15 ? "a clear decline, the signature of perceiving rather than counting." : fdSlope > -0.05 ? "almost flat, which is what counting looks like." : "a mild decline."}</p>`);
+    }
+    if (state.est.length) {
+      const ns = [...new Set(state.est.map(r => r.n))].sort((a, b) => a - b);
+      const meanBy = (rows, f) => [...new Set(rows.map(r => r.n))].sort((a, b) => a - b).map(n => [n, mean(rows.filter(r => r.n === n).map(f))]);
+      out.push(card("Your estimates", plot({ xmin: 1, xmax: 100, ymin: 0.8, ymax: 160, xlog: true, ylog: true,
+        xticks: [1, 4, 10, 25, 50, 100], yticks: [1, 4, 10, 25, 50, 100], xlabel: "true number of dots", ylabel: "estimate",
+        bands: [[0.95, 4.5]],
+        series: [{ type: "line", cls: "ref", pts: [[1, 1], [100, 100]] }, { type: "points", cls: "you", pts: meanBy(state.est, r => Math.max(r.estimate, 0.8)) },
+          ...(hasAIe ? [{ type: "points", cls: "alt", pts: meanBy(ai.est, r => Math.max(r.estimate, 0.8)) }] : [])] }),
+        [["dot", "you", "your estimates"], ...(hasAIe ? [["dot", "alt", `${nm}'s estimates`]] : []), ["dash", "", "perfect estimate"], ["band", "", "subitizing range (1–4)"]],
+        "Points below the dashed line are underestimates."));
+      if (state.est.some(r => Number.isFinite(r.confidence))) {
+        const yc = meanBy(state.est, r => r.confidence / 100);
+        const ye = meanBy(state.est, r => +(r.estimate === r.n));
+        const aiConf = hasAIe && ai.est.some(r => Number.isFinite(r.confidence));
+        out.push(card("How sure were you? (estimation)", plot({ xmin: 1, xmax: 100, ymin: 0, ymax: 1, xlog: true,
+          xticks: [1, 4, 10, 25, 50, 100], yticks: [0, 0.25, 0.5, 0.75, 1], xlabel: "true number of dots", ylabel: "proportion",
+          bands: [[0.95, 4.5]],
+          series: [{ type: "points", cls: "fd", pts: ye }, { type: "line", cls: "youline", pts: yc }, { type: "points", cls: "you", pts: yc },
+                   ...(aiConf ? [{ type: "line", cls: "altline", pts: meanBy(ai.est.filter(r => Number.isFinite(r.confidence)), r => r.confidence / 100) }] : [])] }),
+          [["dotline", "you", "your confidence"], ["dot", "fd", "exactly right"], ...(aiConf ? [["line", "alt", `${nm}'s confidence`]] : []), ["band", "", "subitizing range"]],
+          "Confidence 1–4 is shown as 25, 50, 75, 100%. Humans are sure up to about 4 and less sure after."));
+      }
+      let sub = 0; for (const n of ns) { const s = state.est.filter(r => r.n === n); if (n === sub + 1 && mean(s.map(r => +(r.estimate === n))) >= 0.9) sub = n; else break; }
+      const big = state.est.filter(r => r.n > 4).map(r => r.estimate / r.n), m = mean(big), cv = sd(big) / m;
+      said.push(`<p><b>Estimation.</b> You were exact up to <b>${sub || "—"}</b> ${sub >= 3 && sub <= 5 ? "(the usual subitizing range)" : ""}. Beyond 4, your estimates averaged ${Math.round(m * 100)}% of the true number${m < 0.95 ? " (underestimation, common in humans)" : m > 1.05 ? " (overestimation)" : ""}, with a spread (CV) of ${cv.toFixed(2)}; adults are typically around 0.15–0.25.</p>`);
+    }
+    const durs = [...new Set(state.cmp.map(r => r.display_ms))].sort((a, b) => (a || 1e9) - (b || 1e9));
+    if (durs.length > 1) {
+      const lab = d => d === 0 ? "∞" : d / 1000;
+      const xsd = durs.map((d, i) => i + 1);
+      const wv = durs.map((d, i) => [i + 1, fitW(state.cmp.filter(r => r.display_ms === d))]);
+      const fdv = durs.map((d, i) => [i + 1, mean(state.cmp.filter(r => r.display_ms === d && r.design === "difference").map(r => r.correct))]);
+      let svg = plot({ xmin: 0.6, xmax: durs.length + 0.4, ymin: 0, ymax: 1, xticks: [], yticks: [0, 0.25, 0.5, 0.75, 1],
+        xlabel: "display time (s)", ylabel: "value",
+        series: [{ type: "line", cls: "youline", pts: wv }, { type: "points", cls: "you", pts: wv },
+                 { type: "line", cls: "fdline", pts: fdv }, { type: "points", cls: "fd", pts: fdv }] });
+      const Wd = 360, L = 54, Rm = 12, H = 230, B = 40;
+      const X = v => L + (v - 0.6) / (durs.length - 0.2) * (Wd - L - Rm);
+      svg = svg.replace("</svg>", xsd.map((x, i) => `<text x="${X(x)}" y="${H - B + 16}" text-anchor="middle">${lab(durs[i])}</text>`).join("") + "</svg>");
+      out.push(card("From a glance to counting", svg,
+        [["dotline", "you", "your Weber fraction w (lower = sharper)"], ["dotline", "fd", "accuracy on the fixed-difference pairs"]],
+        "As display time grows, w should drop and the fixed-difference pairs get easier: that is counting taking over."));
+    }
+    if (state.heap.length) heapCharts(out, said);
+    for (const [k, x] of Object.entries(X)) { const rows = xState()[k]; if (!rows.length) continue;
+      const o = { charts: [], table: "" }; x.results(rows, [], o, said); out.push(...o.charts); }
+    $("charts").innerHTML = out.join("");
+    $("summary").innerHTML = said.join("");
+    buildVersus();
+  }
+
+  // logistic in log n for P(yes): returns { t: n at 50%, s: slope in log units }
+  function fitHeap(rows) {
+    let best = { t: NaN, s: NaN, e: Infinity };
+    if (rows.length < 3) return best;
+    const ns = [...new Set(rows.map(r => r.n))];
+    const py = ns.map(n => [Math.log(n), mean(rows.filter(r => r.n === n).map(r => +(r.answer === "yes")))]);
+    for (let lt = 0; lt <= Math.log(600); lt += 0.02) for (let k = 0; k < 60; k++) {
+      const sl = Math.exp(Math.log(0.05) + k * (Math.log(3) - Math.log(0.05)) / 59);
+      let e = 0; for (const [x, y] of py) e += (1 / (1 + Math.exp(-(x - lt) / sl)) - y) ** 2;
+      if (e < best.e) best = { t: Math.exp(lt), s: sl, e };
+    }
+    return best;
+  }
+  // a threshold outside the tested range is reported as "under" / "over" the range
+  function heapLabel(f, rows) {
+    if (!Number.isFinite(f.t)) return "—";
+    const ns = rows.map(r => r.n), lo = Math.min(...ns), hi = Math.max(...ns);
+    return f.t < lo ? `under ${lo}` : f.t > hi ? `over ${hi}` : `about ${Math.round(f.t)}`;
+  }
+  function heapCharts(out, said) {
+    const nm = ai.name || "AI";
+    const curve = f => range(0, Math.log(500), 60).map(x => [Math.exp(x), 1 / (1 + Math.exp(-(x - Math.log(f.t)) / f.s))]);
+    const pts = rows => [...new Set(rows.map(r => r.n))].sort((a, b) => a - b).map(n => [n, mean(rows.filter(r => r.n === n).map(r => +(r.answer === "yes")))]);
+    const series = [], items = [], fits = {};
+    for (const [who, rows, cls] of [["you", state.heap, "you"], [nm, ai.heap, "alt"]]) {
+      for (const arr of ["pile", "scatter"]) {
+        const rs = rows.filter(r => r.arrangement === arr && (r.answer === "yes" || r.answer === "no"));
+        if (rs.length < 3) continue;
+        const f = fitHeap(rs); fits[`${who}|${arr}`] = f;
+        series.push({ type: "line", cls: arr === "pile" ? cls + "line" : cls + "dashline", pts: curve(f) }, { type: "points", cls: arr === "pile" ? cls : cls + " open", pts: pts(rs) });
+        items.push([arr === "pile" ? "dotline" : "line", arr === "pile" ? cls : cls + "dash", `${who === "you" ? "you" : nm}: ${arr === "pile" ? "piled" : "scattered"}`]);
+      }
+    }
+    out.push(card("When do grains become a heap?", plot({ xmin: 1, xmax: 500, ymin: 0, ymax: 1, xlog: true,
+      xticks: [1, 3, 10, 30, 100, 500], yticks: [0, 0.25, 0.5, 0.75, 1], xlabel: "number of grains", ylabel: "proportion “yes, a heap”", series }),
+      items, "Solid line, filled dots: grains piled into a mound. Dashed line, open dots: the same grains scattered. A gradual curve is perception; a sudden jump is a rule.", false));
+    const confPts = rows => [...new Set(rows.map(r => r.n))].sort((a, b) => a - b).map(n => [n, mean(rows.filter(r => r.n === n && Number.isFinite(r.confidence)).map(r => r.confidence / 100))]);
+    const cs = [{ type: "line", cls: "youline", pts: confPts(state.heap) }, { type: "points", cls: "you", pts: confPts(state.heap) }];
+    const ci = [["dotline", "you", "your confidence"]];
+    if (ai.heap.some(r => Number.isFinite(r.confidence))) { cs.push({ type: "line", cls: "altline", pts: confPts(ai.heap.filter(r => Number.isFinite(r.confidence))) }); ci.push(["line", "alt", `${nm}'s confidence`]); }
+    out.push(card("How sure were you? (heap)", plot({ xmin: 1, xmax: 500, ymin: 0.4, ymax: 1, xlog: true,
+      xticks: [1, 3, 10, 30, 100, 500], yticks: [0.5, 0.75, 1], xlabel: "number of grains", ylabel: "confidence", series: cs }),
+      ci, "Humans are least sure near their own boundary: that dip is where vagueness lives."));
+    const fp = fits["you|pile"], fs = fits["you|scatter"];
+    if (fp && fs) {
+      const ratio = fs.t / fp.t;
+      said.push(`<p><b>The heap.</b> For you, a pile became a heap at <b>${heapLabel(fp, state.heap)}</b> grains, scattered sand at <b>${heapLabel(fs, state.heap)}</b>${ratio > 1.5 ? ": the shape mattered, not only the number, so for you a heap is a quality of the whole." : ratio < 0.67 ? ": oddly, scattered sand became a heap sooner." : ": the shape hardly mattered, so for you a heap was mostly a matter of number."} There is no right answer here; the point is how the boundary looks.</p>`);
+    }
+    return fits;
+  }
+
+  function estStats(rows) {
+    const small = rows.filter(r => r.n <= 4), big = rows.filter(r => r.n > 4);
+    return { exactSmall: small.length ? mean(small.map(r => +(r.estimate === r.n))) : NaN,
+             err: big.length ? Math.pow(2, mean(big.map(r => Math.abs(Math.log2(Math.max(r.estimate, 0.5) / r.n))))) : NaN };
+  }
+  // ---------- the twist: the human test ----------
+  // Losing to the AI is no shame: people make HUMAN mistakes, and those are the signatures we look for.
+  // Each check asks whether your pattern shows the human signature of that game.
+  function humanTests() {
+    const out = [], m = a => a.length ? mean(a) : NaN, X_ = xState();
+    const exact = rs => m(rs.map(r => +(r.estimate === r.n)));
+    const t = (name, ok, yes, no, need) => out.push({ name, ok, text: ok === null ? need : ok ? yes : no });
+    if (state.cmp.length) {
+      const e = state.cmp.filter(r => r.design === "ratio" && r.ratio <= 0.65), h = state.cmp.filter(r => r.ratio >= 0.75);
+      const guessing = m(state.cmp.map(r => r.correct)) < 0.6;
+      if (guessing) t("Which side has more?", null, "", "", "");
+      else t("Which side has more?", e.length >= 3 && h.length >= 3 ? m(e.map(r => r.correct)) - m(h.map(r => r.correct)) >= 0.1 : null,
+        "the close pairs fooled you more than the easy ones: Weber's law, the oldest signature of the human number sense.",
+        "you were as good on the close pairs as on the easy ones. Suspiciously machine-like...", "play a few more rounds to tell.");
+    }
+    for (const [name, rs] of [["How many dots?", state.est], ["How many in a row?", X_.strings]]) if (rs.length) {
+      const sm = rs.filter(r => r.n <= 4), bg = rs.filter(r => r.n >= 8);
+      t(name, sm.length >= 2 && bg.length >= 2 ? exact(sm) >= 0.75 && exact(bg) < 0.6 : null,
+        "exact up to four, then you started to estimate: subitizing, just like every human (and many animals).",
+        exact(bg) >= 0.6 ? "you got the big numbers exactly right. Were you counting? Very machine of you." : "even the small ones slipped. Try a longer display time.",
+        "play a few more rounds to tell.");
+    }
+    if (X_.symbolic.length) {
+      const c = X_.symbolic.filter(r => r.correct), near = c.filter(r => r.ratio >= 0.9), far = c.filter(r => r.ratio < 0.75);
+      if (m(X_.symbolic.map(r => r.correct)) < 0.6) t("Which is bigger?", null, "", "", "");
+      else t("Which is bigger?", near.length >= 2 && far.length >= 2 ? m(near.map(r => r.rt_ms)) - m(far.map(r => r.rt_ms)) >= 40 : null,
+        `close numbers took you longer (${Math.round(m(near.map(r => r.rt_ms)) - m(far.map(r => r.rt_ms)))} ms): you read digits as amounts, the distance effect. The AI may win here, but it doesn't feel the distance.`,
+        "close and far numbers took you the same time. That's how a machine compares strings...", "play a few more rounds to tell.");
+    }
+    if (X_.numberline.length) {
+      const pae = m(X_.numberline.map(r => Math.abs(r.estimate - r.value) / r.top));
+      t("Where does it go?", pae > 0.01 && pae < 0.15,
+        `you were close but never exact (${(100 * pae).toFixed(1)}% off on average): a hand, not a ruler.`,
+        pae <= 0.01 ? "pixel-perfect. Are you sure you're not a robot?" : "you were far off. Maybe a child's number line?", "");
+    }
+    if (X_.coords.length) {
+      const e = m(X_.coords.map(r => Math.hypot(r.est_x - r.x, r.est_y - r.y) / r.top));
+      t("Place the point", e > 0.01 && e < 0.15, `close but never exact (${(100 * e).toFixed(1)}% of an axis off): a hand and an eye, not a ruler.`,
+        e <= 0.01 ? "pixel-perfect in two dimensions. Suspicious!" : "far off. Were the axes confusing?", "");
+    }
+    if (X_.analog.length) {
+      const a = X_.analog.filter(r => r.encoding === "area" && r.value <= 55), b = X_.analog.filter(r => r.encoding === "position" || r.encoding === "length");
+      const over = m(a.map(r => r.estimate - r.value)), errA = m(X_.analog.filter(r => r.encoding === "area").map(r => Math.abs(r.estimate - r.value))), errB = m(b.map(r => Math.abs(r.estimate - r.value)));
+      t("Read the chart", a.length >= 1 || (b.length && Number.isFinite(errA)) ? over > 3 || errA > errB : null,
+        "small circles looked bigger to you than they are, and areas were your weakest: the human way of seeing area.",
+        "you read areas as well as lengths. Humans almost never do...", "play a few more rounds (with circles) to tell.");
+    }
+    if (state.heap.length >= 6) {
+      const fp = fitHeap(state.heap.filter(r => r.arrangement === "pile")), fs = fitHeap(state.heap.filter(r => r.arrangement === "scatter"));
+      t("Is it a heap?", Number.isFinite(fp.t) && Number.isFinite(fs.t) ? fs.t > fp.t : null,
+        "a pile became a heap with fewer grains than scattered sand: for you a heap is a shape, not a number.",
+        "shape didn't matter to you, only the count. A rule-follower!", "play a few more rounds to tell.");
+    }
+    return out;
+  }
+  function stamp(ok) {
+    const txt = ok ? "100% HUMAN" : "ROBOT?";
+    return `<svg viewBox="0 0 260 90" width="230" role="img" aria-label="${txt}" style="transform:rotate(-6deg);flex:none">
+      <rect x="6" y="6" width="248" height="78" rx="14" fill="none" stroke="${ok ? "#1f9a5a" : "#e8262d"}" stroke-width="6" stroke-dasharray="${ok ? "none" : "10 5"}"/>
+      <text x="130" y="60" text-anchor="middle" style="font-family: Bangers, Impact, sans-serif; font-size: 44px; fill: ${ok ? "#1f9a5a" : "#e8262d"}; letter-spacing: 2px">${txt}</text></svg>`;
+  }
+  function humanHtml(lost) {
+    const ts = humanTests().filter(x => x.ok !== null);
+    if (!ts.length) return "";
+    const pass = ts.filter(x => x.ok).length, allOk = pass >= Math.ceil(ts.length / 2);
+    const head = lost && allOk ? "You lost to the AI... and that's fine: your mistakes are human. Verdict: you are human."
+      : allOk ? "You beat the AI, and still made human mistakes. Verdict: you are human." : lost ? "You lost, and not even in a human way... Verdict: are you sure you're not a robot?"
+      : "You beat the AI with no human mistakes. Verdict: suspiciously robot.";
+    return `<div class="humantest"><div class="row" style="align-items:center;gap:18px;flex-wrap:nowrap">${stamp(allOk)}<div><h3 style="margin:0">${head}</h3>
+      <p class="note" style="margin:4px 0 0">Machines can win at numbers. What gives a human away is not the score but the shape of the mistakes.</p></div></div>
+      <ul>${ts.map(x => `<li><b>${x.name}</b> ${x.ok ? "✓" : "✗"} ${x.text}</li>`).join("")}</ul></div>`;
+  }
+  function buildVersus() {
+    const name = ai.name || "the AI";
+    if (state.challenge && state.challenge.results.length) {
+      const c = state.challenge, A = aiNow();
+      const rows = c.results.map((r, i) => `<tr><td>Level ${i + 1}</td><td>${r.ptsYou} pts · ${r.you}/${r.n}</td><td>${r.ptsAI} pts · ${r.ai}/${r.n}</td><td>${r.ptsYou > r.ptsAI ? '<span class="chip y">you</span>' : r.ptsYou < r.ptsAI ? '<span class="chip a">AI</span>' : '<span class="chip t">tie</span>'}</td></tr>`).join("");
+      $("versus").innerHTML = `<div class="tablewrap"><table><thead><tr><th>Challenge</th><th>You</th><th>${A.simulated ? "Stand-in AI" : A.name}</th><th>Winner</th></tr></thead><tbody>${rows}</tbody></table></div>
+        <p class="note">${A.simulated ? "The AI in the challenge is a stand-in until Meta's model results are loaded." : ""}</p>`
+        + humanHtml(c.results.reduce((t, r) => t + r.ptsYou - r.ptsAI, 0) < 0);
+      return;
+    }
+    const own = state.challenge ? [] : [...state.cmp, ...state.est, ...Object.values(xState()).flat()].filter(r => Number.isFinite(r.pts));
+    let raceHtml = "";
+    if (state.heap.length) {
+      // No right answer, so no winner: the heap score is how often you and the AI drew the line in the same place.
+      const agree = state.heap.reduce((t, r) => { const p = aiHeapYes(r.arrangement, r.n); return t + (r.answer === "yes" ? p : 1 - p); }, 0);
+      const k = Math.round(agree), n = state.heap.length, f = agree / n;
+      const say = f >= 0.8 ? "SAME BRAIN!" : f >= 0.6 ? "CLOSE MINDS!" : "WORLDS APART!";
+      raceHtml = (own.length ? "" : `<div style="display:flex;justify-content:center">${comic("tie", say)}</div>`) + `
+        <div class="score" style="text-align:center"><span class="y">You</span> & <span class="a">AI</span> agreed on ${k} of ${n} <small style="font-size:1rem">heaps${own.length ? ` · ${say}` : ""}</small></div>
+        <p class="note" style="text-align:center;margin:0 auto">A heap has no right answer, so nobody wins: this is how often you and ${aiHeapName()} put the line in the same place. We only tell you at the end, so it doesn't change your answers.</p>`;
+    }
+    if (own.length) {
+      const y = own.reduce((t, r) => t + r.pts, 0), a = Math.round(own.reduce((t, r) => t + r.ai_pts, 0));
+      raceHtml = `<div id="vArt2" style="display:flex;justify-content:center">${comic(y > a ? "win" : y < a ? "lose" : "tie")}</div>
+        <div class="score" style="text-align:center"><span class="y">You ${y}</span> – <span class="a">${a} AI</span> <small style="font-size:1rem">points in the race</small></div>` + raceHtml;
+      raceHtml += humanHtml(y < a);
+    } else if (state.heap.length) raceHtml += humanHtml(false);
+    if (!ai.cmp.length && !ai.est.length) {
+      $("versus").innerHTML = raceHtml + (raceHtml || state.heap.length ? "" : `<p class="muted">Can you beat the AI? Its results are not loaded yet: once Meta's models have run the same trials, paste their CSV below and your scores appear side by side.</p>`);
+      return;
+    }
+    const rows = [];
+    const add = (label, you, them, better, fmt) => {
+      if (!Number.isFinite(you) || !Number.isFinite(them)) return;
+      const win = Math.abs(you - them) < 1e-9 ? "t" : (better === "high" ? you > them : you < them) ? "y" : "a";
+      rows.push([label, fmt(you), fmt(them), win]);
+    };
+    const pct = v => `${Math.round(100 * v)}%`, two = v => v >= 2.9 ? "> 1" : v.toFixed(2), times = v => `×${v.toFixed(2)}`;
+    if (state.cmp.length && ai.cmp.length) {
+      add("Comparison: proportion correct", mean(state.cmp.map(r => r.correct)), mean(ai.cmp.map(r => r.correct)), "high", pct);
+      add("Weber fraction w (sharper = smaller)", fitW(state.cmp), fitW(ai.cmp), "low", two);
+      const hard = rs => mean(rs.filter(r => r.design === "difference" && Math.max(r.n_left, r.n_right) >= 80).map(r => r.correct));
+      add("Hardest pairs: 80 vs 70, 120 vs 110", hard(state.cmp), hard(ai.cmp), "high", pct);
+    }
+    if (state.est.length && ai.est.length) {
+      const y = estStats(state.est), a = estStats(ai.est);
+      add("Exact at a glance, 1–4 dots", y.exactSmall, a.exactSmall, "high", pct);
+      add("Typical estimation error, 5–100 dots", y.err, a.err, "low", times);
+    }
+    const ys = rows.filter(r => r[3] === "y").length, as = rows.filter(r => r[3] === "a").length;
+    const label = w => w === "y" ? `<span class="chip y">you</span>` : w === "a" ? `<span class="chip a">AI</span>` : `<span class="chip t">tie</span>`;
+    $("versus").innerHTML = raceHtml + `<div class="score"><span class="y">You ${ys}</span> – <span class="a">${as} ${name}</span></div>
+      <div class="tablewrap"><table><thead><tr><th>Measure</th><th>You</th><th>${name}</th><th>Better</th></tr></thead>
+      <tbody>${rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${label(r[3])}</td></tr>`).join("")}</tbody></table></div>
+      <p class="note">Same stimuli, different conditions: you saw each image for ${state.dur === -1 ? "0.25–4 s" : state.dur === 0 ? "as long as you liked" : state.dur + " ms"}; the AI had the image for as long as it worked on it. ${rows.length ? "" : "Load AI results for the same task you ran."}</p>`;
+  }
+
+  // finish(task): the results of the game just played, with a button on to the next game; finish(): everything
+  const LEN_ORDER = ["mini", "quick", "medium", "full"];
+  const KEY = { comparison: "cmp", estimation: "est", heap: "heap" };
+  const TRIALS = { comparison: l => comparisonTrials(l), estimation: l => estimationTrials(l), heap: l => heapTrials(l),
+                   symbolic: l => X.symbolic.build(l), strings: l => X.strings.build(l), numberline: l => X.numberline.build(l), analog: l => X.analog.build(l), coords: l => X.coords.build(l) };
+  const played = task => arrOf(task).length;
+  function nextStep(task) {          // the next length up from what has been played: rounds to add, or null at the top
+    const n = played(task);
+    for (const l of LEN_ORDER) { const N = isX(task) ? X[task].lens[l] : LENGTHS[l][KEY[task]]; if (N > n) return { len: l, add: N - n, total: N }; }
+    return null;
+  }
+  function assignTimes(trials) {
+    trials.forEach((t, i) => { t.display_ms = t.part === "number_line" || t.part === "analog" || t.part === "coords" ? 0 : state.dur === -1 ? DURS[i % DURS.length] : state.dur; });
+    return shuffle(trials);
+  }
+  const GAME_NAMES = { comparison: "Which side has more?", estimation: "How many dots?", heap: "Is it a heap?",
+                       symbolic: X.symbolic.name, strings: X.strings.name, numberline: X.numberline.name, analog: X.analog.name, coords: X.coords.name };
+  function finish(only) {
+    clearTimers(); state.phase = "results"; show("results"); bubble("results"); window.scrollTo(0, 0);
+    const next = only && state.queue[0], step = only && nextStep(only);
+    state.lastTask = only || null;
+    for (const id of ["nextGame", "nextGame2"]) { $(id).hidden = !next; if (next) $(id).textContent = `Next game: ${GAME_NAMES[next.task]} →`; }
+    for (const id of ["more", "more2"]) { $(id).hidden = !step; if (step) $(id).textContent = `One more chance? +${step.add} rounds`; }
+    for (const id of ["allRes", "allRes2"]) $(id).hidden = !(only && !next);
+    $("resTitle").textContent = only ? `${GAME_NAMES[only]} · your results (${played(only)} rounds)` : "You vs the AI";
+    $("again").hidden = !!next;
+    const xs = xState(), keep = { cmp: state.cmp, est: state.est, heap: state.heap, x: xs };
+    if (only) { if (only !== "comparison") state.cmp = []; if (only !== "estimation") state.est = []; if (only !== "heap") state.heap = [];
+                state.x = Object.fromEntries(Object.keys(X).map(k => [k, k === only ? xs[k] : []])); }
+    try { render(); } finally { Object.assign(state, keep); }
+  }
+  function render() {
+    const stats = [];
+    const model = `human:${state.pid || "anon"}`;
+    if (state.cmp.length) {
+      const w = fitW(state.cmp), acc = mean(state.cmp.map(r => r.correct));
+      const cong = state.cmp.filter(r => r.condition === "congruent"), inc = state.cmp.filter(r => r.condition === "incongruent");
+      stats.push(["Weber fraction w", w >= 2.9 ? "> 1" : w.toFixed(2), "typical adult ≈ 0.11–0.15"]);
+      stats.push(["Comparison accuracy", `${Math.round(100 * acc)}%`, `${state.cmp.length} trials`]);
+      if (cong.length && inc.length) stats.push(["Area effect", ((mean(cong.map(r => r.correct)) - mean(inc.map(r => r.correct))) * 100).toFixed(0) + " pts", "congruent − incongruent; near 0 = number"]);
+      const rows = [];
+      for (const r of [0.5, 0.6, 0.7, 0.8, 0.9]) { const s = state.cmp.filter(x => x.design === "ratio" && Math.round(x.ratio * 10) / 10 === r);
+        rows.push([`ratio ${r}`, `${Math.round(100 * mean(s.map(x => x.correct)))}%`, Math.round(mean(s.map(x => x.confidence)))]); }
+      for (const b of [20, 40, 60, 80, 120]) { const s = state.cmp.filter(x => x.design === "difference" && Math.max(x.n_left, x.n_right) === b);
+        rows.push([`${b} vs ${b - 10}`, `${Math.round(100 * mean(s.map(x => x.correct)))}%`, Math.round(mean(s.map(x => x.confidence)))]); }
+      $("tableCmp").innerHTML = `<table><thead><tr><th>Comparison</th><th>Correct</th><th>Confidence</th></tr></thead><tbody>${rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody></table>`;
+      const out = state.cmp.map(r => ({ ...r, modality: "image", reasoning: "human", model, response: r.choice, completion_tokens: "", reasoning_tokens: "" }));
+      $("csvCmp").value = toCSV(out, ["trial_id", "design", "condition", "n_left", "n_right", "ratio", "larger_side", "modality", "reasoning", "model", "timestamp", "response", "choice", "correct", "confidence", "completion_tokens", "reasoning_tokens", "rt_ms", "display_ms", "level", "ai_p", "bet", "pts"]);
+    } else { $("tableCmp").innerHTML = ""; $("csvCmp").value = ""; }
+    if (state.est.length) {
+      const ns = [...new Set(state.est.map(r => r.n))].sort((a, b) => a - b);
+      let sub = 0; for (const n of ns) { const s = state.est.filter(r => r.n === n); if (n === sub + 1 && mean(s.map(r => +(r.estimate === n))) >= 0.9) sub = n; else break; }
+      const big = state.est.filter(r => r.n > 4);
+      const ratios = big.map(r => r.estimate / r.n);
+      stats.push(["Subitizing range", sub ? `1–${sub}` : "none", "typical ≈ 1–4"]);
+      stats.push(["Estimate / true (n > 4)", `${mean(ratios).toFixed(2)} ± ${sd(ratios).toFixed(2)}`, "SD here ≈ your Weber-like CV"]);
+      const rows = [];
+      for (const [lo, hi] of [[1, 4], [5, 10], [12, 25], [32, 50], [64, 100]]) {
+        const s = state.est.filter(r => r.n >= lo && r.n <= hi);
+        rows.push([`${lo}–${hi}`, `${Math.round(100 * mean(s.map(r => +(r.estimate === r.n))))}%`, mean(s.map(r => r.estimate / r.n)).toFixed(2), Math.round(mean(s.map(r => r.confidence)))]);
+      }
+      $("tableEst").innerHTML = `<table><thead><tr><th>Estimation, n</th><th>Exact</th><th>Estimate / true</th><th>Confidence</th></tr></thead><tbody>${rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("")}</tbody></table>`;
+      const out = state.est.map(r => ({ ...r, modality: "image", reasoning: "human", model, response: r.estimate, completion_tokens: "", reasoning_tokens: "" }));
+      $("csvEst").value = toCSV(out, ["trial_id", "condition", "n", "modality", "reasoning", "model", "timestamp", "response", "estimate", "confidence", "completion_tokens", "reasoning_tokens", "rt_ms", "display_ms", "pts"]);
+    } else { $("tableEst").innerHTML = ""; $("csvEst").value = ""; }
+    if (state.heap.length) {
+      const fp = fitHeap(state.heap.filter(r => r.arrangement === "pile")), fsc = fitHeap(state.heap.filter(r => r.arrangement === "scatter"));
+      stats.push(["Heap threshold, piled", heapLabel(fp, state.heap) + " grains", "where you say “heap” half the time"]);
+      stats.push(["Heap threshold, scattered", heapLabel(fsc, state.heap) + " grains", "higher = shape matters"]);
+      const out = state.heap.map(r => ({ ...r, mode: "independent", question: "binary", direction: "", series: "", step: "", modality: "image", model, response: r.answer }));
+      $("csvHeap").value = toCSV(out, ["trial_id", "arrangement", "n", "mode", "question", "direction", "series", "step", "modality", "model", "timestamp", "response", "answer", "confidence", "rt_ms", "display_ms"]);
+    } else { $("csvHeap").value = ""; }
+    const durs = [...new Set([...state.cmp, ...state.est].map(r => r.display_ms))].sort((a, b) => (a || 1e9) - (b || 1e9));
+    if (durs.length > 1) {
+      const label = d => d === 0 ? "no limit" : d >= 1000 ? `${d / 1000} s` : `${d} ms`;
+      const rows = durs.map(d => {
+        const c = state.cmp.filter(r => r.display_ms === d), diff = c.filter(r => r.design === "difference");
+        const e = state.est.filter(r => r.display_ms === d && r.n > 4);
+        return [label(d),
+          c.length ? `${Math.round(100 * mean(c.map(r => r.correct)))}%` : "—",
+          c.length >= 8 ? fitW(c).toFixed(2) : "—",
+          diff.length ? `${Math.round(100 * mean(diff.map(r => r.correct)))}%` : "—",
+          e.length ? `${Math.round(100 * mean(e.map(r => +(r.estimate === r.n))))}%` : "—",
+          Math.round(mean([...c, ...state.est.filter(r => r.display_ms === d)].map(r => r.rt_ms)))];
+      });
+      $("tableDur").innerHTML = `<table><thead><tr><th>Display time</th><th>Comparison</th><th>Weber w</th><th>Fixed difference</th><th>Exact count, n &gt; 4</th><th>Mean RT (ms)</th></tr></thead><tbody>${rows.map(r => `<tr>${r.map(x => `<td>${x}</td>`).join("")}</tr>`).join("")}</tbody></table>
+        <p class="note">Glance to counting: as display time grows, the fixed-difference pairs (20 vs 10 … 120 vs 110) and exact counts should improve and w should drop; where that happens is where perception hands over to counting.</p>`;
+    } else { $("tableDur").innerHTML = ""; }
+    for (const id of ["csvCmp", "csvEst", "csvHeap"]) $(id).closest(".field").hidden = !$(id).value;
+    let xt = "", xc = "";
+    for (const [k, x] of Object.entries(X)) {
+      const rows = xState()[k]; if (!rows.length) continue;
+      const o = { charts: [], table: "" }; x.results(rows, stats, o, []);
+      xt += o.table;
+      const [cols, data] = x.csv(rows, model);
+      xc += `<div class="field"><label>${x.name} results (CSV for analysis)</label><textarea readonly data-x="${k}">${toCSV(data, cols).replace(/</g, "&lt;")}</textarea>
+        <div class="row"><button class="ghost" data-copy="${k}" type="button">Copy ${x.name} CSV</button></div></div>`;
+    }
+    $("tableX").innerHTML = xt; $("csvX").innerHTML = xc;
+    $("stats").innerHTML = stats.map(([k, v, s]) => `<div class="stat"><small>${k}</small><b>${v}</b><small>${s}</small></div>`).join("");
+    buildCharts();
+  }
+
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+  // ---------- controls ----------
+  $("notbot").addEventListener("change", () => { if ($("notbot").checked) { $("notbot").checked = false; $("challenge").click(); } });
+  $("challenge").addEventListener("click", () => {
+    state = { phase: "run", pid: $("pid").value.trim(), dur: +$("dur").value, queue: [], idx: 0, cmp: [], est: [], heap: [],
+              challenge: { level: 0, results: [] } };
+    startLevel(0);
+  });
+  $("vNext").addEventListener("click", () => { if (awaiting !== "verdict") return; awaiting = null; startLevel(state.challenge.level + 1); });
+  $("vStop").addEventListener("click", () => { if (awaiting !== "verdict") return; awaiting = null; finish(); });
+  $("start").addEventListener("click", () => {
+    state = { phase: "run", pid: $("pid").value.trim(), dur: +$("dur").value, queue: [], idx: 0, cmp: [], est: [], heap: [], x: { symbolic: [], strings: [], numberline: [], analog: [], coords: [] } };
+    const assign = assignTimes;
+    const len = $("len").value;
+    if ($("doCmp").checked) state.queue.push({ task: "comparison", trials: assign(comparisonTrials(len)) });
+    if ($("doEst").checked) state.queue.push({ task: "estimation", trials: assign(estimationTrials(len)) });
+    if ($("doHeap").checked) state.queue.push({ task: "heap", trials: assign(heapTrials(len)) });
+    for (const [box, task] of [["doSym", "symbolic"], ["doStr", "strings"], ["doNl", "numberline"], ["doPt", "coords"], ["doAn", "analog"]])
+      if ($(box).checked) state.queue.push({ task, trials: assign(X[task].build(len)) });
+    if (!state.queue.length) return;
+    show("run"); race(0, 0); intro();
+  });
+  for (const [btn, box] of [["btnCmp", "doCmp"], ["btnEst", "doEst"], ["btnHeap", "doHeap"], ["btnSym", "doSym"], ["btnStr", "doStr"], ["btnNl", "doNl"], ["btnAn", "doAn"], ["btnPt", "doPt"]]) {
+    $(btn).addEventListener("click", () => {
+      const on = $(btn).getAttribute("aria-pressed") !== "true";
+      $(btn).setAttribute("aria-pressed", String(on)); $(box).checked = on;
+    });
+  }
+  $("lens").addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    for (const x of $("lens").querySelectorAll("button")) x.setAttribute("aria-pressed", String(x === b));
+    $("len").value = b.dataset.len;
+    const L = LENGTHS[b.dataset.len];
+    $("subCmp").textContent = `${L.cmp} rounds · about ${Math.max(1, Math.round(L.cmp * 3.5 / 60))} minute${L.cmp * 3.5 / 60 >= 1.5 ? "s" : ""}`;
+    $("subEst").textContent = `${L.est} rounds · about ${Math.max(1, Math.round(L.est * 5 / 60))} minute${L.est * 5 / 60 >= 1.5 ? "s" : ""}`;
+    $("subSym").textContent = `${X.symbolic.lens[b.dataset.len]} rounds · 9.11 or 9.9?`;
+    $("subStr").textContent = `${X.strings.lens[b.dataset.len]} rounds · ●●●●● or 00000`;
+    $("subNl").textContent = `${X.numberline.lens[b.dataset.len]} rounds · the number line`;
+    $("subPt").textContent = `${X.coords.lens[b.dataset.len]} rounds · two axes, no grid`;
+    $("subAn").textContent = `${X.analog.lens[b.dataset.len]} rounds · bars, pies, circles, water`;
+    $("subHeap").textContent = `${L.heap} rounds · about ${Math.max(1, Math.round(L.heap * 3 / 60))} minute${L.heap * 3 / 60 >= 1.5 ? "s" : ""} · no right answer`;
+  });
+  $("durs").addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    for (const x of $("durs").querySelectorAll("button")) x.setAttribute("aria-pressed", String(x === b));
+    $("dur").value = b.dataset.dur;
+  });
+  $("prompt").addEventListener("click", () => { if (awaiting === "begin") { awaiting = null; nextTrial(); } });
+  $("bLeft").addEventListener("click", () => answerChoice("left"));
+  $("bRight").addEventListener("click", () => answerChoice("right"));
+  $("answerEst").addEventListener("submit", e => { e.preventDefault(); answerEstimate(parseFloat($("estInput").value)); });
+  $("confRow").addEventListener("click", e => { const b = e.target.closest("button"); if (b) answerConf(+b.dataset.c); });
+  document.addEventListener("keydown", e => {
+    if (awaiting === "begin" && e.code === "Space") { e.preventDefault(); awaiting = null; nextTrial(); }
+    else if (awaiting === "choice" && (e.key === "f" || e.key === "F")) answerChoice("left");
+    else if (awaiting === "choice" && (e.key === "j" || e.key === "J")) answerChoice("right");
+    else if (awaiting === "heap" && (e.key === "y" || e.key === "Y")) answerHeap(true);
+    else if (awaiting === "heap" && (e.key === "n" || e.key === "N")) answerHeap(false);
+    else if (awaiting === "conf" && ["1", "2", "3", "4"].includes(e.key)) answerConf(+e.key);
+    else if (awaiting === "verdict" && e.key === "Enter") { e.preventDefault(); ($("vNext").hidden ? $("vStop") : $("vNext")).click(); }
+  });
+  function copier(btn, area) {
+    $(btn).addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText($(area).value); $(btn).textContent = "Copied"; }
+      catch { $(area).focus(); $(area).select(); $(btn).textContent = "Selected: press Ctrl/Cmd+C"; }
+      setTimeout(() => { $(btn).textContent = btn === "copyCmp" ? "Copy comparison CSV" : "Copy estimation CSV"; }, 2500);
+    });
+  }
+  copier("copyCmp", "csvCmp"); copier("copyEst", "csvEst"); copier("copyHeap", "csvHeap");
+  $("csvX").addEventListener("click", async e => {
+    const b = e.target.closest("[data-copy]"); if (!b) return;
+    const ta = $("csvX").querySelector(`textarea[data-x="${b.dataset.copy}"]`);
+    try { await navigator.clipboard.writeText(ta.value); b.textContent = "Copied"; } catch { ta.focus(); ta.select(); b.textContent = "Selected: press Ctrl/Cmd+C"; }
+  });
+  $("bYes").addEventListener("click", () => answerHeap(true));
+  $("bNo").addEventListener("click", () => answerHeap(false));
+  $("aiLoad").addEventListener("click", () => {
+    const rows = parseCSV($("aiCsv").value.trim());
+    if (!rows.length) { $("aiStatus").textContent = "Nothing to read: paste the whole CSV, including its header line."; return; }
+    const isHeap = "arrangement" in rows[0] && "answer" in rows[0];
+    const confOfX = r => (r.confidence && r.confidence !== "None" && Number.isFinite(+r.confidence)) ? +r.confidence : NaN;
+    if ("a" in rows[0] && "b" in rows[0] && "part" in rows[0]) {
+      ai.name = (rows[0].model || "AI").replace(/^mock-.*/, "simulated AI");
+      ai.sym = rows.filter(r => r.correct === "0" || r.correct === "1").map(r => ({ trial_id: r.trial_id, part: r.part, correct: +r.correct, confidence: confOfX(r) }));
+      $("aiStatus").textContent = `Loaded ${ai.sym.length} "which is bigger" answers from ${ai.name}.`; $("aiCsv").value = ""; buildCharts(); return;
+    }
+    if ("est_x" in rows[0] && "est_y" in rows[0]) {
+      ai.name = (rows[0].model || "AI").replace(/^mock-.*/, "simulated AI");
+      ai.coords = rows.filter(r => Number.isFinite(parseFloat(r.est_x)) && Number.isFinite(parseFloat(r.est_y))).map(r => ({ trial_id: r.trial_id, est_x: +r.est_x, est_y: +r.est_y }));
+      $("aiStatus").textContent = `Loaded ${ai.coords.length} coordinate answers from ${ai.name}.`; $("aiCsv").value = ""; buildCharts(); return;
+    }
+    if ("encoding" in rows[0] && "estimate" in rows[0]) {
+      ai.name = (rows[0].model || "AI").replace(/^mock-.*/, "simulated AI");
+      ai.analog = rows.filter(r => r.estimate !== "" && Number.isFinite(+r.estimate)).map(r => ({ trial_id: r.trial_id, encoding: r.encoding, value: +r.value, estimate: +r.estimate }));
+      $("aiStatus").textContent = `Loaded ${ai.analog.length} chart-reading answers from ${ai.name}.`; $("aiCsv").value = ""; buildCharts(); return;
+    }
+    if ("scale" in rows[0] && "value" in rows[0] && "estimate" in rows[0]) {
+      ai.name = (rows[0].model || "AI").replace(/^mock-.*/, "simulated AI");
+      ai.nl = rows.filter(r => r.part === "number_line" && r.estimate !== "" && Number.isFinite(+r.estimate)).map(r => ({ scale: r.scale, value: +r.value, estimate: +r.estimate }));
+      $("aiStatus").textContent = `Loaded ${ai.nl.length} number-line answers from ${ai.name}.`; $("aiCsv").value = ""; buildCharts(); return;
+    }
+    const isCmp = !isHeap && "n_left" in rows[0], isEst = !isHeap && "estimate" in rows[0] && "n" in rows[0];
+    if (!isCmp && !isEst && !isHeap) { $("aiStatus").textContent = "This CSV is neither a comparison nor an estimation result (expected columns n_left or estimate)."; return; }
+    ai.name = (rows[0].model || "AI").replace(/^mock-.*/, "simulated AI");
+    const confOf = r => (r.confidence && r.confidence !== "None" && Number.isFinite(+r.confidence)) ? +r.confidence : NaN;
+    if (isHeap) ai.heap = rows.filter(r => (r.mode || "independent") === "independent" && (r.answer === "yes" || r.answer === "no"))
+      .map(r => ({ arrangement: r.arrangement, n: +r.n, answer: r.answer, confidence: confOf(r) }));
+    if (isCmp) ai.cmp = rows.filter(r => r.correct === "0" || r.correct === "1").map(r => ({ design: r.design || "ratio", condition: r.condition,
+      n_left: +r.n_left, n_right: +r.n_right, ratio: +r.ratio, correct: +r.correct, confidence: confOf(r) }));
+    if (isEst) ai.est = rows.filter(r => r.estimate && r.estimate !== "None" && Number.isFinite(+r.estimate)).map(r => ({ n: +r.n, estimate: +r.estimate, condition: r.condition, confidence: confOf(r) }));
+    if (isCmp && rows.some(r => (r.trial_id || "").startsWith("ch_"))) {
+      const by = {};
+      for (const r of rows) if (r.trial_id.startsWith("ch_") && (r.correct === "0" || r.correct === "1")) (by[r.trial_id] = by[r.trial_id] || []).push(r);
+      const images = {};
+      for (const [id, rs] of Object.entries(by)) {
+        const cs = rs.map(confOf).filter(Number.isFinite);
+        images[id] = { p: mean(rs.map(r => +r.correct)), q: cs.length ? Math.min(1, Math.max(0.5, mean(cs) / 100)) : NaN, n: rs.length };
+      }
+      AI_TABLE = { model: ai.name, w: fitW(ai.cmp), images };
+      $("aiStatus").textContent = `Loaded ${rows.length} answers from ${ai.name} on ${Object.keys(images).length} challenge images: the next challenge uses them image by image.`;
+      $("aiCsv").value = ""; buildCharts(); return;
+    }
+    $("aiStatus").textContent = `Loaded ${isHeap ? ai.heap.length + " heap" : isCmp ? ai.cmp.length + " comparison" : ai.est.length + " estimation"} trials from ${ai.name}.`;
+    $("aiCsv").value = "";
+    buildCharts();
+  });
+  for (const id of ["more", "more2"]) $(id).addEventListener("click", () => {
+    const task = state.lastTask, step = task && nextStep(task); if (!step) return;
+    const extra = assignTimes(TRIALS[task](step.len)).slice(0, step.add)
+      .map((t, i) => ({ ...t, trial_id: `${t.trial_id}_x${played(task) + i}` }));
+    state.queue.unshift({ task, trials: extra }); state.idx = 0;
+    state.phase = "run"; show("run"); race(0, 0); bubble(task); nextTrial();
+  });
+  for (const id of ["allRes", "allRes2"]) $(id).addEventListener("click", () => finish());
+  for (const id of ["nextGame", "nextGame2"]) $(id).addEventListener("click", () => { if (!state.queue[0]) return; state.phase = "run"; show("run"); intro(); });
+  // Quit: first click asks, second click within 3 s goes back to the start (the run is discarded)
+  let quitArmed = 0;
+  $("home").addEventListener("click", () => {
+    if (Date.now() - quitArmed > 3000) { quitArmed = Date.now(); $("home").textContent = "Quit? Click again"; setTimeout(() => { $("home").textContent = "✕ Quit"; }, 3000); return; }
+    quitArmed = 0; $("home").textContent = "✕ Quit";
+    clearTimers(); awaiting = null; pending = null; state = { phase: "setup", queue: [], idx: 0, cmp: [], est: [], heap: [] };
+    $("race").hidden = true; bubble("setup"); show("setup"); window.scrollTo(0, 0);
+  });
+  $("again").addEventListener("click", () => { clearTimers(); state.phase = "setup"; bubble("setup"); show("setup"); });
+
+  // idle preview on the stimulus panel
+  cv.width = 2 * SIDE; cv.height = SIDE; blank(true);
+  try { const rr = radiiFor({ n_left: 20, n_right: 16, condition: "equal_area" }); drawDots(placeDots(20, rr[0]), rr[0], 0); drawDots(placeDots(16, rr[1]), rr[1], SIDE); } catch {}
+})();
+</script>
+
+</body>
+</html>
