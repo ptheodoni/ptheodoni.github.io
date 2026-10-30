@@ -230,8 +230,8 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
 <div class="wrap">
   <header>
     <h1>Are you human?</h1>
-    <label class="notbot"><input type="checkbox" id="notbot"> <span>I'm not a robot</span> <small>Prove it: with numbers.</small></label>
-    <p class="bubble" id="bubble">Websites ask if you're a robot. We ask the opposite. Play against Meta's AI on the very same pictures: you may beat it, or lose, but only a human makes human mistakes.</p>
+    <label class="notbot"><input type="checkbox" id="notbot"> <span>Are you human?</span> <small>Prove it.</small></label>
+    <p class="bubble" id="bubble">Websites ask if you're a robot. We ask the opposite. Play against an AI (simulated in this prototype) on the very same pictures: you may beat it, or lose, but only a human makes human mistakes.</p>
   </header>
 
   <section class="card" id="setup">
@@ -279,7 +279,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <div class="field"><label for="pid">Your initials</label><input id="pid" type="text" value="PT" maxlength="12" autocomplete="off" style="width: 8rem;"></div>
       <button class="go" id="start">Start!</button>
     </div>
-    <p class="note">Version 26 Oct · 13:00, place the point. Team pilot: nothing is sent anywhere, and closing the page discards the run. After each answer, press 1–4 to say how sure you were.</p>
+    <p class="note">Version 30 Oct, prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards the run. After each answer, press 1–4 to say how sure you were.</p>
   </section>
 
   <section class="card" id="run" hidden>
@@ -1055,7 +1055,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   const arrOf = task => isX(task) ? xState()[task] : state[{ comparison: "cmp", estimation: "est", heap: "heap" }[task]];
 
   const BUBBLES = {
-    setup: "Websites ask if you're a robot. We ask the opposite. Play against Meta's AI on the very same pictures: you may beat it, or lose, but only a human makes human mistakes.",
+    setup: "Websites ask if you're a robot. We ask the opposite. Play against an AI (simulated in this prototype) on the very same pictures: you may beat it, or lose, but only a human makes human mistakes.",
     comparison: "Two clouds of dots, half a blink. Which side has more? No counting, trust your gut. The AI is staring at the very same picture.",
     estimation: "How many dots? Way too fast to count, so guess! Your eyes against the machine's.",
     heap: "One grain of sand is not a heap. A million grains is. So where does the heap begin? No right answer here: just yours, and the AI's.",
