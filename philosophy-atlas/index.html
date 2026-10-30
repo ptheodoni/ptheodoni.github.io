@@ -698,7 +698,7 @@ cform.addEventListener('submit',async e=>{e.preventDefault();
     box.innerHTML=`<h3>Suggested changes (only you see this list)</h3>${all.length?`<ul class="links">${all.map(x=>`<li><b>${S(x.kind)}</b> · ${S(x.ctx)}<div style="font-size:14px;white-space:pre-wrap">${S(x.what)}</div><div style="font-size:13px">References: ${(x.refs||[]).map(S).join('; ')}</div><div style="color:var(--muted);font-size:13px">${x.credit?S(x.credit):'No name given'} · ${S(x.at).slice(0,10)}</div></li>`).join('')}</ul>`:'<p class="sub">No suggestions yet.</p>'}`}catch(e){}})();
 // ---- Contributors: credited by name, with what they added ----
 const CONTRIBUTORS=[
- {name:'Panagiota Theodoni',role:'Founder and curator',since:'October 2026',did:['Founded and designed the atlas','Curates the data','Added thinkers, texts and links','Corrected placements and links']}];
+ {name:'Panagiota Theodoni',role:'Founder and curator',since:'October 2026',did:['Founded and designed the atlas','Curates the data','Added thinkers, texts and links','Corrections of links and interpretations']}];
 document.getElementById('clist').innerHTML=`<ul class="links">${CONTRIBUTORS.map(c=>`<li><b>${esc(c.name)}</b> <span style="color:var(--muted)">· ${esc(c.role)} · since ${esc(c.since)}</span><ul class="ul" style="margin-top:6px">${c.did.map(d=>`<li>${esc(d)}</li>`).join('')}</ul></li>`).join('')}</ul>`;
 document.getElementById('bcb2').addEventListener('click',()=>document.getElementById('bcb').click());
 drawQList();setQuestion(0);
