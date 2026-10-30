@@ -90,6 +90,12 @@ footer{font-size:12.5px;color:var(--muted);max-width:90ch}
 .err{color:var(--e-ref);font-size:13px}
 dialog{border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--fg);width:min(560px,calc(100vw - 32px));padding:20px;box-sizing:border-box}
 dialog::backdrop{background:rgb(0 0 0 / .35)}
+.addbtn{font:inherit;font-size:15px;font-weight:600;background:var(--accent);color:var(--on-accent);border:0;border-radius:6px;padding:10px 16px;min-height:44px;cursor:pointer}
+.addbtn:hover{filter:brightness(1.08)}
+.ways{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:12px 0}
+.way{border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.way h3{margin:0;font-size:15px}
+.way p{margin:0;font-size:13.5px;color:var(--muted);flex:1}
 footer .tbtn,.contrib{font-size:14px}
 .qgen{border:1px dashed var(--bar-edge);border-radius:8px;padding:10px 12px;font-size:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
 .tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
@@ -107,7 +113,7 @@ footer .tbtn,.contrib{font-size:14px}
 <div class="wrap">
   <header>
     <h1>Philosophy Atlas<small>How philosophers across traditions answer the same questions: where they agree, where they part, and who answered whom. Ask a question, see which topics each age discussed, or follow the whole history on one timeline.</small></h1>
-    <p class="status" id="status" aria-live="polite"></p>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><button type="button" class="addbtn" id="bcb">Be a contributor</button><p class="status" id="status" aria-live="polite" style="margin:0"></p></div>
   </header>
 
   <nav class="tabs" role="tablist" aria-label="Views"><button type="button" role="tab" id="tab-q" aria-selected="true">Questions</button><button type="button" role="tab" id="tab-ideas" aria-selected="false">History of ideas</button><button type="button" role="tab" id="tab-tl" aria-selected="false">Timeline</button></nav>
@@ -163,6 +169,19 @@ footer .tbtn,.contrib{font-size:14px}
       <div id="qmine"></div><div id="qreview" hidden></div><div id="creview" hidden></div>
     </div>
   </section>
+  <dialog id="bdlg" aria-labelledby="bdlg-h" style="width:min(760px,calc(100vw - 32px))"><div>
+    <h2 id="bdlg-h" class="vh" style="font-size:22px">Be a contributor</h2>
+    <p class="lead" style="margin-top:4px">The atlas is built by its community. Every contribution goes to the curator, who checks the sources; accepted contributions are credited by name.</p>
+    <div class="ways">
+      <div class="way"><h3>Suggest a change</h3><p>Add information, object to a placement or a link, propose a new link or another reading, or correct a date. References are required.</p><button type="button" class="tbtn" data-contrib="General suggestion">Suggest a change</button></div>
+      <div class="way"><h3>Add a philosopher or a text</h3><p>Someone missing from the atlas, especially from traditions and women the usual histories leave out. Give their dates and a work with its passage.</p><button type="button" class="tbtn" data-contrib="Add a philosopher or text" data-kind="Add information">Add someone</button></div>
+      <div class="way"><h3>Object to a placement or a link</h3><p>Select the thinker on the timeline or in a question, then use Suggest a change there; the form records exactly what you are objecting to.</p><button type="button" class="tbtn" data-go-view="q">Go to the questions</button></div>
+      <div class="way"><h3>Propose a question</h3><p>A question for the atlas, its parts, and the thinkers you would place on it.</p><button type="button" class="tbtn" data-go-view="q" data-focus="qf-q">Propose a question</button></div>
+      <div class="way"><h3>Draft a map with Claude</h3><p>Type a question and get a first map from the thinkers already in the atlas, then send it to the curator to be checked.</p><button type="button" class="tbtn" data-go-view="q" data-focus="qa-in">Ask a question</button></div>
+    </div>
+    <p class="sub">Sending works when the atlas is opened in claude.ai while signed in. On other copies, the forms let you copy your contribution as text.</p>
+    <div style="display:flex;justify-content:flex-end"><button type="button" class="tbtn" id="bclose">Close</button></div>
+  </div></dialog>
   <dialog id="cdlg" aria-labelledby="cdlg-h"><form id="cform" class="qform" style="margin:0;max-width:none" novalidate>
     <h2 id="cdlg-h" class="vh" style="font-size:20px">Suggest a change</h2>
     <p class="sub" id="cctx" style="margin:0"></p>
@@ -648,9 +667,11 @@ ${roster}`;
 // ---- Community contributions: every change must cite its sources ----
 const attr=v=>esc(String(v)).replace(/"/g,'&quot;');
 const cdlg=document.getElementById('cdlg'),cform=document.getElementById('cform'),cctx=document.getElementById('cctx'),cst=document.getElementById('cst'),coff=document.getElementById('coff'),csend=document.getElementById('csend');
-function openContrib(ctx){cform.reset();cst.textContent='';cst.className='';cctx.textContent=ctx;cdlg.dataset.ctx=ctx;try{cdlg.showModal()}catch(e){cdlg.setAttribute('open','')}document.getElementById('cwhat').focus()}
-document.addEventListener('click',e=>{const b=e.target.closest('[data-contrib]');if(b){e.preventDefault();openContrib(b.dataset.contrib)}});
+function openContrib(ctx,kind){cform.reset();if(kind)document.getElementById('ckind').value=kind;cst.textContent='';cst.className='';cctx.textContent=ctx;cdlg.dataset.ctx=ctx;try{cdlg.showModal()}catch(e){cdlg.setAttribute('open','')}document.getElementById('cwhat').focus()}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-contrib]');if(b){e.preventDefault();const bd=document.getElementById('bdlg');if(bd.open)bd.close();openContrib(b.dataset.contrib,b.dataset.kind)}const g=e.target.closest('[data-go-view]');if(g){const bd=document.getElementById('bdlg');if(bd.open)bd.close();showView(g.dataset.goView);const f=g.dataset.focus&&document.getElementById(g.dataset.focus);if(f&&!f.closest('[hidden]')){f.scrollIntoView({block:'center'});f.focus()}else if(f){const o=document.getElementById(g.dataset.focus==='qa-in'?'qa-off':'qform-off');if(o)o.scrollIntoView({block:'center'})}}});
 document.getElementById('ccancel').addEventListener('click',()=>cdlg.close());
+document.getElementById('bcb').addEventListener('click',()=>{const d=document.getElementById('bdlg');try{d.showModal()}catch(e){d.setAttribute('open','')}});
+document.getElementById('bclose').addEventListener('click',()=>document.getElementById('bdlg').close());
 ['cwhat','crefs'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{if(cst.className==='err'){cst.textContent='';cst.className=''}}));
 document.getElementById('ccopy').addEventListener('click',async()=>{const t=`${cdlg.dataset.ctx}\nKind: ${document.getElementById('ckind').value}\n\n${document.getElementById('cwhat').value}\n\nReferences:\n${document.getElementById('crefs').value}`;try{await navigator.clipboard.writeText(t);cst.className='';cst.textContent='Copied.'}catch(e){cst.className='err';cst.textContent='Copying is not allowed here; select the text and copy it by hand.'}});
 cform.addEventListener('submit',async e=>{e.preventDefault();
