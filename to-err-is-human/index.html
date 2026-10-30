@@ -231,7 +231,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   <header>
     <h1>To Err Is Human?</h1>
     <label class="notbot"><input type="checkbox" id="notbot"> <span>I am human</span> <small>Prove it.</small></label>
-    <p class="bubble" id="bubble">Websites ask if you're a robot. We ask the opposite. Play against an AI (simulated in this prototype) on the very same pictures: you may beat it, or lose, but only a human makes human mistakes.</p>
+    <p class="bubble" id="bubble">To err is human, but only humans err like humans. Play against a simulated AI (Meta's model coming soon) on the very same pictures: you may beat it or lose to it; what counts is whether your mistakes are human ones.</p>
   </header>
 
   <section class="card" id="setup">
@@ -1055,7 +1055,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   const arrOf = task => isX(task) ? xState()[task] : state[{ comparison: "cmp", estimation: "est", heap: "heap" }[task]];
 
   const BUBBLES = {
-    setup: "Websites ask if you're a robot. We ask the opposite. Play against an AI (simulated in this prototype) on the very same pictures: you may beat it, or lose, but only a human makes human mistakes.",
+    setup: "To err is human, but only humans err like humans. Play against a simulated AI (Meta's model coming soon) on the very same pictures: you may beat it or lose to it; what counts is whether your mistakes are human ones.",
     comparison: "Two clouds of dots, half a blink. Which side has more? No counting, trust your gut. The AI is staring at the very same picture.",
     estimation: "How many dots? Way too fast to count, so guess! Your eyes against the machine's.",
     heap: "One grain of sand is not a heap. A million grains is. So where does the heap begin? No right answer here: just yours, and the AI's.",
@@ -1587,7 +1587,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     if (!ts.length) return "";
     const pass = ts.filter(x => x.ok).length, allOk = pass >= Math.ceil(ts.length / 2);
     const head = lost && allOk ? "You lost to the AI... and that's fine: your mistakes are human. Verdict: you are human."
-      : allOk ? "You beat the AI, and still made human mistakes. Verdict: you are human." : lost ? "You lost, and not even in a human way... Verdict: are you sure you're not a robot?"
+      : allOk ? "You beat the AI, and still made human mistakes. Verdict: you are human." : lost ? "You lost, and not even in a human way... To err is human, but not like that. Are you sure you're not a robot?"
       : "You beat the AI with no human mistakes. Verdict: suspiciously robot.";
     return `<div class="humantest"><div class="row" style="align-items:center;gap:18px;flex-wrap:nowrap">${stamp(allOk)}<div><h3 style="margin:0">${head}</h3>
       <p class="note" style="margin:4px 0 0">Machines can win at numbers. What gives a human away is not the score but the shape of the mistakes.</p></div></div>
