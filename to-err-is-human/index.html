@@ -166,6 +166,11 @@ svg .fdline { stroke: var(--good); stroke-width: 3; fill: none; }
 .divider { border-top: 3px dashed var(--ink); margin: 6px 0 0; }
 .verdict { align-items: center; text-align: center; }
 #vArt { width: 100%; display: flex; justify-content: center; }
+.guides { display: flex; flex-direction: column; gap: 14px; }
+.guide { border: 3px solid var(--ink); border-radius: 18px; padding: 12px 16px; background: #fff; box-shadow: 4px 4px 0 var(--ink); display: flex; flex-direction: column; gap: 8px; }
+.guide h3 { margin: 0; font-size: 1.4rem; }
+.guide p { margin: 0; }
+.guide th, .guide td { text-align: left; vertical-align: top; }
 .humantest { border: 3px solid var(--ink); border-radius: 18px; padding: 14px 16px; background: #fff; box-shadow: 4px 4px 0 var(--ink); }
 .humantest h3 { font-size: 1.5rem; }
 .humantest ul { margin: 10px 0 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 4px; }
@@ -279,7 +284,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <div class="field"><label for="pid">Your initials</label><input id="pid" type="text" value="PT" maxlength="12" autocomplete="off" style="width: 8rem;"></div>
       <button class="go" id="start">Start!</button>
     </div>
-    <p class="note">Version 30 Oct, prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards the run. After each answer, press 1–4 to say how sure you were.</p>
+    <p class="note">Version 30 Oct, prototype (simulated AI), with how to read your results. Team pilot: nothing is sent anywhere, and closing the page discards the run. After each answer, press 1–4 to say how sure you were.</p>
   </section>
 
   <section class="card" id="run" hidden>
@@ -334,6 +339,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     <div class="stats" id="stats"></div>
     <div id="summary" class="summary"></div>
     <div class="charts" id="charts"></div>
+    <div class="guides" id="guide"></div>
     <div class="tablewrap" id="tableDur"></div>
     <div class="tablewrap" id="tableCmp"></div>
     <div class="tablewrap" id="tableEst"></div>
@@ -1461,6 +1467,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     for (const [k, x] of Object.entries(X)) { const rows = xState()[k]; if (!rows.length) continue;
       const o = { charts: [], table: "" }; x.results(rows, [], o, said); out.push(...o.charts); }
     $("charts").innerHTML = out.join("");
+    $("guide").innerHTML = guideHtml();
     $("summary").innerHTML = said.join("");
     buildVersus();
   }
@@ -1680,6 +1687,141 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     if (only) { if (only !== "comparison") state.cmp = []; if (only !== "estimation") state.est = []; if (only !== "heap") state.heap = [];
                 state.x = Object.fromEntries(Object.keys(X).map(k => [k, k === only ? xs[k] : []])); }
     try { render(); } finally { Object.assign(state, keep); }
+  }
+
+  // ---------- how to read your results: what adults, children, infants and animals do, and what departures mean ----------
+  // Reference values are approximate and cited from the literature as summarised in analysis/human_benchmarks.md;
+  // they are to be checked against the original papers before any scientific use.
+  function guideHtml() {
+    const m = a => a.length ? mean(a) : NaN, X_ = xState(), blocks = [];
+    const pct = v => Number.isFinite(v) ? `${Math.round(100 * v)}%` : "—";
+    const table = rows => `<div class="tablewrap"><table><thead><tr><th>Who</th><th>Typical result</th><th>Source</th></tr></thead><tbody>${rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody></table></div>`;
+    const block = (title, ref, you, means) => blocks.push(`<div class="guide"><h3>${title}</h3>${table(ref)}
+      <p><b>You:</b> ${you}</p><p><b>What it means:</b> ${means}</p></div>`);
+    const roundShare = rs => m(rs.filter(r => r.n > 10).map(r => +(r.estimate % 5 === 0)));
+
+    if (state.cmp.length) {
+      const rs = state.cmp, acc = m(rs.map(r => r.correct)), w = fitW(rs);
+      const fd = rs.filter(r => r.design === "difference" && Math.max(r.n_left, r.n_right) >= 80);
+      const cong = rs.filter(r => r.condition === "congruent"), inc = rs.filter(r => r.condition === "incongruent");
+      const easy = m(rs.filter(r => r.design === "ratio" && r.ratio <= 0.65).map(r => r.correct)), hard = m(rs.filter(r => r.ratio >= 0.75).map(r => r.correct));
+      let means;
+      if (acc < 0.6) means = "close to chance. Either you were guessing, or the dots were too brief to see. This is not a human-like pattern or a machine-like one; it carries no signal. Try a longer display time.";
+      else if (fd.length >= 2 && m(fd.map(r => r.correct)) >= 0.9) means = "you were almost always right even on 80 vs 70 and 120 vs 110. That is counting, not perceiving: people do it when they have time, perception alone cannot.";
+      else if (cong.length && inc.length && m(cong.map(r => r.correct)) - m(inc.map(r => r.correct)) > 0.25) means = "you did much better when the larger number also had more ink than when it had less. You were judging area rather than number, as young children often do.";
+      else if (Number.isFinite(easy) && Number.isFinite(hard) && easy - hard < 0.05) means = "the close pairs were not harder for you than the easy ones. A human perceiver almost always shows that drop (Weber's law), so either you counted, or your answers were erratic.";
+      else if (w <= 0.3) means = "a typical adult pattern: easy ratios almost always right, close ones harder. That drop with the ratio is Weber's law, shared with infants and monkeys.";
+      else if (w <= 0.6) means = "broader than adults usually are, like a young child or an adult seeing the dots very briefly. Still the human shape, just less sharp.";
+      else means = "very broad acuity. With so few rounds this is noisy; play more rounds to tell.";
+      block("Which side has more?", [
+        ["Newborns", "tell 4 from 12 (1:3), not 4 from 8", "Izard et al. 2009"],
+        ["6-month-olds", "tell 8 from 16 (1:2), not 2:3; w ≈ 0.5", "Xu & Spelke 2000"],
+        ["3-year-olds", "w ≈ 0.4", "Halberda & Feigenson 2008"],
+        ["6-year-olds", "w ≈ 0.2", "Halberda & Feigenson 2008"],
+        ["Adults", "w ≈ 0.11–0.25; accuracy depends on the ratio, not the size", "Pica et al. 2004; Halberda et al. 2012"],
+        ["Monkeys", "the same ratio dependence as college students", "Cantlon & Brannon 2006"]],
+        `${pct(acc)} correct; Weber fraction w ${w >= 2.9 ? "> 1" : w.toFixed(2)}${Number.isFinite(easy) && Number.isFinite(hard) ? `; easy pairs ${pct(easy)}, close pairs ${pct(hard)}` : ""}.`, means);
+    }
+
+    for (const [title, rs, kind] of [["How many dots?", state.est, "dots"], ["How many in a row?", X_.strings, "rows"]]) if (rs.length) {
+      const sm = rs.filter(r => r.n <= 4), bg = rs.filter(r => r.n > 4);
+      const exS = m(sm.map(r => +(r.estimate === r.n))), exB = m(bg.map(r => +(r.estimate === r.n)));
+      const ratio = bg.map(r => r.estimate / r.n), mu = m(ratio), cv = ratio.length > 1 ? Math.sqrt(m(ratio.map(v => (v - mu) ** 2))) / mu : NaN, rnd = roundShare(rs);
+      let means;
+      if (Number.isFinite(exS) && exS < 0.6) means = "even 1 to 4 slipped. Adults see up to about four at a glance without error, so this points to the display being too short or to inattention.";
+      else if (Number.isFinite(exB) && exB >= 0.7) means = "you were exact well beyond four. That is counting: people do it given time, but it is not what the glance does.";
+      else if (Number.isFinite(rnd) && rnd >= 0.7) means = "most of your larger answers were round numbers (20, 25, 50…). That is a verbal, not a perceptual, habit, and also typical of language models.";
+      else if (Number.isFinite(cv) && cv > 0.45) means = "your estimates beyond four scattered widely. Adults keep a fairly constant relative error; this much scatter suggests guessing.";
+      else if (Number.isFinite(mu) && mu < 0.8) means = "the human pattern, with the common tendency to underestimate large sets: exact up to about four, then estimates whose error grows with the number.";
+      else means = "the human pattern: exact up to about four (subitizing), then estimates whose error grows in proportion to the number (scalar variability).";
+      block(title, kind === "dots" ? [
+        ["Infants", "track up to about 3 objects at once", "Feigenson, Carey & Hauser 2002"],
+        ["Children", "subitize from early childhood; larger relative errors when estimating", "Izard & Dehaene 2008"],
+        ["Adults", "exact and fast up to 3–4; beyond, error grows with n (relative error ≈ 0.15–0.25), large sets underestimated", "Kaufman et al. 1949; Whalen et al. 1999; Izard & Dehaene 2008"],
+        ["Monkeys", "approximate number with the same scaling", "Nieder & Miller 2003"]] : [
+        ["Adults", "a row of symbols is subitized up to about 4; spacing and grouping (1,000,000) make counting easier", "Trick & Pylyshyn 1994 (subitizing)"],
+        ["Children, animals", "no standard data for rows of written symbols", "—"],
+        ["Language models", "read text in chunks (tokens), so runs of identical symbols are hard to count", "—"]],
+        `exact on 1–4: ${pct(exS)}; exact beyond 4: ${pct(exB)}${Number.isFinite(mu) ? `; on average your estimates were ${Math.round(100 * mu)}% of the true number` : ""}.`, means);
+    }
+
+    if (state.heap.length >= 4) {
+      const ys = state.heap.map(r => +(r.answer === "yes")), allSame = ys.every(v => v === ys[0]);
+      const fp = fitHeap(state.heap.filter(r => r.arrangement === "pile")), fs = fitHeap(state.heap.filter(r => r.arrangement === "scatter"));
+      const sharp = Number.isFinite(fp.s) && fp.s < 0.12;
+      let means;
+      if (allSame) means = `you answered "${ys[0] ? "yes" : "no"}" every time. There is no boundary to see, so this tells us nothing about where a heap begins for you.`;
+      else if (Number.isFinite(fp.t) && Number.isFinite(fs.t) && fs.t > 1.5 * fp.t) means = "a pile became a heap with fewer grains than scattered sand: for you a heap is a shape, a quality of the whole, not just a number. That is the typical human answer.";
+      else if (sharp) means = "your boundary was sharp, like a rule (\"from N grains on, it's a heap\"). People usually show a gradual zone where they hesitate.";
+      else means = "a gradual boundary with a zone of hesitation, which is how people usually treat vague words.";
+      block("Is it a heap?", [
+        ["Adults", "a gradual boundary with a borderline zone of uncertainty; answers depend on the shape and on the order of presentation", "Egré, de Gardelle & Ripley 2013"],
+        ["Children, animals", "no standard data for heap judgments", "—"]],
+        `${Number.isFinite(fp.t) ? `a pile became a heap at about ${Math.round(fp.t)} grains` : "no clear pile threshold"}${Number.isFinite(fs.t) ? `, scattered sand at about ${Math.round(fs.t)}` : ""}.`, means);
+    }
+
+    if (X_.symbolic.length) {
+      const rs = X_.symbolic, acc = m(rs.map(r => r.correct)), trap = rs.filter(r => r.first_diff === "trap");
+      const c = rs.filter(r => r.correct), near = m(c.filter(r => r.ratio >= 0.9).map(r => r.rt_ms)), far = m(c.filter(r => r.ratio < 0.75).map(r => r.rt_ms));
+      let means;
+      if (acc < 0.6) means = "close to chance: guessing, or the numbers were too brief to read.";
+      else if (trap.length && m(trap.map(r => r.correct)) < 0.6) means = "you often picked the longer decimal (9.11 over 9.9). That is the whole-number bias, common in children learning decimals, and a famous error of language models.";
+      else if (Number.isFinite(near) && Number.isFinite(far) && near - far >= 40) means = "close numbers took you longer: the distance effect. Even with digits, you read numbers as amounts on a mental line, as adults do.";
+      else if (Number.isFinite(near) && Number.isFinite(far)) means = "close and far numbers took you about the same time. That fits comparing digit by digit, like a string, rather than as amounts.";
+      else means = "play more rounds to see a pattern.";
+      block("Which is bigger?", [
+        ["Adults", "slower and less accurate for close numbers (distance effect), even with digits", "Moyer & Landauer 1967"],
+        ["Adults", "slower when the units point the other way (47 vs 62)", "Nuerk et al. 2001"],
+        ["Children", "often think the longer decimal is bigger (whole-number bias)", "Resnick et al. 1989"],
+        ["Monkeys", "a distance effect when comparing learned symbols", "Cantlon & Brannon 2007"]],
+        `${pct(acc)} correct${trap.length ? `; decimal traps ${pct(m(trap.map(r => r.correct)))}` : ""}${Number.isFinite(near) && Number.isFinite(far) ? `; close pairs ${Math.round(near)} ms, far pairs ${Math.round(far)} ms` : ""}.`, means);
+    }
+
+    if (X_.numberline.length) {
+      const rs = X_.numberline, pae = m(rs.map(r => Math.abs(r.estimate - r.value) / r.top));
+      const small = rs.filter(r => r.value <= r.top / 4), push = m(small.map(r => (r.estimate - r.value) / r.top));
+      let means;
+      if (pae <= 0.01) means = "pixel-perfect. People are never this exact; that is a ruler, not an eye.";
+      else if (Number.isFinite(push) && push > 0.07) means = "you gave small numbers too much room, placing them too far right. That is the log-compressed number line of young children, before schooling makes it linear.";
+      else if (pae > 0.15) means = "large errors all along the line, without a clear shape: erratic rather than child-like or adult-like.";
+      else means = "close but never exact, with no squeeze of the small numbers: the linear number line of educated adults.";
+      block("Where does it go?", [
+        ["Kindergarten", "log-compressed on 0–100: small numbers spread out, large ones squeezed", "Siegler & Booth 2004"],
+        ["2nd–4th grade", "linear on 0–100, still log-like on 0–1000", "Siegler & Opfer 2003"],
+        ["Adults", "linear, errors of a few percent of the line", "Siegler & Opfer 2003"],
+        ["Adults without formal schooling (Mundurukú)", "log-like mapping", "Dehaene et al. 2008"]],
+        `you missed by ${(100 * pae).toFixed(1)}% of the line on average${Number.isFinite(push) ? `; small numbers shifted ${push >= 0 ? "right" : "left"} by ${(100 * Math.abs(push)).toFixed(1)}%` : ""}.`, means);
+    }
+
+    if (X_.coords.length) {
+      const rs = X_.coords, e = m(rs.map(r => Math.hypot(r.est_x - r.x, r.est_y - r.y) / r.top));
+      const toward = m(rs.map(r => (Math.abs(r.x - r.top / 2) - Math.abs(r.est_x - r.top / 2) + Math.abs(r.y - r.top / 2) - Math.abs(r.est_y - r.top / 2)) / r.top));
+      let means;
+      if (e <= 0.01) means = "pixel-perfect in two dimensions: a ruler, not an eye.";
+      else if (e > 0.15) means = "large errors: perhaps the axes were confusing, or the answers were hurried.";
+      else if (toward > 0.02) means = "your points drifted toward the middle of the axes, a pull that people show when they place or remember locations.";
+      else means = "close but never exact: an eye and a hand, as expected.";
+      block("Place the point", [
+        ["Adults", "remembered locations are pulled toward the centres of regions", "Huttenlocher, Hedges & Duncan 1991"],
+        ["Children, animals", "no standard data for placing coordinates on empty axes", "—"]],
+        `you missed by ${(100 * e).toFixed(1)}% of an axis on average.`, means);
+    }
+
+    if (X_.analog.length) {
+      const rs = X_.analog, err = enc => m(rs.filter(r => r.encoding === enc).map(r => Math.abs(r.estimate - r.value)));
+      const small = rs.filter(r => r.encoding === "area" && r.value <= 55), over = m(small.map(r => r.estimate - r.value));
+      let means;
+      if (m(rs.map(r => Math.abs(r.estimate - r.value))) > 25) means = "large errors on every kind of picture: guessing rather than reading.";
+      else if (Number.isFinite(over) && over > 3) means = "small circles looked bigger to you than they are: the human compression of area, which even trained adults keep.";
+      else if (Number.isFinite(err("area")) && Number.isFinite(err("position")) && err("area") <= err("position")) means = "you read areas as well as positions. People almost never do; areas are our weakest reading.";
+      else means = "the usual human ranking: positions and lengths read best, angles and areas worse.";
+      block("Read the chart", [
+        ["Adults", "position < length < angle < area, from most to least accurate", "Cleveland & McGill 1984"],
+        ["Adults", "perceived area grows more slowly than true area (exponent ≈ 0.7–0.8)", "Stevens 1957; Teghtsoonian 1965"],
+        ["Adults", "proportions are pulled toward reference points such as one half", "Spence 1990; Hollands & Dyre 2000"]],
+        `average miss ${m(rs.map(r => Math.abs(r.estimate - r.value))).toFixed(1)} points${Number.isFinite(over) ? `; small circles judged ${over >= 0 ? "+" : ""}${over.toFixed(1)} points off` : ""}.`, means);
+    }
+    return blocks.length ? `<h2>How to read your results</h2><p class="note">What people of different ages, and animals, usually do, and what it means when you depart from it. Values are approximate, from the studies named.</p>${blocks.join("")}` : "";
   }
   function render() {
     const stats = [];
