@@ -186,7 +186,7 @@ footer .tbtn,.contrib{font-size:14px}
       <div class="way"><h3>Draft a map with Claude</h3><p>Type a question and get a first map from the thinkers already in the atlas, then send it to the curator to be checked.</p><button type="button" class="tbtn" data-go-view="q" data-focus="qa-in">Ask a question</button></div>
     </div>
     <p class="sub">Sending works when the atlas is opened in claude.ai while signed in. On other copies, the forms let you copy your contribution as text.</p>
-    <div style="display:flex;justify-content:flex-end"><button type="button" class="tbtn" id="bclose">Close</button></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><button type="button" class="tbtn" id="bsee">See the contributors so far</button><button type="button" class="tbtn" id="bclose">Close</button></div>
   </div></dialog>
   <dialog id="cdlg" aria-labelledby="cdlg-h"><form id="cform" class="qform" style="margin:0;max-width:none" novalidate>
     <h2 id="cdlg-h" class="vh" style="font-size:20px">Suggest a change</h2>
@@ -678,6 +678,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-contrib]')
 document.getElementById('ccancel').addEventListener('click',()=>cdlg.close());
 document.getElementById('bcb').addEventListener('click',()=>{const d=document.getElementById('bdlg');try{d.showModal()}catch(e){d.setAttribute('open','')}});
 document.getElementById('bclose').addEventListener('click',()=>document.getElementById('bdlg').close());
+document.getElementById('bsee').addEventListener('click',()=>{document.getElementById('bdlg').close();const c=document.getElementById('contributors');c.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});c.setAttribute('tabindex','-1');c.focus({preventScroll:true})});
 ['cwhat','crefs'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{if(cst.className==='err'){cst.textContent='';cst.className=''}}));
 document.getElementById('ccopy').addEventListener('click',async()=>{const t=`${cdlg.dataset.ctx}\nKind: ${document.getElementById('ckind').value}\n\n${document.getElementById('cwhat').value}\n\nReferences:\n${document.getElementById('crefs').value}`;try{await navigator.clipboard.writeText(t);cst.className='';cst.textContent='Copied.'}catch(e){cst.className='err';cst.textContent='Copying is not allowed here; select the text and copy it by hand.'}});
 cform.addEventListener('submit',async e=>{e.preventDefault();
