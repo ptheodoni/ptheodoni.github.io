@@ -169,9 +169,15 @@ footer .tbtn,.contrib{font-size:14px}
       <div id="qmine"></div><div id="qreview" hidden></div><div id="creview" hidden></div>
     </div>
   </section>
+  <section id="contributors" class="tl" style="padding:16px" aria-labelledby="contrib-h">
+    <h2 id="contrib-h" class="vh" style="font-size:20px">Contributors</h2>
+    <p class="lead">Everyone whose contribution has been accepted, and what they added. Version 0.1, October 2026.</p>
+    <div id="clist"></div>
+    <p class="sub" style="margin-top:10px">Built with drafting help from Claude (Anthropic): data, readings and code were drafted by Claude and checked by the curator. Corrections and additions from the community are credited here when accepted. <button type="button" class="tbtn" id="bcb2" style="margin-left:4px">Be a contributor</button></p>
+  </section>
   <dialog id="bdlg" aria-labelledby="bdlg-h" style="width:min(760px,calc(100vw - 32px))"><div>
     <h2 id="bdlg-h" class="vh" style="font-size:22px">Be a contributor</h2>
-    <p class="lead" style="margin-top:4px">The atlas is built by its community. Every contribution goes to the curator, who checks the sources; accepted contributions are credited by name.</p>
+    <p class="lead" style="margin-top:4px">The atlas is built by its community. Every contribution goes to the curator, who checks the sources; accepted contributions are credited by name in the Contributors list at the bottom of the page, with what each person added.</p>
     <div class="ways">
       <div class="way"><h3>Suggest a change</h3><p>Add information, object to a placement or a link, propose a new link or another reading, or correct a date. References are required.</p><button type="button" class="tbtn" data-contrib="General suggestion">Suggest a change</button></div>
       <div class="way"><h3>Add a philosopher or a text</h3><p>Someone missing from the atlas, especially from traditions and women the usual histories leave out. Give their dates and a work with its passage.</p><button type="button" class="tbtn" data-contrib="Add a philosopher or text" data-kind="Add information">Add someone</button></div>
@@ -689,6 +695,11 @@ cform.addEventListener('submit',async e=>{e.preventDefault();
 (async()=>{const db=await claude.use('db'),user=await claude.use('user');if(!db||!user)return;let owner=false;try{owner=await user.isOwner()}catch(e){}if(!owner)return;
   try{const qs=await db.collection('contributions').get();const all=[];qs.docs.forEach(d=>{const v=d.data();((v&&v.items)||[]).forEach(x=>all.push(x))});all.sort((a,b)=>String(b.at).localeCompare(String(a.at)));const S=v=>esc(String(v||''));const box=document.getElementById('creview');box.hidden=false;
     box.innerHTML=`<h3>Suggested changes (only you see this list)</h3>${all.length?`<ul class="links">${all.map(x=>`<li><b>${S(x.kind)}</b> · ${S(x.ctx)}<div style="font-size:14px;white-space:pre-wrap">${S(x.what)}</div><div style="font-size:13px">References: ${(x.refs||[]).map(S).join('; ')}</div><div style="color:var(--muted);font-size:13px">${x.credit?S(x.credit):'No name given'} · ${S(x.at).slice(0,10)}</div></li>`).join('')}</ul>`:'<p class="sub">No suggestions yet.</p>'}`}catch(e){}})();
+// ---- Contributors: credited by name, with what they added ----
+const CONTRIBUTORS=[
+ {name:'Panagiota Theodoni',role:'Founder and curator',since:'October 2026',did:['Conceived and designed the atlas: timeline, history of ideas, questions','Curates thinkers, texts, schools, questions and links','Brought in women philosophers and non-Western traditions','Corrections: Spinoza\'s substance with infinitely many attributes; Anne Conway distinguished from Spinoza; living philosophers kept apart from the history']}];
+document.getElementById('clist').innerHTML=`<ul class="links">${CONTRIBUTORS.map(c=>`<li><b>${esc(c.name)}</b> <span style="color:var(--muted)">· ${esc(c.role)} · since ${esc(c.since)}</span><ul class="ul" style="margin-top:6px">${c.did.map(d=>`<li>${esc(d)}</li>`).join('')}</ul></li>`).join('')}</ul>`;
+document.getElementById('bcb2').addEventListener('click',()=>document.getElementById('bcb').click());
 drawQList();setQuestion(0);
 showPanel();showView('q');
 </script>
