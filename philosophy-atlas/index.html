@@ -2193,7 +2193,10 @@ hobbes:'PMN',berkeley:'MKN',comte:'CP',kierkegaard:'RE',marx:'PE',peirce:'LKC',j
 ADD.forEach(a=>{TAGS[a.id]=a.tg});
 T.forEach(t=>t.tp=TAGS[t.id]||'');
 // Religion grouping = the religion a thinker WRITES ABOUT (works tagged Religion & the sacred), not their personal faith or origin.
-T.forEach(t=>{const writes=t.tp.includes('R')||(t.txt&&/torah|testament|quran|gath|veda|upani|kojiki|zhou/i.test(t.id+t.n));t.relw=writes?(t.rel==='Secular / not religious'?'Religion in general':t.rel):'Not about a particular religion'});
+T.forEach(t=>{const writes=t.tp.includes('R')||(t.txt&&/torah|testament|quran|gath|veda|upani|kojiki|zhou/i.test(t.id+t.n));t.relw=writes?(t.rel==='Secular / not religious'?'Religion in general':t.rel):'Not about a particular religion';
+ // Greek & Roman philosophers who speak of God or the One without addressing the gods of cult go to 'Religion in general'
+ if(t.relw==='Greek & Roman religion'&&!['homer','hesiod','sappho','xenophanes','proclus','iamblichus','porphyry','julianemperor','plutarch','plethon','sallustius','orphica'].includes(t.id)&&!/\bgods?\b|zeus|cult|hymn|oracle|myster|homer|hesiod|olymp|isis|delphi|sacrific|theurg/i.test((t.note||'')+' '+t.n))t.relw='Religion in general';
+ if(/gregorynyssa|basilides|methodius|eunomius|valentinus|heracleon|ptolemygnostic/.test(t.id)&&t.relw!=='Not about a particular religion')t.relw='Christian'});
 let ilane='all',inorm=false,icell=null;
 const ilaneEl=document.getElementById('ilane'),iplot=document.getElementById('iplot'),ipanel=document.getElementById('ipanel');
 ilaneEl.innerHTML='<option value="all">All traditions</option>'+LANES.map(l=>`<option value="${l[0]}">${l[1]}</option>`).join('');
