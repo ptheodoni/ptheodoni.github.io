@@ -268,18 +268,20 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <button class="task" id="btnPt" type="button" aria-pressed="false">Place the point<small id="subPt">20 rounds · two axes, no grid</small></button>
       <button class="task" id="btnAn" type="button" aria-pressed="false">Read the chart<small id="subAn">20 rounds · bars, pies, circles, water</small></button>
       <button class="task" id="btnAd" type="button" aria-pressed="false">Stare, then compare<small id="subAd">24 rounds · tired eyes see fewer</small></button>
+      <button class="task" id="btnOb" type="button" aria-pressed="false">Does it matter what you count?<small id="subOb">20 rounds · dots, apples, birds, cars</small></button>
+      <button class="task" id="btnAl" type="button" aria-pressed="false">Alien numerals<small id="subAl">20 rounds · learn 5 new symbols</small></button>
     </div>
     <div id="adaptOpts" hidden>
       <span class="label">Stare, then compare: how long to stare?</span>
       <div class="durs" id="adaptVer">
-        <button type="button" data-ver="short" aria-pressed="true">Short · 12 s (game version)</button>
+        <button type="button" data-ver="short" aria-pressed="true">Short version · 12 s</button>
         <button type="button" data-ver="full" aria-pressed="false">Full · 30 s (as published)</button>
       </div>
     </div>
     <input id="doCmp" type="checkbox" checked hidden>
     <input id="doEst" type="checkbox" checked hidden>
     <input id="doHeap" type="checkbox" checked hidden>
-    <input id="doSym" type="checkbox" hidden><input id="doStr" type="checkbox" hidden><input id="doNl" type="checkbox" hidden><input id="doAn" type="checkbox" hidden><input id="doPt" type="checkbox" hidden><input id="doAd" type="checkbox" hidden>
+    <input id="doSym" type="checkbox" hidden><input id="doStr" type="checkbox" hidden><input id="doNl" type="checkbox" hidden><input id="doAn" type="checkbox" hidden><input id="doPt" type="checkbox" hidden><input id="doAd" type="checkbox" hidden><input id="doOb" type="checkbox" hidden><input id="doAl" type="checkbox" hidden>
     <span class="label">How long does the picture stay?</span>
     <div class="durs" id="durs">
       <button type="button" data-dur="200" aria-pressed="false">0.2 s</button>
@@ -306,7 +308,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <button class="go" id="start">Start!</button>
     </div>
     <p class="note" id="bankNote" hidden><span id="bankText"></span> <button class="ghost" id="restart" type="button" style="font-size:0.95rem;padding:3px 10px;box-shadow:2px 2px 0 var(--ink)">↺ Start over</button> <button class="ghost" id="newPlayer" type="button" style="font-size:0.95rem;padding:3px 10px;box-shadow:2px 2px 0 var(--ink)">New player</button></p>
-    <p class="note">Version 31 Oct (8), prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards all results. After each answer, press 1–4 to say how sure you were.</p>
+    <p class="note">Version 31 Oct (9), prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards all results. After each answer, press 1–4 to say how sure you were.</p>
   </section>
 
   <section class="card" id="run" hidden>
@@ -325,6 +327,9 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <div class="answer" id="answerCmp" hidden>
         <button id="bLeft" class="ghost"><kbd>←</kbd> Left</button>
         <button id="bRight" class="ghost">Right <kbd>→</kbd></button>
+      </div>
+      <div class="answer" id="learnPad" hidden>
+        <button class="ghost" type="button" data-learn="1">1</button><button class="ghost" type="button" data-learn="2">2</button><button class="ghost" type="button" data-learn="3">3</button><button class="ghost" type="button" data-learn="4">4</button><button class="ghost" type="button" data-learn="5">5</button>
       </div>
       <div class="answer" id="answerHeap" hidden>
         <button id="bYes" class="ghost"><kbd>←</kbd> Yes, a heap</button>
@@ -362,6 +367,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     <div class="versus" id="versus"></div>
     <div class="stats" id="stats"></div>
     <div id="summary" class="summary"></div>
+    <div id="meta"></div>
     <div class="charts" id="charts"></div>
     <div class="guides" id="guide"></div>
     <div class="tablewrap" id="tableDur"></div>
@@ -391,7 +397,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     <div id="csvX"></div>
     <div class="field"><label>Everything in one file (JSON: every round of every game, with the settings)</label>
       <div class="row"><button class="go" id="saveJson" type="button">Save all as JSON</button><button class="ghost" id="copyJson" type="button">Copy JSON</button><span class="note" id="jsonNote"></span></div></div>
-    <p class="note">Paste each into a file in <code>results/</code>, e.g. <code>results/human_PT_comparison.csv</code>, then run the same analysis as for the models. Human adults typically show a Weber fraction around 0.1–0.25 and a subitizing range of about 4.</p>
+    <p class="note">Paste each into a file in <code>results/</code>, e.g. <code>results/human_PT_comparison.csv</code>, then run the same analysis as for the models. Human adults typically show a Weber fraction around 0.1–0.3 when comparing, an estimation spread of about 25–30% of the number (Whalen, Gallistel &amp; Gelman 1999; Burr &amp; Ross 2008), and a subitizing range of about 4.</p>
     <div class="row"><button class="go" id="more2" type="button" hidden>One more chance?</button><button class="go" id="nextGame2" type="button" hidden>Next game</button><button class="ghost" id="allRes2" type="button" hidden>See all my results</button><button id="again">Run again</button></div>
   </section>
 </div>
@@ -661,6 +667,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   // so experiments lock it from the link: ?ai=show or ?ai=hide. The results at the end always show the comparison.
   const AI_LOCK = new URLSearchParams(location.search).get("ai");
   let showAI = AI_LOCK !== "hide";
+  let resumeFn = null, learnAnswer = () => {};     // pauses inside a game (adaptation blocks, alien learning)
   let best = 0; try { best = +localStorage.getItem("beatAI.best") || 0; } catch {}
 
   // original pop-art panels: a round blue hero, a red robot, a starburst
@@ -747,7 +754,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   // Each mirrors a model experiment (7, 8, 9) and uses the same items, so the AI's answers can be loaded item by item.
   const SYM_POOL = [["grid_0000","grid","3298","2812","A","0.85264","1","1","486",""],["grid_0001","grid","3214","2777","A","0.86403","1","1","437",""],["grid_0002","grid","2013","2014","B","0.9995","4","3","1",""],["grid_0003","grid","5744","3181","A","0.5538","1","0","2563",""],["grid_0004","grid","4155","4145","A","0.99759","3","3","10",""],["grid_0005","grid","2917","2920","B","0.99897","3","3","3",""],["grid_0006","grid","5367","5373","B","0.99888","3","3","6",""],["grid_0007","grid","4088","4144","B","0.98649","2","2","56",""],["grid_0008","grid","9604","5919","A","0.61631","1","0","3685",""],["grid_0009","grid","8353","5717","A","0.68442","1","0","2636",""],["grid_0010","grid","7850","9387","B","0.83626","1","1","1537",""],["grid_0011","grid","7909","9011","B","0.87771","1","1","1102",""],["grid_0012","grid","6857","6862","B","0.99927","3","3","5",""],["grid_0013","grid","9156","9160","B","0.99956","3","3","4",""],["grid_0014","grid","1974","1994","B","0.98997","3","2","20",""],["grid_0015","grid","3838","3843","B","0.9987","3","3","5",""],["grid_0016","grid","7804","6878","A","0.88134","1","1","926",""],["grid_0017","grid","3472","4780","B","0.72636","1","0","1308",""],["grid_0018","grid","2862","2857","A","0.99825","3","3","5",""],["grid_0019","grid","8763","8820","B","0.99354","2","3","57",""],["grid_0020","grid","7319","7323","B","0.99945","3","3","4",""],["grid_0021","grid","7528","7521","A","0.99907","4","3","7",""],["grid_0022","grid","5106","4965","A","0.97239","1","2","141",""],["grid_0023","grid","2677","1861","A","0.69518","1","0","816",""],["grid_0024","grid","5192","4685","A","0.90235","1","1","507",""],["grid_0025","grid","6966","6691","A","0.96052","2","2","275",""],["grid_0026","grid","8634","8996","B","0.95976","2","2","362",""],["grid_0027","grid","3361","2674","A","0.7956","1","0","687",""],["grid_0028","grid","1278","1378","B","0.92743","2","1","100",""],["grid_0029","grid","6442","5670","A","0.88016","1","1","772",""],["grid_0030","grid","4650","4690","B","0.99147","3","3","40",""],["grid_0031","grid","4614","4714","B","0.97879","2","2","100",""],["grid_0032","grid","4172","4152","A","0.99521","3","3","20",""],["grid_0033","grid","2473","2673","B","0.92518","2","1","200",""],["grid_0034","grid","2968","2964","A","0.99865","4","3","4",""],["grid_0035","grid","2391","2691","B","0.88852","2","1","300",""],["grid_0036","grid","5847","5851","B","0.99932","3","3","4",""],["grid_0037","grid","7553","8099","B","0.93258","1","1","546",""],["grid_0038","grid","4486","5126","B","0.87515","1","1","640",""],["grid_0039","grid","6341","5249","A","0.82779","1","1","1092",""],["grid_0040","grid","9465","9466","B","0.99989","4","3","1",""],["grid_0041","grid","3754","3454","A","0.92009","2","1","300",""],["grid_0042","grid","9492","9494","B","0.99979","4","3","2",""],["grid_0043","grid","5537","4134","A","0.74661","1","0","1403",""],["grid_0044","grid","9782","9282","A","0.94889","2","1","500",""],["grid_0045","grid","7384","7444","B","0.99194","2","3","60",""],["grid_0046","grid","3248","3246","A","0.99938","4","3","2",""],["grid_0047","grid","8017","4942","A","0.61644","1","0","3075",""],["grid_0048","grid","3518","4366","B","0.80577","1","1","848",""],["grid_0049","grid","5146","3248","A","0.63117","1","0","1898",""],["grid_0050","grid","8076","8070","A","0.99926","4","3","6",""],["grid_0051","grid","8514","8216","A","0.965","2","2","298",""],["grid_0052","grid","9477","5840","A","0.61623","1","0","3637",""],["grid_0053","grid","2716","4744","B","0.57251","1","0","2028",""],["grid_0054","grid","3974","5430","B","0.73186","1","0","1456",""],["grid_0055","grid","3443","3447","B","0.99884","4","3","4",""],["grid_0056","grid","4519","5056","B","0.89379","1","1","537",""],["grid_0057","grid","5750","5759","B","0.99844","4","3","9",""],["grid_0058","grid","9385","9376","A","0.99904","3","3","9",""],["grid_0059","grid","4125","4525","B","0.9116","2","1","400",""],["grid_0060","grid","6966","6389","A","0.91717","2","1","577",""],["grid_0061","grid","5909","5984","B","0.98747","3","2","75",""],["grid_0062","grid","4362","4780","B","0.91255","2","1","418",""],["grid_0063","grid","7629","7581","A","0.99371","2","3","48",""],["grid_0064","grid","5603","5597","A","0.99893","2","3","6",""],["grid_0065","grid","3382","3322","A","0.98226","3","2","60",""],["grid_0066","grid","6983","6783","A","0.97136","2","2","200",""],["grid_0067","grid","6146","6080","A","0.98926","2","2","66",""],["grid_0068","grid","2064","2061","A","0.99855","4","3","3",""],["grid_0069","grid","6351","6417","B","0.98971","2","2","66",""],["grid_0070","grid","3350","3423","B","0.97867","2","2","73",""],["grid_0071","grid","7731","7734","B","0.99961","4","3","3",""],["grid_0072","grid","5262","5190","A","0.98632","2","2","72",""],["grid_0073","grid","6672","6708","B","0.99463","2","3","36",""],["grid_0074","grid","3976","4016","B","0.99004","1","3","40",""],["grid_0075","grid","8304","8075","A","0.97242","2","2","229",""],["grid_0076","grid","8755","8754","A","0.99989","4","3","1",""],["grid_0077","grid","7065","7952","B","0.88846","2","1","887",""],["grid_0078","grid","4781","4177","A","0.87367","2","1","604",""],["grid_0079","grid","1087","1387","B","0.78371","2","0","300",""],["grid_0080","grid","6394","6694","B","0.95518","2","2","300",""],["grid_0081","grid","8192","7979","A","0.974","1","2","213",""],["grid_0082","grid","1142","1172","B","0.9744","3","2","30",""],["grid_0083","grid","5078","4879","A","0.96081","1","2","199",""],["grid_0084","grid","1601","1661","B","0.96388","3","2","60",""],["grid_0085","grid","1644","1624","A","0.98783","3","2","20",""],["grid_0086","grid","7411","7371","A","0.9946","2","3","40",""],["grid_0087","grid","6884","6928","B","0.99365","2","3","44",""],["grid_0088","grid","8866","9228","B","0.96077","1","2","362",""],["grid_0089","grid","3083","3107","B","0.99228","2","3","24",""],["grid_0090","grid","1365","1746","B","0.78179","2","0","381",""],["grid_0091","grid","8437","8380","A","0.99324","2","3","57",""],["grid_0092","grid","4893","4041","A","0.82587","2","1","852",""],["grid_0093","grid","4931","4231","A","0.85804","2","1","700",""],["grid_0094","grid","5027","4978","A","0.99025","1","3","49",""],["grid_0095","grid","7984","8223","B","0.97094","1","2","239",""],["grid_0096","grid","9788","9831","B","0.99563","2","3","43",""],["grid_0097","grid","8408","8385","A","0.99726","2","3","23",""],["grid_0098","grid","2750","2790","B","0.98566","3","2","40",""],["grid_0099","grid","6011","5762","A","0.95858","1","2","249",""],["grid_0100","grid","2063","2663","B","0.77469","2","0","600",""],["grid_0101","grid","2797","2813","B","0.99431","2","3","16",""],["grid_0102","grid","1760","1101","A","0.62557","2","0","659",""],["grid_0103","grid","5379","5309","A","0.98699","3","2","70",""],["grid_0104","grid","3408","3498","B","0.97427","3","2","90",""],["grid_0105","grid","2473","2433","A","0.98383","3","2","40",""],["grid_0106","grid","5192","5102","A","0.98267","3","2","90",""],["grid_0107","grid","3877","3077","A","0.79365","2","0","800",""],["grid_0108","grid","9227","8805","A","0.95426","1","2","422",""],["grid_0109","grid","1204","1234","B","0.97569","3","2","30",""],["grid_0110","grid","2032","2629","B","0.77292","2","0","597",""],["grid_0111","grid","1294","1894","B","0.68321","2","0","600",""],["grid_0112","grid","8654","9067","B","0.95445","1","2","413",""],["grid_0113","grid","2785","2115","A","0.75943","2","0","670",""],["grid_0114","grid","1965","2020","B","0.97277","1","2","55",""],["grid_0115","grid","4023","3996","A","0.99329","1","3","27",""],["grid_0116","grid","9405","8941","A","0.95066","1","2","464",""],["grid_0117","grid","1030","1930","B","0.53368","2","0","900",""],["grid_0118","grid","8909","9327","B","0.95518","1","2","418",""],["grid_0119","grid","5981","6028","B","0.9922","1","3","47",""],["grid_0120","grid","2978","2381","A","0.79953","2","0","597",""],["grid_0121","grid","8956","9049","B","0.98972","1","2","93",""],["grid_0122","grid","9016","8992","A","0.99734","1","3","24",""],["grid_0123","grid","1492","1892","B","0.78858","2","0","400",""],["grid_0124","grid","1464","1064","A","0.72678","2","0","400",""],["grid_0125","grid","6000","5997","A","0.9995","1","3","3",""],["grid_0126","grid","2997","3001","B","0.99867","1","3","4",""],["grid_0127","grid","2993","3016","B","0.99237","1","3","23",""],["grid_0128","grid","1082","1002","A","0.92606","3","1","80",""],["grid_0129","grid","8984","9009","B","0.99722","1","3","25",""],["grid_0130","grid","5008","4988","A","0.99601","1","3","20",""],["grid_0131","grid","1371","1301","A","0.94894","3","1","70",""],["grid_0132","grid","6969","7024","B","0.99217","1","3","55",""],["grid_0133","grid","5996","6004","B","0.99867","1","3","8",""],["grid_0134","grid","1010","1080","B","0.93519","3","1","70",""],["grid_0135","grid","1002","1072","B","0.9347","3","1","70",""],["grid_0136","grid","1503","1583","B","0.94946","3","1","80",""],["grid_0137","grid","1393","1302","A","0.93467","3","1","91",""],["grid_0138","grid","1403","1483","B","0.94606","3","1","80",""],["grid_0139","grid","1700","1790","B","0.94972","3","1","90",""],["grid_0140","grid","1005","1095","B","0.91781","3","1","90",""],["grid_0141","grid","1073","1013","A","0.94408","3","1","60",""],["grid_0142","grid","1205","1285","B","0.93774","3","1","80",""],["grid_0143","grid","1086","1006","A","0.92634","3","1","80",""],["compat_0144","compat","31","59","B","0.5254","1","","28","1"],["compat_0145","compat","75","97","B","0.7732","1","","22","1"],["compat_0146","compat","72","98","B","0.7347","1","","26","1"],["compat_0147","compat","47","24","A","0.5106","1","","23","1"],["compat_0148","compat","52","89","B","0.5843","1","","37","1"],["compat_0149","compat","52","69","B","0.7536","1","","17","1"],["compat_0150","compat","75","51","A","0.68","1","","24","1"],["compat_0151","compat","61","95","B","0.6421","1","","34","1"],["compat_0152","compat","88","61","A","0.6932","1","","27","1"],["compat_0153","compat","85","97","B","0.8763","1","","12","1"],["compat_0154","compat","67","42","A","0.6269","1","","25","1"],["compat_0155","compat","56","89","B","0.6292","1","","33","1"],["compat_0156","compat","22","35","B","0.6286","1","","13","1"],["compat_0157","compat","25","57","B","0.4386","1","","32","1"],["compat_0158","compat","41","76","B","0.5395","1","","35","1"],["compat_0159","compat","39","24","A","0.6154","1","","15","1"],["compat_0160","compat","51","69","B","0.7391","1","","18","1"],["compat_0161","compat","81","97","B","0.8351","1","","16","1"],["compat_0162","compat","49","35","A","0.7143","1","","14","1"],["compat_0163","compat","41","79","B","0.519","1","","38","1"],["compat_0164","compat","62","98","B","0.6327","1","","36","1"],["compat_0165","compat","21","49","B","0.4286","1","","28","1"],["compat_0166","compat","56","34","A","0.6071","1","","22","1"],["compat_0167","compat","47","21","A","0.4468","1","","26","1"],["compat_0168","compat","43","66","B","0.6515","1","","23","1"],["compat_0169","compat","78","41","A","0.5256","1","","37","1"],["compat_0170","compat","31","48","B","0.6458","1","","17","1"],["compat_0171","compat","57","33","A","0.5789","1","","24","1"],["compat_0172","compat","53","87","B","0.6092","1","","34","1"],["compat_0173","compat","48","21","A","0.4375","1","","27","1"],["compat_0174","compat","41","53","B","0.7736","1","","12","1"],["compat_0175","compat","64","89","B","0.7191","1","","25","1"],["compat_0176","compat","87","54","A","0.6207","1","","33","1"],["compat_0177","compat","66","53","A","0.803","1","","13","1"],["compat_0178","compat","41","73","B","0.5616","1","","32","1"],["compat_0179","compat","52","87","B","0.5977","1","","35","1"],["compat_0180","compat","21","36","B","0.5833","1","","15","1"],["compat_0181","compat","79","61","A","0.7722","1","","18","1"],["compat_0182","compat","82","98","B","0.8367","1","","16","1"],["compat_0183","compat","79","65","A","0.8228","1","","14","1"],["compat_0184","compat","52","24","A","0.4615","1","","28","0"],["compat_0185","compat","91","69","A","0.7582","1","","22","0"],["compat_0186","compat","52","26","A","0.5","1","","26","0"],["compat_0187","compat","28","51","B","0.549","1","","23","0"],["compat_0188","compat","65","28","A","0.4308","1","","37","0"],["compat_0189","compat","47","64","B","0.7344","1","","17","0"],["compat_0190","compat","51","27","A","0.5294","1","","24","0"],["compat_0191","compat","27","61","B","0.4426","1","","34","0"],["compat_0192","compat","56","29","A","0.5179","1","","27","0"],["compat_0193","compat","49","61","B","0.8033","1","","12","0"],["compat_0194","compat","61","36","A","0.5902","1","","25","0"],["compat_0195","compat","59","92","B","0.6413","1","","33","0"],["compat_0196","compat","81","68","A","0.8395","1","","13","0"],["compat_0197","compat","71","39","A","0.5493","1","","32","0"],["compat_0198","compat","39","74","B","0.527","1","","35","0"],["compat_0199","compat","82","67","A","0.8171","1","","15","0"],["compat_0200","compat","37","55","B","0.6727","1","","18","0"],["compat_0201","compat","27","43","B","0.6279","1","","16","0"],["compat_0202","compat","67","81","B","0.8272","1","","14","0"],["compat_0203","compat","81","43","A","0.5309","1","","38","0"],["compat_0204","compat","83","47","A","0.5663","1","","36","0"],["compat_0205","compat","36","64","B","0.5625","1","","28","0"],["compat_0206","compat","81","59","A","0.7284","1","","22","0"],["compat_0207","compat","62","36","A","0.5806","1","","26","0"],["compat_0208","compat","29","52","B","0.5577","1","","23","0"],["compat_0209","compat","27","64","B","0.4219","1","","37","0"],["compat_0210","compat","86","69","A","0.8023","1","","17","0"],["compat_0211","compat","92","68","A","0.7391","1","","24","0"],["compat_0212","compat","48","82","B","0.5854","1","","34","0"],["compat_0213","compat","72","45","A","0.625","1","","27","0"],["compat_0214","compat","71","59","A","0.831","1","","12","0"],["compat_0215","compat","49","74","B","0.6622","1","","25","0"],["compat_0216","compat","29","62","B","0.4677","1","","33","0"],["compat_0217","compat","59","72","B","0.8194","1","","13","0"],["compat_0218","compat","59","91","B","0.6484","1","","32","0"],["compat_0219","compat","46","81","B","0.5679","1","","35","0"],["compat_0220","compat","92","77","A","0.837","1","","15","0"],["compat_0221","compat","74","56","A","0.7568","1","","18","0"],["compat_0222","compat","55","71","B","0.7746","1","","16","0"],["compat_0223","compat","91","77","A","0.8462","1","","14","0"],["decimals_0224","decimals","1.11","1.8","B","0.6167","trap","","0.69",""],["decimals_0225","decimals","1.89","1.2","A","0.6349","control","","0.69",""],["decimals_0226","decimals","1.4","1.36","A","0.9714","trap","","0.04",""],["decimals_0227","decimals","1.2","1.24","B","0.9677","control","","0.04",""],["decimals_0228","decimals","12.19","12.4","B","0.9831","trap","","0.21",""],["decimals_0229","decimals","12.51","12.3","A","0.9832","control","","0.21",""],["decimals_0230","decimals","12.34","12.8","B","0.9641","trap","","0.46",""],["decimals_0231","decimals","12.66","12.2","A","0.9637","control","","0.46",""],["decimals_0232","decimals","14.33","14.9","B","0.9617","trap","","0.57",""],["decimals_0233","decimals","14.87","14.3","A","0.9617","control","","0.57",""],["decimals_0234","decimals","13.13","13.2","B","0.9947","trap","","0.07",""],["decimals_0235","decimals","13.1","13.17","B","0.9947","control","","0.07",""],["decimals_0236","decimals","8.8","8.63","A","0.9807","trap","","0.17",""],["decimals_0237","decimals","8.77","8.6","A","0.9806","control","","0.17",""],["decimals_0238","decimals","19.13","19.9","B","0.9613","trap","","0.77",""],["decimals_0239","decimals","19.87","19.1","A","0.9612","control","","0.77",""],["decimals_0240","decimals","14.44","14.5","B","0.9959","trap","","0.06",""],["decimals_0241","decimals","14.16","14.1","A","0.9958","control","","0.06",""],["decimals_0242","decimals","1.7","1.31","A","0.7706","trap","","0.39",""],["decimals_0243","decimals","1.5","1.89","B","0.7937","control","","0.39",""],["decimals_0244","decimals","12.23","12.7","B","0.963","trap","","0.47",""],["decimals_0245","decimals","12.4","12.87","B","0.9635","control","","0.47",""],["decimals_0246","decimals","13.63","13.8","B","0.9877","trap","","0.17",""],["decimals_0247","decimals","13.1","13.27","B","0.9872","control","","0.17",""],["decimals_0248","decimals","6.4","6.21","A","0.9703","trap","","0.19",""],["decimals_0249","decimals","6.39","6.2","A","0.9703","control","","0.19",""],["decimals_0250","decimals","15.2","15.14","A","0.9961","trap","","0.06",""],["decimals_0251","decimals","15.56","15.5","A","0.9961","control","","0.06",""],["decimals_0252","decimals","7.28","7.3","B","0.9973","trap","","0.02",""],["decimals_0253","decimals","7.4","7.42","B","0.9973","control","","0.02",""],["decimals_0254","decimals","19.28","19.6","B","0.9837","trap","","0.32",""],["decimals_0255","decimals","19.1","19.42","B","0.9835","control","","0.32",""],["decimals_0256","decimals","8.15","8.2","B","0.9939","trap","","0.05",""],["decimals_0257","decimals","8.6","8.65","B","0.9942","control","","0.05",""],["decimals_0258","decimals","14.48","14.5","B","0.9986","trap","","0.02",""],["decimals_0259","decimals","14.22","14.2","A","0.9986","control","","0.02",""],["decimals_0260","decimals","9.13","9.4","B","0.9713","trap","","0.27",""],["decimals_0261","decimals","9.3","9.57","B","0.9718","control","","0.27",""],["decimals_0262","decimals","17.9","17.38","A","0.9709","trap","","0.52",""],["decimals_0263","decimals","17.1","17.62","B","0.9705","control","","0.52",""],["decimals_0264","decimals","14.3","14.15","A","0.9895","trap","","0.15",""],["decimals_0265","decimals","14.4","14.55","B","0.9897","control","","0.15",""],["decimals_0266","decimals","20.8","20.52","A","0.9865","trap","","0.28",""],["decimals_0267","decimals","20.78","20.5","A","0.9865","control","","0.28",""],["decimals_0268","decimals","8.58","8.6","B","0.9977","trap","","0.02",""],["decimals_0269","decimals","8.32","8.3","A","0.9976","control","","0.02",""],["decimals_0270","decimals","6.9","6.42","A","0.9304","trap","","0.48",""],["decimals_0271","decimals","6.68","6.2","A","0.9281","control","","0.48",""],["decimals_0272","decimals","11.4","11.33","A","0.9939","trap","","0.07",""],["decimals_0273","decimals","11.27","11.2","A","0.9938","control","","0.07",""],["decimals_0274","decimals","4.9","4.34","A","0.8857","trap","","0.56",""],["decimals_0275","decimals","4.4","4.96","B","0.8871","control","","0.56",""],["decimals_0276","decimals","14.29","14.5","B","0.9855","trap","","0.21",""],["decimals_0277","decimals","14.81","14.6","A","0.9858","control","","0.21",""],["decimals_0278","decimals","20.9","20.55","A","0.9833","trap","","0.35",""],["decimals_0279","decimals","20.1","20.45","B","0.9829","control","","0.35",""],["decimals_0280","decimals","15.5","15.43","A","0.9955","trap","","0.07",""],["decimals_0281","decimals","15.67","15.6","A","0.9955","control","","0.07",""],["decimals_0282","decimals","14.21","14.3","B","0.9937","trap","","0.09",""],["decimals_0283","decimals","14.49","14.4","A","0.9938","control","","0.09",""]];   // stimuli/symbolic/trials.csv: [id, part, a, b, larger, ratio, first_diff, ratio_bin, distance, compatible]
   const XW = 1024, XH = 400;        // canvas for the three games
-  const xState = () => state.x || (state.x = { symbolic: [], strings: [], numberline: [], analog: [], coords: [], adapt: [] });
+  const xState = () => state.x || (state.x = { symbolic: [], strings: [], numberline: [], analog: [], coords: [], adapt: [], objects: [], alien: [] });
   const XLEN = { mini: 10, quick: 20, medium: 60, full: 120 };
   const sample = (pools, n) => {    // n items, cycling through the pools so every kind appears equally
     const ps = pools.map(p => shuffle(p.slice())), out = [];
@@ -1012,6 +1019,8 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
         out.charts.push(card("How you read the pictures", plot({ xmin: 0, xmax: 100, ymin: 0, ymax: 100, xticks: [0, 25, 50, 75, 100], yticks: [0, 25, 50, 75, 100],
           xlabel: "true percentage", ylabel: "your answer", series }), items,
           "People read positions and lengths almost exactly, angles less well, and areas worst: small circles look bigger than they are (Cleveland & McGill 1984)."));
+        const ORDER = ["position", "length", "angle", "area"], mine = ORDER.filter(e => rows.some(r => r.encoding === e)).sort((a, b) => err(rows.filter(r => r.encoding === a)) - err(rows.filter(r => r.encoding === b)));
+        if (mine.length >= 3) out.table += `<p class="note">The same values were shown in every form. Your order, best to worst: <b>${mine.join(" → ")}</b>. Cleveland &amp; McGill's (1984): position → length → angle → area, and technically trained and untrained people did about equally well.</p>`;
         said.push(`<p><b>Reading pictures.</b> Your average miss was ${err(rows).toFixed(1)} points. ${encs.length > 1 ? `Best: ${NAMES[encs.reduce((a, b) => err(rows.filter(r => r.encoding === a)) <= err(rows.filter(r => r.encoding === b)) ? a : b)]}; hardest: ${NAMES[encs.reduce((a, b) => err(rows.filter(r => r.encoding === a)) >= err(rows.filter(r => r.encoding === b)) ? a : b)]}.` : ""}</p>`);
       },
     },
@@ -1156,7 +1165,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
         if (t.block_start && state.idx > 0) {   // between blocks: rest the eyes, so one adapter does not leak into the next
           ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH);
           $("prompt").textContent = "New block! Look away and blink for a few seconds, then press Space or tap here.";
-          awaiting = "begin"; this._resume = run; return;
+          awaiting = "begin"; resumeFn = run; return;
         }
         run();
       },
@@ -1189,16 +1198,198 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
         const short = rows.some(r => r.adapt_version !== "full");
         out.table = `<table><thead><tr><th>Adapter</th><th>Rounds</th><th>Chose the adapted side</th><th>Looked equal to 30 at</th><th>Shift</th></tr></thead><tbody>${conds.map(c => { const rs = rows.filter(r => r.condition === c), p = this.pse(rs), sh = c === "none" ? NaN : this.shift(rows, c);
           return `<tr><td>${NAMES[c]}</td><td>${rs.length}</td><td>${pc(rs)}</td><td>${Number.isFinite(p) ? Math.round(p) + " dots" : "—"}</td><td>${Number.isFinite(sh) ? `${sh > 0 ? "looked " + Math.round(100 * sh) + "% fewer" : "looked " + Math.round(-100 * sh) + "% more"}` : "—"}</td></tr>`; }).join("")}</tbody></table>
-          <p class="note">${short ? "Shortened version (12 s adapter): expect a smaller shift than the published one." : "Full version (30 s adapter), as in Burr &amp; Ross 2008."} Published: after 400 dots, more than 90 test dots (over three times 30) looked equal to 30.</p>`;
+          <p class="note">${short ? "Short version (12 s adapter): expect a smaller shift than the published one." : "Full version (30 s adapter), as in Burr &amp; Ross 2008."} Published: after 400 dots, more than 90 test dots (over three times 30) looked equal to 30.</p>`;
         const sh = this.shift(rows, "many"), pm = this.pse(rows.filter(r => r.condition === "many"));
-        stats.push(["Adaptation shift", Number.isFinite(sh) ? `${Math.round(100 * sh)}%` : "—", "after 400 dots; + = looked fewer"]);
+        const pn = this.pse(rows.filter(r => r.condition === "none")), pf = this.pse(rows.filter(r => r.condition === "few")), times = pm / pn, timesF = pn / pf;
+        stats.push(["After 400 dots", Number.isFinite(times) ? `${times.toFixed(1)}× smaller` : "—", "how much smaller the adapted side looked (published: over 3×)"]);
+        if (Number.isFinite(times)) out.charts.unshift(`<div class="why" style="text-align:center"><h3>${times >= 1.2 ? "WOW!" : "Hmm."} After staring at 400 dots, your adapted side looked ${times.toFixed(1)} times smaller</h3>
+          <p>About ${Math.round(pm)} dots there looked like 30 on the other side${Number.isFinite(timesF) ? `; after 10 dots it looked ${timesF.toFixed(1)} times ${timesF >= 1 ? "larger" : "smaller"}` : ""}. In the original 30-second study it was over 3 times.${short ? " This was the short version, so expect less." : ""}</p></div>`);
         const CLS = { none: "fd", many: "alt", few: "you" }, series = [{ type: "line", cls: "ref", pts: [[14, 50], [130, 50]] }], items = [["dash", "", "can't tell"]];
         for (const c of conds) { const pts = this.PROBES.map(n => { const rs = rows.filter(r => r.condition === c && r.probe_n === n); return [n, rs.length ? 100 * mean(rs.map(r => r.chose_probe)) : NaN]; });
           series.push({ type: "line", cls: CLS[c] + "line", pts }, { type: "points", cls: CLS[c], pts }); items.push(["dotline", CLS[c], NAMES[c]]); }
         out.charts.push(card("How often the adapted side looked like more", plot({ xmin: 14, xmax: 130, xlog: true, ymin: 0, ymax: 100, xticks: [15, 30, 60, 120], yticks: [0, 25, 50, 75, 100],
           xlabel: "dots on the adapted side (the other side had 30)", ylabel: "% you chose it", series }), items,
           "After staring at 400 dots, people need far MORE dots on that side before it looks like 30 (over 90 in the original study): the red curve moves right. After 10 dots it moves left (Burr & Ross 2008)."));
-        said.push(`<p><b>Adaptation.</b> ${Number.isFinite(sh) ? `After the 400-dot adapter, ${Number.isFinite(pm) ? `about ${Math.round(pm)} dots on that side looked like 30, so ` : ""}the dots there looked ${sh >= 0 ? Math.round(100 * sh) + "% fewer" : Math.round(-100 * sh) + "% more"} than with no adapter${short ? " (shortened version)" : ""}.` : "Play more rounds to measure the shift."}</p>`);
+        said.push(`<p><b>Adaptation.</b> ${Number.isFinite(sh) ? `After the 400-dot adapter, ${Number.isFinite(pm) ? `about ${Math.round(pm)} dots on that side looked like 30, so ` : ""}the dots there looked ${sh >= 0 ? Math.round(100 * sh) + "% fewer" : Math.round(-100 * sh) + "% more"} than with no adapter${short ? " (short version)" : ""}.` : "Play more rounds to measure the shift."}</p>`);
+      },
+    },
+    // ---- Experiment 12: does it matter what you count? (Testolin, Hou & Zorzi 2025, PLOS ONE, doi:10.1371/journal.pone.0331566) ----
+    // The same numbers of items as dots, apples, birds or cars, matched in size and spacing, shown briefly.
+    // Humans: errors do not depend on the category, and their spread grows with the number (Weber's law).
+    // Vision-language models, in that study: "in many cases the distribution of errors depends on the object category".
+    objects: {
+      name: "Does it matter what you count?", task: "Objects · how many?", lens: { mini: 12, quick: 20, medium: 40, full: 60 }, conf: [25, 50, 75, 100],
+      bubble: "Dots, apples, birds, cars: a quick look, then how many? For you, an apple counts like a dot. Does it for the AI?",
+      title: "How many things?", help: "Type a number, Enter. Then 1–4: how sure.",
+      NS: [3, 6, 12, 25, 40], CATS: ["dots", "apples", "birds", "cars"], RAD: 17,
+      // simulated AI: a category-dependent bias, as Testolin et al. report for models (values are illustrative, not theirs)
+      AI_BIAS: { dots: 1.0, apples: 0.9, birds: 1.15, cars: 0.78 }, AI_SD: 0.18,
+      build(len) {
+        const n = this.lens[len], all = [];
+        for (const cat of this.CATS) for (const k of this.NS) all.push({ trial_id: `objects_${cat}_n${String(k).padStart(2, "0")}`, part: "objects", category: cat, n: k });
+        const pools = this.CATS.map(c => shuffle(all.filter(t => t.category === c)));
+        return sample(pools, n).map((t, i) => ({ ...t, trial_id: `${t.trial_id}_h${Math.floor(i / all.length)}` }));
+      },
+      icon(cat, x, y) {
+        const r = this.RAD - 2;
+        if (cat === "dots") { ctx.fillStyle = "#141414"; ctx.beginPath(); ctx.arc(x, y, r * 0.85, 0, 2 * Math.PI); ctx.fill(); return; }
+        if (cat === "apples") {
+          ctx.fillStyle = "#d42a2a"; ctx.beginPath(); ctx.arc(x - r * 0.35, y + 1, r * 0.65, 0, 2 * Math.PI); ctx.arc(x + r * 0.35, y + 1, r * 0.65, 0, 2 * Math.PI); ctx.fill();
+          ctx.strokeStyle = "#5b3a1a"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x, y - r * 0.45); ctx.lineTo(x + 1, y - r); ctx.stroke();
+          ctx.fillStyle = "#2f9a3a"; ctx.beginPath(); ctx.ellipse(x + r * 0.4, y - r * 0.8, r * 0.35, r * 0.18, -0.5, 0, 2 * Math.PI); ctx.fill(); return;
+        }
+        if (cat === "birds") {
+          ctx.fillStyle = "#26476e"; ctx.beginPath(); ctx.ellipse(x - 1, y + 2, r * 0.75, r * 0.5, 0, 0, 2 * Math.PI); ctx.fill();
+          ctx.beginPath(); ctx.arc(x + r * 0.55, y - r * 0.3, r * 0.38, 0, 2 * Math.PI); ctx.fill();
+          ctx.beginPath(); ctx.moveTo(x - r * 0.6, y + 1); ctx.lineTo(x - r * 1.05, y - r * 0.35); ctx.lineTo(x - r * 0.9, y + r * 0.45); ctx.fill();   // tail
+          ctx.fillStyle = "#f2a51a"; ctx.beginPath(); ctx.moveTo(x + r * 0.88, y - r * 0.38); ctx.lineTo(x + r * 1.15, y - r * 0.22); ctx.lineTo(x + r * 0.85, y - r * 0.12); ctx.fill();
+          ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(x + r * 0.62, y - r * 0.38, 1.5, 0, 2 * Math.PI); ctx.fill(); return;
+        }
+        ctx.fillStyle = "#1f7a5a";                       // a car: body, cabin, two wheels
+        ctx.beginPath(); ctx.roundRect(x - r, y - r * 0.15, 2 * r, r * 0.6, 3); ctx.fill();
+        ctx.beginPath(); ctx.roundRect(x - r * 0.5, y - r * 0.6, r * 1.05, r * 0.5, 3); ctx.fill();
+        ctx.fillStyle = "#141414"; for (const dx of [-0.55, 0.55]) { ctx.beginPath(); ctx.arc(x + dx * r, y + r * 0.48, r * 0.27, 0, 2 * Math.PI); ctx.fill(); }
+      },
+      draw(t) {                        // items in the same field with the same minimum spacing, whatever the category
+        ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH);
+        const R = this.RAD, gap = 8, pts = []; let tries = 0;
+        while (pts.length < t.n && tries++ < 40000) {
+          const x = XW / 2 - 300 + Math.random() * 600, y = 40 + Math.random() * (XH - 80);
+          if (pts.every(([u, v]) => (x - u) ** 2 + (y - v) ** 2 >= (2 * R + gap) ** 2)) pts.push([x, y]);
+        }
+        for (const [x, y] of pts) this.icon(t.category, x, y);
+      },
+      answer: "estimate", prompt: t => `How many ${t.category}?`,
+      aiEstimate(t) {                  // one simulated AI answer for this picture
+        const z = Math.sqrt(-2 * Math.log(Math.random() + 1e-9)) * Math.cos(2 * Math.PI * Math.random());
+        return t.n <= 4 && t.category === "dots" ? t.n : Math.max(1, Math.round(t.n * this.AI_BIAS[t.category] * Math.exp(this.AI_SD * z)));
+      },
+      aiPts(t) {
+        let s = 0, w = 0; for (let z = -4; z <= 4; z += 0.1) { const d = Math.exp(-z * z / 2); s += d * closePts(Math.round(t.n * this.AI_BIAS[t.category] * Math.exp(this.AI_SD * z)), t.n); w += d; }
+        return s / w;
+      },
+      csv(rows, model) {
+        return [["trial_id", "part", "category", "n", "modality", "reasoning", "model", "timestamp", "response", "estimate", "confidence", "rt_ms", "display_ms", "ai_estimate"],
+          rows.map(r => ({ ...r, modality: "image", reasoning: "human", model, response: r.estimate }))];
+      },
+      byCat(rows, key) {               // per category: mean estimate/true (bias) and spread (CV of estimate/true), from 6 items up
+        return this.CATS.filter(c => rows.some(r => r.category === c)).map(c => {
+          const v = rows.filter(r => r.category === c && r.n >= 6 && Number.isFinite(r[key])).map(r => r[key] / r.n), m = v.length ? mean(v) : NaN;
+          return { c, n: rows.filter(r => r.category === c).length, m, cv: v.length >= 2 ? sd(v) / m : NaN };
+        });
+      },
+      results(rows, stats, out, said) {
+        const you = this.byCat(rows, "estimate"), them = this.byCat(rows, "ai_estimate"), f = v => Number.isFinite(v) ? v.toFixed(2) : "—";
+        const spread = a => { const ms = a.map(x => x.m).filter(Number.isFinite); return ms.length >= 2 ? Math.max(...ms) - Math.min(...ms) : NaN; };
+        stats.push(["Category effect (you)", f(spread(you)), "largest gap in estimate/true between categories"]);
+        out.table = `<table><thead><tr><th>What</th><th>Rounds</th><th>You: estimate / true</th><th>You: spread (CV)</th><th>Simulated AI: estimate / true</th><th>Simulated AI: spread</th></tr></thead><tbody>${you.map((y, i) =>
+          `<tr><td>${y.c}</td><td>${y.n}</td><td>${f(y.m)}</td><td>${f(y.cv)}</td><td>${f(them[i].m)}</td><td>${f(them[i].cv)}</td></tr>`).join("")}</tbody></table>
+          <p class="note">Estimate / true: 1.00 is exact on average; below 1 is underestimation. Spread: how much your answers vary relative to the number (humans ≈ 0.25–0.3, the same for every category). From 6 items up.</p>`;
+        const CLS = { dots: ["you", "youline"], apples: ["alt", "altline"], birds: ["fd", "fdline"], cars: ["you open", "youdashline"] };
+        const mk = key => this.CATS.filter(c => rows.some(r => r.category === c)).flatMap(c => { const pts = this.NS.map(k => { const rs = rows.filter(r => r.category === c && r.n === k && Number.isFinite(r[key])); return [k, rs.length ? mean(rs.map(r => r[key] / r.n)) : NaN]; });
+          return [{ type: "line", cls: CLS[c][1], pts }, { type: "points", cls: CLS[c][0], pts }]; });
+        const legend = this.CATS.filter(c => rows.some(r => r.category === c)).map(c => ["dotline", CLS[c][0], c]);
+        for (const [key, who] of [["estimate", "You"], ["ai_estimate", "The simulated AI"]])
+          out.charts.push(card(`${who}: does it matter what is counted?`, plot({ xmin: 2.5, xmax: 48, xlog: true, ymin: 0.4, ymax: 1.6, xticks: [3, 6, 12, 25, 40], yticks: [0.5, 0.75, 1, 1.25, 1.5],
+            xlabel: "true number", ylabel: "estimate / true", series: [{ type: "line", cls: "ref", pts: [[2.5, 1], [48, 1]] }, ...mk(key)] }), legend,
+            key === "estimate" ? "For people the lines lie on top of each other: number is coded whatever is counted (Testolin et al. 2025)." : "Simulated to show what Testolin et al. found for many models: the category shifts the estimates. Real models come next."));
+        const g = spread(you);
+        said.push(`<p><b>What you count.</b> ${Number.isFinite(g) ? `Your estimates differed by at most ${g.toFixed(2)} (estimate / true) between categories${g <= 0.15 ? ": the category hardly mattered, as for people in general." : ": the category shifted your estimates more than is usual for people."}` : "Play more rounds to compare the categories."}</p>`);
+      },
+    },
+
+    // ---- Experiment 13: alien numerals (Diester & Nieder 2007, PLoS Biology, doi:10.1371/journal.pbio.0050294;
+    //      distance effect: Moyer & Landauer 1967, Nature, doi:10.1038/2151519a0) ----
+    // Learn five new symbols for 1–5 (with feedback, until a full run of five is right), then: which is larger?
+    // If close pairs are slower and harder, the symbols have been linked to magnitude, not just memorised as labels.
+    alien: {
+      name: "Alien numerals", task: "Alien numerals · which is larger?", lens: { mini: 10, quick: 20, medium: 40, full: 60 }, conf: [50, 67, 83, 100],
+      bubble: "Five alien numbers. Learn them in a minute, then race: which is larger? If close pairs slow you down, they have become numbers in your head.",
+      title: "Alien numerals", help: "First learn the five symbols. Then ← left or → right: which is larger? Then 1–4: how sure.",
+      NAMES: ["diamond", "star", "pentagon", "knot", "dumbbell"],
+      map: null, learnedFor: null, learnLog: [],
+      assign() {                       // a new random symbol for each number, per player (counterbalanced)
+        const pid = state.pid || "anon";
+        if (this.mapFor !== pid) { this.map = shuffle([0, 1, 2, 3, 4]); this.mapFor = pid; this.learnedFor = null; this.learnLog = []; }
+        return this.map;               // map[v-1] = symbol index for the number v
+      },
+      sym(i, x, y, s) {
+        ctx.save(); ctx.translate(x, y); ctx.lineWidth = Math.max(3, s * 0.09); ctx.strokeStyle = ctx.fillStyle = "#5a2ca0"; ctx.lineJoin = "round";
+        if (i === 0) { ctx.beginPath(); ctx.moveTo(0, -s / 2); ctx.lineTo(s * 0.38, 0); ctx.lineTo(0, s / 2); ctx.lineTo(-s * 0.38, 0); ctx.closePath(); ctx.stroke(); }
+        else if (i === 1) { ctx.beginPath(); for (let k = 0; k < 12; k++) { const a = -Math.PI / 2 + k * Math.PI / 6, r = k % 2 ? s * 0.2 : s * 0.48; ctx.lineTo(r * Math.cos(a), r * Math.sin(a)); } ctx.closePath(); ctx.fill(); }
+        else if (i === 2) { ctx.beginPath(); for (let k = 0; k < 5; k++) { const a = -Math.PI / 2 + k * 2 * Math.PI / 5; ctx.lineTo(s * 0.46 * Math.cos(a), s * 0.46 * Math.sin(a)); } ctx.closePath(); ctx.fill(); }
+        else if (i === 3) { const q = s * 0.13; ctx.beginPath(); ctx.rect(-q, -q, 2 * q, 2 * q);
+          for (const [dx, dy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) { const cx = dx * 2 * q, cy = dy * 2 * q; ctx.moveTo(cx + q, cy); ctx.arc(cx, cy, q, 0, 2 * Math.PI); }
+          ctx.stroke(); }
+        else { const r = s * 0.15; ctx.beginPath(); ctx.arc(-s * 0.3, s * 0.15, r, 0, 2 * Math.PI); ctx.moveTo(s * 0.3 + r, -s * 0.15); ctx.arc(s * 0.3, -s * 0.15, r, 0, 2 * Math.PI);
+          ctx.moveTo(-s * 0.3 + r * 0.7, s * 0.15 - r * 0.7); ctx.lineTo(s * 0.3 - r * 0.7, -s * 0.15 + r * 0.7); ctx.stroke(); }
+        ctx.restore();
+      },
+      dots(v, x, y) { ctx.fillStyle = "#141414"; for (let k = 0; k < v; k++) { ctx.beginPath(); ctx.arc(x + (k - (v - 1) / 2) * 22, y, 7, 0, 2 * Math.PI); ctx.fill(); } },
+      build(len) {
+        const map = this.assign(), pairs = [];
+        for (let a = 1; a <= 5; a++) for (let b = a + 1; b <= 5; b++) pairs.push([a, b]);
+        const all = []; let h = 0;
+        while (all.length < this.lens[len]) { for (const [a, b] of shuffle(pairs.slice())) for (const flip of [false, true]) { const L = flip ? b : a, Rv = flip ? a : b;
+          all.push({ trial_id: `alien_${L}v${Rv}_h${h}`, part: "alien", left_value: L, right_value: Rv, distance: Math.abs(a - b), larger_side: L > Rv ? "left" : "right",
+                     left_symbol: this.NAMES[map[L - 1]], right_symbol: this.NAMES[map[Rv - 1]], display_ms: 0 }); } h++; }
+        return shuffle(all).slice(0, this.lens[len]);
+      },
+      card5() {                        // the study sheet: each symbol with its dots
+        ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH);
+        for (let v = 1; v <= 5; v++) { const x = 112 + (v - 1) * 200; this.sym(this.map[v - 1], x, 140, 110); this.dots(v, x, 280);
+          ctx.fillStyle = "#5b6577"; ctx.font = "600 22px IBM Plex Mono, ui-monospace, monospace"; ctx.textAlign = "center"; ctx.fillText(String(v), x, 340); }
+      },
+      pre(t, go) {
+        this.assign();
+        if (this.learnedFor === (state.pid || "anon")) return go();
+        let block = [], streak = 0, blocks = 0, shown = 0;
+        const study = () => { this.card5(); $("prompt").textContent = "Learn the five alien numbers (each with its dots). Press Space or tap here when ready."; awaiting = "begin"; resumeFn = quiz; };
+        const quiz = () => {
+          if (!block.length) {
+            if (blocks > 0 && streak >= 5) { this.learnedFor = state.pid || "anon"; $("prompt").innerHTML = '<span class="fx hit">LEARNED!</span> <span class="live">Now: which is larger? Be quick.</span>'; return later(1500, go); }
+            if (blocks >= 6) { this.learnedFor = state.pid || "anon"; $("prompt").textContent = "Good enough: on to the test."; return later(1300, go); }
+            block = shuffle([1, 2, 3, 4, 5]); blocks++; streak = 0;
+          }
+          const v = block.shift(), t1 = performance.now();
+          ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH); this.sym(this.map[v - 1], XW / 2, 170, 170);
+          $("prompt").textContent = "Which number is this? Press 1–5 (or tap a number below).";
+          awaiting = "learn";
+          learnAnswer = k => {
+            if (awaiting !== "learn") return; awaiting = null; shown++;
+            const ok = k === v; streak = ok ? streak + 1 : 0;
+            this.learnLog.push({ trial_id: `alien_learn_${shown}`, part: "learn", block: blocks, value: v, symbol: this.NAMES[this.map[v - 1]], response: k, correct: ok ? 1 : 0, rt_ms: Math.round(performance.now() - t1), timestamp: new Date().toISOString().slice(0, 19) + "Z" });
+            ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH); this.sym(this.map[v - 1], XW / 2 - 140, 170, 150); this.dots(v, XW / 2 + 150, 170);
+            $("prompt").innerHTML = ok ? '<span class="fx hit">RIGHT!</span>' : `<span class="fx miss">NO:</span> <span class="live">that one is ${v}</span>`;
+            later(ok ? 700 : 1600, quiz);
+          };
+          $("learnPad").hidden = false;
+        };
+        study();
+      },
+      draw(t) { ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH); $("learnPad").hidden = true;
+        this.sym(this.map[t.left_value - 1], XW / 4, XH / 2, 170); this.sym(this.map[t.right_value - 1], 3 * XW / 4, XH / 2, 170); },
+      answer: "choice", prompt: "Which alien number is larger?",
+      aiP(t) { return 0.97; },          // simulated AI: labels memorised, equally right for close and far pairs (no distance effect)
+      csv(rows, model) {
+        const cols = ["trial_id", "part", "left_value", "right_value", "distance", "larger_side", "left_symbol", "right_symbol", "block", "value", "symbol", "modality", "reasoning", "model", "timestamp", "response", "choice", "correct", "confidence", "rt_ms", "display_ms"];
+        return [cols, [...this.learnLog.map(r => ({ ...r, modality: "image", reasoning: "human", model })),
+          ...rows.map(r => ({ ...r, modality: "image", reasoning: "human", model, response: r.choice }))]];
+      },
+      results(rows, stats, out, said) {
+        const D = [1, 2, 3, 4], acc = rs => rs.length ? mean(rs.map(r => r.correct)) : NaN, rt = rs => { const c = rs.filter(r => r.correct); return c.length ? mean(c.map(r => r.rt_ms)) : NaN; };
+        const pct = v => Number.isFinite(v) ? `${Math.round(100 * v)}%` : "—", ms = v => Number.isFinite(v) ? `${Math.round(v)} ms` : "—";
+        const L = this.learnLog, blocks = L.length ? Math.max(...L.map(r => r.block)) : 0;
+        out.table = `<table><thead><tr><th>Distance</th><th>Rounds</th><th>Right</th><th>Time (right answers)</th></tr></thead><tbody>${D.map(d => { const rs = rows.filter(r => r.distance === d);
+          return `<tr><td>${d}</td><td>${rs.length}</td><td>${pct(acc(rs))}</td><td>${ms(rt(rs))}</td></tr>`; }).join("")}</tbody></table>
+          <p class="note">Learning: ${L.length} tries in ${blocks} run${blocks === 1 ? "" : "s"} of five, ${pct(acc(L))} right. Your symbols: ${[1, 2, 3, 4, 5].map(v => `${v} = ${this.NAMES[this.map[v - 1]]}`).join(", ")}.</p>`;
+        const near = rows.filter(r => r.distance === 1), far = rows.filter(r => r.distance >= 3), eff = rt(near) - rt(far);
+        stats.push(["Alien distance effect", Number.isFinite(eff) ? `${Math.round(eff)} ms` : "—", "close pairs minus far pairs (+ = human-like)"]);
+        out.charts.push(card("Alien numerals: close pairs are slower?", plot({ xmin: 0.5, xmax: 4.5, ymin: 0, ymax: Math.max(1500, ...D.map(d => rt(rows.filter(r => r.distance === d))).filter(Number.isFinite).map(v => v * 1.2)),
+          xticks: [1, 2, 3, 4], yticks: [0, 500, 1000, 1500], xlabel: "distance between the two numbers", ylabel: "your time (ms)",
+          series: [{ type: "line", cls: "youline", pts: D.map(d => [d, rt(rows.filter(r => r.distance === d))]) }, { type: "points", cls: "you", pts: D.map(d => [d, rt(rows.filter(r => r.distance === d))]) }] }),
+          [["dotline", "you", "your time, right answers"]], "With digits, people are slower for close numbers (Moyer & Landauer 1967). The same slope with new symbols means they now stand for amounts."));
+        said.push(`<p><b>Alien numerals.</b> ${Number.isFinite(eff) ? `Close pairs took you ${Math.abs(Math.round(eff))} ms ${eff >= 0 ? "longer" : "less"} than far pairs${eff > 30 ? ": a distance effect, so the symbols became numbers for you." : "."}` : "Play more rounds to measure the distance effect."}</p>`);
       },
     },
   };
@@ -1228,7 +1419,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   const later = (ms, fn) => timers.push(setTimeout(fn, ms));
   const confValue = (task, c) => isX(task) ? X[task].conf[c - 1] : task === "comparison" || task === "heap" ? [50, 67, 83, 100][c - 1] : [25, 50, 75, 100][c - 1];
   const TASKNAME = { comparison: "Comparison · which side has more?", estimation: "Estimation · how many dots?", heap: "The heap · is it a heap?",
-                     symbolic: X.symbolic.task, strings: X.strings.task, numberline: X.numberline.task, analog: X.analog.task, coords: X.coords.task, adapt: X.adapt.task };
+                     symbolic: X.symbolic.task, strings: X.strings.task, numberline: X.numberline.task, analog: X.analog.task, coords: X.coords.task, adapt: X.adapt.task, objects: X.objects.task, alien: X.alien.task };
   const arrOf = task => isX(task) ? xState()[task] : state[{ comparison: "cmp", estimation: "est", heap: "heap" }[task]];
 
   const BUBBLES = {
@@ -1238,7 +1429,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     heap: "One grain of sand is not a heap. A million grains is. So where does the heap begin? No right answer here: just yours, and the AI's. Do you think alike?",
     challenge: "Level up! Beat the AI on points and grab the crown.",
     results: "The verdict is in! Here is how you did, and where you sit next to the AI.",
-    symbolic: X.symbolic.bubble, strings: X.strings.bubble, numberline: X.numberline.bubble, analog: X.analog.bubble, coords: X.coords.bubble, adapt: X.adapt.bubble,
+    symbolic: X.symbolic.bubble, strings: X.strings.bubble, numberline: X.numberline.bubble, analog: X.analog.bubble, coords: X.coords.bubble, adapt: X.adapt.bubble, objects: X.objects.bubble, alien: X.alien.bubble,
   };
   const bubble = k => { $("bubble").textContent = BUBBLES[k]; };
   function show(id) { for (const s of ["setup", "run", "verdict", "results"]) $(s).hidden = s !== id; }
@@ -1260,7 +1451,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     }
     setProgress();
     const t = list.trials[state.idx];
-    $("answerCmp").hidden = $("answerEst").hidden = $("answerHeap").hidden = $("confRow").hidden = true;
+    $("answerCmp").hidden = $("answerEst").hidden = $("answerHeap").hidden = $("confRow").hidden = $("learnPad").hidden = true;
     $("prompt").textContent = ""; cv.style.touchAction = "auto";
     if (isX(list.task)) { cv.width = XW; cv.height = XH; }
     else if (list.task === "heap") { cv.width = HW; cv.height = HH; } else { cv.width = list.task === "comparison" ? 2 * SIDE : SIDE; cv.height = SIDE; }
@@ -1372,7 +1563,8 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     pending.estimate = v;
     const tk = state.queue[0].task;
     if (scoring() && tk === "analog") { pending.pts = X.analog.pts(v, pending); pending.ai_pts = X.analog.aiPts(pending); pending.bet = 0; }
-    else if (scoring()) { pending.pts = closePts(v, pending.n); pending.ai_pts = tk === "strings" ? X.strings.aiPts(pending) : aiEstPts(pending.n); pending.bet = 0; }
+    else if (scoring()) { pending.pts = closePts(v, pending.n); pending.ai_pts = X[tk] && X[tk].aiPts ? X[tk].aiPts(pending) : aiEstPts(pending.n); pending.bet = 0;
+                            if (X[tk] && X[tk].aiEstimate) pending.ai_estimate = X[tk].aiEstimate(pending); }
     $("answerEst").hidden = true; askConf();
   }
   // A placed mark can be moved (tap again, or drag) until the confidence button confirms it.
@@ -1444,11 +1636,11 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     pending.confidence = confValue(task, c);
     // Confidence is a plain rating, as in most metacognition studies (e.g. Fleming & Lau 2014): no points ride on it,
     // so it measures how sure people feel rather than a betting strategy. (Wagering was tried here and dropped.)
-    if (task === "comparison" || task === "adapt" || task === "symbolic") pending.bet = 0;
+    if (task === "comparison" || task === "adapt" || task === "symbolic" || task === "alien") pending.bet = 0;
     pending.timestamp = new Date().toISOString().slice(0, 19) + "Z";
     arrOf(task).push(pending);
     const done = pending; pending = null; awaiting = null; state.idx++;
-    if (task === "comparison" || task === "symbolic" || task === "adapt") {     // a quick comic hit: your result and the AI's on this round
+    if (task === "comparison" || task === "symbolic" || task === "adapt" || task === "alien") {     // a quick comic hit: your result and the AI's on this round
       $("confRow").hidden = true; setProgress();
       const pc = Math.round(100 * done.ai_p);
       const msg = done.correct ? (done.pts - done.bet >= 9 ? "BEAT THE AI!" : done.pts - done.bet >= 7 ? "POW! Tricky one!" : "POW! Right!") : "MISS!";
@@ -1485,7 +1677,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       later(1600, nextTrial);
       return;
     }
-    if ((task === "estimation" || task === "strings" || task === "analog") && Number.isFinite(done.pts)) {
+    if ((task === "estimation" || task === "strings" || task === "analog" || task === "objects") && Number.isFinite(done.pts)) {
       $("confRow").hidden = true; setProgress();
       const msg = done.pts === 10 ? "BULLSEYE!" : done.pts >= 7 ? "So close!" : done.pts >= 3 ? "Not bad!" : "WAY OFF!";
       $("prompt").innerHTML = `<span class="fx ${done.pts >= 3 ? "hit" : "miss"}">${msg} +${done.pts}</span> <span class="live">· it was ${task === "analog" ? done.value + "%" : done.n} ${showAI ? `· the AI scores about ${Math.round(done.ai_pts)} here` : ""}</span>`;
@@ -1654,7 +1846,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       }
       let sub = 0; for (const n of ns) { const s = state.est.filter(r => r.n === n); if (n === sub + 1 && mean(s.map(r => +(r.estimate === n))) >= 0.9) sub = n; else break; }
       const big = state.est.filter(r => r.n > 4).map(r => r.estimate / r.n), m = mean(big), cv = sd(big) / m;
-      said.push(`<p><b>Estimation.</b> You were exact up to <b>${sub || "—"}</b> ${sub >= 3 && sub <= 5 ? "(the usual subitizing range)" : ""}. Beyond 4, your estimates averaged ${Math.round(m * 100)}% of the true number${m < 0.95 ? " (underestimation, common in humans)" : m > 1.05 ? " (overestimation)" : ""}, with a spread (CV) of ${cv.toFixed(2)}; adults are typically around 0.15–0.25.</p>`);
+      said.push(`<p><b>Estimation.</b> You were exact up to <b>${sub || "—"}</b> ${sub >= 3 && sub <= 5 ? "(the usual subitizing range)" : ""}. Beyond 4, your estimates averaged ${Math.round(m * 100)}% of the true number${m < 0.95 ? " (underestimation, common in humans)" : m > 1.05 ? " (overestimation)" : ""}, with a spread (CV) of ${cv.toFixed(2)}; adults are typically around 0.25–0.3 (twice the number, twice the spread).</p>`);
     }
     const durs = [...new Set(state.cmp.map(r => r.display_ms))].sort((a, b) => (a || 1e9) - (b || 1e9));
     if (durs.length > 1) {
@@ -1678,6 +1870,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       const o = { charts: [], table: "" }; x.results(rows, [], o, said); out.push(...o.charts); }
     $("charts").innerHTML = out.join("");
     $("guide").innerHTML = guideHtml();
+    $("meta").innerHTML = metaHtml();
     $("why").innerHTML = whyHtml(state.challenge ? null : state.onlyView);
     $("summary").innerHTML = said.join("");
     buildVersus();
@@ -1785,6 +1978,18 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
         "after staring at many dots, that side looked fewer (or after few dots, more): number adaptation. Your brain reads number like colour or motion, and it gets tired.",
         "staring changed nothing for you. Burr & Ross's observers saw huge shifts after 30 s; try the full version, and keep your eyes on the cross.", "play a few more rounds to tell.");
     }
+    if (X_.objects.length) {
+      const g = X.objects.byCat(X_.objects, "estimate").map(x => x.m).filter(Number.isFinite), gap = g.length >= 2 ? Math.max(...g) - Math.min(...g) : NaN;
+      t("Does it matter what you count?", Number.isFinite(gap) ? gap <= 0.15 : null,
+        "apples, birds, cars or dots, you counted them alike: number apart from what is counted, the human way.",
+        "the kind of object shifted your counts. Testolin et al. found that in AI models, not in people...", "play a few more rounds to tell.");
+    }
+    if (X_.alien.length) {
+      const rt = rs => { const c = rs.filter(r => r.correct); return c.length ? mean(c.map(r => r.rt_ms)) : NaN; }, eff = rt(X_.alien.filter(r => r.distance === 1)) - rt(X_.alien.filter(r => r.distance >= 3));
+      t("Alien numerals", Number.isFinite(eff) ? eff > 30 : null,
+        "close alien numbers slowed you down: the new symbols became amounts in your head.",
+        "close and far pairs took you the same time: labels memorised, the way a lookup table would.", "play a few more rounds to tell.");
+    }
     if (X_.analog.length) {
       const a = X_.analog.filter(r => r.encoding === "area" && r.value <= 55), b = X_.analog.filter(r => r.encoding === "position" || r.encoding === "length");
       const over = m(a.map(r => r.estimate - r.value)), errA = m(X_.analog.filter(r => r.encoding === "area").map(r => Math.abs(r.estimate - r.value))), errB = m(b.map(r => Math.abs(r.estimate - r.value)));
@@ -1878,7 +2083,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   const LEN_ORDER = ["mini", "quick", "medium", "full"];
   const KEY = { comparison: "cmp", estimation: "est", heap: "heap" };
   const TRIALS = { comparison: l => comparisonTrials(l), estimation: l => estimationTrials(l), heap: l => heapTrials(l),
-                   symbolic: l => X.symbolic.build(l), strings: l => X.strings.build(l), numberline: l => X.numberline.build(l), analog: l => X.analog.build(l), coords: l => X.coords.build(l), adapt: l => X.adapt.build(l) };
+                   symbolic: l => X.symbolic.build(l), strings: l => X.strings.build(l), numberline: l => X.numberline.build(l), analog: l => X.analog.build(l), coords: l => X.coords.build(l), adapt: l => X.adapt.build(l), objects: l => X.objects.build(l), alien: l => X.alien.build(l) };
   const played = task => arrOf(task).length;
   function nextStep(task) {          // the next length up from what has been played: rounds to add, or null at the top
     const n = played(task);
@@ -1887,11 +2092,11 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   }
   function assignTimes(trials) {
     if (trials.length && trials[0].part === "adapt") return trials;      // adaptation runs in blocks: keep the order
-    trials.forEach((t, i) => { t.display_ms = t.part === "adapt" ? t.display_ms : t.part === "number_line" || t.part === "coords" ? 0 : state.dur === -1 ? DURS[i % DURS.length] : state.dur; });
+    trials.forEach((t, i) => { t.display_ms = t.part === "adapt" ? t.display_ms : t.part === "number_line" || t.part === "coords" || t.part === "alien" ? 0 : state.dur === -1 ? DURS[i % DURS.length] : state.dur; });
     return shuffle(trials);
   }
   const GAME_NAMES = { comparison: "Which side has more?", estimation: "How many dots?", heap: "Is it a heap?",
-                       symbolic: X.symbolic.name, strings: X.strings.name, numberline: X.numberline.name, analog: X.analog.name, coords: X.coords.name, adapt: X.adapt.name };
+                       symbolic: X.symbolic.name, strings: X.strings.name, numberline: X.numberline.name, analog: X.analog.name, coords: X.coords.name, adapt: X.adapt.name, objects: X.objects.name, alien: X.alien.name };
   function finish(only) {
     clearTimers(); state.phase = "results"; show("results"); bubble("results"); window.scrollTo(0, 0);
     const next = only && state.queue[0], step = only && nextStep(only);
@@ -1947,6 +2152,46 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       "Humans see FEWER dots after staring at many, and MORE after staring at few: the shift goes away from the adapter. No shift, or a shift toward it, is not the human pattern.",
       "An AI that looks at each picture afresh cannot adapt. Shown the same sequence, does it show the aftereffect?"],
   };
+  // ---------- metacognition: did your confidence track your errors? (Butlin et al. 2023, indicator HOT-2) ----------
+  // For each game: the chance that a round you got right (or nearer the truth) carried higher confidence than one you
+  // got wrong (or further off): type-2 AUROC. 0.5 = confidence blind to errors; 1 = perfect tracking. Heap: no right answer.
+  function confTracking() {
+    const xs = xState(), out = [];
+    const errOf = { estimation: r => Math.abs(Math.log((r.estimate + 0.5) / (r.n + 0.5))), strings: r => Math.abs(Math.log((r.estimate + 0.5) / (r.n + 0.5))),
+      objects: r => Math.abs(Math.log((r.estimate + 0.5) / (r.n + 0.5))), analog: r => Math.abs(r.estimate - r.value),
+      numberline: r => Math.abs(r.estimate - r.value) / r.top, coords: r => Math.hypot(r.est_x - r.x, r.est_y - r.y) / r.top };
+    const games = [["comparison", state.cmp], ["estimation", state.est], ...Object.keys(X).map(k => [k, xs[k] || []])];
+    for (const [k, rows0] of games) {
+      const rows = rows0.filter(r => Number.isFinite(r.confidence)); if (rows.length < 6) continue;
+      let good, bad;
+      if (errOf[k]) { const e = rows.map(errOf[k]), med = [...e].sort((a, b) => a - b)[Math.floor(e.length / 2)];
+        good = rows.filter((r, i) => e[i] < med); bad = rows.filter((r, i) => e[i] > med); }
+      else { good = rows.filter(r => r.correct === 1); bad = rows.filter(r => r.correct === 0); }
+      let auc = NaN;
+      if (good.length >= 2 && bad.length >= 2) { let s = 0; for (const g of good) for (const b of bad) s += g.confidence > b.confidence ? 1 : g.confidence === b.confidence ? 0.5 : 0; auc = s / (good.length * bad.length); }
+      out.push({ k, n: rows.length, auc, good: good.length, bad: bad.length });
+    }
+    return out;
+  }
+  function metaHtml() {
+    const rows = confTracking(); if (!rows.length) return "";
+    const verdict = a => !Number.isFinite(a) ? "not enough errors (or hits) to tell" : a >= 0.65 ? "yes: you knew when you were likely wrong" : a >= 0.55 ? "a little" : "no: your confidence did not follow your errors";
+    return `<div class="why"><h3>Did your confidence track your errors?</h3>
+      <p>After each answer you said how sure you were. In people, confidence follows accuracy above chance but imperfectly (Maniscalco &amp; Lau 2012): this is metacognitive monitoring, one of the indicators proposed for consciousness in AI (Butlin et al. 2023, HOT-2). The score is the chance that a round you got right, or nearer the truth, got more confidence than one you got wrong, or further off: 0.5 = no tracking, 1 = perfect.</p>
+      <table><thead><tr><th>Game</th><th>Rounds</th><th>Score</th><th>Did it track?</th></tr></thead><tbody>${rows.map(r =>
+        `<tr><td>${GAME_NAMES[r.k] || r.k}</td><td>${r.n}</td><td>${Number.isFinite(r.auc) ? r.auc.toFixed(2) : "—"}</td><td>${verdict(r.auc)}</td></tr>`).join("")}</tbody></table>
+      <p class="note">An imitator that adds errors on purpose would have no access to them: its confidence would not track them. (The AI here is simulated; real models' confidence comes next.)</p></div>`;
+  }
+  Object.assign(WHY, {
+    objects: ["Does it matter what you count?",
+      "Five apples and five cars are both five. Is number seen apart from what is counted?",
+      "For people, errors do not depend on the kind of object, and their spread grows with the number (Weber's law). A count that shifts with the category is not the human pattern.",
+      "Testolin, Hou & Zorzi (2025) found that, \u201cin stark contrast with human behavior\u201d, many AI models' errors depend on the object category. The simulated AI here mimics that."],
+    alien: ["Alien numerals",
+      "Monkeys can learn arbitrary shapes for small numbers, and their prefrontal neurons then code the shapes' values (Diester & Nieder 2007). Can you turn five new symbols into numbers in one minute?",
+      "With digits, close numbers (4 vs 5) take longer to compare than far ones (1 vs 5): the distance effect (Moyer & Landauer 1967). If it appears with brand-new symbols, they are linked to magnitude, not just memorised as labels.",
+      "A model taught the same symbols in one conversation may answer correctly, but does it slow down, or lose confidence, for close pairs? The simulated AI here has memorised labels: no distance effect."],
+  });
   function whyHtml(only) {
     const has = k => k === "comparison" ? state.cmp.length : k === "estimation" ? state.est.length : k === "heap" ? state.heap.length : (xState()[k] || []).length;
     const list = ["comparison", "estimation", "heap", ...Object.keys(X)].filter(k => only ? k === only : has(k));
@@ -2002,7 +2247,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       block(title, kind === "dots" ? [
         ["Infants", "track up to about 3 objects at once", "Feigenson, Carey & Hauser 2002"],
         ["Children", "subitize from early childhood; larger relative errors when estimating", "Izard & Dehaene 2008"],
-        ["Adults", "exact and fast up to 3–4; beyond, error grows with n (relative error ≈ 0.15–0.25), large sets underestimated", "Kaufman et al. 1949; Whalen et al. 1999; Izard & Dehaene 2008"],
+        ["Adults", "exact and fast up to 3–4; beyond, error grows with n (spread ≈ 25–30% of the number: twice the number, twice the spread), large sets underestimated", "Kaufman et al. 1949; Whalen, Gallistel & Gelman 1999; Burr & Ross 2008; Izard & Dehaene 2008"],
         ["Monkeys", "approximate number with the same scaling", "Nieder & Miller 2003"]] : [
         ["Adults", "a row of symbols is subitized up to about 4; spacing and grouping (1,000,000) make counting easier", "Trick & Pylyshyn 1994 (subitizing)"],
         ["Children, animals", "no standard data for rows of written symbols", "—"],
@@ -2081,7 +2326,8 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       else if (Number.isFinite(err("area")) && Number.isFinite(err("position")) && err("area") <= err("position")) means = "you read areas as well as positions. People almost never do; areas are our weakest reading.";
       else means = "the usual human ranking: positions and lengths read best, angles and areas worse.";
       block("Read the chart", [
-        ["Adults", "position < length < angle < area, from most to least accurate", "Cleveland & McGill 1984"],
+        ["Adults", "the same values read most accurately as position, then length, then angle, then area", "Cleveland & McGill 1984"],
+        ["Trained vs untrained adults", "technically trained and untrained readers performed about the same", "Cleveland & McGill 1984"],
         ["Adults", "perceived area grows more slowly than true area (exponent ≈ 0.7–0.8)", "Stevens 1957; Teghtsoonian 1965"],
         ["Adults", "proportions are pulled toward reference points such as one half", "Spence 1990; Hollands & Dyre 2000"]],
         `average miss ${m(rs.map(r => Math.abs(r.estimate - r.value))).toFixed(1)} points${Number.isFinite(over) ? `; small circles judged ${over >= 0 ? "+" : ""}${over.toFixed(1)} points off` : ""}.`, means);
@@ -2100,6 +2346,24 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
         ["Animals", "no standard data in this format", "—"]],
         `${Number.isFinite(sh) ? `after 400 dots the adapted side looked ${Math.round(100 * Math.abs(sh))}% ${sh >= 0 ? "fewer" : "more"}` : "no 400-dot rounds yet"}${Number.isFinite(sf) ? `; after 10 dots, ${Math.round(100 * Math.abs(sf))}% ${sf >= 0 ? "fewer" : "more"}` : ""}.`, means);
     }
+    if (X_.objects.length) {
+      const by = X.objects.byCat(X_.objects, "estimate"), g = by.map(x => x.m).filter(Number.isFinite), gap = g.length >= 2 ? Math.max(...g) - Math.min(...g) : NaN;
+      const cvs = by.map(x => x.cv).filter(Number.isFinite), cv = cvs.length ? mean(cvs) : NaN;
+      block("Does it matter what you count?", [
+        ["Adults", "errors do not depend on the object category; spread grows with the number (Weber's law)", "Testolin, Hou & Zorzi 2025"],
+        ["AI models (vision-language)", "\u201cin stark contrast with human behavior, in many cases the distribution of errors depends on the object category\u201d", "Testolin, Hou & Zorzi 2025"]],
+        `${Number.isFinite(gap) ? `largest gap between categories ${gap.toFixed(2)} (estimate / true)` : "too few rounds per category"}${Number.isFinite(cv) ? `; average spread ${cv.toFixed(2)}` : ""}.`,
+        !Number.isFinite(gap) ? "play more rounds to compare categories." : gap <= 0.15 ? "the category hardly mattered: number coded independently of what is counted, as in people." : "the category shifted your estimates, the pattern reported for AI models rather than for people.");
+    }
+    if (X_.alien.length) {
+      const rs = X_.alien, rt = a => { const c = a.filter(r => r.correct); return c.length ? mean(c.map(r => r.rt_ms)) : NaN; };
+      const near = rt(rs.filter(r => r.distance === 1)), far = rt(rs.filter(r => r.distance >= 3)), eff = near - far;
+      block("Alien numerals", [
+        ["Adults, digits", "slower and more errors when the two numbers are close (the distance effect)", "Moyer & Landauer 1967"],
+        ["Monkeys", "learned to link arbitrary shapes with small numbers of dots; prefrontal neurons came to code the shapes' numerical values", "Diester & Nieder 2007"]],
+        `${Number.isFinite(eff) ? `close pairs ${Math.round(near)} ms, far pairs ${Math.round(far)} ms` : "too few rounds yet"}.`,
+        !Number.isFinite(eff) ? "play more rounds to measure the distance effect." : eff > 30 ? "a distance effect with symbols you met minutes ago: they now stand for amounts." : "no distance effect: the symbols may still be labels rather than amounts (or you answered at your top speed every time).");
+    }
     return blocks.length ? `<h2>How to read your results</h2><p class="note">What people of different ages, and animals, usually do, and what it means when you depart from it. Values are approximate, from the studies named.</p>${blocks.join("")}` : "";
   }
   function render() {
@@ -2108,7 +2372,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     if (state.cmp.length) {
       const w = fitW(state.cmp), acc = mean(state.cmp.map(r => r.correct));
       const cong = state.cmp.filter(r => r.condition === "congruent"), inc = state.cmp.filter(r => r.condition === "incongruent");
-      stats.push(["Weber fraction w", w >= 2.9 ? "> 1" : w.toFixed(2), "typical adult ≈ 0.11–0.15"]);
+      stats.push(["Weber fraction w", w >= 2.9 ? "> 1" : w.toFixed(2), "typical adult ≈ 0.11–0.28"]);
       stats.push(["Comparison accuracy", `${Math.round(100 * acc)}%`, `${state.cmp.length} trials`]);
       if (cong.length && inc.length) stats.push(["Area effect", ((mean(cong.map(r => r.correct)) - mean(inc.map(r => r.correct))) * 100).toFixed(0) + " pts", "congruent − incongruent; near 0 = number"]);
       const rows = [];
@@ -2187,19 +2451,19 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   $("vStop").addEventListener("click", () => { if (awaiting !== "verdict") return; awaiting = null; finish(); });
   $("start").addEventListener("click", () => {
     const pid = $("pid").value.trim() || "anon";
-    if (!bank || bank.pid !== pid) bank = { pid, cmp: [], est: [], heap: [], x: { symbolic: [], strings: [], numberline: [], analog: [], coords: [], adapt: [] } };
+    if (!bank || bank.pid !== pid) bank = { pid, cmp: [], est: [], heap: [], x: { symbolic: [], strings: [], numberline: [], analog: [], coords: [], adapt: [], objects: [], alien: [] } };
     state = { phase: "run", pid, dur: +$("dur").value, queue: [], idx: 0, cmp: bank.cmp, est: bank.est, heap: bank.heap, x: bank.x };
     const assign = assignTimes;
     const len = $("len").value;
     if ($("doCmp").checked) state.queue.push({ task: "comparison", trials: assign(comparisonTrials(len)) });
     if ($("doEst").checked) state.queue.push({ task: "estimation", trials: assign(estimationTrials(len)) });
     if ($("doHeap").checked) state.queue.push({ task: "heap", trials: assign(heapTrials(len)) });
-    for (const [box, task] of [["doSym", "symbolic"], ["doStr", "strings"], ["doNl", "numberline"], ["doPt", "coords"], ["doAn", "analog"], ["doAd", "adapt"]])
+    for (const [box, task] of [["doSym", "symbolic"], ["doStr", "strings"], ["doNl", "numberline"], ["doPt", "coords"], ["doAn", "analog"], ["doAd", "adapt"], ["doOb", "objects"], ["doAl", "alien"]])
       if ($(box).checked) state.queue.push({ task, trials: assign(X[task].build(len)) });
     if (!state.queue.length) return;
     show("run"); race(0, 0); intro();
   });
-  for (const [btn, box] of [["btnCmp", "doCmp"], ["btnEst", "doEst"], ["btnHeap", "doHeap"], ["btnSym", "doSym"], ["btnStr", "doStr"], ["btnNl", "doNl"], ["btnAn", "doAn"], ["btnPt", "doPt"], ["btnAd", "doAd"]]) {
+  for (const [btn, box] of [["btnCmp", "doCmp"], ["btnEst", "doEst"], ["btnHeap", "doHeap"], ["btnSym", "doSym"], ["btnStr", "doStr"], ["btnNl", "doNl"], ["btnAn", "doAn"], ["btnPt", "doPt"], ["btnAd", "doAd"], ["btnOb", "doOb"], ["btnAl", "doAl"]]) {
     $(btn).addEventListener("click", () => {
       const on = $(btn).getAttribute("aria-pressed") !== "true";
       $(btn).setAttribute("aria-pressed", String(on)); $(box).checked = on;
@@ -2227,6 +2491,8 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     $("subPt").textContent = `${X.coords.lens[b.dataset.len]} rounds · two axes, no grid`;
     $("subAn").textContent = `${X.analog.lens[b.dataset.len]} rounds · bars, pies, circles, water`;
     $("subAd").textContent = `${X.adapt.lens[b.dataset.len]} rounds · tired eyes see fewer`;
+    $("subOb").textContent = `${X.objects.lens[b.dataset.len]} rounds · dots, apples, birds, cars`;
+    $("subAl").textContent = `${X.alien.lens[b.dataset.len]} rounds · learn 5 new symbols`;
     $("subHeap").textContent = `${L.heap} rounds · about ${Math.max(1, Math.round(L.heap * 3 / 60))} minute${L.heap * 3 / 60 >= 1.5 ? "s" : ""} · no right answer`;
   });
   $("durs").addEventListener("click", e => {
@@ -2234,7 +2500,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     for (const x of $("durs").querySelectorAll("button")) x.setAttribute("aria-pressed", String(x === b));
     $("dur").value = b.dataset.dur;
   });
-  const resumeOrNext = () => { const f = X.adapt._resume; if (f) { X.adapt._resume = null; f(); } else nextTrial(); };
+  const resumeOrNext = () => { const f = resumeFn; if (f) { resumeFn = null; f(); } else nextTrial(); };
   $("prompt").addEventListener("click", () => { if (awaiting === "begin") { awaiting = null; resumeOrNext(); } });
   $("bLeft").addEventListener("click", () => answerChoice("left"));
   $("bRight").addEventListener("click", () => answerChoice("right"));
@@ -2242,6 +2508,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   $("confRow").addEventListener("click", e => { const b = e.target.closest("button"); if (b) answerConf(+b.dataset.c); });
   document.addEventListener("keydown", e => {
     if (awaiting === "begin" && e.code === "Space") { e.preventDefault(); awaiting = null; resumeOrNext(); }
+    else if (awaiting === "learn" && ["1", "2", "3", "4", "5"].includes(e.key)) { e.preventDefault(); learnAnswer(+e.key); }
     else if (awaiting === "choice" && (e.key === "ArrowLeft" || e.key === "f" || e.key === "F")) { e.preventDefault(); answerChoice("left"); }
     else if (awaiting === "choice" && (e.key === "ArrowRight" || e.key === "j" || e.key === "J")) { e.preventDefault(); answerChoice("right"); }
     else if (awaiting === "heap" && (e.key === "ArrowLeft" || e.key === "y" || e.key === "Y")) { e.preventDefault(); answerHeap(true); }
@@ -2263,6 +2530,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     const ta = $("csvX").querySelector(`textarea[data-x="${b.dataset.copy}"]`);
     try { await navigator.clipboard.writeText(ta.value); b.textContent = "Copied"; } catch { ta.focus(); ta.select(); b.textContent = "Selected: press Ctrl/Cmd+C"; }
   });
+  $("learnPad").addEventListener("click", e => { const b = e.target.closest("[data-learn]"); if (b) learnAnswer(+b.dataset.learn); });
   $("bYes").addEventListener("click", () => answerHeap(true));
   $("bNo").addEventListener("click", () => answerHeap(false));
   $("aiLoad").addEventListener("click", () => {
@@ -2350,6 +2618,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     const xs = xState(), games = {};
     if (state.cmp.length) games.comparison = state.cmp; if (state.est.length) games.estimation = state.est; if (state.heap.length) games.heap = state.heap;
     for (const k of Object.keys(X)) if ((xs[k] || []).length) games[k] = xs[k];
+    if (X.alien.learnLog.length) games.alien_learning = X.alien.learnLog;
     return JSON.stringify({ app: "To Err Is Human?", version: document.querySelector("#setup .note:last-of-type")?.textContent.match(/Version [^,]+/)?.[0] || "",
       player: state.pid || "anon", exported: new Date().toISOString(), display_ms_setting: state.dur, ai_shown_during_play: showAI, ai_locked: AI_LOCK || null,
       ai_opponent: "simulated", games }, null, 1);
