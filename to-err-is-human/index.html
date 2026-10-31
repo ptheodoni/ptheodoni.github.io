@@ -245,6 +245,14 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <button class="go" id="challenge" type="button">Challenge the AI!</button>
       <p>Which side has more dots? Level 1 is 10 rounds. After each level you find out who won, then decide whether to go on: 10, 20, 60, 120 rounds, each level harder.</p>
     </div>
+    <div class="aiview" id="aiview">
+      <span class="label">While you play</span>
+      <div class="durs" id="aiShow">
+        <button type="button" data-ai="show" aria-pressed="true">Show the AI's answers</button>
+        <button type="button" data-ai="hide" aria-pressed="false">Hide them until the end</button>
+      </div>
+    </div>
+    <p class="note" id="aiLocked" hidden></p>
     <div class="divider"></div>
     <span class="label">Or set up your own run</span>
     <div class="tasks">
@@ -285,7 +293,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <div class="field"><label for="pid">Your initials</label><input id="pid" type="text" value="PT" maxlength="12" autocomplete="off" style="width: 8rem;"></div>
       <button class="go" id="start">Start!</button>
     </div>
-    <p class="note">Version 31 Oct (2), prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards the run. After each answer, press 1–4 to say how sure you were.</p>
+    <p class="note">Version 31 Oct (3), prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards the run. After each answer, press 1–4 to say how sure you were.</p>
   </section>
 
   <section class="card" id="run" hidden>
@@ -296,8 +304,8 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
         <div class="paper"><canvas id="cv" width="1024" height="512" aria-label="Stimulus"></canvas></div>
         <div class="race" id="race" hidden aria-live="polite">
           <div class="head"><span id="raceTitle">The race · level 1</span><span class="lead" id="raceLead">Go!</span></div>
-          <div class="lanes"><div class="lane"><b style="color: var(--accent)">You</b><div class="track y" id="trackY"><div class="fill"></div><div class="zero"></div><div class="runner">YOU</div></div><span class="pts" id="ptsY">0</span></div>
-          <div class="lane"><b style="color: var(--warn)">AI</b><div class="track a" id="trackA"><div class="fill"></div><div class="zero"></div><div class="runner">AI</div></div><span class="pts" id="ptsA">0</span></div></div>
+          <div class="lanes"><div class="lane"><b style="color: var(--accent)" id="laneY">You</b><div class="track y" id="trackY"><div class="fill"></div><div class="zero"></div><div class="runner">YOU</div></div><span class="pts" id="ptsY">0</span></div>
+          <div class="lane"><b style="color: var(--warn)" id="laneA">AI</b><div class="track a" id="trackA"><div class="fill"></div><div class="zero"></div><div class="runner">AI</div></div><span class="pts" id="ptsA">0</span></div></div>
         </div>
       </div>
       <div class="prompt" id="prompt">Get ready</div>
@@ -606,10 +614,15 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   // the race: both runners on the same scale; it stretches as the points grow (and below zero after lost bets)
   function race(gainY, gainA) {
     const c = state.challenge, arena = $("race").parentElement;
-    if (!scoring()) { $("race").hidden = true; arena.classList.remove("racing"); return; }
+    const heap = !!state.queue[0] && state.queue[0].task === "heap";
+    if (!showAI || !(scoring() || heap)) { $("race").hidden = true; arena.classList.remove("racing"); return; }
     arena.classList.add("racing");
-    const own = arrOf(state.queue[0].task).filter(r => Number.isFinite(r.pts));
-    const sc = c ? levelScore(c.level) : { ptsYou: own.reduce((t, r) => t + r.pts, 0), ptsAI: Math.round(own.reduce((t, r) => t + r.ai_pts, 0)), n: own.length };
+    // in the heap there is no right answer: the race is "same" against "different", 10 a round
+    $("laneY").textContent = heap ? "Same" : "You"; $("laneA").textContent = heap ? "Different" : "AI";
+    $("trackY").querySelector(".runner").textContent = heap ? "=" : "YOU"; $("trackA").querySelector(".runner").textContent = heap ? "≠" : "AI";
+    const own = heap ? [] : arrOf(state.queue[0].task).filter(r => Number.isFinite(r.pts));
+    const sc = heap ? { ptsYou: 10 * state.heap.filter(r => r.answer === r.ai_answer).length, ptsAI: 10 * state.heap.filter(r => r.answer !== r.ai_answer).length, n: state.heap.length }
+      : c ? levelScore(c.level) : { ptsYou: own.reduce((t, r) => t + r.pts, 0), ptsAI: Math.round(own.reduce((t, r) => t + r.ai_pts, 0)), n: own.length };
     const y = sc.ptsYou, a = sc.ptsAI;
     const lo = Math.min(0, y, a), hi = Math.max(40, 1.3 * Math.max(y, a, 0));
     const X = v => 100 * (v - lo) / (hi - lo);
@@ -621,12 +634,17 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       if (g) { const e = document.createElement("span"); e.className = `gain ${g > 0 ? "up" : "down"}`; e.style.setProperty("--g", `${X(v)}%`);
                e.textContent = g > 0 ? `+${g}` : `−${-g}`; tr.appendChild(e); setTimeout(() => e.remove(), 1000); }
     }
-    $("raceTitle").textContent = c && c.level ? `The race · total so far ${totalPts()}` : "The race";
+    $("raceTitle").textContent = heap ? "You and the AI" : c && c.level ? `The race · total so far ${totalPts()}` : "The race";
     const d = y - a;
     $("raceLead").className = `lead ${d > 0 ? "y" : d < 0 ? "a" : ""}`;
-    $("raceLead").textContent = sc.n === 0 ? "Go!" : d > 0 ? `You lead by ${d}!` : d < 0 ? `AI leads by ${-d}` : "Neck and neck!";
+    $("raceLead").textContent = heap ? (sc.n === 0 ? "Think alike?" : d > 0 ? "Same brain!" : d < 0 ? "Different minds!" : "Half and half")
+      : sc.n === 0 ? "Go!" : d > 0 ? `You lead by ${d}!` : d < 0 ? `AI leads by ${-d}` : "Neck and neck!";
     $("race").hidden = false;
   }
+  // Show the AI during play, or only at the end. Seeing the AI's answer can nudge the next answer (heap especially),
+  // so experiments lock it from the link: ?ai=show or ?ai=hide. The results at the end always show the comparison.
+  const AI_LOCK = new URLSearchParams(location.search).get("ai");
+  let showAI = AI_LOCK !== "hide";
   let best = 0; try { best = +localStorage.getItem("beatAI.best") || 0; } catch {}
 
   // original pop-art panels: a round blue hero, a red robot, a starburst
@@ -1296,7 +1314,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       const pc = Math.round(100 * done.ai_p);
       const msg = done.correct ? (done.pts - done.bet >= 9 ? "BEAT THE AI!" : done.pts - done.bet >= 7 ? "POW! Tricky one!" : "POW! Right!") : "MISS!";
       const base = done.pts - done.bet, sign = v => v > 0 ? `+${v}` : v < 0 ? `−${-v}` : "±0";
-      $("prompt").innerHTML = `<span class="fx ${done.correct ? "hit" : "miss"}">${msg} ${sign(base)}</span> <span class="live">· the AI gets this one ${pc}% of the time</span>`;
+      $("prompt").innerHTML = `<span class="fx ${done.correct ? "hit" : "miss"}">${msg} ${sign(base)}</span> ${showAI ? `<span class="live">· the AI gets this one ${pc}% of the time</span>` : ""}`;
       race(done.pts, Math.round(done.ai_pts));
       later(1100, nextTrial);
       return;
@@ -1305,14 +1323,16 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       $("confRow").hidden = true; setProgress();
       X.coords.draw(done, [[done.x, done.y, "#1f9a5a", `(${done.x}, ${done.y})`], [done.est_x, done.est_y, "#1d56d8", ""]]);
       const msg = done.pts >= 9 ? "BULLSEYE!" : done.pts >= 6 ? "So close!" : done.pts >= 2 ? "Not bad!" : "WAY OFF!";
-      $("prompt").innerHTML = `<span class="fx ${done.pts >= 2 ? "hit" : "miss"}">${msg} +${done.pts}</span> <span class="live">· you put it at (${done.est_x}, ${done.est_y}) · the AI scores about ${Math.round(done.ai_pts)} here</span>`;
+      $("prompt").innerHTML = `<span class="fx ${done.pts >= 2 ? "hit" : "miss"}">${msg} +${done.pts}</span> <span class="live">· you put it at (${done.est_x}, ${done.est_y}) ${showAI ? `· the AI scores about ${Math.round(done.ai_pts)} here` : ""}</span>`;
       race(done.pts, Math.round(done.ai_pts));
       later(1600, nextTrial);
       return;
     }
     if (task === "heap") {
       $("confRow").hidden = true; setProgress();
+      if (!showAI) { nextTrial(); return; }
       const same = done.answer === done.ai_answer, agreed = state.heap.filter(r => r.answer === r.ai_answer).length;
+      race(same ? 10 : 0, same ? 0 : 10);
       $("prompt").innerHTML = `<span class="fx ${same ? "hit" : "miss"}">${same ? "SAME BRAIN!" : "DIFFERENT MINDS!"}</span> <span class="live">· the AI said ${done.ai_answer === "yes" ? "a heap" : "not a heap"} · you agree on ${agreed} of ${state.heap.length}</span>`;
       later(1300, nextTrial);
       return;
@@ -1321,7 +1341,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       $("confRow").hidden = true; setProgress();
       X.numberline.draw(done, [[done.value, "#1f9a5a", `${done.value}`], [done.estimate, "#1d56d8", "you"]]);
       const msg = done.pts >= 9 ? "BULLSEYE!" : done.pts >= 6 ? "So close!" : done.pts >= 2 ? "Not bad!" : "WAY OFF!";
-      $("prompt").innerHTML = `<span class="fx ${done.pts >= 2 ? "hit" : "miss"}">${msg} +${done.pts}</span> <span class="live">· you put it at ${done.estimate} · the AI scores about ${Math.round(done.ai_pts)} here</span>`;
+      $("prompt").innerHTML = `<span class="fx ${done.pts >= 2 ? "hit" : "miss"}">${msg} +${done.pts}</span> <span class="live">· you put it at ${done.estimate} ${showAI ? `· the AI scores about ${Math.round(done.ai_pts)} here` : ""}</span>`;
       race(done.pts, Math.round(done.ai_pts));
       later(1600, nextTrial);
       return;
@@ -1329,7 +1349,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     if ((task === "estimation" || task === "strings" || task === "analog") && Number.isFinite(done.pts)) {
       $("confRow").hidden = true; setProgress();
       const msg = done.pts === 10 ? "BULLSEYE!" : done.pts >= 7 ? "So close!" : done.pts >= 3 ? "Not bad!" : "WAY OFF!";
-      $("prompt").innerHTML = `<span class="fx ${done.pts >= 3 ? "hit" : "miss"}">${msg} +${done.pts}</span> <span class="live">· it was ${task === "analog" ? done.value + "%" : done.n} · the AI scores about ${Math.round(done.ai_pts)} here</span>`;
+      $("prompt").innerHTML = `<span class="fx ${done.pts >= 3 ? "hit" : "miss"}">${msg} +${done.pts}</span> <span class="live">· it was ${task === "analog" ? done.value + "%" : done.n} ${showAI ? `· the AI scores about ${Math.round(done.ai_pts)} here` : ""}</span>`;
       race(done.pts, Math.round(done.ai_pts));
       later(1400, nextTrial);
       return;
@@ -1976,6 +1996,15 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       $(btn).setAttribute("aria-pressed", String(on)); $(box).checked = on;
     });
   }
+  if (AI_LOCK === "show" || AI_LOCK === "hide") {
+    $("aiview").hidden = true; $("aiLocked").hidden = false;
+    $("aiLocked").textContent = AI_LOCK === "hide" ? "In this study the AI's answers are shown only at the end." : "In this study you see the AI's answers as you play.";
+  }
+  $("aiShow").addEventListener("click", e => {
+    const b = e.target.closest("button[data-ai]"); if (!b) return;
+    showAI = b.dataset.ai === "show";
+    for (const x of $("aiShow").querySelectorAll("button")) x.setAttribute("aria-pressed", String(x === b));
+  });
   $("lens").addEventListener("click", e => {
     const b = e.target.closest("button"); if (!b) return;
     for (const x of $("lens").querySelectorAll("button")) x.setAttribute("aria-pressed", String(x === b));
