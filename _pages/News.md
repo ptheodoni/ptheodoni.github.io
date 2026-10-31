@@ -11,6 +11,9 @@ author_profile: true
 Participating in the [Meta Global AI Developer Hackathon](https://cerebralvalley.ai/e/meta-ai-developer-hackathon) by Meta and Cerebral Valley, with [Dr. Man Yi Yim](https://myyim.github.io).  
 Remote, October 26 – November 4, 2026.  
 
+Created and launched [Logoplex](https://logoplex.app).  
+An app for learning languages through play and by exploring the culture around them.  
+
 Created and launched [Hanzi Link](https://ptheodoni.github.io/portfolio/hanzilink/).  
 A Chinese character game · HSK 1–9, for Chinese language learners and native Chinese speakers.  
 
