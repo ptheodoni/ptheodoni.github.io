@@ -117,7 +117,7 @@ footer .tbtn,.contrib{font-size:14px}
   </header>
   <p style="margin:0;font-size:12.5px;font-style:italic;color:var(--accent);text-align:right;max-width:none;margin:-4px 0 4px">You are especially encouraged to include works by women philosophers, past and present, in the corpus and bring their thought back into the discussion.</p>
 
-  <nav class="tabs" role="tablist" aria-label="Views"><button type="button" role="tab" id="tab-q" aria-selected="true">Questions</button><button type="button" role="tab" id="tab-ideas" aria-selected="false">History of ideas</button><button type="button" role="tab" id="tab-tl" aria-selected="false">Timeline</button><button type="button" role="tab" id="tab-stats" aria-selected="false">Statistics</button></nav>
+  <nav class="tabs" role="tablist" aria-label="Views"><button type="button" role="tab" id="tab-q" aria-selected="true">Questions</button><button type="button" role="tab" id="tab-ideas" aria-selected="false">History of ideas</button><button type="button" role="tab" id="tab-tl" aria-selected="false">Timeline</button><button type="button" role="tab" id="tab-stats" aria-selected="false">Statistics</button><button type="button" role="tab" id="tab-book" aria-selected="false">Book</button></nav>
   <div id="view-tl" class="view" hidden>
   <div class="eras" id="eras" role="group" aria-label="World eras"></div>
 
@@ -154,6 +154,23 @@ footer .tbtn,.contrib{font-size:14px}
     </div>
     <div class="tl" style="padding:16px"><h3 class="vh" style="font-size:18px">Share of women by century</h3><p class="sub" style="margin:0 0 8px">Philosophers born in each century; bar length = how many, darker part = women.</p><div id="statcent"></div></div>
     <div class="tl" style="padding:16px"><h3 class="vh" style="font-size:18px">Who gets answered</h3><p class="sub" style="margin:0 0 8px">Thinkers with the most recorded replies from later thinkers. Silence is measurable too: below, how many have none.</p><div id="statans"></div></div>
+  </section>
+  <section id="view-book" class="view" hidden aria-labelledby="book-h">
+    <div class="tl" style="padding:20px 22px;max-width:860px">
+      <p class="hint" style="margin:0 0 4px">Book in the making · working draft</p>
+      <h2 id="book-h" class="vh" style="font-size:26px;margin:0">A History of Philosophy in the Making</h2>
+      <p class="sub" style="margin:6px 0 14px">Written gradually from the atlas corpus, by its curator and its contributors.</p>
+      <h3 class="vh" style="font-size:18px">Preface</h3>
+      <p>Most histories of philosophy tell one story: a line from Greece through Rome and Christian Europe to modern Europe and North America, carried by a few great names, almost all of them men. This book starts from a different place. It is written from the atlas, a corpus that sets the traditions side by side—Greek, Indian, Chinese, Japanese and Korean, Persian and Islamic, Jewish, European, African and Africana, Latin American—and admits thinkers by their work, not by how much they were later read.</p>
+      <p>Two things follow. First, the history becomes a history of conversations: who answered whom, where answers converge across traditions that never met, and where old ideas return in new words. Second, the silences become visible. In the corpus as it stands, <span id="bk-w"></span> of the philosophers are women, and most of them have no recorded reply from anyone. Part of that is history; part of it is the way histories have been written. The book tries to tell both.</p>
+      <p>The chapters below follow the eras of the timeline. Each one lists the thinkers the corpus already holds, so the outline grows as the corpus grows. Sections are drafted one by one; every claim points back to a text and a reference in the atlas.</p>
+      <h3 class="vh" style="font-size:18px">Authorship</h3>
+      <p>The book is written by its curator together with the contributors. Anyone who drafts or substantially revises a section, adds the thinkers and references a chapter rests on, or checks its sources can, if they wish, be listed as a co-author when the book is completed. Smaller contributions are acknowledged by name.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 4px"><button type="button" class="tbtn" data-kind="Add information" data-contrib="Book · offer to write a section">Offer to write a section</button><button type="button" class="tbtn" data-kind="Add information" data-contrib="Book · comment on the outline">Comment on the outline</button></div>
+      <h3 class="vh" style="font-size:18px;margin-top:18px">Contents</h3>
+      <p class="sub" style="margin:0 0 8px">Generated from the corpus. Open a chapter to see who it will cover, tradition by tradition. Status: <span class="pill check">to be written</span> unless marked otherwise.</p>
+      <div id="bookToc"></div>
+    </div>
   </section>
   <section id="view-ideas" class="view" hidden aria-labelledby="ideas-h">
     <div><h2 id="ideas-h" class="vh">Which topics were discussed, and when</h2><p class="lead">Each cell counts the thinkers and texts in the atlas who worked on a topic during that century. Columns follow the same eras as the timeline.</p></div>
@@ -814,8 +831,8 @@ iplot.addEventListener('click',e=>{const r=e.target.closest('rect[data-r]');if(!
 ipanel.addEventListener('click',e=>{const b=e.target.closest('[data-tl]');if(!b)return;showView('tl');select(b.dataset.tl,true)});
 ilaneEl.addEventListener('change',()=>{ilane=ilaneEl.value;icell=null;renderIdeas();showIdeasPanel()});
 document.getElementById('inorm').addEventListener('change',e=>{inorm=e.target.checked;renderIdeas()});
-function showView(v){statusEl.hidden=v!=='tl';[['tl','view-tl'],['ideas','view-ideas'],['q','view-q'],['stats','view-stats']].forEach(([k,el])=>{document.getElementById(el).hidden=v!==k;document.getElementById('tab-'+k).setAttribute('aria-selected',String(v===k))});if(v==='tl')render();else if(v==='ideas'){renderIdeas();showIdeasPanel()}else{renderQ();showQPanel()}}
-document.getElementById('tab-tl').onclick=()=>showView('tl');document.getElementById('tab-ideas').onclick=()=>showView('ideas');document.getElementById('tab-q').onclick=()=>showView('q');document.getElementById('tab-stats').onclick=()=>showView('stats');
+function showView(v){statusEl.hidden=v!=='tl';[['tl','view-tl'],['ideas','view-ideas'],['q','view-q'],['stats','view-stats'],['book','view-book']].forEach(([k,el])=>{document.getElementById(el).hidden=v!==k;document.getElementById('tab-'+k).setAttribute('aria-selected',String(v===k))});if(v==='tl')render();else if(v==='ideas'){renderIdeas();showIdeasPanel()}else{renderQ();showQPanel()}}
+document.getElementById('tab-tl').onclick=()=>showView('tl');document.getElementById('tab-ideas').onclick=()=>showView('ideas');document.getElementById('tab-q').onclick=()=>showView('q');document.getElementById('tab-stats').onclick=()=>showView('stats');document.getElementById('tab-book').onclick=()=>showView('book');
 new ResizeObserver(()=>{if(!document.getElementById('view-ideas').hidden)renderIdeas()}).observe(iplot);
 // ---- Questions: causation ----
 // Four parts of the question; each answer list is ordered.
@@ -1074,6 +1091,14 @@ const CONTRIBUTORS=[
  const inc={};E.forEach(e=>{inc[e.t]=(inc[e.t]||0)+1});const top=Object.entries(inc).filter(([id])=>byId[id]).sort((a,b)=>b[1]-a[1]).slice(0,12);
  const none=P.filter(t=>!inc[t.id]),noneW=none.filter(t=>t.w).length;
  document.getElementById('statans').innerHTML=`<ol style="margin:0;padding-left:20px;font-size:13.5px;columns:2 220px">${top.map(([id,n])=>`<li>${esc(byId[id].n)}${byId[id].w?' <span class="pill">woman</span>':''} — ${n}</li>`).join('')}</ol><p class="sub" style="margin:8px 0 0">${none.length} of ${P.length} philosophers (${Math.round(100*none.length/P.length)}%) have no recorded reply yet; among women it is ${noneW} of ${W} (${Math.round(100*noneW/W)}%). Some of this is the atlas's own gap, not history's.</p>`;}
+
+{const P=T.filter(t=>!t.txt);document.getElementById('bk-w').textContent=Math.round(100*P.filter(t=>t.w).length/P.length)+'%';
+ const EI=['Before philosophy had a name: the oldest texts','Ancient worlds of thought','Between empires: post-classical philosophies','Early modern encounters','The modern age and the twentieth century','After 1945'];
+ document.getElementById('bookToc').innerHTML=ERAS.filter(([n,a,b])=>T.some(t=>t.b>=a&&t.b<b)).map(([n,a,b],i)=>{const xs=T.filter(t=>t.b>=a&&t.b<b);
+  const lanes=LANES.map(l=>[l,xs.filter(t=>t.l===l[0]).sort((p,q)=>p.b-q.b)]).filter(x=>x[1].length);
+  const w=xs.filter(t=>t.w&&!t.txt).length;
+  return `<details style="border-top:1px solid var(--line);padding:8px 0"><summary style="cursor:pointer"><b>Chapter ${i+1}. ${EI[i]||n}</b> <span class="sub">· ${n==='Modern'?'born 1800–1945':`${n}, ${fy(a)}–${fy(b)}`} · ${xs.length} entries, ${w} women</span></summary>${lanes.map(([l,ts],j)=>`<div style="margin:8px 0 0 12px"><div style="font-weight:600;font-size:14px">${i+1}.${j+1} ${l[1]} <span class="pill check" style="font-weight:400">to be written</span></div><ul style="margin:4px 0 0;padding-left:18px;font-size:13px;columns:2 260px">${ts.map(t=>`<li style="break-inside:avoid"><button type="button" class="linkish" data-bookgo="${t.id}" style="all:unset;cursor:pointer;color:var(--accent)">${esc(t.n)}</button>${t.w?' <span class="pill">woman</span>':''}${t.txt?' <span class="sub">(text)</span>':''}</li>`).join('')}</ul></div>`).join('')}</details>`}).join('');
+ document.addEventListener('click',e=>{const b=e.target.closest('[data-bookgo]');if(!b)return;showView('tl');select(b.dataset.bookgo);const t=byId[b.dataset.bookgo];if(t){const pd=Math.max(30,(t.e-t.b)*0.6);animateTo(t.b-pd,t.e+pd)}});}
 document.getElementById('clist').innerHTML=`<div style="display:flex;flex-direction:column;gap:2px">${CONTRIBUTORS.map(c=>`<div style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;padding:5px 0;border-bottom:1px solid var(--line,rgba(127,127,127,.25))"><div style="font-size:14px;white-space:nowrap"><b>${esc(c.name)}</b> <span style="color:var(--muted);font-size:12px">· ${esc(c.role)} · since ${esc(c.since)}</span></div><div style="display:flex;flex-wrap:wrap;gap:4px">${c.did.map(d=>`<span style="font-size:11.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--line,rgba(127,127,127,.3));color:var(--muted);white-space:nowrap">${esc(d)}</span>`).join('')}</div></div>`).join('')}</div>`;
 document.getElementById('bcb2').addEventListener('click',()=>document.getElementById('bcb').click());
 drawQList();setQuestion(0);
