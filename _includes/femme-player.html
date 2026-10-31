@@ -1,24 +1,29 @@
 <!-- ===== FemMe Radio player (in the top bar, on every page) =====
      The music keeps playing when you move between the site's tabs:
      while it plays, links inside the site load the new page without reloading the whole page. -->
-<div id="femmePlayer" style="position:absolute;right:1em;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:.5em;z-index:20;">
-  <button id="femmeBtn" type="button" title="FemMe Radio" style="display:inline-flex;align-items:center;gap:.4em;padding:.4em .9em;border:0;border-radius:999px;background:#4b1d6e;color:#fff;font-weight:600;font-size:.75em;cursor:pointer;white-space:nowrap;">
-    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="flex:none"><rect x="9" y="2.5" width="6" height="11" rx="3" fill="#fff"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M8.5 21h7" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
-    <span id="femmeLbl">&#9654; Listen live · FemMe Radio</span>
-  </button>
-  <audio id="femmeAudio" preload="none"></audio>
-</div>
+<!-- ===== FemMe Radio: the music player (invisible; the button is in the sidebar, under Github) =====
+     It sits in the top bar, which stays the same on every page, so the music keeps playing
+     when you move between the site's tabs. -->
+<audio id="femmeAudio" preload="none"></audio>
 <style>
-  .masthead__inner-wrap { position: relative; }
-  .masthead__menu { padding-right: 13em; }          /* room for the player on the right */
-  @media (max-width: 600px) { #femmePlayer { right: .5em; } #femmeLbl { display: none; } .masthead__menu { padding-right: 3.5em; } }
+  .femme-li { margin-top: .4em; }
+  #femmeBtn { all: unset; cursor: pointer; display: flex; flex-direction: column; align-items: flex-start; gap: .35em; }
+  #femmeBtn .femme-name { display: inline-flex; align-items: center; gap: .55em; color: #4b1d6e; font-weight: 600; }
+  #femmeBtn .femme-pill { display: inline-block; margin-left: 1.9em; padding: .25em .9em; border-radius: 999px; background: #4b1d6e; color: #fff; font-size: .85em; font-weight: 600; }
+  #femmeBtn:hover .femme-pill, #femmeBtn:focus-visible .femme-pill { background: #6a2a98; }
 </style>
 <script>
 (function () {
   var SRC = "https://radio.femme-radio.gr/listen/femme_radio/radio.mp3";
   var API = "https://radio.femme-radio.gr/api/nowplaying/femme_radio";
-  var a = document.getElementById("femmeAudio"), b = document.getElementById("femmeBtn"),
-      n = { set textContent(t) { b.title = t || "FemMe Radio"; } }, l = document.getElementById("femmeLbl");
+  var a = document.getElementById("femmeAudio");
+  var nowText = "";
+  /* the button lives in the sidebar, which is replaced when the page changes: always look it up again */
+  function btn() { return document.getElementById("femmeBtn"); }
+  var n = { set textContent(t) { nowText = t || ""; var b = btn(); if (b) b.title = nowText || "FemMe Radio"; } };
+  var l = { get innerHTML() { var x = document.getElementById("femmeLbl"); return x ? x.innerHTML : ""; },
+            set innerHTML(h) { var x = document.getElementById("femmeLbl"); if (x) x.innerHTML = h; } };
+  function relabel() { l.innerHTML = a.paused ? "&#9654; Listen live" : "&#10074;&#10074; Pause"; n.textContent = nowText; }
   var timer, opened = false;
   function playing() { return !a.paused; }
   function nowPlaying() {
@@ -27,18 +32,21 @@
       if (s && playing()) n.textContent = "♪ " + (s.artist ? s.artist + " – " : "") + (s.title || "");
     }).catch(function () {});
   }
-  b.onclick = function () {
+  function toggle() {
     if (a.paused) {
       a.src = SRC; a.play();
-      l.innerHTML = "&#10074;&#10074; Pause · FemMe Radio";
+      l.innerHTML = "&#10074;&#10074; Pause";
       n.textContent = "FemMe Radio…"; nowPlaying(); timer = setInterval(nowPlaying, 20000);
       /* first time only: also open the FemMe Radio site in a new tab (it does not start playing by itself) */
       if (!opened) { opened = true; window.open("https://femme-radio.gr/en/?noplay#join", "_blank", "noopener"); }
     } else {
       a.pause(); a.removeAttribute("src"); a.load();
-      l.innerHTML = "&#9654; Listen live · FemMe Radio"; n.textContent = ""; clearInterval(timer);
+      l.innerHTML = "&#9654; Listen live"; n.textContent = ""; clearInterval(timer);
     }
-  };
+  }
+  document.addEventListener("click", function (e) {
+    if (e.target.closest && e.target.closest("#femmeBtn")) { e.preventDefault(); toggle(); }
+  });
   a.onerror = function () { if (l.innerHTML.indexOf("Pause") > -1) n.textContent = "Could not connect"; };
 
   /* --- Keep the music playing while moving between pages of this site --- */
@@ -51,6 +59,7 @@
       document.title = doc.title;
       if (push) history.pushState({ femme: 1 }, "", url);
       window.scrollTo(0, 0);
+      relabel();
       /* run any scripts that came with the new page content */
       document.getElementById("main").querySelectorAll("script").forEach(function (old) {
         var s = document.createElement("script"); s.text = old.text; if (old.src) s.src = old.src; old.replaceWith(s);
