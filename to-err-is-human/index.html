@@ -267,7 +267,14 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <button class="task" id="btnNl" type="button" aria-pressed="false">Where does it go?<small id="subNl">20 rounds · the number line</small></button>
       <button class="task" id="btnPt" type="button" aria-pressed="false">Place the point<small id="subPt">20 rounds · two axes, no grid</small></button>
       <button class="task" id="btnAn" type="button" aria-pressed="false">Read the chart<small id="subAn">20 rounds · bars, pies, circles, water</small></button>
-      <button class="task" id="btnAd" type="button" aria-pressed="false">Stare, then compare<small id="subAd">18 rounds · tired eyes see fewer</small></button>
+      <button class="task" id="btnAd" type="button" aria-pressed="false">Stare, then compare<small id="subAd">24 rounds · tired eyes see fewer</small></button>
+    </div>
+    <div id="adaptOpts" hidden>
+      <span class="label">Stare, then compare: how long to stare?</span>
+      <div class="durs" id="adaptVer">
+        <button type="button" data-ver="short" aria-pressed="true">Short · 12 s (game version)</button>
+        <button type="button" data-ver="full" aria-pressed="false">Full · 30 s (as published)</button>
+      </div>
     </div>
     <input id="doCmp" type="checkbox" checked hidden>
     <input id="doEst" type="checkbox" checked hidden>
@@ -299,7 +306,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <button class="go" id="start">Start!</button>
     </div>
     <p class="note" id="bankNote" hidden><span id="bankText"></span> <button class="ghost" id="restart" type="button" style="font-size:0.95rem;padding:3px 10px;box-shadow:2px 2px 0 var(--ink)">↺ Start over</button> <button class="ghost" id="newPlayer" type="button" style="font-size:0.95rem;padding:3px 10px;box-shadow:2px 2px 0 var(--ink)">New player</button></p>
-    <p class="note">Version 31 Oct (7), prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards all results. After each answer, press 1–4 to say how sure you were.</p>
+    <p class="note">Version 31 Oct (8), prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards all results. After each answer, press 1–4 to say how sure you were.</p>
   </section>
 
   <section class="card" id="run" hidden>
@@ -1089,89 +1096,109 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       },
     },
 
-    // ---- Experiment 11: number adaptation (Burr & Ross 2008, Current Biology 18:425) ----
-    // Stare at the cross while one side flickers with many dots (or few, or none); then two arrays flash.
-    // The probe sits on the adapted side, the reference (30 dots) on the other. People see the probe as FEWER
-    // after a dense adapter and as MORE after a sparse one: the shift is away from the adapter.
+    // ---- Experiment 11: number adaptation (Burr & Ross 2008, Current Biology 18:425, doi:10.1016/j.cub.2008.02.052) ----
+    // Published parameters: a ~400-dot adapter for ~30 s on one side, fixation at the centre; the reference (30 dots)
+    // on the unadapted side; the test (variable) on the adapted side. After 400 dots, the test needed more than three
+    // times the reference (> 100 vs 30) to look equal; after a sparse adapter the adapted side looks larger.
+    // Two versions: "full" (30 s adapter at the start of each block, as published) and "short" (12 s, game-friendly).
+    // Conditions run in blocks (baseline, then 400 dots, then 10 dots), with a pause to look away between blocks.
     adapt: {
-      name: "Stare, then compare", task: "Adaptation · which side has more?", lens: { mini: 12, quick: 18, medium: 36, full: 54 }, conf: [50, 67, 83, 100],
+      name: "Stare, then compare", task: "Adaptation · which side has more?", lens: { mini: 12, quick: 24, medium: 48, full: 72 }, conf: [50, 67, 83, 100],
       bubble: "Keep your eyes on the cross while one side fizzes with dots. Then two clouds flash: which has more? Eyes get tired of numbers the way they tire of colours. Do yours?",
       title: "Stare at the cross, then: which side has more?", help: "Eyes on the cross. Then ← left or → right, and 1–4: how sure.",
-      REF: 30, PROBES: [16, 21, 26, 35, 43, 56], ADAPTERS: { none: 0, many: 100, few: 10 },
-      FIRST_MS: 6000, TOPUP_MS: 3000, TEST_MS: 300,
-      CX: [256, 768], CY: 200, R: 165, DOT: 6,
-      build(len) {
-        const n = this.lens[len], conds = Object.keys(this.ADAPTERS), per = n / conds.length;
-        const probes = per >= this.PROBES.length ? this.PROBES : [21, 26, 35, 43];
+      REF: 30, PROBES: [15, 20, 26, 36, 50, 72, 100, 120], ADAPTERS: { none: 0, many: 400, few: 10 },
+      VERSIONS: { short: { first: 12000, topup: 4000 }, full: { first: 30000, topup: 6000 } },   // top-up length is our choice; check before publication
+      version: "short", TEST_MS: 300,
+      CX: [256, 768], CY: 200, R: 175,
+      build(len, count) {
+        const n = count || this.lens[len], conds = ["none", "many", "few"], per = Math.max(1, Math.round(n / 3));
+        const probes = per >= this.PROBES.length ? this.PROBES : [15, 26, 50, 100, 20, 36, 72, 120].slice(0, Math.max(4, per));
+        const side = Math.random() < 0.5 ? "left" : "right", other = side === "left" ? "right" : "left";   // one adapted side per run, as in the study
         const T = [];
-        for (const condition of conds) for (let k = 0; k < per; k++) {
-          const probe_n = probes[k % probes.length], side = Math.random() < 0.5 ? "left" : "right", other = side === "left" ? "right" : "left";
-          const n_left = side === "left" ? probe_n : this.REF, n_right = side === "left" ? this.REF : probe_n;
-          T.push({ trial_id: `adapt_${condition}_p${String(probe_n).padStart(2, "0")}_${side[0]}_h${Math.floor(k / probes.length)}`, part: "adapt", condition,
-                   adapter_n: this.ADAPTERS[condition], adapter_side: side, probe_side: side, probe_n, ref_n: this.REF,
-                   n_left, n_right, larger_side: probe_n > this.REF ? side : other, ratio: +(Math.min(probe_n, this.REF) / Math.max(probe_n, this.REF)).toFixed(3),
-                   display_ms: this.TEST_MS });
+        for (const condition of conds) {
+          const block = [];
+          for (let k = 0; k < per; k++) {
+            const probe_n = probes[k % probes.length];
+            block.push({ trial_id: `adapt_${condition}_t${String(probe_n).padStart(3, "0")}_${side[0]}_h${Math.floor(k / probes.length)}`, part: "adapt", condition, adapt_version: this.version,
+                         adapter_n: this.ADAPTERS[condition], adapter_side: side, probe_side: side, probe_n, ref_n: this.REF,
+                         n_left: side === "left" ? probe_n : this.REF, n_right: side === "left" ? this.REF : probe_n,
+                         larger_side: probe_n > this.REF ? side : other, ratio: +(Math.min(probe_n, this.REF) / Math.max(probe_n, this.REF)).toFixed(3),
+                         display_ms: this.TEST_MS });
+          }
+          shuffle(block); block[0].block_start = true; T.push(...block);
         }
-        return shuffle(T);
+        return T;
       },
-      cloud(n, cx) {                   // n dots in a disc, no overlaps
-        const pts = []; let tries = 0, { CY, R, DOT } = this;
-        while (pts.length < n && tries++ < 30000) {
-          const a = Math.random() * 2 * Math.PI, d = (R - DOT) * Math.sqrt(Math.random()), x = cx + d * Math.cos(a), y = CY + d * Math.sin(a);
-          if (pts.every(([u, v]) => (x - u) ** 2 + (y - v) ** 2 >= (2 * DOT + 3) ** 2)) pts.push([x, y]);
+      cloud(n, cx, r) {                // n dots in a disc, no overlaps (smaller dots for the 400-dot adapter)
+        const dot = r || (n > 150 ? 3.5 : 6), gap = n > 150 ? 2 : 3, pts = []; let tries = 0;
+        while (pts.length < n && tries++ < 60000) {
+          const a = Math.random() * 2 * Math.PI, d = (this.R - dot) * Math.sqrt(Math.random()), x = cx + d * Math.cos(a), y = this.CY + d * Math.sin(a);
+          if (pts.every(([u, v]) => (x - u) ** 2 + (y - v) ** 2 >= (2 * dot + gap) ** 2)) pts.push([x, y]);
         }
-        ctx.fillStyle = "#000"; for (const [x, y] of pts) { ctx.beginPath(); ctx.arc(x, y, DOT, 0, 2 * Math.PI); ctx.fill(); }
+        ctx.fillStyle = "#000"; for (const [x, y] of pts) { ctx.beginPath(); ctx.arc(x, y, dot, 0, 2 * Math.PI); ctx.fill(); }
       },
       cross() { ctx.strokeStyle = "#e8262d"; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(XW / 2 - 14, this.CY); ctx.lineTo(XW / 2 + 14, this.CY); ctx.moveTo(XW / 2, this.CY - 14); ctx.lineTo(XW / 2, this.CY + 14); ctx.stroke(); },
-      pre(t, go) {                     // the adapter: fresh dots every 250 ms, so it is the number that tires, not the picture
-        const first = !arrOf("adapt").length && state.idx === 0, ms = first ? this.FIRST_MS : this.TOPUP_MS, t1 = performance.now();
-        t.adapter_ms = ms;
-        $("prompt").textContent = first ? "Eyes on the red cross… keep them there" : "Eyes on the cross…";
-        const frame = () => {
-          ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH);
-          if (t.adapter_n) this.cloud(t.adapter_n, this.CX[t.adapter_side === "left" ? 0 : 1]);
-          this.cross();
-          if (performance.now() - t1 < ms) later(250, frame); else { $("prompt").textContent = ""; go(); }
+      pre(t, go) {
+        const V = this.VERSIONS[t.adapt_version] || this.VERSIONS.short;
+        const run = () => {
+          const ms = t.block_start && t.adapter_n ? V.first : V.topup, t1 = performance.now();
+          t.adapter_ms = ms;
+          const tick = () => {             // fresh dots every 250 ms, so it is the number that tires, not one picture
+            ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH);
+            if (t.adapter_n) this.cloud(t.adapter_n, this.CX[t.adapter_side === "left" ? 0 : 1]);
+            this.cross();
+            const left = Math.ceil((ms - (performance.now() - t1)) / 1000);
+            $("prompt").textContent = left > 3 ? `Eyes on the red cross… ${left} s` : "Eyes on the cross…";
+            if (performance.now() - t1 < ms) later(250, tick); else { $("prompt").textContent = ""; go(); }
+          };
+          tick();
         };
-        frame();
+        if (t.block_start && state.idx > 0) {   // between blocks: rest the eyes, so one adapter does not leak into the next
+          ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH);
+          $("prompt").textContent = "New block! Look away and blink for a few seconds, then press Space or tap here.";
+          awaiting = "begin"; this._resume = run; return;
+        }
+        run();
       },
       draw(t) { ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, XW, XH); this.cloud(t.n_left, this.CX[0]); this.cloud(t.n_right, this.CX[1]); this.cross(); },
       answer: "choice", prompt: "Which side has more dots?",
       aiP(t) {                         // stand-in: the model sees each picture afresh, so it has nothing to adapt (w = 0.19)
         const w = AI_PRESET.w; return phi(Math.abs(t.n_left - t.n_right) / (w * Math.hypot(t.n_left, t.n_right)));
       },
-      // the point of subjective equality: how many probe dots look like 30, by maximum likelihood with a fixed slope
+      // the point of subjective equality: how many test dots look like 30, by maximum likelihood with a fixed slope
       pse(rs) {
         if (rs.length < 4) return NaN;
         let best = NaN, bl = -Infinity;
-        for (let k = -60; k <= 60; k++) { const pse = Math.exp(k / 80); let l = 0;
-          for (const r of rs) { const q = Math.min(0.99, Math.max(0.01, phi(Math.log(r.probe_n / (this.REF * pse)) / 0.28))); l += r.chose_probe ? Math.log(q) : Math.log(1 - q); }
+        for (let k = -60; k <= 170; k++) { const pse = Math.exp(k / 80); let l = 0;
+          for (const r of rs) { const q = Math.min(0.99, Math.max(0.01, phi(Math.log(r.probe_n / (this.REF * pse)) / 0.35))); l += r.chose_probe ? Math.log(q) : Math.log(1 - q); }
           if (l > bl) { bl = l; best = pse; } }
         return this.REF * best;
       },
-      shift(rows, cond) {              // + = the probe looked FEWER than in the baseline (repulsion from a dense adapter)
+      shift(rows, cond) {              // + = the adapted side looked FEWER than in the baseline
         const a = this.pse(rows.filter(r => r.condition === cond)), b = this.pse(rows.filter(r => r.condition === "none"));
         return Number.isFinite(a) && Number.isFinite(b) ? 1 - b / a : NaN;
       },
       csv(rows, model) {
-        return [["trial_id", "part", "condition", "adapter_n", "adapter_side", "adapter_ms", "probe_n", "ref_n", "n_left", "n_right", "larger_side", "modality", "reasoning", "model", "timestamp", "response", "choice", "chose_probe", "correct", "confidence", "rt_ms", "display_ms"],
-          rows.map(r => ({ ...r, modality: "image", reasoning: "human", model, response: r.choice }))];
+        return [["trial_id", "part", "condition", "adapt_version", "adapter_n", "adapter_side", "adapter_ms", "block_start", "probe_n", "ref_n", "n_left", "n_right", "larger_side", "modality", "reasoning", "model", "timestamp", "response", "choice", "chose_probe", "correct", "confidence", "rt_ms", "display_ms"],
+          rows.map(r => ({ ...r, block_start: r.block_start ? 1 : 0, modality: "image", reasoning: "human", model, response: r.choice }))];
       },
       results(rows, stats, out, said) {
-        const NAMES = { none: "no adapter", many: "after 100 dots", few: "after 10 dots" };
+        const NAMES = { none: "no adapter", many: "after 400 dots", few: "after 10 dots" };
         const conds = ["none", "many", "few"].filter(c => rows.some(r => r.condition === c));
         const pc = rs => rs.length ? `${Math.round(100 * mean(rs.map(r => r.chose_probe)))}%` : "—";
+        const short = rows.some(r => r.adapt_version !== "full");
         out.table = `<table><thead><tr><th>Adapter</th><th>Rounds</th><th>Chose the adapted side</th><th>Looked equal to 30 at</th><th>Shift</th></tr></thead><tbody>${conds.map(c => { const rs = rows.filter(r => r.condition === c), p = this.pse(rs), sh = c === "none" ? NaN : this.shift(rows, c);
-          return `<tr><td>${NAMES[c]}</td><td>${rs.length}</td><td>${pc(rs)}</td><td>${Number.isFinite(p) ? Math.round(p) + " dots" : "—"}</td><td>${Number.isFinite(sh) ? `${sh > 0 ? "looked " + Math.round(100 * sh) + "% fewer" : "looked " + Math.round(-100 * sh) + "% more"}` : "—"}</td></tr>`; }).join("")}</tbody></table>`;
-        const sh = this.shift(rows, "many");
-        stats.push(["Adaptation shift", Number.isFinite(sh) ? `${Math.round(100 * sh)}%` : "—", "after 100 dots; + = looked fewer"]);
-        const CLS = { none: "fd", many: "alt", few: "you" }, series = [{ type: "line", cls: "ref", pts: [[14, 50], [60, 50]] }], items = [["dash", "", "can't tell"]];
+          return `<tr><td>${NAMES[c]}</td><td>${rs.length}</td><td>${pc(rs)}</td><td>${Number.isFinite(p) ? Math.round(p) + " dots" : "—"}</td><td>${Number.isFinite(sh) ? `${sh > 0 ? "looked " + Math.round(100 * sh) + "% fewer" : "looked " + Math.round(-100 * sh) + "% more"}` : "—"}</td></tr>`; }).join("")}</tbody></table>
+          <p class="note">${short ? "Shortened version (12 s adapter): expect a smaller shift than the published one." : "Full version (30 s adapter), as in Burr &amp; Ross 2008."} Published: after 400 dots, more than 90 test dots (over three times 30) looked equal to 30.</p>`;
+        const sh = this.shift(rows, "many"), pm = this.pse(rows.filter(r => r.condition === "many"));
+        stats.push(["Adaptation shift", Number.isFinite(sh) ? `${Math.round(100 * sh)}%` : "—", "after 400 dots; + = looked fewer"]);
+        const CLS = { none: "fd", many: "alt", few: "you" }, series = [{ type: "line", cls: "ref", pts: [[14, 50], [130, 50]] }], items = [["dash", "", "can't tell"]];
         for (const c of conds) { const pts = this.PROBES.map(n => { const rs = rows.filter(r => r.condition === c && r.probe_n === n); return [n, rs.length ? 100 * mean(rs.map(r => r.chose_probe)) : NaN]; });
           series.push({ type: "line", cls: CLS[c] + "line", pts }, { type: "points", cls: CLS[c], pts }); items.push(["dotline", CLS[c], NAMES[c]]); }
-        out.charts.push(card("How often the adapted side looked like more", plot({ xmin: 14, xmax: 60, xlog: true, ymin: 0, ymax: 100, xticks: [16, 21, 30, 43, 56], yticks: [0, 25, 50, 75, 100],
+        out.charts.push(card("How often the adapted side looked like more", plot({ xmin: 14, xmax: 130, xlog: true, ymin: 0, ymax: 100, xticks: [15, 30, 60, 120], yticks: [0, 25, 50, 75, 100],
           xlabel: "dots on the adapted side (the other side had 30)", ylabel: "% you chose it", series }), items,
-          "After staring at many dots, people need MORE dots on that side before it looks like 30: the red curve moves right. After a few dots it moves left (Burr & Ross 2008)."));
-        said.push(`<p><b>Adaptation.</b> ${Number.isFinite(sh) ? `After the 100-dot adapter, the dots on that side looked ${sh >= 0 ? Math.round(100 * sh) + "% fewer" : Math.round(-100 * sh) + "% more"} than with no adapter.` : "Play more rounds to measure the shift."}</p>`);
+          "After staring at 400 dots, people need far MORE dots on that side before it looks like 30 (over 90 in the original study): the red curve moves right. After 10 dots it moves left (Burr & Ross 2008)."));
+        said.push(`<p><b>Adaptation.</b> ${Number.isFinite(sh) ? `After the 400-dot adapter, ${Number.isFinite(pm) ? `about ${Math.round(pm)} dots on that side looked like 30, so ` : ""}the dots there looked ${sh >= 0 ? Math.round(100 * sh) + "% fewer" : Math.round(-100 * sh) + "% more"} than with no adapter${short ? " (shortened version)" : ""}.` : "Play more rounds to measure the shift."}</p>`);
       },
     },
   };
@@ -1756,7 +1783,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       const sh = X.adapt.shift(X_.adapt, "many"), sf = X.adapt.shift(X_.adapt, "few");
       t("Stare, then compare", Number.isFinite(sh) ? sh > 0.05 || (Number.isFinite(sf) && sf < -0.05) : null,
         "after staring at many dots, that side looked fewer (or after few dots, more): number adaptation. Your brain reads number like colour or motion, and it gets tired.",
-        "staring changed nothing for you. Burr & Ross's observers saw clear shifts; play more rounds, and keep your eyes on the cross.", "play a few more rounds to tell.");
+        "staring changed nothing for you. Burr & Ross's observers saw huge shifts after 30 s; try the full version, and keep your eyes on the cross.", "play a few more rounds to tell.");
     }
     if (X_.analog.length) {
       const a = X_.analog.filter(r => r.encoding === "area" && r.value <= 55), b = X_.analog.filter(r => r.encoding === "position" || r.encoding === "length");
@@ -1859,6 +1886,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     return null;
   }
   function assignTimes(trials) {
+    if (trials.length && trials[0].part === "adapt") return trials;      // adaptation runs in blocks: keep the order
     trials.forEach((t, i) => { t.display_ms = t.part === "adapt" ? t.display_ms : t.part === "number_line" || t.part === "coords" ? 0 : state.dur === -1 ? DURS[i % DURS.length] : state.dur; });
     return shuffle(trials);
   }
@@ -1915,7 +1943,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       "Humans read positions and lengths well, angles less well and areas worst: small circles look bigger than they are (Cleveland & McGill 1984). The shorter the picture stays, the more the eye has to guess.",
       "If the AI reads areas as well as lengths, it does not see like us, even when its answers are good."],
     adapt: ["Stare, then compare",
-      "Staring at many dots tires the number sense, just as staring at red makes white look greenish. This suggests number is perceived directly, like colour or motion (Burr & Ross 2008).",
+      "Staring at many dots tires the number sense, just as staring at red makes white look greenish. This suggests number is perceived directly, like colour or motion (Burr & Ross 2008). In the original study, after 30 s of 400 dots, more than 90 dots looked like 30.",
       "Humans see FEWER dots after staring at many, and MORE after staring at few: the shift goes away from the adapter. No shift, or a shift toward it, is not the human pattern.",
       "An AI that looks at each picture afresh cannot adapt. Shown the same sequence, does it show the aftereffect?"],
   };
@@ -1955,6 +1983,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
         ["3-year-olds", "w ≈ 0.4", "Halberda & Feigenson 2008"],
         ["6-year-olds", "w ≈ 0.2", "Halberda & Feigenson 2008"],
         ["Adults", "w ≈ 0.11–0.25; accuracy depends on the ratio, not the size", "Pica et al. 2004; Halberda et al. 2012"],
+        ["Adults, brief side-by-side clouds", "Weber fraction ≈ 0.28 (0.26 after adaptation)", "Burr & Ross 2008"],
         ["Monkeys", "the same ratio dependence as college students", "Cantlon & Brannon 2006"]],
         `${pct(acc)} correct; Weber fraction w ${w >= 2.9 ? "> 1" : w.toFixed(2)}${Number.isFinite(easy) && Number.isFinite(hard) ? `; easy pairs ${pct(easy)}, close pairs ${pct(hard)}` : ""}.`, means);
     }
@@ -2065,10 +2094,11 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       else if (sh < -0.05) means = "after many dots you saw MORE, a shift TOWARD the adapter. That looks like priming or copying the last picture, not adaptation.";
       else means = "no shift: either the adapter was too short to tire your number sense, or you were not looking at the cross. A system with no perceptual magnitude code would also show no shift.";
       block("Stare, then compare", [
-        ["Adults", "after a dense adapter, dots on that side look fewer; after a sparse one, more; often by tens of percent", "Burr & Ross 2008"],
+        ["Adults", "after 30 s of 400 dots, the adapted side needed more than 3× the reference (over 90 vs 30) to look equal; after a sparse adapter it looks larger", "Burr & Ross 2008"],
+        ["Adults", "the effect shrinks for small numbers, near the subitizing range (below about 12)", "Burr & Ross 2008"],
         ["Infants", "habituate to a number of dots and look longer when it changes", "Xu & Spelke 2000"],
         ["Animals", "no standard data in this format", "—"]],
-        `${Number.isFinite(sh) ? `after 100 dots the adapted side looked ${Math.round(100 * Math.abs(sh))}% ${sh >= 0 ? "fewer" : "more"}` : "no 100-dot rounds yet"}${Number.isFinite(sf) ? `; after 10 dots, ${Math.round(100 * Math.abs(sf))}% ${sf >= 0 ? "fewer" : "more"}` : ""}.`, means);
+        `${Number.isFinite(sh) ? `after 400 dots the adapted side looked ${Math.round(100 * Math.abs(sh))}% ${sh >= 0 ? "fewer" : "more"}` : "no 400-dot rounds yet"}${Number.isFinite(sf) ? `; after 10 dots, ${Math.round(100 * Math.abs(sf))}% ${sf >= 0 ? "fewer" : "more"}` : ""}.`, means);
     }
     return blocks.length ? `<h2>How to read your results</h2><p class="note">What people of different ages, and animals, usually do, and what it means when you depart from it. Values are approximate, from the studies named.</p>${blocks.join("")}` : "";
   }
@@ -2204,13 +2234,14 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     for (const x of $("durs").querySelectorAll("button")) x.setAttribute("aria-pressed", String(x === b));
     $("dur").value = b.dataset.dur;
   });
-  $("prompt").addEventListener("click", () => { if (awaiting === "begin") { awaiting = null; nextTrial(); } });
+  const resumeOrNext = () => { const f = X.adapt._resume; if (f) { X.adapt._resume = null; f(); } else nextTrial(); };
+  $("prompt").addEventListener("click", () => { if (awaiting === "begin") { awaiting = null; resumeOrNext(); } });
   $("bLeft").addEventListener("click", () => answerChoice("left"));
   $("bRight").addEventListener("click", () => answerChoice("right"));
   $("answerEst").addEventListener("submit", e => { e.preventDefault(); answerEstimate(parseFloat($("estInput").value)); });
   $("confRow").addEventListener("click", e => { const b = e.target.closest("button"); if (b) answerConf(+b.dataset.c); });
   document.addEventListener("keydown", e => {
-    if (awaiting === "begin" && e.code === "Space") { e.preventDefault(); awaiting = null; nextTrial(); }
+    if (awaiting === "begin" && e.code === "Space") { e.preventDefault(); awaiting = null; resumeOrNext(); }
     else if (awaiting === "choice" && (e.key === "ArrowLeft" || e.key === "f" || e.key === "F")) { e.preventDefault(); answerChoice("left"); }
     else if (awaiting === "choice" && (e.key === "ArrowRight" || e.key === "j" || e.key === "J")) { e.preventDefault(); answerChoice("right"); }
     else if (awaiting === "heap" && (e.key === "ArrowLeft" || e.key === "y" || e.key === "Y")) { e.preventDefault(); answerHeap(true); }
@@ -2286,7 +2317,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   });
   for (const id of ["more", "more2"]) $(id).addEventListener("click", () => {
     const task = state.lastTask, step = task && nextStep(task); if (!step) return;
-    const extra = assignTimes(TRIALS[task](step.len)).slice(0, step.add)
+    const extra = (task === "adapt" ? X.adapt.build(null, step.add) : assignTimes(TRIALS[task](step.len)).slice(0, step.add))
       .map((t, i) => ({ ...t, trial_id: `${t.trial_id}_x${played(task) + i}` }));
     state.queue.unshift({ task, trials: extra }); state.idx = 0;
     state.phase = "run"; show("run"); race(0, 0); bubble(task); nextTrial();
@@ -2340,6 +2371,12 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     if (Date.now() - restartArmed > 3000) { restartArmed = Date.now(); $("restart").textContent = "Erase my rounds? Click again"; setTimeout(() => { $("restart").textContent = "↺ Start over"; }, 3000); return; }
     restartArmed = 0; $("restart").textContent = "↺ Start over"; bank = null; bankNote();
   });
+  $("adaptVer").addEventListener("click", e => {
+    const b = e.target.closest("button[data-ver]"); if (!b) return;
+    X.adapt.version = b.dataset.ver;
+    for (const x of $("adaptVer").querySelectorAll("button")) x.setAttribute("aria-pressed", String(x === b));
+  });
+  $("btnAd").addEventListener("click", () => { $("adaptOpts").hidden = $("btnAd").getAttribute("aria-pressed") !== "true"; });
   $("newPlayer").addEventListener("click", () => { bank = null; $("pid").value = ""; $("pid").focus(); bankNote(); });
   document.querySelector("h1").addEventListener("click", () => { if ($("run").hidden) goHome(); else $("home").click(); });
   $("again").addEventListener("click", () => { clearTimers(); state.phase = "setup"; bubble("setup"); show("setup"); });
