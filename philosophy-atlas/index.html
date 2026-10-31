@@ -278,7 +278,7 @@ footer .tbtn,.contrib{font-size:14px}
 </div>
 
 <script>
-const ERAS=[["Bronze Age",-2450,-800,7],["Ancient",-800,500,26],["Post-classical",500,1500,23],["Early modern",1500,1800,19],["Modern",1800,1945,15],["Contemporary",1945,2026,17]];
+const ERAS=[["Bronze Age",-2750,-800,8],["Ancient",-800,500,26],["Post-classical",500,1500,23],["Early modern",1500,1800,19],["Modern",1800,1945,15],["Contemporary",1945,2026,17]];
 const LANES=[
  ["neareast","Ancient Near East",[["Sumerian & Akkadian",-2900,-1600],["Babylonian & Assyrian",-1600,-539]]],
  ["greek","Greek",[["Archaic poets",-750,-600],["Presocratic",-600,-470],["Classical",-470,-322],["Hellenistic",-322,-31],["Roman imperial",-31,529],["Byzantine",529,1453],["Ottoman era",1453,1750],["Greek Enlightenment",1750,1830],["Modern Greek",1830,2026]]],
@@ -1412,7 +1412,7 @@ for(let i=E.length-1;i>=0;i--)if(!T.some(t=>t.id===E[i].s)||!T.some(t=>t.id===E[
 const ACTIVE={nagel:1970,chalmers:1995,habermas:1962,irigaray:1974,kristeva:1969};
 T.forEach(t=>{if(ACTIVE[t.id]){t.b=ACTIVE[t.id];t.act=true;t.c=false}});
 const byId=Object.fromEntries(T.map(t=>[t.id,t]));
-const MINY=-2450,MAXY=2030,MAXS=MAXY-MINY,MINS=12;
+const MINY=-2750,MAXY=2030,MAXS=MAXY-MINY,MINS=12;
 let t0=MINY,t1=MAXY,sel=null,hiW=false,anim=null;
 const plot=document.getElementById('plot'),statusEl=document.getElementById('status'),panel=document.getElementById('panel'),slider=document.getElementById('zslider');
 
@@ -1570,7 +1570,7 @@ T.forEach(t=>t.tp=TAGS[t.id]||'');
 let ilane='all',inorm=false,icell=null;
 const ilaneEl=document.getElementById('ilane'),iplot=document.getElementById('iplot'),ipanel=document.getElementById('ipanel');
 ilaneEl.innerHTML='<option value="all">All traditions</option>'+LANES.map(l=>`<option value="${l[0]}">${l[1]}</option>`).join('');
-const CENTS=[];for(let c=-2600;c<2000;c+=100)CENTS.push(c);
+const CENTS=[];for(let c=-2800;c<2000;c+=100)CENTS.push(c);
 const yl=v=>v===0?'1 CE':fy(v);
 const act=(t,c)=>{const a=t.txt?t.b:Math.min(t.b+20,t.e);return a<c+100&&t.e>=c};
 const ipool=()=>T.filter(t=>ilane==='all'||t.l===ilane);
