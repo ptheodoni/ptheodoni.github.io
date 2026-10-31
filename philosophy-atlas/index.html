@@ -66,6 +66,7 @@ h1 small{display:block;font-family:var(--body);font-weight:400;font-size:14.5px;
 .check input{accent-color:var(--accent);width:16px;height:16px}
 .hint{font-size:12.5px;color:var(--muted)}
 .main{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.dlgx{position:absolute;top:8px;right:10px;width:34px;height:34px;border:0;background:none;color:var(--muted);font-size:26px;line-height:1;cursor:pointer;border-radius:6px;z-index:2}.dlgx:hover{color:var(--fg);background:var(--band)}#txdlg>div,#askdlg>div,#phdlg>div,#bdlg>div,#cdlg>form{position:relative}#tx-close,#sa-close,#ph-close,#bclose{display:none!important}
 #thdlg{position:fixed;inset:auto 16px auto auto;top:90px;margin:0;width:min(460px,calc(100vw - 32px));max-height:calc(100vh - 110px);overflow:auto;padding:0;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--fg);box-shadow:0 12px 40px rgb(0 0 0 / .25);z-index:40}#thdlg #panel{border:0;padding:4px 18px 18px;columns:auto}#thdlg #panel ul.links{columns:auto}
 #view-tl .main{flex-direction:column;align-items:stretch}#view-tl .main>.tl{flex:1 1 auto;width:100%}#view-tl #panel{flex:1 1 auto;width:auto;max-width:none;position:static;max-height:none}#view-tl #panel ul.links{columns:2 320px;column-gap:20px}#view-tl #panel ul.links>li{break-inside:avoid}
 .tl{flex:999 1 620px;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 0 8px}
@@ -132,7 +133,7 @@ footer .tbtn,.contrib{font-size:14px}
     <div class="topbar"><div class="papcol"><button type="button" class="morebtn" id="alltx-btn">See all texts <span class="tag" id="alltx-n"></span></button><button type="button" class="morebtn" id="ask-btn">Search and ask the texts</button><button type="button" class="morebtn" id="ph-btn">See and search philosophers <span class="tag" id="ph-n"></span></button></div><div class="contribcol"><button type="button" class="addbtn" id="bcb">+ Be a contributor</button><p class="women-top">You are especially encouraged to include works<br>by women philosophers, past and present,<br>in the corpus, and bring their thought<br>back into the discussion.</p></div></div></div>
     <p class="status" id="status" aria-live="polite" style="margin:6px 0 0;text-align:right"></p>
   </header>
-  <dialog id="thdlg" aria-label="Thinker"><div style="display:flex;justify-content:flex-end;position:sticky;top:0;background:var(--panel);padding:6px 8px 0;z-index:1"><button type="button" class="tbtn" id="thdlg-x" aria-label="Close" style="min-height:34px;padding:0 12px;font-weight:600">✕ Close</button></div><div id="thslot"></div></dialog>
+  <dialog id="thdlg" aria-label="Thinker"><div style="display:flex;justify-content:flex-end;position:sticky;top:0;background:var(--panel);padding:6px 8px 0;z-index:1"><button type="button" class="tbtn" id="thdlg-x" aria-label="Close" style="min-height:34px;width:34px;padding:0;font-size:22px;line-height:1;border:0;background:none;color:var(--muted)">×</button></div><div id="thslot"></div></dialog>
   <dialog id="phdlg" aria-labelledby="phdlg-h" style="width:min(1100px,calc(100vw - 32px))"><div>
     <h2 id="phdlg-h" class="vh" style="font-size:22px;margin:0 0 4px">Philosophers</h2>
     <p class="sub" style="margin:0 0 8px">Every philosopher in the atlas. Filter by name, tradition, period or gender; click a name to open their card on the timeline.</p>
@@ -2553,6 +2554,8 @@ const CONTRIBUTORS=[
  ['ph-q','ph-l','ph-e','ph-g'].forEach(i=>document.getElementById(i).addEventListener('input',draw));
  document.getElementById('ph-btn').onclick=()=>{draw();try{d.showModal()}catch(e){d.setAttribute('open','')}};document.getElementById('ph-close').onclick=()=>d.close();
  document.addEventListener('click',e=>{const b=e.target.closest('[data-phgo]');if(!b)return;d.close();showView('tl');select(b.dataset.phgo);const t=byId[b.dataset.phgo];if(t){const pd=Math.max(30,(t.e-t.b)*0.6);animateTo(t.b-pd,t.e+pd)}});}
+
+['txdlg','askdlg','phdlg','bdlg','cdlg'].forEach(id=>{const d=document.getElementById(id);if(!d)return;const host=d.firstElementChild||d;const b=document.createElement('button');b.type='button';b.className='dlgx';b.setAttribute('aria-label','Close');b.textContent='×';b.onclick=()=>d.close();host.prepend(b)});
 document.getElementById('clist').innerHTML=`<div style="display:flex;flex-direction:column;gap:2px">${CONTRIBUTORS.map(c=>`<div style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;padding:5px 0;border-bottom:1px solid var(--line,rgba(127,127,127,.25))"><div style="font-size:14px;white-space:nowrap"><b>${esc(c.name)}</b> <span style="color:var(--muted);font-size:12px">· ${esc(c.role)} · since ${esc(c.since)}</span></div><div style="display:flex;flex-wrap:wrap;gap:4px">${c.did.map(d=>`<span style="font-size:11.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--line,rgba(127,127,127,.3));color:var(--muted);white-space:nowrap">${esc(d)}</span>`).join('')}</div></div>`).join('')}</div>`;
 document.getElementById('bcb2').addEventListener('click',()=>document.getElementById('bcb').click());
 drawQList();setQuestion(0);
