@@ -24,7 +24,7 @@ My main research interest is in the foundations of science.
 
 <!-- FemMe Radio: plays the live stream right here, without leaving the page -->
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:.4em 1em;margin:.8em 0;">
-<button id="femmeBtn" type="button" style="display:inline-flex;align-items:center;gap:.5em;padding:.6em 1.3em;border:0;border-radius:999px;background:#4b1d6e;color:#fff;font-weight:600;font-size:1em;cursor:pointer;"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" style="flex:none"><rect x="9" y="2.5" width="6" height="11" rx="3" fill="#fff"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M8.5 21h7" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg><span id="femmeLbl">&#9654; Listen live · FemMe Radio</span></button>
+<button id="femmeBtn" type="button" style="display:inline-flex;align-items:center;gap:.5em;padding:.45em 1em;border:0;border-radius:999px;background:#4b1d6e;color:#fff;font-weight:600;font-size:.85em;cursor:pointer;"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="flex:none"><rect x="9" y="2.5" width="6" height="11" rx="3" fill="#fff"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M8.5 21h7" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg><span id="femmeLbl">&#9654; Listen live · FemMe Radio</span></button>
 <span id="femmeNow" style="font-size:.85em;color:#666;"></span>
 </div>
 <audio id="femmeAudio" preload="none" src="https://radio.femme-radio.gr/listen/femme_radio/radio.mp3"></audio>
@@ -38,10 +38,12 @@ My main research interest is in the foundations of science.
       if (s && !a.paused) n.textContent = "Now playing: " + (s.artist ? s.artist + " – " : "") + (s.title || "");
     }).catch(function () {});
   }
-  var timer;
+  var timer, opened = false;
   b.onclick = function () {
     if (a.paused) {
       a.src = src; a.play();
+      /* the first time: also open the FemMe Radio site in a new tab (the music plays only from here; the site there does not start playing on its own) */
+      if (!opened) { opened = true; window.open("https://femme-radio.gr/en/#join", "_blank", "noopener"); }
       l.innerHTML = "&#10074;&#10074; Pause · FemMe Radio";
       n.textContent = "Connecting…"; nowPlaying(); timer = setInterval(nowPlaying, 20000);
     } else {
