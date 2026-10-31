@@ -4,13 +4,13 @@
 <div id="femmePlayer" style="position:absolute;right:1em;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:.5em;z-index:20;">
   <button id="femmeBtn" type="button" title="FemMe Radio" style="display:inline-flex;align-items:center;gap:.4em;padding:.4em .9em;border:0;border-radius:999px;background:#4b1d6e;color:#fff;font-weight:600;font-size:.75em;cursor:pointer;white-space:nowrap;">
     <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="flex:none"><rect x="9" y="2.5" width="6" height="11" rx="3" fill="#fff"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M8.5 21h7" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
-    <span id="femmeLbl">&#9654; Listen live</span>
+    <span id="femmeLbl">&#9654; Listen live · FemMe Radio</span>
   </button>
   <audio id="femmeAudio" preload="none"></audio>
 </div>
 <style>
   .masthead__inner-wrap { position: relative; }
-  .masthead__menu { padding-right: 9em; }          /* room for the player on the right */
+  .masthead__menu { padding-right: 13em; }          /* room for the player on the right */
   @media (max-width: 600px) { #femmePlayer { right: .5em; } #femmeLbl { display: none; } .masthead__menu { padding-right: 3.5em; } }
 </style>
 <script>
@@ -30,13 +30,13 @@
   b.onclick = function () {
     if (a.paused) {
       a.src = SRC; a.play();
-      l.innerHTML = "&#10074;&#10074; Pause";
+      l.innerHTML = "&#10074;&#10074; Pause · FemMe Radio";
       n.textContent = "FemMe Radio…"; nowPlaying(); timer = setInterval(nowPlaying, 20000);
       /* first time only: also open the FemMe Radio site in a new tab (it does not start playing by itself) */
       if (!opened) { opened = true; window.open("https://femme-radio.gr/en/?noplay#join", "_blank", "noopener"); }
     } else {
       a.pause(); a.removeAttribute("src"); a.load();
-      l.innerHTML = "&#9654; Listen live"; n.textContent = ""; clearInterval(timer);
+      l.innerHTML = "&#9654; Listen live · FemMe Radio"; n.textContent = ""; clearInterval(timer);
     }
   };
   a.onerror = function () { if (l.innerHTML.indexOf("Pause") > -1) n.textContent = "Could not connect"; };
