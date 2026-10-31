@@ -20,7 +20,7 @@ Currently, I am
 - Developing [FemMe Radio](https://femme-radio.gr/en/), [Logoplex](https://logoplex.app), and [Noes](https://www.noes.gr/en/)  
 
 <!-- FemMe Radio button: opens the radio page -->
-<a href="https://femme-radio.gr/en/#join" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.5em;margin:.6em 0 .2em;padding:.6em 1.3em;border-radius:999px;background:#4b1d6e;color:#fff;font-weight:600;text-decoration:none;">&#9654; Play FemMe Radio</a>
+<a href="https://femme-radio.gr/en/#join" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.5em;margin:.6em 0 .2em;padding:.6em 1.3em;border-radius:999px;background:#4b1d6e;color:#fff;font-weight:600;text-decoration:none;">&#9654; Listen live · FemMe Radio</a>
 
 My main research interest is in the foundations of science.
 
