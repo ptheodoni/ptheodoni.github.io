@@ -117,7 +117,7 @@ footer .tbtn,.contrib{font-size:14px}
   </header>
   <p style="margin:0;font-size:12.5px;font-style:italic;color:var(--accent);text-align:right;max-width:none;margin:-4px 0 4px">You are especially encouraged to include works by women philosophers, past and present, in the corpus and bring their thought back into the discussion.</p>
 
-  <nav class="tabs" role="tablist" aria-label="Views"><button type="button" role="tab" id="tab-q" aria-selected="true">Questions</button><button type="button" role="tab" id="tab-ideas" aria-selected="false">History of ideas</button><button type="button" role="tab" id="tab-tl" aria-selected="false">Timeline</button></nav>
+  <nav class="tabs" role="tablist" aria-label="Views"><button type="button" role="tab" id="tab-q" aria-selected="true">Questions</button><button type="button" role="tab" id="tab-ideas" aria-selected="false">History of ideas</button><button type="button" role="tab" id="tab-tl" aria-selected="false">Timeline</button><button type="button" role="tab" id="tab-stats" aria-selected="false">Statistics</button></nav>
   <div id="view-tl" class="view" hidden>
   <div class="eras" id="eras" role="group" aria-label="World eras"></div>
 
@@ -142,6 +142,19 @@ footer .tbtn,.contrib{font-size:14px}
   </div>
 
   </div>
+  <section id="view-stats" class="view" hidden aria-labelledby="stats-h">
+    <h2 id="stats-h" class="vh">Statistics</h2>
+    <p class="lead" style="margin-top:0">Counts are computed from the atlas as it stands and update as it grows.</p>
+    <div id="statcards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div>
+    <div class="tl" style="padding:16px">
+    <h3 id="num-h" class="vh" style="font-size:18px">Women and men in the atlas</h3>
+    <p class="lead" id="numlead"></p>
+    <div class="tablebox" id="numtable" style="margin-top:8px"></div>
+    <p class="sub" style="margin-top:10px">For comparison: the 1967 <i>Encyclopedia of Philosophy</i> had articles on over 900 philosophers but no entry for Wollstonecraft, Arendt or Beauvoir; the 2015 <i>Norton Introduction to Philosophy</i>, over 1,000 pages, names no woman philosopher before the mid-20th century (<a href="https://en.wikipedia.org/wiki/Women_in_philosophy" target="_blank" rel="noopener">sources</a>). The share here is not the true historical share: it is what a deliberate search finds, and it will change as the atlas grows.</p>
+    </div>
+    <div class="tl" style="padding:16px"><h3 class="vh" style="font-size:18px">Share of women by century</h3><p class="sub" style="margin:0 0 8px">Philosophers born in each century; bar length = how many, darker part = women.</p><div id="statcent"></div></div>
+    <div class="tl" style="padding:16px"><h3 class="vh" style="font-size:18px">Who gets answered</h3><p class="sub" style="margin:0 0 8px">Thinkers with the most recorded replies from later thinkers. Silence is measurable too: below, how many have none.</p><div id="statans"></div></div>
+  </section>
   <section id="view-ideas" class="view" hidden aria-labelledby="ideas-h">
     <div><h2 id="ideas-h" class="vh">Which topics were discussed, and when</h2><p class="lead">Each cell counts the thinkers and texts in the atlas who worked on a topic during that century. Columns follow the same eras as the timeline.</p></div>
     <div class="controls"><label class="slider" for="ilane">Tradition <select id="ilane"></select></label><label class="check" for="inorm"><input type="checkbox" id="inorm"> Show as share (%) of everyone active in the century</label></div>
@@ -169,12 +182,6 @@ footer .tbtn,.contrib{font-size:14px}
       <p class="lead" id="qform-off">Proposing works when this page is opened in claude.ai while signed in.</p>
       <div id="qmine"></div><div id="qreview" hidden></div><div id="creview" hidden></div>
     </div>
-  </section>
-  <section id="numbers" class="tl" style="padding:16px" aria-labelledby="num-h">
-    <h2 id="num-h" class="vh" style="font-size:20px">Women and men in the atlas</h2>
-    <p class="lead" id="numlead"></p>
-    <div class="tablebox" id="numtable" style="margin-top:8px"></div>
-    <p class="sub" style="margin-top:10px">For comparison: the 1967 <i>Encyclopedia of Philosophy</i> had articles on over 900 philosophers but no entry for Wollstonecraft, Arendt or Beauvoir; the 2015 <i>Norton Introduction to Philosophy</i>, over 1,000 pages, names no woman philosopher before the mid-20th century (<a href="https://en.wikipedia.org/wiki/Women_in_philosophy" target="_blank" rel="noopener">sources</a>). The share here is not the true historical share: it is what a deliberate search finds, and it will change as the atlas grows.</p>
   </section>
   <section id="references" class="tl" style="padding:16px" aria-labelledby="refs-h">
     <h2 id="refs-h" class="vh" style="font-size:20px">References</h2>
@@ -807,8 +814,8 @@ iplot.addEventListener('click',e=>{const r=e.target.closest('rect[data-r]');if(!
 ipanel.addEventListener('click',e=>{const b=e.target.closest('[data-tl]');if(!b)return;showView('tl');select(b.dataset.tl,true)});
 ilaneEl.addEventListener('change',()=>{ilane=ilaneEl.value;icell=null;renderIdeas();showIdeasPanel()});
 document.getElementById('inorm').addEventListener('change',e=>{inorm=e.target.checked;renderIdeas()});
-function showView(v){statusEl.hidden=v!=='tl';[['tl','view-tl'],['ideas','view-ideas'],['q','view-q']].forEach(([k,el])=>{document.getElementById(el).hidden=v!==k;document.getElementById('tab-'+k).setAttribute('aria-selected',String(v===k))});if(v==='tl')render();else if(v==='ideas'){renderIdeas();showIdeasPanel()}else{renderQ();showQPanel()}}
-document.getElementById('tab-tl').onclick=()=>showView('tl');document.getElementById('tab-ideas').onclick=()=>showView('ideas');document.getElementById('tab-q').onclick=()=>showView('q');
+function showView(v){statusEl.hidden=v!=='tl';[['tl','view-tl'],['ideas','view-ideas'],['q','view-q'],['stats','view-stats']].forEach(([k,el])=>{document.getElementById(el).hidden=v!==k;document.getElementById('tab-'+k).setAttribute('aria-selected',String(v===k))});if(v==='tl')render();else if(v==='ideas'){renderIdeas();showIdeasPanel()}else{renderQ();showQPanel()}}
+document.getElementById('tab-tl').onclick=()=>showView('tl');document.getElementById('tab-ideas').onclick=()=>showView('ideas');document.getElementById('tab-q').onclick=()=>showView('q');document.getElementById('tab-stats').onclick=()=>showView('stats');
 new ResizeObserver(()=>{if(!document.getElementById('view-ideas').hidden)renderIdeas()}).observe(iplot);
 // ---- Questions: causation ----
 // Four parts of the question; each answer list is ordered.
@@ -1057,6 +1064,16 @@ const CONTRIBUTORS=[
  const cell=(xs)=>{const w=xs.filter(t=>t.w).length;return xs.length?`${xs.length} <span style="color:var(--muted)">(${w} w)</span>`:'<span style="color:var(--muted)">0</span>'};
  const rows=LANES.map(l=>{const xs=P.filter(t=>t.l===l[0]);const w=xs.filter(t=>t.w).length;return `<tr><th scope="row" style="text-align:left">${l[1]}</th>${bins.map(b=>`<td>${cell(xs.filter(t=>t.b>=b[0]&&t.b<b[1]))}</td>`).join('')}<td><b>${xs.length}</b></td><td>${w}</td><td>${pct(w,xs.length)}</td></tr>`}).join('');
  document.getElementById('numtable').innerHTML=`<table style="border-collapse:collapse;font-size:13px;width:100%"><thead><tr><th style="text-align:left">Tradition</th>${bins.map(b=>`<th>${b[2]}</th>`).join('')}<th>All</th><th>Women</th><th>% women</th></tr></thead><tbody>${rows}</tbody></table><p class="sub" style="margin:6px 0 0">Counted by birth year; (w) = women.</p>`;}
+
+{const P=T.filter(t=>!t.txt),W=P.filter(t=>t.w).length,rv=Object.values(REFS);
+ const card=(n,l)=>`<div class="tl" style="padding:12px"><div style="font-size:26px;font-weight:600;color:var(--accent)">${n}</div><div class="sub" style="margin:0">${l}</div></div>`;
+ document.getElementById('statcards').innerHTML=card(P.length,'philosophers')+card(W,'women')+card(P.length-W,'men')+card(Math.round(100*W/P.length)+'%','women')+card(T.filter(t=>t.txt).length,'texts')+card(LANES.length,'traditions')+card(E.length,'links between thinkers')+card(rv.filter(r=>r[6]).length,'passages read by the Atlas');
+ const cs={};P.forEach(t=>{const c=Math.floor(t.b/100);(cs[c]=cs[c]||[0,0])[t.w?1:0]++});const ks=Object.keys(cs).map(Number).sort((a,b)=>a-b);const mx=Math.max(...ks.map(k=>cs[k][0]+cs[k][1]));
+ const cl=c=>c<0?`${-c}th c. BCE`.replace(/^1th/,'1st').replace(/^2th/,'2nd').replace(/^3th/,'3rd'):`${c+1}${[,'st','nd','rd'][(c+1)%10]&&![11,12,13].includes((c+1)%100)?[,'st','nd','rd'][(c+1)%10]:'th'} c.`;
+ document.getElementById('statcent').innerHTML=ks.map(k=>{const[m,w]=cs[k],n=m+w;return `<div style="display:grid;grid-template-columns:110px 1fr 70px;gap:8px;align-items:center;font-size:12.5px;margin:2px 0"><span style="color:var(--muted)">${cl(k)}</span><span style="display:flex;height:12px"><span style="width:${100*w/mx}%;background:var(--accent)"></span><span style="width:${100*m/mx}%;background:var(--bar)"></span></span><span>${n} · ${w} w</span></div>`}).join('');
+ const inc={};E.forEach(e=>{inc[e.t]=(inc[e.t]||0)+1});const top=Object.entries(inc).filter(([id])=>byId[id]).sort((a,b)=>b[1]-a[1]).slice(0,12);
+ const none=P.filter(t=>!inc[t.id]),noneW=none.filter(t=>t.w).length;
+ document.getElementById('statans').innerHTML=`<ol style="margin:0;padding-left:20px;font-size:13.5px;columns:2 220px">${top.map(([id,n])=>`<li>${esc(byId[id].n)}${byId[id].w?' <span class="pill">woman</span>':''} — ${n}</li>`).join('')}</ol><p class="sub" style="margin:8px 0 0">${none.length} of ${P.length} philosophers (${Math.round(100*none.length/P.length)}%) have no recorded reply yet; among women it is ${noneW} of ${W} (${Math.round(100*noneW/W)}%). Some of this is the atlas's own gap, not history's.</p>`;}
 document.getElementById('clist').innerHTML=`<div style="display:flex;flex-direction:column;gap:2px">${CONTRIBUTORS.map(c=>`<div style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;padding:5px 0;border-bottom:1px solid var(--line,rgba(127,127,127,.25))"><div style="font-size:14px;white-space:nowrap"><b>${esc(c.name)}</b> <span style="color:var(--muted);font-size:12px">· ${esc(c.role)} · since ${esc(c.since)}</span></div><div style="display:flex;flex-wrap:wrap;gap:4px">${c.did.map(d=>`<span style="font-size:11.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--line,rgba(127,127,127,.3));color:var(--muted);white-space:nowrap">${esc(d)}</span>`).join('')}</div></div>`).join('')}</div>`;
 document.getElementById('bcb2').addEventListener('click',()=>document.getElementById('bcb').click());
 drawQList();setQuestion(0);
