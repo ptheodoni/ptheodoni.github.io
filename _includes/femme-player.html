@@ -33,7 +33,7 @@
       l.innerHTML = "&#10074;&#10074; Pause";
       n.textContent = "FemMe Radio…"; nowPlaying(); timer = setInterval(nowPlaying, 20000);
       /* first time only: also open the FemMe Radio site in a new tab (it does not start playing by itself) */
-      if (!opened) { opened = true; window.open("https://femme-radio.gr/en/#join", "_blank", "noopener"); }
+      if (!opened) { opened = true; window.open("https://femme-radio.gr/en/?noplay#join", "_blank", "noopener"); }
     } else {
       a.pause(); a.removeAttribute("src"); a.load();
       l.innerHTML = "&#9654; Listen live"; n.textContent = ""; clearInterval(timer);
