@@ -284,7 +284,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <div class="field"><label for="pid">Your initials</label><input id="pid" type="text" value="PT" maxlength="12" autocomplete="off" style="width: 8rem;"></div>
       <button class="go" id="start">Start!</button>
     </div>
-    <p class="note">Version 30 Oct, prototype (simulated AI), with how to read your results. Team pilot: nothing is sent anywhere, and closing the page discards the run. After each answer, press 1–4 to say how sure you were.</p>
+    <p class="note">Version 31 Oct, prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards the run. After each answer, press 1–4 to say how sure you were.</p>
   </section>
 
   <section class="card" id="run" hidden>
@@ -1090,7 +1090,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     setProgress();
     const t = list.trials[state.idx];
     $("answerCmp").hidden = $("answerEst").hidden = $("answerHeap").hidden = $("confRow").hidden = true;
-    $("prompt").textContent = "";
+    $("prompt").textContent = ""; cv.style.touchAction = "auto";
     if (isX(list.task)) { cv.width = XW; cv.height = XH; }
     else if (list.task === "heap") { cv.width = HW; cv.height = HH; } else { cv.width = list.task === "comparison" ? 2 * SIDE : SIDE; cv.height = SIDE; }
     fixation();
@@ -1112,8 +1112,8 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
           const x = X[list.task], pr = typeof x.prompt === "function" ? x.prompt(t) : x.prompt;
           if (x.answer === "choice") { $("prompt").textContent = pr; $("answerCmp").hidden = false; awaiting = "choice"; }
           else if (x.answer === "estimate") { $("prompt").textContent = pr; $("answerEst").hidden = false; $("estInput").value = ""; $("estInput").focus(); awaiting = "estimate"; }
-          else if (x.answer === "point") { $("prompt").textContent = `${pr} Tap the spot.`; awaiting = "point"; }
-          else { $("prompt").textContent = `${pr} Tap the line.`; awaiting = "line"; }
+          else if (x.answer === "point") { $("prompt").textContent = `${pr} Tap the spot.`; awaiting = "point"; cv.style.touchAction = "none"; }
+          else { $("prompt").textContent = `${pr} Tap the line.`; awaiting = "line"; cv.style.touchAction = "none"; }
         } else if (list.task === "comparison") {
           $("prompt").textContent = "Which side has more dots?";
           $("answerCmp").hidden = false; awaiting = "choice";
@@ -1200,8 +1200,10 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     else if (scoring()) { pending.pts = closePts(v, pending.n); pending.ai_pts = tk === "strings" ? X.strings.aiPts(pending) : aiEstPts(pending.n); pending.bet = 0; }
     $("answerEst").hidden = true; askConf();
   }
+  // A placed mark can be moved (tap again, or drag) until the confidence button confirms it.
+  const placing = kind => awaiting === kind || (awaiting === "conf" && pending && pending.placed === kind);
   function answerLine(e) {
-    if (awaiting !== "line") return;
+    if (!placing("line")) return;
     const r = cv.getBoundingClientRect(), x = (e.clientX - r.left) * cv.width / r.width, y = (e.clientY - r.top) * cv.height / r.height;
     const N = X.numberline, t = pending;
     if (Math.abs(y - N.LY) > 110) return;                          // only taps near the line count
@@ -1210,11 +1212,13 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     pending.estimate = +(t.top >= 1000 ? Math.round(v) : v.toFixed(1));
     pending.pts = N.pts(pending.estimate, t); pending.ai_pts = N.aiPts(t); pending.bet = 0;
     N.draw(t, [[pending.estimate, "#1d56d8", ""]]);
-    askConf();
+    pending.moves = (pending.moves || 0) + (pending.placed ? 1 : 0);
+    if (!pending.placed) { pending.placed = "line"; askConf(); }
+    $("prompt").textContent = "Tap again or drag to move it. How sure are you?";
   }
   cv.addEventListener("pointerdown", answerLine);
   function answerPoint(e) {
-    if (awaiting !== "point") return;
+    if (!placing("point")) return;
     const r = cv.getBoundingClientRect(), x = (e.clientX - r.left) * cv.width / r.width, y = (e.clientY - r.top) * cv.height / r.height;
     const C = X.coords, t = pending;
     if (x < C.OX - 30 || x > C.OX + C.S + 30 || y < C.OY - C.S - 30 || y > C.OY + 30) return;   // only taps near the plane count
@@ -1224,9 +1228,16 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     pending.est_x = round(fx * t.top); pending.est_y = round(fy * t.top);
     pending.pts = C.pts(pending.est_x, pending.est_y, t); pending.ai_pts = C.aiPts(t); pending.bet = 0;
     C.draw(t, [[pending.est_x, pending.est_y, "#1d56d8", ""]]);
-    askConf();
+    pending.moves = (pending.moves || 0) + (pending.placed ? 1 : 0);
+    if (!pending.placed) { pending.placed = "point"; askConf(); }
+    $("prompt").textContent = "Tap again or drag to move it. How sure are you?";
   }
   cv.addEventListener("pointerdown", answerPoint);
+  let dragging = false;
+  cv.addEventListener("pointerdown", e => { if (pending && pending.placed) { dragging = true; try { cv.setPointerCapture(e.pointerId); } catch {} } });
+  cv.addEventListener("pointermove", e => { if (!dragging || !pending || !pending.placed) return; pending.placed === "point" ? answerPoint(e) : answerLine(e); });
+  for (const ev of ["pointerup", "pointercancel"]) cv.addEventListener(ev, () => { dragging = false; });
+
   const CONF_LABELS = ["Guessing", "Unsure", "Fairly sure", "Sure"];
   function askConf() {
     const bet = false;   // confidence is not scored
