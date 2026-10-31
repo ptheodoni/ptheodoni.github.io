@@ -34,6 +34,19 @@ body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px
 .wrap>*{min-width:0}
 header{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;align-items:flex-end}
 h1{font-family:var(--display);font-weight:650;font-size:clamp(26px,4vw,36px);line-height:1.1;margin:0;text-wrap:balance}
+header{display:block!important}
+.hdrow{display:flex;gap:16px 28px;align-items:flex-start;justify-content:space-between;margin-top:4px}
+.hdtext{flex:1 1 auto;min-width:0}.hdtext p{margin:0}
+.hdtext .subtitle{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(19px,2.2vw,24px);line-height:1.2;color:var(--accent)}
+.hdtext .hdesc{font-size:15px;line-height:1.4;color:var(--muted);margin-top:6px!important;max-width:70ch}
+.topbar{display:flex;gap:12px;align-items:flex-start;flex:none}
+.papcol{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.contribcol{display:flex;flex-direction:column;align-items:flex-start}
+.women-top{font-style:italic;font-size:12.5px;color:var(--muted);margin:6px 0 0!important;line-height:1.35}
+.morebtn{font:inherit;font-size:14px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 10px;color:var(--accent);cursor:pointer;text-align:left}
+.morebtn:hover{border-color:var(--accent)}
+@media (max-width:760px){.hdrow{flex-wrap:wrap}.topbar{flex-wrap:wrap;flex:1 1 100%}.contribcol{min-width:0;flex:1 1 200px}}
+header h1{font-size:clamp(34px,4.2vw,48px)!important;letter-spacing:-0.01em}
 h1 small{display:block;font-family:var(--body);font-weight:400;font-size:14.5px;color:var(--muted);margin-top:6px;max-width:68ch}
 .status{font-family:var(--mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
 .status b{color:var(--fg);font-weight:500}
@@ -112,9 +125,29 @@ footer .tbtn,.contrib{font-size:14px}
 
 <div class="wrap">
   <header>
-    <h1>Philosophy Atlas<span style="display:block;font-size:.5em;font-style:italic;font-weight:400;color:var(--accent);margin-top:2px;letter-spacing:.01em">Taming Chaos</span><small>How philosophers across traditions answer the same questions: where they agree, where they part, and who answered whom. Ask a question, see which topics each age discussed, or follow the whole history on one timeline.</small></h1>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;align-self:flex-start;margin-top:6px"><button type="button" class="addbtn" id="bcb">Be a contributor</button><p style="margin:0;font-size:12.5px;font-style:italic;color:var(--accent);text-align:right;line-height:1.45">You are especially encouraged to include works<br>by women philosophers, past and present,<br>in the corpus, and bring their thought<br>back into the discussion.</p><p class="status" id="status" aria-live="polite" style="margin:0"></p></div>
+    <h1>Philosophy Atlas</h1>
+    <div class="hdrow"><div class="hdtext"><p class="subtitle">Taming Chaos</p><p class="hdesc">How philosophers across traditions answer the same questions: where they agree, where they part, and who answered whom. Ask a question, see which topics each age discussed, or follow the whole history on one timeline.</p></div>
+    <div class="topbar"><div class="papcol"><button type="button" class="morebtn" id="alltx-btn">See all texts <span class="tag" id="alltx-n"></span></button><button type="button" class="morebtn" id="ask-btn">Search and ask the texts</button></div><div class="contribcol"><button type="button" class="addbtn" id="bcb">+ Be a contributor</button><p class="women-top">You are especially encouraged to include works<br>by women philosophers, past and present,<br>in the corpus, and bring their thought<br>back into the discussion.</p></div></div></div>
+    <p class="status" id="status" aria-live="polite" style="margin:6px 0 0;text-align:right"></p>
   </header>
+  <dialog id="txdlg" aria-labelledby="txdlg-h" style="width:min(1100px,calc(100vw - 32px))"><div>
+    <h2 id="txdlg-h" class="vh" style="font-size:22px;margin:0 0 4px">All texts</h2>
+    <p class="sub" style="margin:0 0 8px">The main work of every thinker in the atlas, with a link to a free full text where one has been found. <b>Read by the Atlas</b>: a passage from it has been checked. <b>Upload PDF</b>: no text found yet; if you have it, upload it to help the reading (uploads stay private to the curator).</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 8px"><input type="search" id="tx-q" placeholder="Filter by name, work or tradition" style="flex:1 1 260px;font:inherit;font-size:14px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--fg)"><label style="display:flex;gap:6px;align-items:center;font-size:14px"><input type="checkbox" id="tx-missing"> Only texts still missing</label><span class="sub" id="tx-count" style="margin:0"></span><button type="button" class="tbtn" id="tx-close">Close</button></div>
+    <div class="tablebox" id="tx-box" style="max-height:65vh;overflow:auto"></div>
+  </div></dialog>
+  <dialog id="askdlg" aria-labelledby="askdlg-h" style="width:min(900px,calc(100vw - 32px))"><div>
+    <h2 id="askdlg-h" class="vh" style="font-size:22px;margin:0 0 4px">Search and ask the texts</h2>
+    <p class="sub" style="margin:0 0 8px">Search thinkers, works, notes and the references behind every link. Click a name to see it on the timeline.</p>
+    <input type="search" id="sa-q" placeholder="Search: causation, Conway, Nyāya, women education, Ibn Rushd…" style="width:100%;box-sizing:border-box;font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--fg)">
+    <div id="sa-res" style="max-height:38vh;overflow:auto;margin-top:6px"></div>
+    <h3 class="vh" style="font-size:17px;margin:14px 0 4px">Ask the atlas</h3>
+    <p class="sub" style="margin:0 0 6px">The answer uses only what the atlas holds (thinkers, works, links and references) and names its entries. It runs on your own claude.ai account; the first question asks your permission.</p>
+    <textarea id="sa-ask" rows="3" placeholder="For example: which women answered Descartes, and where?" style="width:100%;box-sizing:border-box;font:inherit;font-size:14px;padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--fg)"></textarea>
+    <div style="display:flex;gap:8px;margin-top:6px"><button type="button" class="tbtn" id="sa-go">Ask</button><button type="button" class="tbtn" id="sa-close">Close</button></div>
+    <div id="sa-out" aria-live="polite" style="white-space:pre-wrap;font-size:14.5px;line-height:1.55;margin-top:10px"></div>
+    <p class="sub" id="sa-off" hidden>Asking works when this page is opened in claude.ai while signed in.</p>
+  </div></dialog>
 
   <nav class="tabs" role="tablist" aria-label="Views"><button type="button" role="tab" id="tab-q" aria-selected="true">Questions</button><button type="button" role="tab" id="tab-ideas" aria-selected="false">History of ideas</button><button type="button" role="tab" id="tab-tl" aria-selected="false">Timeline</button><button type="button" role="tab" id="tab-stats" aria-selected="false">Statistics</button><button type="button" role="tab" id="tab-book" aria-selected="false">Book</button></nav>
   <div id="view-tl" class="view" hidden>
@@ -1289,6 +1322,30 @@ const CONTRIBUTORS=[
  const row=(b,src,n,w,lanes,cov,covw,basis)=>`<tr><th scope="row" style="text-align:left;font-weight:500">${src?`<a href="${src}" target="_blank" rel="noopener">${esc(b)}</a>`:`<b>${esc(b)}</b>`}<div class="sub" style="margin:0;font-size:11.5px">${esc(basis)}</div></th><td>${n}</td><td>${w}</td><td>${pct(w,n)}</td><td>${Object.values(lanes).filter(v=>v>0).length} of ${LANES.length}</td><td>${pct(out(lanes),n)}</td><td>${cov==null?'&ndash;':`${cov} of ${P.length} (${pct(cov,P.length)})`}</td><td>${covw==null?'&ndash;':`${covw} of ${W}`}</td></tr>`;
  document.getElementById('statbooks').innerHTML=`<table style="border-collapse:collapse;font-size:13px;width:100%"><thead><tr><th style="text-align:left">History</th><th>With own chapter</th><th>Women</th><th>% women</th><th>Traditions</th><th>Outside Greek & European</th><th>Atlas philosophers covered</th><th>Atlas women covered</th></tr></thead><tbody>${BOOKS.slice().sort((x,y)=>(+(x.b.match(/\d{4}/)||[0])[0])-(+(y.b.match(/\d{4}/)||[0])[0])).map(o=>row(o.b,o.src,o.n,o.w,o.lanes,o.cov,o.covw,o.basis)).join('')}${row('This atlas','',P.length,W,al,null,null,'all entries')}</tbody></table>`;
  document.getElementById('statbooksnote').innerHTML=`Russell, Copleston, Durant, Kenny and Marías give no woman a chapter of her own and stay within the Greek and European traditions. Adamson's ongoing series is the modern contrast, with India, the Islamic world, Jewish and Africana philosophy, and 13 women; its volumes on China and Japan are not out yet. Kenny's chapters are thematic, so only names in chapter titles are counted. The comparison cuts both ways: the thinkers these books give a chapter have now been added to the atlas where they were missing. Matching of names is automatic and approximate.`;}
+
+// ---- See all texts / Search and ask ----
+{const txd=document.getElementById('txdlg'),skd=document.getElementById('askdlg');const op=d=>{try{d.showModal()}catch(e){d.setAttribute('open','')}};
+ const LN=Object.fromEntries(LANES.map(l=>[l[0],l[1]]));const READL=new Set(Object.entries(REFS).filter(([,r])=>r[6]).map(([k])=>k.split('>')[0]));
+ const rows=()=>T.filter(t=>!t.txt).map(t=>{const w=WTEXT[t.id]||[],wk=w[0]||(WORKS[t.id]&&WORKS[t.id][0]&&WORKS[t.id][0][0])||'';return {t,wk,url:w[1]||'',ed:w[2]||'',read:READL.has(t.id)}}).sort((a,b)=>a.t.b-b.t.b);
+ document.getElementById('alltx-n').textContent='('+T.filter(t=>!t.txt).length+')';
+ const draw=()=>{const q=document.getElementById('tx-q').value.trim().toLowerCase(),miss=document.getElementById('tx-missing').checked;
+  const R=rows().filter(r=>(!q||(r.t.n+' '+r.wk+' '+LN[r.t.l]).toLowerCase().includes(q))&&(!miss||!r.url));
+  document.getElementById('tx-count').textContent=`${R.length} shown · ${rows().filter(r=>r.url).length} with a free text`;
+  document.getElementById('tx-box').innerHTML=`<table style="border-collapse:collapse;width:100%;font-size:13px"><thead><tr><th style="text-align:left">Thinker</th><th style="text-align:left">Tradition</th><th style="text-align:left">Dates</th><th style="text-align:left">Main work</th><th style="text-align:left">Text</th></tr></thead><tbody>${R.map(r=>`<tr><td><button type="button" data-txgo="${r.t.id}" style="all:unset;cursor:pointer;color:var(--accent)">${esc(r.t.n)}</button>${r.t.w?' <span class="pill">woman</span>':''}</td><td>${LN[r.t.l]}</td><td>${fl(r.t)}</td><td><i>${esc(r.wk)}</i></td><td>${r.url?`<a href="${r.url}" target="_blank" rel="noopener">free text</a>${r.ed?' <span class="sub">· '+esc(r.ed)+'</span>':''}`:`<button type="button" class="tbtn" style="font-size:11px;min-height:0;padding:1px 6px" data-kind="Upload a text (PDF) to help the reading" data-contrib="${attr('Text of '+r.t.n+(r.wk?', '+r.wk:''))}">Upload PDF</button>`}${r.read?' <span class="pill">Read by the Atlas</span>':''}</td></tr>`).join('')}</tbody></table>`};
+ document.getElementById('alltx-btn').onclick=()=>{draw();op(txd)};document.getElementById('tx-close').onclick=()=>txd.close();
+ document.getElementById('tx-q').oninput=draw;document.getElementById('tx-missing').onchange=draw;
+ const go=id=>{try{txd.close()}catch(e){}try{skd.close()}catch(e){}showView('tl');select(id);const t=byId[id];if(t){const pd=Math.max(30,(t.e-t.b)*0.6);animateTo(t.b-pd,t.e+pd)}};
+ document.addEventListener('click',e=>{const b=e.target.closest('[data-txgo]');if(b)go(b.dataset.txgo);if(e.target.closest('[data-contrib]')){try{txd.close()}catch(_){}try{skd.close()}catch(_){}}});
+ const docs=()=>T.map(t=>{const outs=E.filter(e=>e.s===t.id).map(e=>`${e.k} ${NM(e.t)}${REFS[e.s+'>'+e.t]?' ('+REFS[e.s+'>'+e.t][0]+')':''}`);const w=WTEXT[t.id]||[];return {t,txt:[t.n,LN[t.l],fl(t),t.note,w[0]||'',(WORKS[t.id]||[]).map(x=>x[0]).join('; '),outs.join('; '),(SRC[t.id]||[])[0]||''].join(' | ')}});
+ const search=q=>{const ws=q.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').split(/\s+/).filter(x=>x.length>1);if(!ws.length)return[];return docs().map(d=>{const h=d.txt.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');let sc=0;ws.forEach(w=>{if(h.includes(w))sc+=1+(d.t.n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(w)?2:0)});return {d,sc}}).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc)};
+ document.getElementById('sa-q').oninput=e=>{const R=search(e.target.value).slice(0,40);document.getElementById('sa-res').innerHTML=R.map(({d})=>`<div style="padding:6px 0;border-top:1px solid var(--line);font-size:13.5px"><button type="button" data-txgo="${d.t.id}" style="all:unset;cursor:pointer;color:var(--accent);font-weight:600">${esc(d.t.n)}</button> <span class="sub">· ${LN[d.t.l]} · ${fl(d.t)}</span><div class="sub" style="margin:0">${esc(d.t.note||'')}</div></div>`).join('')||(e.target.value.trim()?'<p class="sub">No match.</p>':'')};
+ document.getElementById('ask-btn').onclick=()=>op(skd);document.getElementById('sa-close').onclick=()=>skd.close();
+ let ac=null;document.getElementById('sa-go').onclick=async()=>{const q=document.getElementById('sa-ask').value.trim(),out=document.getElementById('sa-out');if(!q)return;
+  let sample=null;try{sample=await claude.use('sample')}catch(e){}if(!sample){document.getElementById('sa-off').hidden=false;return}
+  const R=search(q).slice(0,60).map(x=>x.d.txt);const ctx=(R.length?R:docs().slice(0,0).map(x=>x.txt)).join('\n');
+  if(ac)ac.abort();ac=new AbortController();out.textContent='Thinking…';
+  try{await sample(`You answer questions about a history-of-philosophy atlas. Use ONLY the atlas entries below (one per line: name | tradition | dates | note | main work | works | links with the passage where the link happens | source). Name the entries you use. If the entries do not answer the question, say what is missing instead of using outside knowledge. Be concise.\n\nATLAS ENTRIES:\n${ctx||'(no entry matched the question words)'}\n\nQUESTION: ${q}`,{signal:ac.signal,modelTier:'default',cache:false,onText:({text})=>{out.textContent=text}})}
+  catch(err){out.textContent=err&&err.code==='not_granted'?'Permission was not given.':'Could not get an answer. '+((err&&err.message)||'')}};}
 document.getElementById('clist').innerHTML=`<div style="display:flex;flex-direction:column;gap:2px">${CONTRIBUTORS.map(c=>`<div style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;padding:5px 0;border-bottom:1px solid var(--line,rgba(127,127,127,.25))"><div style="font-size:14px;white-space:nowrap"><b>${esc(c.name)}</b> <span style="color:var(--muted);font-size:12px">· ${esc(c.role)} · since ${esc(c.since)}</span></div><div style="display:flex;flex-wrap:wrap;gap:4px">${c.did.map(d=>`<span style="font-size:11.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--line,rgba(127,127,127,.3));color:var(--muted);white-space:nowrap">${esc(d)}</span>`).join('')}</div></div>`).join('')}</div>`;
 document.getElementById('bcb2').addEventListener('click',()=>document.getElementById('bcb').click());
 drawQList();setQuestion(0);
