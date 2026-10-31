@@ -168,7 +168,7 @@ footer .tbtn,.contrib{font-size:14px}
     <label class="slider" for="zslider">Zoom <input type="range" id="zslider" min="0" max="100" step="0.5" value="0"></label>
     <button type="button" class="tbtn" id="reset">Whole history</button>
     <label class="slider" for="find">Find <input type="search" id="find" list="names" placeholder="A thinker or text" style="width:min(220px,60vw);font:inherit;font-size:14px;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 8px;min-height:40px;box-sizing:border-box"></label><datalist id="names"></datalist>
-    <label class="slider" for="groupby">Lanes by <select id="groupby"><option value="tradition">Tradition</option><option value="none">None: one row per thinker</option><option value="o">Origin</option><option value="lg">Language of writing</option><option value="p">Place of work</option></select></label>
+    <label class="slider" for="groupby">Lanes by <select id="groupby"><option value="tradition">Tradition</option><option value="none">None: one row per thinker</option><option value="o">Origin</option><option value="lg">Language of writing</option><option value="p">Place of work</option><option value="rel">Religion</option></select></label>
     <button type="button" class="tbtn" id="order" aria-pressed="false">Order: oldest at top</button>
     <label class="check" for="hiwomen"><input type="checkbox" id="hiwomen"> Highlight women philosophers</label><label class="check" for="alllinks"><input type="checkbox" id="alllinks"> See all links</label>
     <span class="hint">Pinch or <kbd>Ctrl</kbd> + scroll to zoom · two-finger swipe or drag to move</span>
@@ -247,7 +247,7 @@ footer .tbtn,.contrib{font-size:14px}
     <h2 id="refs-h" class="vh" style="font-size:20px">References</h2>
     <p class="lead">For every link: where the later thinker answers the earlier one, and a secondary source that documents it, open access where possible. Links without a reference stay marked as such until one is added.</p>
     <p class="sub" id="refcount"></p>
-    <div id="reflist"></div>
+    <details id="refdet"><summary class="tbtn" style="display:inline-flex;align-items:center;cursor:pointer;list-style:none">Show all references</summary><div id="reflist" style="margin-top:10px"></div></details>
   </section>
   <section id="contributors" class="tl" style="padding:16px" aria-labelledby="contrib-h">
     <h2 id="contrib-h" class="vh" style="font-size:20px">Contributors</h2>
@@ -2021,10 +2021,38 @@ T.forEach(t=>{const m=META[t.id]||[U,U,U];t.o=m[0];t.lg=m[1];t.p=m[2]});
 const EUR=new Set([FR,DE,BR,LC,CE,IT,IB,CH,SC,BK,NAM,AU,LA,'France','German lands & Austria','Britain & Ireland','Low Countries','Central & Eastern Europe','Italy','Switzerland','Scandinavia','Balkans','North America','Australia','Latin America']);
 T.forEach(t=>{if(t.l!=='jewish')return;t.trad='jewish';const lg=String(t.lg||''),pl=t.p||'';
   if(/Greek/.test(lg)&&t.b<700)t.l='greek';else if(/Arabic/.test(lg))t.l='islamic';else if(t.b<640&&!EUR.has(pl))t.l='neareast';else if(pl==='Iberia'&&t.b<1492&&/Arabic|Judeo/.test(lg))t.l='islamic';else if(EUR.has(pl))t.l=(pl==='Latin America'?'latam':'europe');else if(pl==='Iraq & Iran'||pl==='Levant'||pl==='North Africa'||pl==='Arabia'||pl==='Egypt'||pl==='Aegean & Asia Minor')t.l=t.b<640?'neareast':'islamic';else t.l='europe'});
+
+// ---- Religion: an approximate attribute for grouping, from tradition, period and notes (to be checked) ----
+const REL_ORDER=['Mesopotamian religion','Egyptian religion','Vedic & Hindu','Zoroastrian','Greek & Roman religion','Jewish','Buddhist','Jain','Confucian','Daoist','Other Chinese schools','Christian','Manichaean','Shinto','Islamic','Sikh','Bábí & Bahá\'í','Secular / not religious'];
+(function(){const has=(t,re)=>re.test((t.n||'')+' '+(t.note||''));
+ const XN=/christ|church|bishop|monk(?!.*buddh)|nun\b|abbess|abbot|priest|theolog|catholic|protestant|lutheran|calvin|jesuit|franciscan|dominican|quaker|pietis|mystic|saint|patriarch|gospel|desert (father|mother)|coptic|syriac|nestorian|jacobite|scholastic|byzantine|orthodox|apolog/i;
+ const BU=/buddh|madhyamaka|yog[aā]c[aā]ra|abhidharma|abhidhamma|chan\b|zen\b|pure land|tiantai|tendai|huayan|kegon|shingon|nichiren|sangha|bhikkhun|therīgāthā|therigatha|dharmak|dign|nāgārjuna|nagarjuna|lama|tibet|karmapa|kadam|sakya|nyingma|gelug|kagyu|dzogchen|vajray|tantric buddh|monk.*buddh/i;
+ const DA=/dao(?!.*buddh)|daoist|taoist|laozi|zhuangzi|liezi|xuanxue|neo-daoism|huang-lao|quanzhen|inner alchemy|ge hong|huainanzi/i;
+ const OCN=/mohist|mozi|legalist|school of names|hui shi|gongsun long|yang zhu|shen buhai|shang yang|han fei|shen dao|guanzi|deng xi/i;
+ const IS=/islam|muslim|sufi|qur|kal[aā]m|mu.tazil|ash.ar|ism[aā].[iī]l|sh[iī].i|sunni|hadith|falsafa|imam|shaykh|caliph/i;
+ const ZO=/zoroastr|mazdean|mazdak|pahlavi|d[eē]nkard|g[aā]th|avest|sasanian|zurvan/i;
+ const SH=/shinto|kokugaku|motoori|norinaga|hirata|kamo no mabuchi|watarai|yoshida kanetomo|kojiki|ise\b/i;
+ T.forEach(t=>{let r=null;const l=t.l,b=t.b;
+  if(t.trad==='jewish')r='Jewish';
+  else if(/^mani$/.test(t.id)||has(t,/manich/i))r='Manichaean';
+  else if(has(t,/b[aá]b[ií]|bah[aá]|ṭāhir|tahirih|qurrat/i))r='Bábí & Bahá\'í';
+  else if(has(t,/sikh|guru n[aā]nak|japji/i))r='Sikh';
+  else if(l==='neareast')r=b<-539?'Mesopotamian religion':(has(t,XN)||/syriac/i.test(t.lg||'')?'Christian':'Jewish');
+  else if(l==='africa'&&b<0)r='Egyptian religion';
+  else if(l==='indian'){r=has(t,BU)?'Buddhist':has(t,/jain|jina|mah[aā]v[iī]ra|digambara|[sś]vet[aā]mbara/i)?'Jain':has(t,IS)?'Islamic':has(t,XN)&&b>1700?'Christian':has(t,/c[aā]rv[aā]ka|lok[aā]yata|materialis/i)?'Secular / not religious':(b>1850&&has(t,/secular|marx|radical humanis|rationalis|atheis/i))?'Secular / not religious':'Vedic & Hindu'}
+  else if(l==='chinese'){r=has(t,BU)?'Buddhist':has(t,DA)?'Daoist':has(t,OCN)?'Other Chinese schools':(b>=1890&&!has(t,/confuc|new confucian/i))?'Secular / not religious':'Confucian'}
+  else if(l==='japkor'){r=has(t,BU)?'Buddhist':has(t,SH)?'Shinto':has(t,XN)?'Christian':has(t,/tenri|[oō]moto|nakayama miki|deguchi/i)?'Shinto':b>=1850&&!has(t,/confuc|neo-confuc/i)?'Secular / not religious':'Confucian'}
+  else if(l==='islamic'){r=has(t,ZO)||(b<640&&!has(t,XN))?'Zoroastrian':has(t,XN)||has(t,/translator|ḥunayn|hunayn|ibn .ad[iī]|abū bishr|abu bishr|qusṭā|qusta|ibn zur|ibn al-ṭayyib|ibn suw[aā]r/i)?'Christian':'Islamic'}
+  else if(l==='greek'){if(has(t,XN)||b>=500)r='Christian';else if(b>=300&&has(t,/neoplaton|proclus|simplicius|damascius|olympiodor|asclepi|hierocles|hypatia|sosipatra|aedesia|julian/i))r='Greek & Roman religion';else if(b>=1700&&!has(t,XN))r='Secular / not religious';else r=b>=380?'Christian':'Greek & Roman religion'}
+  else if(l==='europe'||l==='latam'||l==='africa'){if(b<300&&!has(t,XN))r='Greek & Roman religion';else if(has(t,IS))r='Islamic';else if(b<1700)r='Christian';else r=has(t,XN)?'Christian':'Secular / not religious'}
+  if(!r)r='Secular / not religious';
+  const OV={vasubandhu:'Buddhist',dharmottara:'Buddhist',huineng:'Buddhist',wangbi:'Daoist',kukai:'Buddhist',dogen:'Buddhist',saicho:'Buddhist',shinran:'Buddhist',nichiren:'Buddhist',honen:'Buddhist',eisai:'Buddhist',ikkyu:'Buddhist',rennyo:'Buddhist',ramabai:'Christian',plethon:'Greek & Roman religion',kierkegaard:'Christian',stein:'Christian',weil:'Christian',anscombe:'Christian',spinoza:'Jewish',pascal:'Christian',xiedaoyun:'Confucian'};if(OV[t.id])r=OV[t.id];if(t.l==='indian'&&t.p==='Central Asia')r='Buddhist';if(t.id==='newtestament')r='Christian';if(t.id==='quran')r='Islamic';if(t.id==='gathas')r='Zoroastrian';if(t.id==='torah')r='Jewish';if(t.id==='ambedkar')r='Buddhist';
+  t.rel=r});})();
 let groupBy='tradition',GROUPS=[],orderUp=false;const LROWS={};
 function layout(){
   if(groupBy==='none'){GROUPS=[['all','All thinkers and texts, by date of birth',[]]];T.forEach(t=>t.g='all');LROWS.all=0;return}
   if(groupBy==='tradition'){GROUPS=LANES;T.forEach(t=>t.g=t.l)}
+  else if(groupBy==='rel'){T.forEach(t=>t.g=t.rel);const ks=new Set(T.map(t=>t.rel));GROUPS=REL_ORDER.filter(k=>ks.has(k)).map(k=>[k,k,[]])}
   else{const first={};T.forEach(t=>{t.g=t[groupBy];first[t.g]=Math.min(first[t.g]??Infinity,t.b)});GROUPS=Object.keys(first).sort((a,b)=>(a===U)-(b===U)||first[a]-first[b]).map(k=>[k,k===U?'Unknown':k,[]])}
   GROUPS.forEach(([id])=>{const ts=T.filter(t=>t.g===id).sort((a,b)=>a.b-b.b);const rows=[];ts.forEach(t=>{let r=rows.findIndex(end=>end+6<=t.b);if(r<0){r=rows.length;rows.push(0)}rows[r]=t.e;t.row=r;t.next=Infinity});LROWS[id]=rows.length;ts.forEach(a=>ts.forEach(b=>{if(b!==a&&b.row===a.row&&b.b>=a.e&&b.b<a.next)a.next=b.b}))});
 }
@@ -2114,7 +2142,7 @@ function showPanel(){
   const t=byId[sel],lane=LANES.find(l=>l[0]===t.l);
   const out=E.filter(e=>e.s===sel),inc=E.filter(e=>e.t===sel);
   const li=(o,k,ev,dir,rs,rt)=>`<li>${dir==='out'?`<span style="color:var(--muted)">${k}</span> <button type="button" data-sel="${o.id}">${esc(o.n)}</button>`:`<button type="button" data-sel="${o.id}">${esc(o.n)}</button> <span style="color:var(--muted)">${k}</span>`}<span class="pill ${ev==='to check'?'check':''}">${ev}</span>${refHTML(rs,rt)}</li>`;
-  panel.innerHTML=`<h2>${esc(t.n)}</h2><p class="sub">${t.txt?'Text · ':''}${fl(t)} · ${lane[1]}${t.trad?' · Jewish thought':''}${t.note?' · '+esc(t.note):''}</p><p class="sub">From: ${t.o} · Writes in: ${t.lg} · Worked in: ${t.p}</p>${t.txt?'':`<p class="sub" style="margin-top:-2px">Text: ${WTEXT[t.id]&&WTEXT[t.id][1]?`<a href="${WTEXT[t.id][1]}" target="_blank" rel="noopener"><i>${esc(WTEXT[t.id][0])}</i></a>${WTEXT[t.id][2]?' · '+esc(WTEXT[t.id][2]):''}`:`${WTEXT[t.id]&&WTEXT[t.id][0]?`<i>${esc(WTEXT[t.id][0])}</i> · `:''}no link yet <button type="button" class="tbtn" style="font-size:11px;padding:1px 6px" data-kind="Upload a text (PDF) to help the reading" data-contrib="${attr('Text of '+t.n+(WTEXT[t.id]&&WTEXT[t.id][0]?', '+WTEXT[t.id][0]:''))}">Upload PDF</button>`}</p>`}${SRC[t.id]?`<p class="sub">Source: ${SRC[t.id][1]?`<a href="${SRC[t.id][1]}" target="_blank" rel="noopener">${esc(SRC[t.id][0])}</a>`:esc(SRC[t.id][0])}</p>`:''}${readHTML(t.id)}
+  panel.innerHTML=`<h2>${esc(t.n)}</h2><p class="sub">${t.txt?'Text · ':''}${fl(t)} · ${lane[1]}${t.rel?' · '+t.rel+' <span title="Assigned automatically from tradition, period and notes; to be checked" style="cursor:help">(approx.)</span>':''}${t.note?' · '+esc(t.note):''}</p><p class="sub">From: ${t.o} · Writes in: ${t.lg} · Worked in: ${t.p}</p>${t.txt?'':`<p class="sub" style="margin-top:-2px">Text: ${WTEXT[t.id]&&WTEXT[t.id][1]?`<a href="${WTEXT[t.id][1]}" target="_blank" rel="noopener"><i>${esc(WTEXT[t.id][0])}</i></a>${WTEXT[t.id][2]?' · '+esc(WTEXT[t.id][2]):''}`:`${WTEXT[t.id]&&WTEXT[t.id][0]?`<i>${esc(WTEXT[t.id][0])}</i> · `:''}no link yet <button type="button" class="tbtn" style="font-size:11px;padding:1px 6px" data-kind="Upload a text (PDF) to help the reading" data-contrib="${attr('Text of '+t.n+(WTEXT[t.id]&&WTEXT[t.id][0]?', '+WTEXT[t.id][0]:''))}">Upload PDF</button>`}</p>`}${SRC[t.id]?`<p class="sub">Source: ${SRC[t.id][1]?`<a href="${SRC[t.id][1]}" target="_blank" rel="noopener">${esc(SRC[t.id][0])}</a>`:esc(SRC[t.id][0])}</p>`:''}${readHTML(t.id)}
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="tbtn" id="zlife">Zoom to this life</button><button type="button" class="tbtn" id="unsel">Clear selection</button><button type="button" class="tbtn" data-contrib="${attr('Timeline · '+t.n)}">Suggest a change</button></div>
   ${WORKS[t.id]?`<h3>Works on the line</h3><ul class="ul">${WORKS[t.id].map(([w,y])=>`<li><i>${esc(w)}</i>, ${fy(y)}</li>`).join('')}</ul>`:''}
   <h3>Answers to</h3>${out.length?`<ul class="links">${out.map(e=>li(byId[e.t],e.k,e.ev,'out',e.s,e.t)).join('')}</ul>`:'<p class="sub">No recorded link yet.</p>'}
