@@ -78,10 +78,10 @@
       {% endif %}
       <!-- FemMe Radio: the button only; the music itself lives in _includes/femme-player.html (top of every page) -->
       <li class="femme-li">
-        <button id="femmeBtn" type="button" title="FemMe Radio">
+        <a id="femmeBtn" href="#" role="button" title="FemMe Radio">
           <span class="femme-name"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="9" y="2.5" width="6" height="11" rx="3" fill="#4b1d6e"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M8.5 21h7" fill="none" stroke="#4b1d6e" stroke-width="1.8" stroke-linecap="round"/></svg>FemMe Radio</span>
           <span id="femmeLbl" class="femme-pill">&#9654; Listen live</span>
-        </button>
+        </a>
       </li>
       {% if author.kaggle %}
         <li><a href="https://kaggle.com/{{ author.kaggle }}"><i class="fab fa-fw fa-kaggle icon-pad-right" aria-hidden="true"></i>Kaggle</a></li>
