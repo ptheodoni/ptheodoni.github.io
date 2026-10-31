@@ -8,6 +8,9 @@ author_profile: true
 2026
 ---- 
 **October**  
+Participating in the [Meta Global AI Developer Hackathon](https://cerebralvalley.ai/e/meta-ai-developer-hackathon) by Meta and Cerebral Valley, with [Dr. Man Yi Yim](https://myyim.github.io).  
+Remote, October 26 – November 4, 2026.  
+
 Created and launched [Hanzi Link](https://ptheodoni.github.io/portfolio/hanzilink/).  
 A Chinese character game · HSK 1–9, for Chinese language learners and native Chinese speakers.  
 
