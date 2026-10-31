@@ -7,7 +7,7 @@ redirect_from:
   - /resume
 ---
 
-**2022, 2024-Present** Adj. Prof of Computational Neuroscience, *Open University of Cyprus, Faculty of Pure and Applied Sciences, Cyprus*  
+**2022, 2024-Present** Adj. Prof Computational Neuroscience, *Open University of Cyprus, Faculty of Pure and Applied Sciences, Cyprus*  
 **2022-Present** MA in Philosophy, *University of Athens, Dept of Philosophy, Athens, Greece*  
 **2023-2026** External Faculty, *University of Athens, Dept of History and Philosophy of Science, Athens, Greece*  
 **2022-2025** Adj. Prof of Neuroscience and Psychology, *College Year in Athens, Athens, Greece*  
