@@ -17,7 +17,7 @@ Currently, I am
 - Independent Researcher
 - Adjunct Professor of computational neuroscience, [Open University of Cyprus](https://www.ouc.ac.cy/), [MSc Cognitive Systems](https://www.ouc.ac.cy/index.php/en/studies/master/cos)
 - Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University)
-- Developing [FemMe Radio](https://femme-radio.gr/), [Logoplex](https://logoplex.app), and [Noes](https://www.noes.gr)  
+- Developing [FemMe Radio](https://femme-radio.gr/en/), [Logoplex](https://logoplex.app), and [Noes](https://www.noes.gr/en/)  
 
 My main research interest is in the foundations of science.
 
