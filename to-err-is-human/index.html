@@ -298,7 +298,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <button class="go" id="start">Start!</button>
     </div>
     <p class="note" id="bankNote" hidden><span id="bankText"></span> <button class="ghost" id="newPlayer" type="button" style="font-size:0.95rem;padding:3px 10px;box-shadow:2px 2px 0 var(--ink)">New player</button></p>
-    <p class="note">Version 31 Oct (5), prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards all results. After each answer, press 1–4 to say how sure you were.</p>
+    <p class="note">Version 31 Oct (6), prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards all results. After each answer, press 1–4 to say how sure you were.</p>
   </section>
 
   <section class="card" id="run" hidden>
@@ -315,12 +315,12 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       </div>
       <div class="prompt" id="prompt">Get ready</div>
       <div class="answer" id="answerCmp" hidden>
-        <button id="bLeft" class="ghost">Left <kbd>F</kbd></button>
-        <button id="bRight" class="ghost">Right <kbd>J</kbd></button>
+        <button id="bLeft" class="ghost"><kbd>←</kbd> Left</button>
+        <button id="bRight" class="ghost">Right <kbd>→</kbd></button>
       </div>
       <div class="answer" id="answerHeap" hidden>
-        <button id="bYes" class="ghost">Yes, a heap <kbd>Y</kbd></button>
-        <button id="bNo" class="ghost">Not a heap <kbd>N</kbd></button>
+        <button id="bYes" class="ghost"><kbd>←</kbd> Yes, a heap</button>
+        <button id="bNo" class="ghost">Not a heap <kbd>→</kbd></button>
       </div>
       <form class="answer" id="answerEst" hidden>
         <input id="estInput" type="number" min="0" max="999" inputmode="numeric" aria-label="Your estimate" style="width: 8rem;">
@@ -753,7 +753,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     symbolic: {
       name: "Which is bigger?", task: "Numbers · which is bigger?", lens: { mini: 10, quick: 20, medium: 60, full: 120 }, conf: [50, 67, 83, 100],
       bubble: "Two numbers, one blink. Which is bigger? Easy... or is it? 9.11 or 9.9? Some of these trip up the smartest AIs.",
-      title: "Which number is bigger?", help: "F (left) or J (right). Then 1–4: how sure.",
+      title: "Which number is bigger?", help: "← left or → right. Then 1–4: how sure.",
       build(len) {
         const items = SYM_POOL.map(([trial_id, part, a, b, larger, ratio, first_diff, ratio_bin, distance, compatible]) =>
           ({ trial_id, part, a, b, larger, ratio: +ratio, first_diff, ratio_bin, distance: +distance, compatible, larger_side: larger === "A" ? "left" : "right" }));
@@ -858,7 +858,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     numberline: {
       name: "Where does it go?", task: "Number line · where does it go?", lens: { mini: 10, quick: 20, medium: 40, full: 60 }, conf: [25, 50, 75, 100],
       bubble: "A line from 0 to 20, 100 or 1000. Where does 523 go? Tap the spot. Children squeeze the big numbers together; do you? Does the AI?",
-      title: "Where does the number go on the line?", help: "Click or tap the spot on the line. Then 1–4: how sure.",
+      title: "Where does the number go on the line?", help: "Tap the line, or move with ← → (Shift = big steps). Then 1–4: how sure.",
       TARGETS: { 20: [1, 2, 3, 4, 5, 7, 9, 11, 13, 15, 17, 19],
                  100: [2, 3, 4, 6, 8, 12, 17, 21, 25, 29, 33, 39, 43, 48, 52, 57, 61, 64, 72, 79, 81, 84, 90, 96],
                  1000: [3, 7, 15, 20, 30, 40, 60, 80, 120, 170, 210, 250, 290, 330, 390, 430, 480, 520, 523, 570, 610, 640, 720, 790, 810, 840, 900, 960] },
@@ -1010,7 +1010,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     coords: {
       name: "Place the point", task: "Coordinates · place the point", lens: { mini: 10, quick: 20, medium: 40, full: 60 }, conf: [25, 50, 75, 100],
       bubble: "Two axes, no grid, no ticks. Where is the point (3, 5)? Tap it. Your eye has to measure both directions at once.",
-      title: "Where is the point?", help: "Click or tap the spot. Then 1–4: how sure.",
+      title: "Where is the point?", help: "Tap the spot, or move with the arrow keys (Shift = big steps). Then 1–4: how sure.",
       TOPS: [10, 20, 100], N: 14, SEED: 909,
       OX: 352, OY: 364, S: 320,              // origin and side of the plotting square (canvas units)
       set() {
@@ -1093,7 +1093,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     adapt: {
       name: "Stare, then compare", task: "Adaptation · which side has more?", lens: { mini: 12, quick: 18, medium: 36, full: 54 }, conf: [50, 67, 83, 100],
       bubble: "Keep your eyes on the cross while one side fizzes with dots. Then two clouds flash: which has more? Eyes get tired of numbers the way they tire of colours. Do yours?",
-      title: "Stare at the cross, then: which side has more?", help: "Eyes on the cross. Then F (left) or J (right), and 1–4: how sure.",
+      title: "Stare at the cross, then: which side has more?", help: "Eyes on the cross. Then ← left or → right, and 1–4: how sure.",
       REF: 30, PROBES: [16, 21, 26, 35, 43, 56], ADAPTERS: { none: 0, many: 100, few: 10 },
       FIRST_MS: 6000, TOPUP_MS: 3000, TEST_MS: 300,
       CX: [256, 768], CY: 200, R: 165, DOT: 6,
@@ -1282,8 +1282,8 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     else if (list.task === "heap") { cv.width = HW; cv.height = HH; } else { cv.width = list.task === "comparison" ? 2 * SIDE : SIDE; cv.height = SIDE; }
     ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, cv.width, cv.height);
     const title = isX(list.task) ? X[list.task].title : { comparison: "Which side has more dots?", estimation: "How many dots?", heap: "Is it a heap of sand?" }[list.task];
-    const help = isX(list.task) ? X[list.task].help : { comparison: "Answer with F (left) or J (right). Then 1–4: how sure.", estimation: "Type a number, Enter. Then 1–4: how sure.",
-                   heap: "Y (yes) or N (no). There is no right answer. Then 1–4: how sure." }[list.task];
+    const help = isX(list.task) ? X[list.task].help : { comparison: "← left or → right. Then 1–4: how sure.", estimation: "Type a number, Enter. Then 1–4: how sure.",
+                   heap: "← yes or → no. There is no right answer. Then 1–4: how sure." }[list.task];
     ctx.fillStyle = "#1d2330"; ctx.font = "600 26px 'IBM Plex Sans', sans-serif"; ctx.textAlign = "center";
     ctx.fillText(title, cv.width / 2, cv.height / 2 - 16);
     ctx.font = "18px 'IBM Plex Sans', sans-serif"; ctx.fillStyle = "#5b6577";
@@ -1359,7 +1359,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     N.draw(t, [[pending.estimate, "#1d56d8", ""]]);
     pending.moves = (pending.moves || 0) + (pending.placed ? 1 : 0);
     if (!pending.placed) { pending.placed = "line"; askConf(); }
-    $("prompt").textContent = "Tap again or drag to move it. How sure are you?";
+    $("prompt").textContent = "Tap again, drag or use the arrows to move it. How sure are you?";
   }
   cv.addEventListener("pointerdown", answerLine);
   function answerPoint(e) {
@@ -1375,9 +1375,24 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     C.draw(t, [[pending.est_x, pending.est_y, "#1d56d8", ""]]);
     pending.moves = (pending.moves || 0) + (pending.placed ? 1 : 0);
     if (!pending.placed) { pending.placed = "point"; askConf(); }
-    $("prompt").textContent = "Tap again or drag to move it. How sure are you?";
+    $("prompt").textContent = "Tap again, drag or use the arrows to move it. How sure are you?";
   }
   cv.addEventListener("pointerdown", answerPoint);
+  // keyboard placement: the arrows move a mark (starting in the middle); Shift = steps of 10%; then 1–4 as usual
+  function keyPlace(key, big) {
+    const kind = pending && (pending.placed || (awaiting === "line" || awaiting === "point" ? awaiting : null)); if (!kind) return false;
+    const d = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1] }[key]; if (!d || (kind === "line" && d[1])) return false;
+    const step = big ? 0.1 : 0.01, r = cv.getBoundingClientRect(), toClient = (x, y) => ({ clientX: r.left + x * r.width / cv.width, clientY: r.top + y * r.height / cv.height });
+    if (kind === "line") {
+      const N = X.numberline, f = pending.placed ? pending.estimate / pending.top : 0.5 - d[0] * step, nf = Math.min(1, Math.max(0, f + d[0] * step));
+      answerLine(toClient(N.L0 + nf * (N.L1 - N.L0), N.LY));
+    } else {
+      const C = X.coords, fx0 = pending.placed ? pending.est_x / pending.top : 0.5 - d[0] * step, fy0 = pending.placed ? pending.est_y / pending.top : 0.5 - d[1] * step;
+      const fx = Math.min(1, Math.max(0, fx0 + d[0] * step)), fy = Math.min(1, Math.max(0, fy0 + d[1] * step));
+      answerPoint(toClient(C.OX + fx * C.S, C.OY - fy * C.S));
+    }
+    return true;
+  }
   let dragging = false;
   cv.addEventListener("pointerdown", e => { if (pending && pending.placed) { dragging = true; try { cv.setPointerCapture(e.pointerId); } catch {} } });
   cv.addEventListener("pointermove", e => { if (!dragging || !pending || !pending.placed) return; pending.placed === "point" ? answerPoint(e) : answerLine(e); });
@@ -2193,10 +2208,11 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   $("confRow").addEventListener("click", e => { const b = e.target.closest("button"); if (b) answerConf(+b.dataset.c); });
   document.addEventListener("keydown", e => {
     if (awaiting === "begin" && e.code === "Space") { e.preventDefault(); awaiting = null; nextTrial(); }
-    else if (awaiting === "choice" && (e.key === "f" || e.key === "F")) answerChoice("left");
-    else if (awaiting === "choice" && (e.key === "j" || e.key === "J")) answerChoice("right");
-    else if (awaiting === "heap" && (e.key === "y" || e.key === "Y")) answerHeap(true);
-    else if (awaiting === "heap" && (e.key === "n" || e.key === "N")) answerHeap(false);
+    else if (awaiting === "choice" && (e.key === "ArrowLeft" || e.key === "f" || e.key === "F")) { e.preventDefault(); answerChoice("left"); }
+    else if (awaiting === "choice" && (e.key === "ArrowRight" || e.key === "j" || e.key === "J")) { e.preventDefault(); answerChoice("right"); }
+    else if (awaiting === "heap" && (e.key === "ArrowLeft" || e.key === "y" || e.key === "Y")) { e.preventDefault(); answerHeap(true); }
+    else if (awaiting === "heap" && (e.key === "ArrowRight" || e.key === "n" || e.key === "N")) { e.preventDefault(); answerHeap(false); }
+    else if (e.key.startsWith("Arrow") && keyPlace(e.key, e.shiftKey)) e.preventDefault();
     else if (awaiting === "conf" && ["1", "2", "3", "4"].includes(e.key)) answerConf(+e.key);
     else if (awaiting === "verdict" && e.key === "Enter") { e.preventDefault(); ($("vNext").hidden ? $("vStop") : $("vNext")).click(); }
   });
