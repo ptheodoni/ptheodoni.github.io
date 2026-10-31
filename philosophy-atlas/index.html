@@ -142,7 +142,7 @@ footer .tbtn,.contrib{font-size:14px}
   </div></dialog>
   <dialog id="txdlg" aria-labelledby="txdlg-h" style="width:min(1100px,calc(100vw - 32px))"><div>
     <h2 id="txdlg-h" class="vh" style="font-size:22px;margin:0 0 4px">All texts</h2>
-    <p class="sub" style="margin:0 0 8px">The main work of every thinker in the atlas, with a link to a free full text where one has been found. <b>Read by the Atlas</b>: a passage from it has been checked. <b>Upload PDF</b>: no text found yet; if you have it, upload it to help the reading (uploads stay private to the curator).</p>
+    <p class="sub" style="margin:0 0 8px">The works of every thinker in the atlas, one row per work, with a link to a free full text where one has been found. <b>Read by the Atlas</b>: a passage from it has been checked. <b>Upload PDF</b>: no text found yet; if you have it, upload it to help the reading (uploads stay private to the curator).</p>
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 8px"><input type="search" id="tx-q" placeholder="Filter by name, work or tradition" style="flex:1 1 260px;font:inherit;font-size:14px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--fg)"><label style="display:flex;gap:6px;align-items:center;font-size:14px"><input type="checkbox" id="tx-missing"> Only texts still missing</label><span class="sub" id="tx-count" style="margin:0"></span><button type="button" class="tbtn" id="tx-close">Close</button></div>
     <div class="tablebox" id="tx-box" style="max-height:65vh;overflow:auto"></div>
   </div></dialog>
@@ -2514,12 +2514,20 @@ const CONTRIBUTORS=[
 // ---- See all texts / Search and ask ----
 {const txd=document.getElementById('txdlg'),skd=document.getElementById('askdlg');const op=d=>{try{d.showModal()}catch(e){d.setAttribute('open','')}};
  const LN=Object.fromEntries(LANES.map(l=>[l[0],l[1]]));const READL=new Set(Object.entries(REFS).filter(([,r])=>r[6]).map(([k])=>k.split('>')[0]));
- const rows=()=>T.filter(t=>!t.txt).map(t=>{const w=WTEXT[t.id]||[],wk=w[0]||(WORKS[t.id]&&WORKS[t.id][0]&&WORKS[t.id][0][0])||'';return {t,wk,url:w[1]||'',ed:w[2]||'',read:READL.has(t.id)}}).sort((a,b)=>a.t.b-b.t.b);
- document.getElementById('alltx-n').textContent='('+T.filter(t=>!t.txt).length+')';
+ const norm=x=>String(x||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');
+ const ALLW=(()=>{const out=[];T.forEach(t=>{const w=WTEXT[t.id]||[],list=(WORKS[t.id]||[]).map(x=>[x[0],x[1]]);
+   if(t.txt){out.push({t,wk:t.n,yr:t.b,url:w[1]||'',ed:w[2]||''});return}
+   const wt=norm(w[0]);let used=false;
+   list.forEach(([title,yr])=>{const m=w[1]&&wt&&(norm(title).includes(wt)||wt.includes(norm(title))||list.length===1);if(m)used=true;out.push({t,wk:title,yr,url:m?w[1]:'',ed:m?(w[2]||''):''})});
+   if(w[0]&&!used)out.push({t,wk:w[0],yr:null,url:w[1]||'',ed:w[2]||''});
+   if(!list.length&&!w[0])out.push({t,wk:'',yr:null,url:'',ed:''})});
+  return out.map(r=>Object.assign(r,{read:READL.has(r.t.id)})).sort((a,b)=>a.t.b-b.t.b||(a.yr??9e9)-(b.yr??9e9))})();
+ const rows=()=>ALLW;
+ document.getElementById('alltx-n').textContent='('+ALLW.filter(r=>r.wk).length+')';
  const draw=()=>{const q=document.getElementById('tx-q').value.trim().toLowerCase(),miss=document.getElementById('tx-missing').checked;
   const R=rows().filter(r=>(!q||(r.t.n+' '+r.wk+' '+LN[r.t.l]).toLowerCase().includes(q))&&(!miss||!r.url));
-  document.getElementById('tx-count').textContent=`${R.length} shown · ${rows().filter(r=>r.url).length} with a free text`;
-  document.getElementById('tx-box').innerHTML=`<table style="border-collapse:collapse;width:100%;font-size:13px"><thead><tr><th style="text-align:left">Thinker</th><th style="text-align:left">Tradition</th><th style="text-align:left">Dates</th><th style="text-align:left">Main work</th><th style="text-align:left">Text</th></tr></thead><tbody>${R.map(r=>`<tr><td><button type="button" data-txgo="${r.t.id}" style="all:unset;cursor:pointer;color:var(--accent)">${esc(r.t.n)}</button>${r.t.w?' <span class="pill">woman</span>':''}</td><td>${LN[r.t.l]}</td><td>${fl(r.t)}</td><td><i>${esc(r.wk)}</i></td><td>${r.url?`<a href="${r.url}" target="_blank" rel="noopener">free text</a>${r.ed?' <span class="sub">· '+esc(r.ed)+'</span>':''}`:`<button type="button" class="tbtn" style="font-size:11px;min-height:0;padding:1px 6px" data-kind="Upload a text (PDF) to help the reading" data-contrib="${attr('Text of '+r.t.n+(r.wk?', '+r.wk:''))}">Upload PDF</button>`}${r.read?' <span class="pill">Read by the Atlas</span>':''}</td></tr>`).join('')}</tbody></table>`};
+  document.getElementById('tx-count').textContent=`${R.length} shown · ${rows().filter(r=>r.url).length} with a free text · ${new Set(rows().map(r=>r.t.id)).size} authors`;
+  document.getElementById('tx-box').innerHTML=`<table style="border-collapse:collapse;width:100%;font-size:13px"><thead><tr><th style="text-align:left">Thinker</th><th style="text-align:left">Tradition</th><th style="text-align:left">Dates</th><th style="text-align:left">Work</th><th style="text-align:left">Text</th></tr></thead><tbody>${R.map(r=>`<tr><td><button type="button" data-txgo="${r.t.id}" style="all:unset;cursor:pointer;color:var(--accent)">${esc(r.t.n)}</button>${r.t.w?' <span class="pill">woman</span>':''}</td><td>${LN[r.t.l]}</td><td>${fl(r.t)}</td><td><i>${esc(r.wk)}</i>${r.yr!=null?' <span class="sub">('+fy(r.yr)+')</span>':''}</td><td>${r.url?`<a href="${r.url}" target="_blank" rel="noopener">free text</a>${r.ed?' <span class="sub">· '+esc(r.ed)+'</span>':''}`:`<button type="button" class="tbtn" style="font-size:11px;min-height:0;padding:1px 6px" data-kind="Upload a text (PDF) to help the reading" data-contrib="${attr('Text of '+r.t.n+(r.wk?', '+r.wk:''))}">Upload PDF</button>`}${r.read?' <span class="pill">Read by the Atlas</span>':''}</td></tr>`).join('')}</tbody></table>`};
  document.getElementById('alltx-btn').onclick=()=>{draw();op(txd)};document.getElementById('tx-close').onclick=()=>txd.close();
  document.getElementById('tx-q').oninput=draw;document.getElementById('tx-missing').onchange=draw;
  const go=id=>{try{txd.close()}catch(e){}try{skd.close()}catch(e){}showView('tl');select(id);const t=byId[id];if(t){const pd=Math.max(30,(t.e-t.b)*0.6);animateTo(t.b-pd,t.e+pd)}};
