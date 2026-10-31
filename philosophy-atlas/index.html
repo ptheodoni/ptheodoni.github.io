@@ -66,6 +66,7 @@ h1 small{display:block;font-family:var(--body);font-weight:400;font-size:14.5px;
 .check input{accent-color:var(--accent);width:16px;height:16px}
 .hint{font-size:12.5px;color:var(--muted)}
 .main{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+#thdlg{position:fixed;inset:auto 16px auto auto;top:90px;margin:0;width:min(460px,calc(100vw - 32px));max-height:calc(100vh - 110px);overflow:auto;padding:0;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--fg);box-shadow:0 12px 40px rgb(0 0 0 / .25);z-index:40}#thdlg #panel{border:0;padding:4px 18px 18px;columns:auto}#thdlg #panel ul.links{columns:auto}
 #view-tl .main{flex-direction:column;align-items:stretch}#view-tl .main>.tl{flex:1 1 auto;width:100%}#view-tl #panel{flex:1 1 auto;width:auto;max-width:none;position:static;max-height:none}#view-tl #panel ul.links{columns:2 320px;column-gap:20px}#view-tl #panel ul.links>li{break-inside:avoid}
 .tl{flex:999 1 620px;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 0 8px}
 #plot{position:relative;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;outline:none}
@@ -131,6 +132,7 @@ footer .tbtn,.contrib{font-size:14px}
     <div class="topbar"><div class="papcol"><button type="button" class="morebtn" id="alltx-btn">See all texts <span class="tag" id="alltx-n"></span></button><button type="button" class="morebtn" id="ask-btn">Search and ask the texts</button></div><div class="contribcol"><button type="button" class="addbtn" id="bcb">+ Be a contributor</button><p class="women-top">You are especially encouraged to include works<br>by women philosophers, past and present,<br>in the corpus, and bring their thought<br>back into the discussion.</p></div></div></div>
     <p class="status" id="status" aria-live="polite" style="margin:6px 0 0;text-align:right"></p>
   </header>
+  <dialog id="thdlg" aria-label="Thinker"><div style="display:flex;justify-content:flex-end;position:sticky;top:0;background:var(--panel);padding:6px 8px 0;z-index:1"><button type="button" class="tbtn" id="thdlg-x" aria-label="Close" style="min-height:32px;padding:0 10px">✕</button></div><div id="thslot"></div></dialog>
   <dialog id="txdlg" aria-labelledby="txdlg-h" style="width:min(1100px,calc(100vw - 32px))"><div>
     <h2 id="txdlg-h" class="vh" style="font-size:22px;margin:0 0 4px">All texts</h2>
     <p class="sub" style="margin:0 0 8px">The main work of every thinker in the atlas, with a link to a free full text where one has been found. <b>Read by the Atlas</b>: a passage from it has been checked. <b>Upload PDF</b>: no text found yet; if you have it, upload it to help the reading (uploads stay private to the curator).</p>
@@ -1476,6 +1478,13 @@ const CONTRIBUTORS=[
   if(ac)ac.abort();ac=new AbortController();out.textContent='Thinking…';
   try{await sample(`You answer questions about a history-of-philosophy atlas. Use ONLY the atlas entries below (one per line: name | tradition | dates | note | main work | works | links with the passage where the link happens | source). Name the entries you use. If the entries do not answer the question, say what is missing instead of using outside knowledge. Be concise.\n\nATLAS ENTRIES:\n${ctx||'(no entry matched the question words)'}\n\nQUESTION: ${q}`,{signal:ac.signal,modelTier:'default',cache:false,onText:({text})=>{out.textContent=text}})}
   catch(err){out.textContent=err&&err.code==='not_granted'?'Permission was not given.':'Could not get an answer. '+((err&&err.message)||'')}};}
+
+// ---- Thinker window: selecting a thinker opens their card in a floating window ----
+{const dlg=document.getElementById('thdlg'),slot=document.getElementById('thslot'),pnl=document.getElementById('panel'),home=pnl.parentNode,next=pnl.nextSibling;
+ const back=()=>{if(pnl.parentNode!==home)home.insertBefore(pnl,next)};
+ const _select=select;select=function(id,z){_select(id,z);if(id&&!document.getElementById('view-tl').hidden){slot.appendChild(pnl);if(!dlg.open){try{dlg.show()}catch(e){dlg.setAttribute('open','')}}dlg.scrollTop=0}else if(!id&&dlg.open){dlg.close()}};
+ dlg.addEventListener('close',back);document.getElementById('thdlg-x').onclick=()=>dlg.close();
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dlg.open)dlg.close()});}
 document.getElementById('clist').innerHTML=`<div style="display:flex;flex-direction:column;gap:2px">${CONTRIBUTORS.map(c=>`<div style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;padding:5px 0;border-bottom:1px solid var(--line,rgba(127,127,127,.25))"><div style="font-size:14px;white-space:nowrap"><b>${esc(c.name)}</b> <span style="color:var(--muted);font-size:12px">· ${esc(c.role)} · since ${esc(c.since)}</span></div><div style="display:flex;flex-wrap:wrap;gap:4px">${c.did.map(d=>`<span style="font-size:11.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--line,rgba(127,127,127,.3));color:var(--muted);white-space:nowrap">${esc(d)}</span>`).join('')}</div></div>`).join('')}</div>`;
 document.getElementById('bcb2').addEventListener('click',()=>document.getElementById('bcb').click());
 drawQList();setQuestion(0);
