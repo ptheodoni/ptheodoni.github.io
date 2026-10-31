@@ -7,7 +7,7 @@
 <audio id="femmeAudio" preload="none"></audio>
 <style>
   .femme-li { margin-top: .4em; }
-  #femmeBtn { all: unset; cursor: pointer; display: flex; flex-direction: column; align-items: flex-start; gap: .35em; }
+  #femmeBtn { text-decoration: none; cursor: pointer; display: flex; flex-direction: column; align-items: flex-start; gap: .35em; }
   #femmeBtn .femme-name { display: inline-flex; align-items: center; gap: .55em; color: #4b1d6e; font-weight: 600; }
   #femmeBtn .femme-pill { display: inline-block; margin-left: 1.9em; padding: .25em .9em; border-radius: 999px; background: #4b1d6e; color: #fff; font-size: .85em; font-weight: 600; }
   #femmeBtn:hover .femme-pill, #femmeBtn:focus-visible .femme-pill { background: #6a2a98; }
@@ -60,6 +60,14 @@
       if (push) history.pushState({ femme: 1 }, "", url);
       window.scrollTo(0, 0);
       relabel();
+      /* the theme's sidebar menu ("Follow" button on phones) needs to be set up again for the new page */
+      if (window.jQuery) {
+        var $ = window.jQuery;
+        $(".author__urls-wrapper button").off("click").on("click", function () {
+          $(".author__urls").fadeToggle("fast"); $(".author__urls-wrapper button").toggleClass("open");
+        });
+        if ($(window).width() >= 1024) $(".author__urls").css("display", "block");
+      }
       /* run any scripts that came with the new page content */
       document.getElementById("main").querySelectorAll("script").forEach(function (old) {
         var s = document.createElement("script"); s.text = old.text; if (old.src) s.src = old.src; old.replaceWith(s);
