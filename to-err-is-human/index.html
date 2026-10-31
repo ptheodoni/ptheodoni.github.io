@@ -154,6 +154,10 @@ svg .youdashline { stroke: var(--accent); stroke-width: 3; stroke-dasharray: 7 5
 svg .fd { fill: var(--good); stroke: var(--ink); stroke-width: 1; }
 svg .fdline { stroke: var(--good); stroke-width: 3; fill: none; }
 .why { background: #fffbea; border: 3px solid var(--ink); border-radius: 14px; box-shadow: 4px 4px 0 var(--ink); padding: 12px 16px; margin: 10px 0; text-align: left; }
+.refs { margin: 14px 0; text-align: left; font-size: 0.9rem; }
+.refs summary { cursor: pointer; font-weight: 700; font-size: 1.05rem; }
+.refs li { margin: 4px 0; }
+.refs a { word-break: break-all; }
 .why h3 { margin: 0 0 6px; font-family: var(--display); letter-spacing: 0.03em; }
 .why p { margin: 4px 0; }
 .versus { display: flex; flex-direction: column; gap: 10px; }
@@ -308,7 +312,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <button class="go" id="start">Start!</button>
     </div>
     <p class="note" id="bankNote" hidden><span id="bankText"></span> <button class="ghost" id="restart" type="button" style="font-size:0.95rem;padding:3px 10px;box-shadow:2px 2px 0 var(--ink)">↺ Start over</button> <button class="ghost" id="newPlayer" type="button" style="font-size:0.95rem;padding:3px 10px;box-shadow:2px 2px 0 var(--ink)">New player</button></p>
-    <p class="note">Version 31 Oct (9), prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards all results. After each answer, press 1–4 to say how sure you were.</p>
+    <p class="note">Version 1 Nov, prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards all results. After each answer, press 1–4 to say how sure you were.</p>
   </section>
 
   <section class="card" id="run" hidden>
@@ -370,6 +374,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     <div id="meta"></div>
     <div class="charts" id="charts"></div>
     <div class="guides" id="guide"></div>
+    <div id="refs"></div>
     <div class="tablewrap" id="tableDur"></div>
     <div class="tablewrap" id="tableCmp"></div>
     <div class="tablewrap" id="tableEst"></div>
@@ -1871,6 +1876,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     $("charts").innerHTML = out.join("");
     $("guide").innerHTML = guideHtml();
     $("meta").innerHTML = metaHtml();
+    $("refs").innerHTML = refsHtml();
     $("why").innerHTML = whyHtml(state.challenge ? null : state.onlyView);
     $("summary").innerHTML = said.join("");
     buildVersus();
@@ -2192,6 +2198,13 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       "With digits, close numbers (4 vs 5) take longer to compare than far ones (1 vs 5): the distance effect (Moyer & Landauer 1967). If it appears with brand-new symbols, they are linked to magnitude, not just memorised as labels.",
       "A model taught the same symbols in one conversation may answer correctly, but does it slow down, or lose confidence, for close pairs? The simulated AI here has memorised labels: no distance effect."],
   });
+  // ---------- references (every study cited in the game, with DOI links) ----------
+  const REFERENCES = [["Burr, D., & Ross, J. (2008). A visual sense of number. <i>Current Biology</i>, 18(6), 425–428.", "10.1016/j.cub.2008.02.052"], ["Butlin, P., Long, R., Elmoznino, E., Bengio, Y., Birch, J., et al. (2023). Consciousness in artificial intelligence: Insights from the science of consciousness. <i>arXiv</i>:2308.08708.", "10.48550/arXiv.2308.08708"], ["Cantlon, J. F., & Brannon, E. M. (2006). Shared system for ordering small and large numbers in monkeys and humans. <i>Psychological Science</i>, 17(5), 401–406.", "10.1111/j.1467-9280.2006.01719.x"], ["Cleveland, W. S., & McGill, R. (1984). Graphical perception: Theory, experimentation, and application to the development of graphical methods. <i>Journal of the American Statistical Association</i>, 79(387), 531–554.", "10.1080/01621459.1984.10478080"], ["Dehaene, S., Izard, V., Spelke, E., & Pica, P. (2008). Log or linear? Distinct intuitions of the number scale in Western and Amazonian indigene cultures. <i>Science</i>, 320(5880), 1217–1220.", "10.1126/science.1156540"], ["Diester, I., & Nieder, A. (2007). Semantic associations between signs and numerical categories in the prefrontal cortex. <i>PLoS Biology</i>, 5(11), e294.", "10.1371/journal.pbio.0050294"], ["Egré, P., de Gardelle, V., & Ripley, D. (2013). Vagueness and order effects in color categorization. <i>Journal of Logic, Language and Information</i>, 22(4), 391–420.", "10.1007/s10849-013-9183-7"], ["Feigenson, L., Carey, S., & Hauser, M. (2002). The representations underlying infants' choice of more: Object files versus analog magnitudes. <i>Psychological Science</i>, 13(2), 150–156.", "10.1111/1467-9280.00427"], ["Fleming, S. M., & Lau, H. C. (2014). How to measure metacognition. <i>Frontiers in Human Neuroscience</i>, 8, 443.", "10.3389/fnhum.2014.00443"], ["Halberda, J., & Feigenson, L. (2008). Developmental change in the acuity of the “number sense”: The approximate number system in 3-, 4-, 5-, and 6-year-olds and adults. <i>Developmental Psychology</i>, 44(5), 1457–1465.", "10.1037/a0012682"], ["Halberda, J., Ly, R., Wilmer, J. B., Naiman, D. Q., & Germine, L. (2012). Number sense across the lifespan as revealed by a massive Internet-based sample. <i>PNAS</i>, 109(28), 11116–11120.", "10.1073/pnas.1200196109"], ["Hollands, J. G., & Dyre, B. P. (2000). Bias in proportion judgments: The cyclical power model. <i>Psychological Review</i>, 107(3), 500–524.", "10.1037/0033-295X.107.3.500"], ["Huttenlocher, J., Hedges, L. V., & Duncan, S. (1991). Categories and particulars: Prototype effects in estimating spatial location. <i>Psychological Review</i>, 98(3), 352–376.", "10.1037/0033-295X.98.3.352"], ["Izard, V., & Dehaene, S. (2008). Calibrating the mental number line. <i>Cognition</i>, 106(3), 1221–1247.", "10.1016/j.cognition.2007.06.004"], ["Izard, V., Sann, C., Spelke, E. S., & Streri, A. (2009). Newborn infants perceive abstract numbers. <i>PNAS</i>, 106(25), 10382–10385.", "10.1073/pnas.0812142106"], ["Kaufman, E. L., Lord, M. W., Reese, T. W., & Volkmann, J. (1949). The discrimination of visual number. <i>American Journal of Psychology</i>, 62(4), 498–525.", "10.2307/1418556"], ["Maniscalco, B., & Lau, H. (2012). A signal detection theoretic approach for estimating metacognitive sensitivity from confidence ratings. <i>Consciousness and Cognition</i>, 21(1), 422–430.", "10.1016/j.concog.2011.09.021"], ["Moyer, R. S., & Landauer, T. K. (1967). Time required for judgements of numerical inequality. <i>Nature</i>, 215, 1519–1520.", "10.1038/2151519a0"], ["Nieder, A., & Miller, E. K. (2003). Coding of cognitive magnitude: Compressed scaling of numerical information in the primate prefrontal cortex. <i>Neuron</i>, 37(1), 149–157.", "10.1016/S0896-6273(02)01144-3"], ["Nuerk, H.-C., Weger, U., & Willmes, K. (2001). Decade breaks in the mental number line? Putting the tens and units back in different bins. <i>Cognition</i>, 82(1), B25–B33.", "10.1016/S0010-0277(01)00142-1"], ["Pica, P., Lemer, C., Izard, V., & Dehaene, S. (2004). Exact and approximate arithmetic in an Amazonian indigene group. <i>Science</i>, 306(5695), 499–503.", "10.1126/science.1102085"], ["Resnick, L. B., Nesher, P., Leonard, F., Magone, M., Omanson, S., & Peled, I. (1989). Conceptual bases of arithmetic errors: The case of decimal fractions. <i>Journal for Research in Mathematics Education</i>, 20(1), 8–27.", "10.2307/749095"], ["Siegler, R. S., & Booth, J. L. (2004). Development of numerical estimation in young children. <i>Child Development</i>, 75(2), 428–444.", "10.1111/j.1467-8624.2004.00684.x"], ["Siegler, R. S., & Opfer, J. E. (2003). The development of numerical estimation: Evidence for multiple representations of numerical quantity. <i>Psychological Science</i>, 14(3), 237–243.", "10.1111/1467-9280.02438"], ["Spence, I. (1990). Visual psychophysics of simple graphical elements. <i>Journal of Experimental Psychology: Human Perception and Performance</i>, 16(4), 683–692.", "10.1037/0096-1523.16.4.683"], ["Stevens, S. S. (1957). On the psychophysical law. <i>Psychological Review</i>, 64(3), 153–181.", "10.1037/h0046162"], ["Teghtsoonian, M. (1965). The judgment of size. <i>American Journal of Psychology</i>, 78(3), 392–402.", "10.2307/1420573"], ["Testolin, A., Hou, K., & Zorzi, M. (2025). Visual enumeration remains challenging for multimodal generative AI. <i>PLOS ONE</i>, 20(9).", "10.1371/journal.pone.0331566"], ["Trick, L. M., & Pylyshyn, Z. W. (1994). Why are small and large numbers enumerated differently? A limited-capacity preattentive stage in vision. <i>Psychological Review</i>, 101(1), 80–102.", "10.1037/0033-295X.101.1.80"], ["Washburn, D. A., & Rumbaugh, D. M. (1991). Ordinal judgments of numerical symbols by macaques (<i>Macaca mulatta</i>). <i>Psychological Science</i>, 2(3), 190–193.", "10.1111/j.1467-9280.1991.tb00130.x"], ["Whalen, J., Gallistel, C. R., & Gelman, R. (1999). Nonverbal counting in humans: The psychophysics of number representation. <i>Psychological Science</i>, 10(2), 130–137.", "10.1111/1467-9280.00120"], ["Xu, F., & Spelke, E. S. (2000). Large number discrimination in 6-month-old infants. <i>Cognition</i>, 74(1), B1–B11.", "10.1016/S0010-0277(99)00066-9"]];
+  function refsHtml() {
+    return `<details class="refs"><summary>References (${REFERENCES.length} studies cited in this game)</summary><ol>${REFERENCES.map(([t, d]) =>
+      `<li>${t} <a href="https://doi.org/${d}" target="_blank" rel="noopener">doi:${d}</a></li>`).join("")}</ol>
+      <p class="note">Reference values in the game are approximate summaries of these studies; check the originals before scientific use.</p></details>`;
+  }
   function whyHtml(only) {
     const has = k => k === "comparison" ? state.cmp.length : k === "estimation" ? state.est.length : k === "heap" ? state.heap.length : (xState()[k] || []).length;
     const list = ["comparison", "estimation", "heap", ...Object.keys(X)].filter(k => only ? k === only : has(k));
@@ -2265,7 +2278,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       else if (sharp) means = "your boundary was sharp, like a rule (\"from N grains on, it's a heap\"). People usually show a gradual zone where they hesitate.";
       else means = "a gradual boundary with a zone of hesitation, which is how people usually treat vague words.";
       block("Is it a heap?", [
-        ["Adults", "a gradual boundary with a borderline zone of uncertainty; answers depend on the shape and on the order of presentation", "Egré, de Gardelle & Ripley 2013"],
+        ["Adults", "a gradual boundary with a borderline zone of uncertainty, and answers that depend on the order of presentation (shown for colour categories)", "Egré, de Gardelle & Ripley 2013"],
         ["Children, animals", "no standard data for heap judgments", "—"]],
         `${Number.isFinite(fp.t) ? `a pile became a heap at about ${Math.round(fp.t)} grains` : "no clear pile threshold"}${Number.isFinite(fs.t) ? `, scattered sand at about ${Math.round(fs.t)}` : ""}.`, means);
     }
@@ -2283,7 +2296,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
         ["Adults", "slower and less accurate for close numbers (distance effect), even with digits", "Moyer & Landauer 1967"],
         ["Adults", "slower when the units point the other way (47 vs 62)", "Nuerk et al. 2001"],
         ["Children", "often think the longer decimal is bigger (whole-number bias)", "Resnick et al. 1989"],
-        ["Monkeys", "a distance effect when comparing learned symbols", "Cantlon & Brannon 2007"]],
+        ["Monkeys", "learned to pick the larger of two Arabic numerals", "Washburn & Rumbaugh 1991"]],
         `${pct(acc)} correct${trap.length ? `; decimal traps ${pct(m(trap.map(r => r.correct)))}` : ""}${Number.isFinite(near) && Number.isFinite(far) ? `; close pairs ${Math.round(near)} ms, far pairs ${Math.round(far)} ms` : ""}.`, means);
     }
 
