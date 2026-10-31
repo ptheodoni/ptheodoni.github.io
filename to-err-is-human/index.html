@@ -153,6 +153,9 @@ svg .altdashline { stroke: var(--warn); stroke-width: 3; stroke-dasharray: 7 5; 
 svg .youdashline { stroke: var(--accent); stroke-width: 3; stroke-dasharray: 7 5; fill: none; }
 svg .fd { fill: var(--good); stroke: var(--ink); stroke-width: 1; }
 svg .fdline { stroke: var(--good); stroke-width: 3; fill: none; }
+.why { background: #fffbea; border: 3px solid var(--ink); border-radius: 14px; box-shadow: 4px 4px 0 var(--ink); padding: 12px 16px; margin: 10px 0; text-align: left; }
+.why h3 { margin: 0 0 6px; font-family: var(--display); letter-spacing: 0.03em; }
+.why p { margin: 4px 0; }
 .versus { display: flex; flex-direction: column; gap: 10px; }
 .versus .score { font-family: var(--display); font-size: 2.6rem; letter-spacing: 0.03em; -webkit-text-stroke: 1px var(--ink); }
 .versus .score .y { color: var(--accent); }
@@ -270,7 +273,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     <input id="doEst" type="checkbox" checked hidden>
     <input id="doHeap" type="checkbox" checked hidden>
     <input id="doSym" type="checkbox" hidden><input id="doStr" type="checkbox" hidden><input id="doNl" type="checkbox" hidden><input id="doAn" type="checkbox" hidden><input id="doPt" type="checkbox" hidden><input id="doAd" type="checkbox" hidden>
-    <span class="label">How long do the dots stay?</span>
+    <span class="label">How long does the picture stay?</span>
     <div class="durs" id="durs">
       <button type="button" data-dur="250" aria-pressed="false">0.25 s</button>
       <button type="button" data-dur="500" aria-pressed="true">0.5 s</button>
@@ -289,12 +292,13 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <button type="button" data-len="full" aria-pressed="false">Full · 120</button>
     </div>
     <input id="len" type="hidden" value="quick">
-    <p class="note">Short times force a glance; long times let you count. <b>Mixed</b> gives each round a different time (0.25 to 4 s) and shows where your glance turns into counting; it needs Medium or Full to say much. The number line, the points and the charts stay until you answer.</p>
+    <p class="note">Short times force a glance; long times let you count. <b>Mixed</b> gives each round a different time (0.25 to 4 s) and shows where your glance turns into counting; it needs Medium or Full to say much. The charts follow this time too; the number line and the points stay until you answer.</p>
     <div class="row">
       <div class="field"><label for="pid">Your initials</label><input id="pid" type="text" value="PT" maxlength="12" autocomplete="off" style="width: 8rem;"></div>
       <button class="go" id="start">Start!</button>
     </div>
-    <p class="note">Version 31 Oct (4), prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards the run. After each answer, press 1–4 to say how sure you were.</p>
+    <p class="note" id="bankNote" hidden><span id="bankText"></span> <button class="ghost" id="newPlayer" type="button" style="font-size:0.95rem;padding:3px 10px;box-shadow:2px 2px 0 var(--ink)">New player</button></p>
+    <p class="note">Version 31 Oct (5), prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards all results. After each answer, press 1–4 to say how sure you were.</p>
   </section>
 
   <section class="card" id="run" hidden>
@@ -346,6 +350,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
 
   <section class="card" id="results" hidden>
     <div class="row" style="justify-content: space-between;"><h2 id="resTitle">You vs the AI</h2><span class="row"><button class="ghost" id="homeRes" type="button">⌂ Home</button><button class="go" id="more" type="button" hidden>One more chance?</button><button class="go" id="nextGame" type="button" hidden>Next game</button><button class="ghost" id="allRes" type="button" hidden>See all my results</button><button class="go" id="another" type="button" hidden>Play another game</button></span></div>
+    <div class="whys" id="why"></div>
     <div class="versus" id="versus"></div>
     <div class="stats" id="stats"></div>
     <div id="summary" class="summary"></div>
@@ -1628,6 +1633,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       const o = { charts: [], table: "" }; x.results(rows, [], o, said); out.push(...o.charts); }
     $("charts").innerHTML = out.join("");
     $("guide").innerHTML = guideHtml();
+    $("why").innerHTML = whyHtml(state.challenge ? null : state.onlyView);
     $("summary").innerHTML = said.join("");
     buildVersus();
   }
@@ -1835,7 +1841,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     return null;
   }
   function assignTimes(trials) {
-    trials.forEach((t, i) => { t.display_ms = t.part === "adapt" ? t.display_ms : t.part === "number_line" || t.part === "analog" || t.part === "coords" ? 0 : state.dur === -1 ? DURS[i % DURS.length] : state.dur; });
+    trials.forEach((t, i) => { t.display_ms = t.part === "adapt" ? t.display_ms : t.part === "number_line" || t.part === "coords" ? 0 : state.dur === -1 ? DURS[i % DURS.length] : state.dur; });
     return shuffle(trials);
   }
   const GAME_NAMES = { comparison: "Which side has more?", estimation: "How many dots?", heap: "Is it a heap?",
@@ -1843,7 +1849,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   function finish(only) {
     clearTimers(); state.phase = "results"; show("results"); bubble("results"); window.scrollTo(0, 0);
     const next = only && state.queue[0], step = only && nextStep(only);
-    state.lastTask = only || null;
+    state.lastTask = only || null; state.onlyView = only || null;
     for (const id of ["nextGame", "nextGame2"]) { $(id).hidden = !next; if (next) $(id).textContent = `Next game: ${GAME_NAMES[next.task]} →`; }
     for (const id of ["more", "more2"]) { $(id).hidden = !step; if (step) $(id).textContent = `One more chance? +${step.add} rounds`; }
     for (const id of ["allRes", "allRes2"]) $(id).hidden = !(only && !next);
@@ -1856,6 +1862,51 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     try { render(); } finally { Object.assign(state, keep); }
   }
 
+  // ---------- why each game: what it measures, what its errors tell, and how the AI is put to the test ----------
+  const WHY = {
+    comparison: ["Which side has more?",
+      "Telling which of two clouds of dots is bigger is the oldest test of the number sense: babies, monkeys, fish and bees can do it.",
+      "Humans get worse as the two numbers get closer in ratio (20 vs 18 is harder than 20 vs 10): Weber's law. Being equally good on close and far pairs is not human.",
+      "The AI is scored against the same human curve: does it fail on the same pairs, or on others?"],
+    estimation: ["How many dots?",
+      "Estimating a number at a glance shows how the brain represents quantity without counting.",
+      "Humans are exact up to about four (subitizing), then their errors grow in proportion to the number. Exact answers for 80 dots in half a second are not human.",
+      "If the AI is exact where we guess, or guesses where we are exact, it is solving the task another way."],
+    heap: ["Is it a heap?",
+      "The sorites paradox: one grain is not a heap, a million are. Where does a heap begin? There is no right answer, only judgement.",
+      "Humans have no sharp line: a fuzzy zone where they hesitate, and the shape of the pile matters. A sharp rule (\"from 50 grains on\") looks mechanical.",
+      "Here the AI cannot be right or wrong, only alike or unlike us: does it draw the fuzzy line in the same place?"],
+    symbolic: ["Which is bigger?",
+      "Digits are symbols, but we still read them as amounts.",
+      "Humans are slower when the numbers are close (the distance effect), and children (and some AIs) fall for \"longer is bigger\": 9.11 > 9.9.",
+      "An AI may compare digits perfectly, or fail the decimal trap; but does it feel the distance like we do?"],
+    strings: ["How many in a row?",
+      "Counting symbols in a row (●●●●● or 00000) mixes seeing with reading.",
+      "Humans take in short rows at a glance and slow down for long ones; grouping (1,000,000) helps. Language models often miscount long rows too, but for another reason: they read text in chunks.",
+      "Same errors, or different errors for different reasons? That is the test."],
+    numberline: ["Where does it go?",
+      "Placing a number on a line shows the mental map from numbers to space.",
+      "Young children squeeze large numbers together (a log-like line); schooled adults are close to linear but never pixel-exact.",
+      "An AI that is pixel-perfect is measuring, not estimating; one that compresses is child-like."],
+    coords: ["Place the point",
+      "Finding (x, y) on two empty axes asks the eye to measure two directions at once.",
+      "Humans are close but never exact, and drift toward the centres of regions.",
+      "A ruler-perfect answer is not a human one; nor is a large miss without a pattern."],
+    analog: ["Read the chart",
+      "Bars, pies, circles and a glass of water: everyday charts rely on our perception.",
+      "Humans read positions and lengths well, angles less well and areas worst: small circles look bigger than they are (Cleveland & McGill 1984). The shorter the picture stays, the more the eye has to guess.",
+      "If the AI reads areas as well as lengths, it does not see like us, even when its answers are good."],
+    adapt: ["Stare, then compare",
+      "Staring at many dots tires the number sense, just as staring at red makes white look greenish. This suggests number is perceived directly, like colour or motion (Burr & Ross 2008).",
+      "Humans see FEWER dots after staring at many, and MORE after staring at few: the shift goes away from the adapter. No shift, or a shift toward it, is not the human pattern.",
+      "An AI that looks at each picture afresh cannot adapt. Shown the same sequence, does it show the aftereffect?"],
+  };
+  function whyHtml(only) {
+    const has = k => k === "comparison" ? state.cmp.length : k === "estimation" ? state.est.length : k === "heap" ? state.heap.length : (xState()[k] || []).length;
+    const list = ["comparison", "estimation", "heap", ...Object.keys(X)].filter(k => only ? k === only : has(k));
+    return list.filter(k => WHY[k]).map(k => { const [t, a, b, c] = WHY[k];
+      return `<div class="why"><h3>Why this game · ${t}</h3><p>${a}</p><p><b>What the errors tell:</b> ${b}</p><p><b>The AI on trial:</b> ${c} <small>(In this prototype the AI is simulated; real models come next.)</small></p></div>`; }).join("");
+  }
   // ---------- how to read your results: what adults, children, infants and animals do, and what departures mean ----------
   // Reference values are approximate and cited from the literature as summarised in analysis/human_benchmarks.md;
   // they are to be checked against the original papers before any scientific use.
@@ -2087,7 +2138,9 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   $("vNext").addEventListener("click", () => { if (awaiting !== "verdict") return; awaiting = null; startLevel(state.challenge.level + 1); });
   $("vStop").addEventListener("click", () => { if (awaiting !== "verdict") return; awaiting = null; finish(); });
   $("start").addEventListener("click", () => {
-    state = { phase: "run", pid: $("pid").value.trim(), dur: +$("dur").value, queue: [], idx: 0, cmp: [], est: [], heap: [], x: { symbolic: [], strings: [], numberline: [], analog: [], coords: [], adapt: [] } };
+    const pid = $("pid").value.trim() || "anon";
+    if (!bank || bank.pid !== pid) bank = { pid, cmp: [], est: [], heap: [], x: { symbolic: [], strings: [], numberline: [], analog: [], coords: [], adapt: [] } };
+    state = { phase: "run", pid, dur: +$("dur").value, queue: [], idx: 0, cmp: bank.cmp, est: bank.est, heap: bank.heap, x: bank.x };
     const assign = assignTimes;
     const len = $("len").value;
     if ($("doCmp").checked) state.queue.push({ task: "comparison", trials: assign(comparisonTrials(len)) });
@@ -2221,19 +2274,28 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   });
   for (const id of ["allRes", "allRes2"]) $(id).addEventListener("click", () => finish());
   for (const id of ["nextGame", "nextGame2"]) $(id).addEventListener("click", () => { if (!state.queue[0]) return; state.phase = "run"; show("run"); intro(); });
+  // Results stay on this page for one player (by initials) until the page is closed or "New player" is pressed.
+  // Nothing is stored or sent: a new player = new initials, or the button.
+  let bank = null;
+  function bankNote() {
+    const n = bank ? bank.cmp.length + bank.est.length + bank.heap.length + Object.values(bank.x).reduce((t, a) => t + a.length, 0) : 0;
+    $("bankNote").hidden = !n;
+    if (n) $("bankText").textContent = `Playing as ${bank.pid}: ${n} rounds so far on this page. "See all my results" gathers every game ${bank.pid} plays here; new initials start a new player.`;
+  }
   // Quit: first click asks, second click within 3 s goes back to the start (the run is discarded)
   let quitArmed = 0;
   $("home").addEventListener("click", () => {
     if (Date.now() - quitArmed > 3000) { quitArmed = Date.now(); $("home").textContent = "Quit? Click again"; setTimeout(() => { $("home").textContent = "✕ Quit"; }, 3000); return; }
     quitArmed = 0; $("home").textContent = "✕ Quit";
     clearTimers(); awaiting = null; pending = null; state = { phase: "setup", queue: [], idx: 0, cmp: [], est: [], heap: [] };
-    $("race").hidden = true; bubble("setup"); show("setup"); window.scrollTo(0, 0);
+    $("race").hidden = true; bubble("setup"); show("setup"); window.scrollTo(0, 0); bankNote();
   });
   function goHome() {
     clearTimers(); awaiting = null; pending = null; state = { phase: "setup", queue: [], idx: 0, cmp: [], est: [], heap: [] };
-    $("race").hidden = true; bubble("setup"); show("setup"); window.scrollTo(0, 0);
+    $("race").hidden = true; bubble("setup"); show("setup"); window.scrollTo(0, 0); bankNote();
   }
   for (const id of ["homeRes", "homeV", "another"]) $(id).addEventListener("click", goHome);
+  $("newPlayer").addEventListener("click", () => { bank = null; $("pid").value = ""; $("pid").focus(); bankNote(); });
   document.querySelector("h1").addEventListener("click", () => { if ($("run").hidden) goHome(); else $("home").click(); });
   $("again").addEventListener("click", () => { clearTimers(); state.phase = "setup"; bubble("setup"); show("setup"); });
 
