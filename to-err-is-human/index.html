@@ -45,6 +45,7 @@ body {
 }
 .wrap { max-width: 940px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
 header { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+h1 { cursor: pointer; }
 h1 {
   font-family: "Luckiest Guy", var(--display); font-weight: 400; font-size: clamp(2.9rem, 10vw, 5.6rem); line-height: 1; margin: 0;
   color: var(--yellow); letter-spacing: 0.05em; transform: rotate(-2deg); text-wrap: balance;
@@ -284,7 +285,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <div class="field"><label for="pid">Your initials</label><input id="pid" type="text" value="PT" maxlength="12" autocomplete="off" style="width: 8rem;"></div>
       <button class="go" id="start">Start!</button>
     </div>
-    <p class="note">Version 31 Oct, prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards the run. After each answer, press 1–4 to say how sure you were.</p>
+    <p class="note">Version 31 Oct (2), prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards the run. After each answer, press 1–4 to say how sure you were.</p>
   </section>
 
   <section class="card" id="run" hidden>
@@ -329,12 +330,13 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     <div class="row" style="justify-content: center;">
       <button class="go" id="vNext" type="button">Wanna continue?</button>
       <button class="ghost" id="vStop" type="button">Stop, show my results</button>
+      <button class="ghost" id="homeV" type="button">⌂ Home</button>
     </div>
     <p class="note" id="vNote"></p>
   </section>
 
   <section class="card" id="results" hidden>
-    <div class="row" style="justify-content: space-between;"><h2 id="resTitle">You vs the AI</h2><span class="row"><button class="go" id="more" type="button" hidden>One more chance?</button><button class="go" id="nextGame" type="button" hidden>Next game</button><button class="ghost" id="allRes" type="button" hidden>See all my results</button></span></div>
+    <div class="row" style="justify-content: space-between;"><h2 id="resTitle">You vs the AI</h2><span class="row"><button class="ghost" id="homeRes" type="button">⌂ Home</button><button class="go" id="more" type="button" hidden>One more chance?</button><button class="go" id="nextGame" type="button" hidden>Next game</button><button class="ghost" id="allRes" type="button" hidden>See all my results</button><button class="go" id="another" type="button" hidden>Play another game</button></span></div>
     <div class="versus" id="versus"></div>
     <div class="stats" id="stats"></div>
     <div id="summary" class="summary"></div>
@@ -455,11 +457,20 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   }
   // ---------- the heap: grains of sand, piled or scattered ----------
   const HEAP_NS = [1, 2, 3, 4, 6, 9, 13, 20, 30, 45, 70, 100, 150, 220, 330, 500];
+  // Shapes: four compact ones (counted as "pile" in the analysis) and two spread ones (counted as "scatter"),
+  // each with one of three packing densities, so a heap is not simply "a triangle".
+  const HEAP_SHAPES = { pile: "pile", dome: "pile", flat: "pile", lump: "pile", scatter: "scatter", line: "scatter" };
+  const PACKINGS = [1.3, 1.7, 2.3];
   function heapTrials(len) {
     const sets = { mini: [3, 9, 30, 100, 330], quick: [1, 3, 6, 13, 20, 30, 70, 150, 220, 500] };
     const ns = sets[len] || HEAP_NS, reps = len === "full" ? 2 : 1, T = [];
-    for (const arrangement of ["pile", "scatter"]) for (const n of ns) for (let r = 0; r < reps; r++)
-      T.push({ arrangement, n, rep: r, trial_id: `${arrangement}_n${String(n).padStart(3, "0")}_h${r}` });
+    const shapes = Object.keys(HEAP_SHAPES), compact = shapes.filter(k => HEAP_SHAPES[k] === "pile"), spread = shapes.filter(k => HEAP_SHAPES[k] === "scatter");
+    let i = 0;
+    for (const group of ["pile", "scatter"]) for (const n of ns) for (let r = 0; r < reps; r++, i++) {
+      const pool = group === "pile" ? compact : spread, shape = pool[Math.floor(Math.random() * pool.length)];
+      const packing = PACKINGS[i % PACKINGS.length];
+      T.push({ arrangement: group, shape, packing, n, rep: r, trial_id: `${shape}_n${String(n).padStart(3, "0")}_p${packing}_h${r}` });
+    }
     return shuffle(T);
   }
   const HW = 640, HH = 400, GROUND = 360, G = 4;
@@ -479,14 +490,34 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     }
     return pts;
   }
+  // a mound = the region under a height profile f(d), d from -1 to 1, sized so its area holds n grains
+  const PROFILES = {
+    pile: { f: d => 1 - Math.abs(d), aspect: 0.6 },
+    dome: { f: d => Math.sqrt(Math.max(0, 1 - d * d)), aspect: 0.65 },
+    flat: { f: d => Math.max(0, 1 - d ** 4), aspect: 0.2 },
+    lump: { f: null, aspect: 0.5 },
+  };
   function heapPoints(t) {
-    if (t.n === 1) return [[t.arrangement === "pile" ? HW / 2 : HW / 2 + (Math.random() - 0.5) * 300, GROUND - G]];
-    if (t.arrangement === "pile") {
-      const area = t.n * (2 * G) ** 2 * 1.5, h = Math.max(2 * G, Math.sqrt(area * 0.6)), half = Math.max(2 * G, area / h), cx = HW / 2;
-      return sampleGrains(t.n, (x, y) => y >= GROUND - h * Math.max(0, 1 - Math.abs(x - cx) / half) && y <= GROUND - G * 0.6,
-                          cx - half, GROUND - h, cx + half, GROUND);
+    const shape = t.shape || (t.arrangement === "pile" ? "pile" : "scatter");
+    if (t.n === 1) return [[HEAP_SHAPES[shape] === "pile" ? HW / 2 : HW / 2 + (Math.random() - 0.5) * 300, GROUND - G]];
+    if (shape === "scatter") return sampleGrains(t.n, () => true, 40, GROUND - 120, HW - 40, GROUND - G * 0.6);
+    if (shape === "line") {
+      const rows = Math.max(1, Math.ceil(t.n * (2 * G) * 1.25 / (HW - 80)));
+      return sampleGrains(t.n, () => true, 40, GROUND - rows * 2 * G - G, HW - 40, GROUND - G * 0.6);
     }
-    return sampleGrains(t.n, () => true, 40, GROUND - 120, HW - 40, GROUND - G * 0.6);
+    let f = PROFILES[shape].f;
+    if (shape === "lump") {          // two or three overlapping mounds of different sizes
+      const bumps = Array.from({ length: 2 + Math.floor(Math.random() * 2) }, () => { const w = 0.3 + Math.random() * 0.35; return [(Math.random() * 2 - 1) * (1 - w), w, 0.5 + Math.random() * 0.5]; });   // each mound stays inside the frame
+      f = d => Math.min(1, Math.max(0, ...bumps.map(([c, w, h]) => h * Math.max(0, 1 - ((d - c) / w) ** 2))));
+    }
+    let I = 0; for (let k = 0; k < 200; k++) I += f(-1 + (k + 0.5) / 100) / 100;      // area of the unit profile
+    const area = t.n * (2 * G) ** 2 * (t.packing || 1.5);
+    let W = Math.sqrt(area / (I * PROFILES[shape].aspect)), H = PROFILES[shape].aspect * W;
+    if (W > 290) { W = 290; H = area / (I * W); }
+    W = Math.max(W, 2 * G); H = Math.max(H, 2 * G);
+    const cx = HW / 2;
+    return sampleGrains(t.n, (x, y) => { const d = (x - cx) / W; return Math.abs(d) <= 1 && y >= GROUND - H * f(d) && y <= GROUND - G * 0.6; },
+                        cx - W, GROUND - H, cx + W, GROUND);
   }
   function drawHeap(t) {
     ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, HW, HH);
@@ -1064,7 +1095,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     setup: "To err is human, but do only humans err like humans? Play against a simulated AI (Meta's model coming soon) on the very same pictures: you may beat it or lose to it; what counts is whether your mistakes are human ones.",
     comparison: "Two clouds of dots, half a blink. Which side has more? No counting, trust your gut. The AI is staring at the very same picture.",
     estimation: "How many dots? Way too fast to count, so guess! Your eyes against the machine's.",
-    heap: "One grain of sand is not a heap. A million grains is. So where does the heap begin? No right answer here: just yours, and the AI's.",
+    heap: "One grain of sand is not a heap. A million grains is. So where does the heap begin? No right answer here: just yours, and the AI's. Do you think alike?",
     challenge: "Level up! Beat the AI on points and grab the crown.",
     results: "The verdict is in! Here is how you did, and where you sit next to the AI.",
     symbolic: X.symbolic.bubble, strings: X.strings.bubble, numberline: X.numberline.bubble, analog: X.analog.bubble, coords: X.coords.bubble,
@@ -1189,7 +1220,9 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   function answerHeap(yes) {
     if (awaiting !== "heap") return;
     pending.rt_ms = Math.round(performance.now() - t0);
-    pending.answer = yes ? "yes" : "no"; $("answerHeap").hidden = true; askConf();
+    pending.answer = yes ? "yes" : "no";
+    pending.ai_answer = Math.random() < aiHeapYes(pending.arrangement, pending.n) ? "yes" : "no";   // one draw from the AI's chance of saying "heap"
+    $("answerHeap").hidden = true; askConf();
   }
   function answerEstimate(v) {
     if (awaiting !== "estimate" || !Number.isFinite(v) || v < 0) return;
@@ -1275,6 +1308,13 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       $("prompt").innerHTML = `<span class="fx ${done.pts >= 2 ? "hit" : "miss"}">${msg} +${done.pts}</span> <span class="live">· you put it at (${done.est_x}, ${done.est_y}) · the AI scores about ${Math.round(done.ai_pts)} here</span>`;
       race(done.pts, Math.round(done.ai_pts));
       later(1600, nextTrial);
+      return;
+    }
+    if (task === "heap") {
+      $("confRow").hidden = true; setProgress();
+      const same = done.answer === done.ai_answer, agreed = state.heap.filter(r => r.answer === r.ai_answer).length;
+      $("prompt").innerHTML = `<span class="fx ${same ? "hit" : "miss"}">${same ? "SAME BRAIN!" : "DIFFERENT MINDS!"}</span> <span class="live">· the AI said ${done.ai_answer === "yes" ? "a heap" : "not a heap"} · you agree on ${agreed} of ${state.heap.length}</span>`;
+      later(1300, nextTrial);
       return;
     }
     if (task === "numberline") {
@@ -1630,7 +1670,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       const say = f >= 0.8 ? "SAME BRAIN!" : f >= 0.6 ? "CLOSE MINDS!" : "WORLDS APART!";
       raceHtml = (own.length ? "" : `<div style="display:flex;justify-content:center">${comic("tie", say)}</div>`) + `
         <div class="score" style="text-align:center"><span class="y">You</span> & <span class="a">AI</span> agreed on ${k} of ${n} <small style="font-size:1rem">heaps${own.length ? ` · ${say}` : ""}</small></div>
-        <p class="note" style="text-align:center;margin:0 auto">A heap has no right answer, so nobody wins: this is how often you and ${aiHeapName()} put the line in the same place. We only tell you at the end, so it doesn't change your answers.</p>`;
+        <p class="note" style="text-align:center;margin:0 auto">A heap has no right answer, so nobody wins: this is how often you and ${aiHeapName()} put the line in the same place. </p>`;
     }
     if (own.length) {
       const y = own.reduce((t, r) => t + r.pts, 0), a = Math.round(own.reduce((t, r) => t + r.ai_pts, 0));
@@ -1692,6 +1732,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     for (const id of ["nextGame", "nextGame2"]) { $(id).hidden = !next; if (next) $(id).textContent = `Next game: ${GAME_NAMES[next.task]} →`; }
     for (const id of ["more", "more2"]) { $(id).hidden = !step; if (step) $(id).textContent = `One more chance? +${step.add} rounds`; }
     for (const id of ["allRes", "allRes2"]) $(id).hidden = !(only && !next);
+    $("another").hidden = !!next;
     $("resTitle").textContent = only ? `${GAME_NAMES[only]} · your results (${played(only)} rounds)` : "You vs the AI";
     $("again").hidden = !!next;
     const xs = xState(), keep = { cmp: state.cmp, est: state.est, heap: state.heap, x: xs };
@@ -1873,7 +1914,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       stats.push(["Heap threshold, piled", heapLabel(fp, state.heap) + " grains", "where you say “heap” half the time"]);
       stats.push(["Heap threshold, scattered", heapLabel(fsc, state.heap) + " grains", "higher = shape matters"]);
       const out = state.heap.map(r => ({ ...r, mode: "independent", question: "binary", direction: "", series: "", step: "", modality: "image", model, response: r.answer }));
-      $("csvHeap").value = toCSV(out, ["trial_id", "arrangement", "n", "mode", "question", "direction", "series", "step", "modality", "model", "timestamp", "response", "answer", "confidence", "rt_ms", "display_ms"]);
+      $("csvHeap").value = toCSV(out, ["trial_id", "arrangement", "shape", "packing", "n", "mode", "question", "direction", "series", "step", "modality", "model", "timestamp", "response", "answer", "confidence", "rt_ms", "display_ms", "ai_answer"]);
     } else { $("csvHeap").value = ""; }
     const durs = [...new Set([...state.cmp, ...state.est].map(r => r.display_ms))].sort((a, b) => (a || 1e9) - (b || 1e9));
     if (durs.length > 1) {
@@ -2050,6 +2091,12 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     clearTimers(); awaiting = null; pending = null; state = { phase: "setup", queue: [], idx: 0, cmp: [], est: [], heap: [] };
     $("race").hidden = true; bubble("setup"); show("setup"); window.scrollTo(0, 0);
   });
+  function goHome() {
+    clearTimers(); awaiting = null; pending = null; state = { phase: "setup", queue: [], idx: 0, cmp: [], est: [], heap: [] };
+    $("race").hidden = true; bubble("setup"); show("setup"); window.scrollTo(0, 0);
+  }
+  for (const id of ["homeRes", "homeV", "another"]) $(id).addEventListener("click", goHome);
+  document.querySelector("h1").addEventListener("click", () => { if ($("run").hidden) goHome(); else $("home").click(); });
   $("again").addEventListener("click", () => { clearTimers(); state.phase = "setup"; bubble("setup"); show("setup"); });
 
   // idle preview on the stimulus panel
