@@ -49,6 +49,17 @@
   });
   a.onerror = function () { if (l.innerHTML.indexOf("Pause") > -1) n.textContent = "Could not connect"; };
 
+  /* --- Links to other websites open in a new tab, so this site stays open --- */
+  function externalInNewTab() {
+    document.querySelectorAll("a[href]").forEach(function (link) {
+      var url; try { url = new URL(link.href, location.href); } catch (e) { return; }
+      if (/^https?:$/.test(url.protocol) && url.origin !== location.origin && !link.target) {
+        link.target = "_blank"; link.rel = "noopener";
+      }
+    });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", externalInNewTab); else externalInNewTab();
+
   /* --- Keep the music playing while moving between pages of this site --- */
   function swap(url, push) {
     return fetch(url).then(function (r) { if (!r.ok) throw 0; return r.text(); }).then(function (html) {
@@ -60,6 +71,7 @@
       if (push) history.pushState({ femme: 1 }, "", url);
       window.scrollTo(0, 0);
       relabel();
+      externalInNewTab();
       /* the theme's sidebar menu ("Follow" button on phones) needs to be set up again for the new page */
       if (window.jQuery) {
         var $ = window.jQuery;
