@@ -19,10 +19,39 @@ Currently, I am
 - Graduate student of the [MA in Philosophy](http://en.philosophymaster.philosophy.uoa.gr/overview.html) at the [Department of Philosophy](https://en.philosophy.uoa.gr/) of the [University of Athens (NKUA)](https://en.wikipedia.org/wiki/New_York_University)
 - Developing [FemMe Radio](https://femme-radio.gr/en/), [Logoplex](https://logoplex.app), and [Noes](https://www.noes.gr/en/)  
 
-<!-- FemMe Radio button: opens the radio page -->
-<a href="https://femme-radio.gr/en/#join" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.5em;margin:.6em 0 .2em;padding:.6em 1.3em;border-radius:999px;background:#4b1d6e;color:#fff;font-weight:600;text-decoration:none;">&#9654; Listen live · FemMe Radio</a>
 
 My main research interest is in the foundations of science.
+
+<!-- FemMe Radio: plays the live stream right here, without leaving the page -->
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:.4em 1em;margin:.8em 0;">
+<button id="femmeBtn" type="button" style="display:inline-flex;align-items:center;gap:.5em;padding:.6em 1.3em;border:0;border-radius:999px;background:#4b1d6e;color:#fff;font-weight:600;font-size:1em;cursor:pointer;">&#9654; Listen live · FemMe Radio</button>
+<span id="femmeNow" style="font-size:.85em;color:#666;"></span>
+</div>
+<audio id="femmeAudio" preload="none" src="https://radio.femme-radio.gr/listen/femme_radio/radio.mp3"></audio>
+<script>
+(function () {
+  var a = document.getElementById("femmeAudio"), b = document.getElementById("femmeBtn"), n = document.getElementById("femmeNow");
+  var src = a.getAttribute("src");
+  function nowPlaying() {
+    fetch("https://radio.femme-radio.gr/api/nowplaying/femme_radio").then(function (r) { return r.json(); }).then(function (d) {
+      var s = d && d.now_playing && d.now_playing.song;
+      if (s && !a.paused) n.textContent = "Now playing: " + (s.artist ? s.artist + " – " : "") + (s.title || "");
+    }).catch(function () {});
+  }
+  var timer;
+  b.onclick = function () {
+    if (a.paused) {
+      a.src = src; a.play();
+      b.innerHTML = "&#10074;&#10074; Pause · FemMe Radio";
+      n.textContent = "Connecting…"; nowPlaying(); timer = setInterval(nowPlaying, 20000);
+    } else {
+      a.pause(); a.removeAttribute("src"); a.load();
+      b.innerHTML = "&#9654; Listen live · FemMe Radio"; n.textContent = ""; clearInterval(timer);
+    }
+  };
+  a.onerror = function () { if (b.innerHTML.indexOf("Pause") > -1) n.innerHTML = 'Could not connect — <a href="https://femme-radio.gr/en/" target="_blank" rel="noopener">open femme-radio.gr</a>'; };
+})();
+</script>
 
 
   
