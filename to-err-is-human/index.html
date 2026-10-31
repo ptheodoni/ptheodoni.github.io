@@ -275,6 +275,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     <input id="doSym" type="checkbox" hidden><input id="doStr" type="checkbox" hidden><input id="doNl" type="checkbox" hidden><input id="doAn" type="checkbox" hidden><input id="doPt" type="checkbox" hidden><input id="doAd" type="checkbox" hidden>
     <span class="label">How long does the picture stay?</span>
     <div class="durs" id="durs">
+      <button type="button" data-dur="200" aria-pressed="false">0.2 s</button>
       <button type="button" data-dur="250" aria-pressed="false">0.25 s</button>
       <button type="button" data-dur="500" aria-pressed="true">0.5 s</button>
       <button type="button" data-dur="1000" aria-pressed="false">1 s</button>
@@ -297,8 +298,8 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <div class="field"><label for="pid">Your initials</label><input id="pid" type="text" value="PT" maxlength="12" autocomplete="off" style="width: 8rem;"></div>
       <button class="go" id="start">Start!</button>
     </div>
-    <p class="note" id="bankNote" hidden><span id="bankText"></span> <button class="ghost" id="newPlayer" type="button" style="font-size:0.95rem;padding:3px 10px;box-shadow:2px 2px 0 var(--ink)">New player</button></p>
-    <p class="note">Version 31 Oct (6), prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards all results. After each answer, press 1–4 to say how sure you were.</p>
+    <p class="note" id="bankNote" hidden><span id="bankText"></span> <button class="ghost" id="restart" type="button" style="font-size:0.95rem;padding:3px 10px;box-shadow:2px 2px 0 var(--ink)">↺ Start over</button> <button class="ghost" id="newPlayer" type="button" style="font-size:0.95rem;padding:3px 10px;box-shadow:2px 2px 0 var(--ink)">New player</button></p>
+    <p class="note">Version 31 Oct (7), prototype (simulated AI). Team pilot: nothing is sent anywhere, and closing the page discards all results. After each answer, press 1–4 to say how sure you were.</p>
   </section>
 
   <section class="card" id="run" hidden>
@@ -381,6 +382,8 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
       <div class="row"><button class="ghost" id="copyHeap">Copy heap CSV</button></div>
     </div>
     <div id="csvX"></div>
+    <div class="field"><label>Everything in one file (JSON: every round of every game, with the settings)</label>
+      <div class="row"><button class="go" id="saveJson" type="button">Save all as JSON</button><button class="ghost" id="copyJson" type="button">Copy JSON</button><span class="note" id="jsonNote"></span></div></div>
     <p class="note">Paste each into a file in <code>results/</code>, e.g. <code>results/human_PT_comparison.csv</code>, then run the same analysis as for the models. Human adults typically show a Weber fraction around 0.1–0.25 and a subitizing range of about 4.</p>
     <div class="row"><button class="go" id="more2" type="button" hidden>One more chance?</button><button class="go" id="nextGame2" type="button" hidden>Next game</button><button class="ghost" id="allRes2" type="button" hidden>See all my results</button><button id="again">Run again</button></div>
   </section>
@@ -2311,6 +2314,32 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     $("race").hidden = true; bubble("setup"); show("setup"); window.scrollTo(0, 0); bankNote();
   }
   for (const id of ["homeRes", "homeV", "another"]) $(id).addEventListener("click", goHome);
+  // JSON export: one file per player with every round and the settings it was played under
+  function allJson() {
+    const xs = xState(), games = {};
+    if (state.cmp.length) games.comparison = state.cmp; if (state.est.length) games.estimation = state.est; if (state.heap.length) games.heap = state.heap;
+    for (const k of Object.keys(X)) if ((xs[k] || []).length) games[k] = xs[k];
+    return JSON.stringify({ app: "To Err Is Human?", version: document.querySelector("#setup .note:last-of-type")?.textContent.match(/Version [^,]+/)?.[0] || "",
+      player: state.pid || "anon", exported: new Date().toISOString(), display_ms_setting: state.dur, ai_shown_during_play: showAI, ai_locked: AI_LOCK || null,
+      ai_opponent: "simulated", games }, null, 1);
+  }
+  $("saveJson").addEventListener("click", () => {
+    try {
+      const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([allJson()], { type: "application/json" }));
+      a.download = `to-err-is-human_${(state.pid || "anon").replace(/\W+/g, "")}_${new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-")}.json`;
+      document.body.appendChild(a); a.click(); a.remove(); $("jsonNote").textContent = "Saved (check your downloads). If nothing appeared, use Copy JSON.";
+    } catch { $("jsonNote").textContent = "This page can't save files here: use Copy JSON."; }
+  });
+  $("copyJson").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(allJson()); $("jsonNote").textContent = "Copied: paste it into a .json file."; }
+    catch { $("jsonNote").textContent = "Copy was blocked by the browser."; }
+  });
+  // same player, clean slate: forget this player's rounds but keep the initials (two clicks, so it can't happen by accident)
+  let restartArmed = 0;
+  $("restart").addEventListener("click", () => {
+    if (Date.now() - restartArmed > 3000) { restartArmed = Date.now(); $("restart").textContent = "Erase my rounds? Click again"; setTimeout(() => { $("restart").textContent = "↺ Start over"; }, 3000); return; }
+    restartArmed = 0; $("restart").textContent = "↺ Start over"; bank = null; bankNote();
+  });
   $("newPlayer").addEventListener("click", () => { bank = null; $("pid").value = ""; $("pid").focus(); bankNote(); });
   document.querySelector("h1").addEventListener("click", () => { if ($("run").hidden) goHome(); else $("home").click(); });
   $("again").addEventListener("click", () => { clearTimers(); state.phase = "setup"; bubble("setup"); show("setup"); });
