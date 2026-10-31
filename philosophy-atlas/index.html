@@ -132,7 +132,7 @@ footer .tbtn,.contrib{font-size:14px}
     <div class="topbar"><div class="papcol"><button type="button" class="morebtn" id="alltx-btn">See all texts <span class="tag" id="alltx-n"></span></button><button type="button" class="morebtn" id="ask-btn">Search and ask the texts</button><button type="button" class="morebtn" id="ph-btn">See and search philosophers <span class="tag" id="ph-n"></span></button></div><div class="contribcol"><button type="button" class="addbtn" id="bcb">+ Be a contributor</button><p class="women-top">You are especially encouraged to include works<br>by women philosophers, past and present,<br>in the corpus, and bring their thought<br>back into the discussion.</p></div></div></div>
     <p class="status" id="status" aria-live="polite" style="margin:6px 0 0;text-align:right"></p>
   </header>
-  <dialog id="thdlg" aria-label="Thinker"><div style="display:flex;justify-content:flex-end;position:sticky;top:0;background:var(--panel);padding:6px 8px 0;z-index:1"><button type="button" class="tbtn" id="thdlg-x" aria-label="Close" style="min-height:32px;padding:0 10px">✕</button></div><div id="thslot"></div></dialog>
+  <dialog id="thdlg" aria-label="Thinker"><div style="display:flex;justify-content:flex-end;position:sticky;top:0;background:var(--panel);padding:6px 8px 0;z-index:1"><button type="button" class="tbtn" id="thdlg-x" aria-label="Close" style="min-height:34px;padding:0 12px;font-weight:600">✕ Close</button></div><div id="thslot"></div></dialog>
   <dialog id="phdlg" aria-labelledby="phdlg-h" style="width:min(1100px,calc(100vw - 32px))"><div>
     <h2 id="phdlg-h" class="vh" style="font-size:22px;margin:0 0 4px">Philosophers</h2>
     <p class="sub" style="margin:0 0 8px">Every philosopher in the atlas. Filter by name, tradition, period or gender; click a name to open their card on the timeline.</p>
@@ -170,7 +170,7 @@ footer .tbtn,.contrib{font-size:14px}
     <label class="slider" for="find">Find <input type="search" id="find" list="names" placeholder="A thinker or text" style="width:min(220px,60vw);font:inherit;font-size:14px;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 8px;min-height:40px;box-sizing:border-box"></label><datalist id="names"></datalist>
     <label class="slider" for="groupby">Lanes by <select id="groupby"><option value="tradition">Tradition</option><option value="none">None: one row per thinker</option><option value="o">Origin</option><option value="lg">Language of writing</option><option value="p">Place of work</option></select></label>
     <button type="button" class="tbtn" id="order" aria-pressed="false">Order: oldest at top</button>
-    <label class="check" for="hiwomen"><input type="checkbox" id="hiwomen"> Highlight women philosophers</label>
+    <label class="check" for="hiwomen"><input type="checkbox" id="hiwomen"> Highlight women philosophers</label><label class="check" for="alllinks"><input type="checkbox" id="alllinks"> See all links</label>
     <span class="hint">Pinch or <kbd>Ctrl</kbd> + scroll to zoom · two-finger swipe or drag to move</span>
   </div>
 
@@ -286,13 +286,12 @@ footer .tbtn,.contrib{font-size:14px}
 <script>
 const ERAS=[["Bronze Age",-2750,-800,8],["Ancient",-800,500,26],["Post-classical",500,1500,23],["Early modern",1500,1800,19],["Modern",1800,1945,15],["Contemporary",1945,2026,17]];
 const LANES=[
- ["neareast","Ancient Near East",[["Sumerian & Akkadian",-2900,-1600],["Babylonian & Assyrian",-1600,-539]]],
+ ["neareast","Ancient Near East",[["Sumerian & Akkadian",-2900,-1600],["Babylonian & Assyrian",-1600,-539],["Persian era, Second Temple",-539,70],["Rabbinic, Syriac",70,640]]],
  ["greek","Greek",[["Archaic poets",-750,-600],["Presocratic",-600,-470],["Classical",-470,-322],["Hellenistic",-322,-31],["Roman imperial",-31,529],["Byzantine",529,1453],["Ottoman era",1453,1750],["Greek Enlightenment",1750,1830],["Modern Greek",1830,2026]]],
  ["indian","Indian",[["Vedic hymns",-1500,-800],["Upaniṣadic",-800,-500],["Śramaṇa, early Buddhist",-500,-150],["Classical darśanas",-150,1200],["Later Nyāya, Vedānta",1200,1800],["Modern",1800,2026]]],
  ["chinese","Chinese",[["Western Zhou",-1046,-771],["Spring and Autumn",-770,-476],["Warring States",-476,-221],["Qin–Han",-221,220],["Six Dynasties",220,589],["Sui–Tang",589,907],["Song–Ming",960,1644],["Qing",1644,1912],["Republic",1912,1949],["People's Republic",1949,2026]]],
  ["japkor","Japanese & Korean",[["Nara–Heian",710,1185],["Kamakura–Muromachi",1185,1573],["Edo",1603,1868],["Meiji",1868,1912],["Taishō–Shōwa",1912,1989],["Heisei–Reiwa",1989,2026]]],
- ["islamic","Persian & Islamic",[["Zoroastrian",-1200,-330],["Sasanian",224,651],["Translation movement",750,950],["Classical falsafa, kalām",950,1258],["Later schools",1258,1800],["Modern",1800,2026]]],
- ["jewish","Jewish",[["Exile, Second Temple",-586,70],["Rabbinic",70,900],["Medieval",900,1500],["Early modern",1500,1800],["Modern",1800,2026]]],
+ ["islamic","Arabic & Persian",[["Zoroastrian",-1200,-330],["Sasanian",224,651],["Translation movement",750,950],["Classical falsafa, kalām",950,1258],["Later schools",1258,1800],["Modern",1800,2026]]],
  ["europe","European & Anglophone",[["Early Christian",30,300],["Late antique",300,600],["Early medieval",600,1050],["High medieval",1050,1300],["Late medieval",1300,1450],["Renaissance",1450,1600],["Early modern",1600,1800],["Idealism, positivism",1800,1900],["Phenomenology, analytic",1900,2026]]],
  ["africa","African & Africana",[["Ancient Egyptian",-2600,-30],["Ethiopian, early modern",1600,1800],["West African scholarship",1800,1900],["Modern Africana",1900,2026]]],
  ["latam","Latin American",[["Colonial",1520,1810],["Independence, positivism",1810,1910],["20th century, liberation",1910,2026]]]];
@@ -2002,7 +2001,7 @@ const ACTIVE={nagel:1970,chalmers:1995,habermas:1962,irigaray:1974,kristeva:1969
 T.forEach(t=>{if(ACTIVE[t.id]){t.b=ACTIVE[t.id];t.act=true;t.c=false}});
 const byId=Object.fromEntries(T.map(t=>[t.id,t]));
 const MINY=-2750,MAXY=2030,MAXS=MAXY-MINY,MINS=12;
-let t0=MINY,t1=MAXY,sel=null,hiW=false,anim=null;
+let showAllLinks=false;let t0=MINY,t1=MAXY,sel=null,hiW=false,anim=null;
 const plot=document.getElementById('plot'),statusEl=document.getElementById('status'),panel=document.getElementById('panel'),slider=document.getElementById('zslider');
 
 // origin, language of writing, main place of work (coarse historical regions)
@@ -2018,6 +2017,10 @@ ptahhotep:[EG,'Egyptian',EG],zerayacob:[ET,'Geʽez',ET],amo:[WA,'Latin',DE],fano
 hobbes:[BR,'English',BR],berkeley:[BR,'English',BR],comte:[FR,'French',FR],kierkegaard:[SC,'Danish',SC],marx:[DE,'German',BR],peirce:[NAM,'English',NAM],james:[NAM,'English',NAM],saussure:[CH,'French',CH],dewey:[NAM,'English',NAM],addams:[NAM,'English',NAM],carnap:[DE,'German',NAM],adorno:[DE,'German',DE],sartre:[FR,'French',FR],quine:[NAM,'English',NAM],levistrauss:[LC,'French',FR],deleuze:[FR,'French',FR],foucault:[FR,'French',FR],habermas:[DE,'German',DE],derrida:[NA,'French',FR],irigaray:[LC,'French',FR],kristeva:[BK,'French',FR],senghor:[WA,'French',WA],hountondji:[WA,'French',WA],dennett:[NAM,'English',NAM],aspasia:[AE,'Greek',AE],sappho:[AE,'Greek',AE],aesara:[IT,'Greek',IT],theano:[U,'Greek',IT],arete:[NA,'Greek',NA],sosipatra:[AE,'Greek',AE],maitreyi:[SA,'Sanskrit',SA],akka:[SA,'Kannada',SA],lalded:[SA,'Kashmiri',SA],ramabai:[SA,'Marathi',SA],xiedaoyun:[CN,'Chinese',CN],raicho:[JP,'Japanese',JP],yunjidang:[KR,'Chinese',KR],kangjeongil:[KR,'Chinese',KR],tahirih:[II,'Persian',II],sullam:[IT,'Italian',IT],porete:[LC,'French',FR],julian:[BR,'English',BR],catherine:[IT,'Italian',IT],teresa:[IB,'Spanish',IB],gournay:[FR,'French',FR],schurman:[DE,'Latin',LC],masham:[BR,'English',BR],cockburn:[BR,'English',BR],shepherd:[BR,'English',BR],martineau:[BR,'English',BR],salome:[CE,'German',DE],luxemburg:[CE,'German',DE],voigtlander:[DE,'German',DE],stebbing:[BR,'English',BR],walther:[DE,'German',DE],arendt:[DE,'German',NAM],midgley:[BR,'English',BR],barcanmarcus:[NAM,'English',NAM],asmau:[WA,'Arabic',WA],cooper:[NAM,'English',NAM],sorjuana:[LA,'Spanish',LA],vasconcelos:[LA,'Spanish',LA],castellanos:[LA,'Spanish',LA],dussel:[LA,'Spanish',LA]};
 ADD.forEach(a=>{META[a.id]=a.m});
 T.forEach(t=>{const m=META[t.id]||[U,U,U];t.o=m[0];t.lg=m[1];t.p=m[2]});
+// Jewish thinkers are placed in the lane of the language and region they wrote in, like every other thinker; 'Jewish' remains a tradition of thought, not a lane.
+const EUR=new Set([FR,DE,BR,LC,CE,IT,IB,CH,SC,BK,NAM,AU,LA,'France','German lands & Austria','Britain & Ireland','Low Countries','Central & Eastern Europe','Italy','Switzerland','Scandinavia','Balkans','North America','Australia','Latin America']);
+T.forEach(t=>{if(t.l!=='jewish')return;t.trad='jewish';const lg=String(t.lg||''),pl=t.p||'';
+  if(/Greek/.test(lg)&&t.b<700)t.l='greek';else if(/Arabic/.test(lg))t.l='islamic';else if(t.b<640&&!EUR.has(pl))t.l='neareast';else if(pl==='Iberia'&&t.b<1492&&/Arabic|Judeo/.test(lg))t.l='islamic';else if(EUR.has(pl))t.l=(pl==='Latin America'?'latam':'europe');else if(pl==='Iraq & Iran'||pl==='Levant'||pl==='North Africa'||pl==='Arabia'||pl==='Egypt'||pl==='Aegean & Asia Minor')t.l=t.b<640?'neareast':'islamic';else t.l='europe'});
 let groupBy='tradition',GROUPS=[],orderUp=false;const LROWS={};
 function layout(){
   if(groupBy==='none'){GROUPS=[['all','All thinkers and texts, by date of birth',[]]];T.forEach(t=>t.g='all');LROWS.all=0;return}
@@ -2092,7 +2095,7 @@ function render(){
   });
   // edges
   let eg='';
-  if(L>=1||flat||sel)E.forEach(e=>{const a=pos[e.s],b=pos[e.t];if(!a||!b)return;const on=sel&&(e.s===sel||e.t===sel);if(sel&&!on)return;
+  if(showAllLinks||sel)E.forEach(e=>{const a=pos[e.s],b=pos[e.t];if(!a||!b)return;const on=sel&&(e.s===sel||e.t===sel);if(sel&&!on)return;
     const sx=Math.max(a.x0,Math.min(a.x1,a.x0+(a.x1-a.x0)*0.35)),tx=Math.max(b.x0,Math.min(b.x1,b.x0+(b.x1-b.x0)*0.65));
     const my=(a.y+b.y)/2-(Math.abs(a.y-b.y)<4?26:0);
     const dash=['reinterprets','reformulates','transmits','parallel'].includes(e.k)||e.ev==='to check'?'stroke-dasharray="5 4"':'';
@@ -2111,7 +2114,7 @@ function showPanel(){
   const t=byId[sel],lane=LANES.find(l=>l[0]===t.l);
   const out=E.filter(e=>e.s===sel),inc=E.filter(e=>e.t===sel);
   const li=(o,k,ev,dir,rs,rt)=>`<li>${dir==='out'?`<span style="color:var(--muted)">${k}</span> <button type="button" data-sel="${o.id}">${esc(o.n)}</button>`:`<button type="button" data-sel="${o.id}">${esc(o.n)}</button> <span style="color:var(--muted)">${k}</span>`}<span class="pill ${ev==='to check'?'check':''}">${ev}</span>${refHTML(rs,rt)}</li>`;
-  panel.innerHTML=`<h2>${esc(t.n)}</h2><p class="sub">${t.txt?'Text · ':''}${fl(t)} · ${lane[1]}${t.note?' · '+esc(t.note):''}</p><p class="sub">From: ${t.o} · Writes in: ${t.lg} · Worked in: ${t.p}</p>${t.txt?'':`<p class="sub" style="margin-top:-2px">Text: ${WTEXT[t.id]&&WTEXT[t.id][1]?`<a href="${WTEXT[t.id][1]}" target="_blank" rel="noopener"><i>${esc(WTEXT[t.id][0])}</i></a>${WTEXT[t.id][2]?' · '+esc(WTEXT[t.id][2]):''}`:`${WTEXT[t.id]&&WTEXT[t.id][0]?`<i>${esc(WTEXT[t.id][0])}</i> · `:''}no link yet <button type="button" class="tbtn" style="font-size:11px;padding:1px 6px" data-kind="Upload a text (PDF) to help the reading" data-contrib="${attr('Text of '+t.n+(WTEXT[t.id]&&WTEXT[t.id][0]?', '+WTEXT[t.id][0]:''))}">Upload PDF</button>`}</p>`}${SRC[t.id]?`<p class="sub">Source: ${SRC[t.id][1]?`<a href="${SRC[t.id][1]}" target="_blank" rel="noopener">${esc(SRC[t.id][0])}</a>`:esc(SRC[t.id][0])}</p>`:''}${readHTML(t.id)}
+  panel.innerHTML=`<h2>${esc(t.n)}</h2><p class="sub">${t.txt?'Text · ':''}${fl(t)} · ${lane[1]}${t.trad?' · Jewish thought':''}${t.note?' · '+esc(t.note):''}</p><p class="sub">From: ${t.o} · Writes in: ${t.lg} · Worked in: ${t.p}</p>${t.txt?'':`<p class="sub" style="margin-top:-2px">Text: ${WTEXT[t.id]&&WTEXT[t.id][1]?`<a href="${WTEXT[t.id][1]}" target="_blank" rel="noopener"><i>${esc(WTEXT[t.id][0])}</i></a>${WTEXT[t.id][2]?' · '+esc(WTEXT[t.id][2]):''}`:`${WTEXT[t.id]&&WTEXT[t.id][0]?`<i>${esc(WTEXT[t.id][0])}</i> · `:''}no link yet <button type="button" class="tbtn" style="font-size:11px;padding:1px 6px" data-kind="Upload a text (PDF) to help the reading" data-contrib="${attr('Text of '+t.n+(WTEXT[t.id]&&WTEXT[t.id][0]?', '+WTEXT[t.id][0]:''))}">Upload PDF</button>`}</p>`}${SRC[t.id]?`<p class="sub">Source: ${SRC[t.id][1]?`<a href="${SRC[t.id][1]}" target="_blank" rel="noopener">${esc(SRC[t.id][0])}</a>`:esc(SRC[t.id][0])}</p>`:''}${readHTML(t.id)}
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="tbtn" id="zlife">Zoom to this life</button><button type="button" class="tbtn" id="unsel">Clear selection</button><button type="button" class="tbtn" data-contrib="${attr('Timeline · '+t.n)}">Suggest a change</button></div>
   ${WORKS[t.id]?`<h3>Works on the line</h3><ul class="ul">${WORKS[t.id].map(([w,y])=>`<li><i>${esc(w)}</i>, ${fy(y)}</li>`).join('')}</ul>`:''}
   <h3>Answers to</h3>${out.length?`<ul class="links">${out.map(e=>li(byId[e.t],e.k,e.ev,'out',e.s,e.t)).join('')}</ul>`:'<p class="sub">No recorded link yet.</p>'}
@@ -2501,8 +2504,9 @@ const CONTRIBUTORS=[
 {const dlg=document.getElementById('thdlg'),slot=document.getElementById('thslot'),pnl=document.getElementById('panel'),home=pnl.parentNode,next=pnl.nextSibling;
  const back=()=>{if(pnl.parentNode!==home)home.insertBefore(pnl,next)};
  const _select=select;select=function(id,z){_select(id,z);if(id&&!document.getElementById('view-tl').hidden){slot.appendChild(pnl);if(!dlg.open){try{dlg.show()}catch(e){dlg.setAttribute('open','')}}dlg.scrollTop=0}else if(!id&&dlg.open){dlg.close()}};
- dlg.addEventListener('close',back);document.getElementById('thdlg-x').onclick=()=>dlg.close();
- document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dlg.open)dlg.close()});}
+ dlg.addEventListener('close',()=>{back();if(sel)_select(null)});document.getElementById('thdlg-x').onclick=()=>dlg.close();
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dlg.open)dlg.close()});
+ document.getElementById('alllinks').addEventListener('change',e=>{showAllLinks=e.target.checked;render()});}
 
 {const d=document.getElementById('phdlg');const P=()=>T.filter(t=>!t.txt);const LN=Object.fromEntries(LANES.map(l=>[l[0],l[1]]));
  document.getElementById('ph-n').textContent='('+P().length+')';
