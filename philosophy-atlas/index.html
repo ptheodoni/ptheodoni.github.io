@@ -1479,7 +1479,11 @@ function render(){
     pers.forEach(([pn,a,b],i)=>{if(b<t0||a>t1)return;const x0=Math.max(0,X(a)),x1=Math.min(W,X(b));if(x1-x0<1)return;g+=`<g data-per="${id}|${i}" style="cursor:pointer"><title>${esc(pn)}: zoom in</title><rect x="${x0}" y="${y}" width="${x1-x0}" height="16" fill="var(${i%2?'--band-2':'--band'})"/>`;if(x1-x0>tw(pn,11)+10)g+=`<text x="${x0+5}" y="${y+12}" font-size="11" fill="var(--muted)">${esc(pn)}</text>`;g+='</g>'});
     y+=20;
     if(groupBy==='tradition'&&L>=1&&SROWS[id]){(SCHOOLS[id]||[]).forEach((sc,i)=>{if(sc[2]<t0||sc[1]>t1)return;const x0=Math.max(0,X(sc[1])),x1=Math.min(W,X(sc[2]));if(x1-x0<2)return;const sy=y+sc.row*16,on=selSchool===id+'|'+i;g+=`<g data-school="${id}|${i}" style="cursor:pointer"><title>${esc(sc[0])}</title><rect x="${x0}" y="${sy}" width="${x1-x0}" height="13" rx="6.5" fill="${on?'var(--accent)':'var(--panel)'}" stroke="var(--bar-edge)" stroke-width="0.8"/>`;if(x1-x0>tw(sc[0],10.5)+12)g+=`<text x="${x0+6}" y="${sy+10}" font-size="10.5" fill="${on?'var(--on-accent)':'var(--fg)'}">${esc(sc[0])}</text>`;g+='</g>'});y+=SROWS[id]*16+4}
-    const top=y;
+    const top=y;let yb=null;const yst=st>=100?100:st,ybk=v=>Math.floor(v/yst);
+    if(flat){const vis=T.filter(t=>t.g===id&&!(t.e<t0||t.b>t1)).sort((a,b)=>a.row-b.row);const ys=[];
+      vis.forEach(t=>{const k=ybk(t.b);if(k!==yb){yb=k;const ry=top+(orderUp?LROWS[id]-1-t.row:t.row)*rowH;const v=k*yst;ys.push(`<g pointer-events="none"><line x1="0" x2="${W}" y1="${ry-2}" y2="${ry-2}" stroke="var(--accent)" stroke-opacity=".18"/><text x="6" y="${ry+9}" font-size="11" font-weight="600" fill="var(--accent)" paint-order="stroke" stroke="var(--panel)" stroke-width="4">${v<=t0?'':(v===0?'1 CE':fy(v))}</text></g>`)}
+        if(t.row>0&&t.row%40===0){const ry=top+(orderUp?LROWS[id]-1-t.row:t.row)*rowH;ys.push(`<g pointer-events="none">${tk.map(v=>`<text class="axis" x="${X(v)+3}" y="${ry-4}" paint-order="stroke" stroke="var(--panel)" stroke-width="3">${v===0?'1 CE':fy(v)}</text>`).join('')}</g>`)}});
+      body.push(ys.join(''))}
     T.filter(t=>t.g===id).forEach(t=>{
       if(t.e<t0||t.b>t1)return;
       const ry=top+(orderUp?LROWS[id]-1-t.row:t.row)*rowH,x0=X(t.b),x1=Math.max(X(t.e),x0+2),cx0=Math.max(x0,-4),cx1=Math.min(x1,W+4);
