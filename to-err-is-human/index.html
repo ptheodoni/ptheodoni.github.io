@@ -1699,15 +1699,20 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
   function erf(x) { const s = Math.sign(x); x = Math.abs(x); const t = 1 / (1 + 0.3275911 * x);
     const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return s * y; }
   const phi = x => 0.5 * (1 + erf(x / Math.SQRT2));
+  // One Weber fraction w for all comparison rounds (ratio and fixed-difference pairs together), by maximum likelihood.
+  // A lapse rate (0–6%, fitted too) absorbs the odd slip on an easy pair, so one miss does not bend the whole curve
+  // (standard practice in psychophysics: Wichmann & Hill 2001).
+  let lastLapse = 0;
   function fitW(rows) {
-    let best = null, bestLL = -Infinity;
-    for (let k = 0; k < 400; k++) {
+    let best = null, bestLL = -Infinity, bestL = 0;
+    for (const lapse of [0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06]) for (let k = 0; k < 400; k++) {
       const w = Math.exp(Math.log(0.02) + k * (Math.log(3) - Math.log(0.02)) / 399);
       let ll = 0;
       for (const r of rows) { const a = Math.max(r.n_left, r.n_right), b = Math.min(r.n_left, r.n_right);
-        let p = phi((a - b) / (w * Math.hypot(a, b))); p = Math.min(Math.max(p, 1e-6), 1 - 1e-6); ll += Math.log(r.correct ? p : 1 - p); }
-      if (ll > bestLL) { bestLL = ll; best = w; }
+        let p = lapse / 2 + (1 - lapse) * phi((a - b) / (w * Math.hypot(a, b))); p = Math.min(Math.max(p, 1e-6), 1 - 1e-6); ll += Math.log(r.correct ? p : 1 - p); }
+      if (ll > bestLL + 1e-9) { bestLL = ll; best = w; bestL = lapse; }
     }
+    lastLapse = bestL;
     return best;
   }
   const mean = a => a.reduce((s, x) => s + x, 0) / (a.length || 1);
@@ -1783,13 +1788,15 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
     const out = [], said = [];
     const hasAIc = ai.cmp.length > 0, hasAIe = ai.est.length > 0, nm = ai.name || "AI";
     if (state.cmp.length) {
-      const w = fitW(state.cmp);
+      const w = fitW(state.cmp), lapse = lastLapse;
       const wAI = hasAIc ? fitW(ai.cmp) : undefined;
+      const nR = state.cmp.filter(r => r.design === "ratio").length, nD = state.cmp.filter(r => r.design === "difference").length;
+      const fitNote = `Your curve is one Weber fraction (w = ${w >= 2.9 ? "> 1" : w.toFixed(2)}) fitted on all ${state.cmp.length} rounds of both charts${lapse ? `, allowing ${Math.round(100 * lapse)}% slips` : ""}. ${state.cmp.length < 30 ? "With so few rounds each dot is one or two answers (right = 1, wrong = 0), so the curve is rough: play Medium or Full for a real fit." : ""}`;
       out.push(card("Where you are on the human scale", weberScale(w, wAI),
         [["band", "", "range of adult values reported in different studies"], ["dash", "", "typical value for each age"]],
         "Each age is a different study and task, so the markers are approximate (Xu & Spelke 2000; Halberda & Feigenson 2008; values cited from memory, to be checked).", true));
       const xs = range(0.45, 0.95, 40), yr = byRatio(state.cmp), ar = hasAIc ? byRatio(ai.cmp) : [];
-      out.push(card("Accuracy by ratio", plot({ xmin: 0.45, xmax: 0.95, ymin: 0.3, ymax: 1, xticks: [0.5, 0.6, 0.7, 0.8, 0.9], yticks: [0.4, 0.6, 0.8, 1],
+      out.push(card("Accuracy by ratio", plot({ xmin: 0.45, xmax: 0.95, ymin: 0, ymax: 1, xticks: [0.5, 0.6, 0.7, 0.8, 0.9], yticks: [0, 0.25, 0.5, 0.75, 1],
         xlabel: "ratio smaller / larger (harder →)", ylabel: "proportion correct",
         series: [{ type: "line", cls: "ref", pts: xs.map(x => [x, pCorrect(1, x, ADULT_W)]) },
                  { type: "line", cls: "youline", pts: xs.map(x => [x, pCorrect(1, x, w)]) },
@@ -1797,11 +1804,11 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
                  ...(hasAIc ? [{ type: "line", cls: "altline", pts: xs.map(x => [x, pCorrect(1, x, wAI)]) },
                    { type: "points", cls: "alt", pts: ar.map(d => [d.r, d.acc]) }] : [])] }),
         [["dot", "you", "your answers"], ["line", "you", "your fitted curve"], ...(hasAIc ? [["dotline", "alt", `${nm}: answers and curve`]] : []),
-         ["dash", "", `typical adult (w ≈ ${ADULT_W})`]]));
+         ["dash", "", `typical adult (w ≈ ${ADULT_W})`]], `${fitNote} Ratio pairs: ${nR} rounds.`));
       const bigs = [20, 40, 60, 80, 120], xb = range(20, 120, 40);
       const fdOf = rows => bigs.map(b => [b, mean(rows.filter(x => x.design === "difference" && Math.max(x.n_left, x.n_right) === b).map(x => x.correct))]);
       const fd = fdOf(state.cmp);
-      out.push(card("Fixed difference of 10", plot({ xmin: 15, xmax: 125, ymin: 0.3, ymax: 1, xticks: bigs, yticks: [0.4, 0.6, 0.8, 1],
+      out.push(card("Fixed difference of 10", plot({ xmin: 15, xmax: 125, ymin: 0, ymax: 1, xticks: bigs, yticks: [0, 0.25, 0.5, 0.75, 1],
         xlabel: "larger set (20 vs 10 … 120 vs 110)", ylabel: "proportion correct",
         series: [{ type: "line", cls: "ref", pts: xb.map(b => [b, pCorrect(b, b - 10, ADULT_W)]) },
                  { type: "line", cls: "youline", pts: xb.map(b => [b, pCorrect(b, b - 10, w)]) },
@@ -1810,7 +1817,7 @@ svg.comic { width: min(100%, 560px); height: auto; display: block; }
                    { type: "points", cls: "alt", pts: fdOf(ai.cmp) }] : [])] }),
         [["dot", "you", "your answers"], ["line", "you", "your fitted curve"], ...(hasAIc ? [["dotline", "alt", `${nm}`]] : []),
          ["dash", "", "typical adult"]],
-        "A curve that falls means perceiving; a flat, high one means counting."));
+        `A curve that falls means perceiving; a flat, high one means counting. Fixed-difference pairs: ${nD} rounds; the curve is the same w as on the left.`));
       if (yr.some(d => Number.isFinite(d.conf))) {
         out.push(card("How sure were you? (comparison)", plot({ xmin: 0.45, xmax: 0.95, ymin: 0.3, ymax: 1, xticks: [0.5, 0.6, 0.7, 0.8, 0.9], yticks: [0.4, 0.6, 0.8, 1],
           xlabel: "ratio smaller / larger (harder →)", ylabel: "proportion",
