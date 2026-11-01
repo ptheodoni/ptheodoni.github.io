@@ -310,8 +310,8 @@ const LANES=[
  ["chinese","Chinese",[["Western Zhou",-1046,-771],["Spring and Autumn",-770,-476],["Warring States",-476,-221],["Qin–Han",-221,220],["Six Dynasties",220,589],["Sui–Tang",589,907],["Song–Ming",960,1644],["Qing",1644,1912],["Republic",1912,1949],["People's Republic",1949,2026]]],
  ["japkor","Japanese & Korean",[["Nara–Heian",710,1185],["Kamakura–Muromachi",1185,1573],["Edo",1603,1868],["Meiji",1868,1912],["Taishō–Shōwa",1912,1989],["Heisei–Reiwa",1989,2026]]],
  ["islamic","Arabic & Persian",[["Zoroastrian",-1200,-330],["Sasanian",224,651],["Translation movement",750,950],["Classical falsafa, kalām",950,1258],["Later schools",1258,1800],["Modern",1800,2026]]],
- ["europe","Continental European",[["Early Christian",30,300],["Late antique",300,600],["Early medieval",600,1050],["High medieval",1050,1300],["Late medieval",1300,1450],["Renaissance",1450,1600],["Early modern",1600,1800],["Idealism, positivism",1800,1900],["Phenomenology, analytic",1900,2026]]],
- ["anglo","Anglophone (Britain, Ireland, North America, Australia, New Zealand)",[["Early modern",1550,1700],["Enlightenment",1700,1800],["Utilitarian, idealist, pragmatist",1800,1900],["Analytic & pragmatist",1900,2026]]],
+ ["europe","Europe",[["Early Christian",30,300],["Late antique",300,600],["Early medieval",600,1050],["High medieval",1050,1300],["Late medieval",1300,1450],["Renaissance",1450,1600],["Early modern",1600,1800],["Idealism, positivism",1800,1900],["Phenomenology, analytic",1900,2026]]],
+ ["anglo","Anglophone world (Britain, Ireland, North America, Australia, New Zealand)",[["Early modern",1550,1700],["Enlightenment",1700,1800],["Utilitarian, idealist, pragmatist",1800,1900],["Analytic & pragmatist",1900,2026]]],
  ["africa","African & Africana",[["Ancient Egyptian",-2600,-30],["Ethiopian, early modern",1600,1800],["West African scholarship",1800,1900],["Modern Africana",1900,2026]]],
  ["latam","Latin American",[["Colonial",1520,1810],["Independence, positivism",1810,1910],["20th century, liberation",1910,2026]]]];
 const T=[
@@ -2943,7 +2943,7 @@ T.forEach(t=>{const m=META[t.id]||[U,U,U];t.o=m[0];t.lg=m[1];t.p=m[2]});
 const EUR=new Set([FR,DE,BR,LC,CE,IT,IB,CH,SC,BK,NAM,AU,LA,'France','German lands & Austria','Britain & Ireland','Low Countries','Central & Eastern Europe','Italy','Switzerland','Scandinavia','Balkans','North America','Australia','Latin America']);
 T.forEach(t=>{if(t.l!=='jewish')return;t.trad='jewish';const lg=String(t.lg||''),pl=t.p||'';
   if(/Greek/.test(lg)&&t.b<700)t.l='greek';else if(/Arabic/.test(lg))t.l='islamic';else if(t.b<640&&!EUR.has(pl))t.l='neareast';else if(pl==='Iberia'&&t.b<1492&&/Arabic|Judeo/.test(lg))t.l='islamic';else if(EUR.has(pl))t.l=(pl==='Latin America'?'latam':'europe');else if(pl==='Iraq & Iran'||pl==='Levant'||pl==='North Africa'||pl==='Arabia'||pl==='Egypt'||pl==='Aegean & Asia Minor')t.l=t.b<640?'neareast':'islamic';else t.l='europe'});
-// Anglophone lane: English-language philosophy from c. 1550 in Britain, Ireland, North America, Australia and New Zealand. Placed by place of work and language: emigrés who wrote mainly in another language (e.g. Arendt, Marcuse, Wittgenstein) stay in the Continental lane.
+// Anglophone lane (geographic and linguistic, not a school: analytic and continental philosophy are done on both sides): English-language philosophy from c. 1550 in Britain, Ireland, North America, Australia and New Zealand. Placed by place of work and language: emigrés who wrote mainly in another language (e.g. Arendt, Marcuse, Wittgenstein) stay in the Europe lane.
 (function(){const AN=new Set(['Britain & Ireland','North America','Australia']);
  T.forEach(t=>{if(t.l!=='europe'||t.b<1550)return;const lg=String(t.lg||''),o=t.o||'',p=t.p||'';
   const eng=/^\s*English/.test(lg)||lg==='';
