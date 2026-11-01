@@ -171,7 +171,7 @@ footer .tbtn,.contrib{font-size:14px}
     <button type="button" class="zbtn" id="zin" aria-label="Zoom in">+</button>
     <label class="slider" for="zslider">Zoom <input type="range" id="zslider" min="0" max="100" step="0.5" value="0"></label>
     <button type="button" class="tbtn" id="reset">Whole history</button>
-    <label class="slider" for="find">Find <input type="search" id="find" list="names" placeholder="A thinker or text" style="width:min(220px,60vw);font:inherit;font-size:14px;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 8px;min-height:40px;box-sizing:border-box"></label><datalist id="names"></datalist>
+    <label class="slider" for="find">Find <input type="search" id="find" list="names" placeholder="Find a philosopher or text" style="width:min(220px,60vw);font:inherit;font-size:14px;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 8px;min-height:40px;box-sizing:border-box"></label><datalist id="names"></datalist>
     <label class="slider" for="groupby">Lanes by <select id="groupby"><option value="tradition">Tradition</option><option value="none">None: one row per thinker</option><option value="o">Origin</option><option value="lg">Language of writing</option><option value="p">Place of work</option><option value="rel">Religion written about</option></select></label>
     <label class="slider" for="tscale">Time scale <select id="tscale"><option value="warp">More room for recent centuries</option><option value="even">Even (every year the same width)</option></select></label>
     <button type="button" class="tbtn" id="order" aria-pressed="false">Order: oldest at top</button>
@@ -3039,8 +3039,8 @@ function render(){
       if(t.e<t0||t.b>t1)return;
       const ry=flat?t.fry:top+(orderUp?LROWS[id]-1-t.row:t.row)*rowH,x0=X(t.b),x1=Math.max(X(t.e),x0+2),cx0=Math.max(x0,-4),cx1=Math.min(x1,W+4);
       const isSel=sel===t.id,linked=sel&&E.some(e=>(e.s===sel&&e.t===t.id)||(e.t===sel&&e.s===t.id));
-      const smem=selSchool?schoolOf(selSchool)[1][3]:null;const dim=(hiW&&!t.w)||(sel&&!isSel&&!linked)||(smem&&!smem.includes(t.id));
-      const fill=isSel?'var(--accent)':(hiW&&t.w)?'var(--accent)':dim?'var(--bar-dim)':t.txt?'var(--band-2)':'var(--bar)';
+      const smem=selSchool?schoolOf(selSchool)[1][3]:null;const dim=(hiW&&!t.w)||(sel&&!selFind&&!isSel&&!linked)||(smem&&!smem.includes(t.id));
+      const fill=isSel?(selFind?'#c2185b':'var(--accent)'):(hiW&&t.w)?'var(--accent)':dim?'var(--bar-dim)':t.txt?'var(--band-2)':'var(--bar)';
       const stroke=isSel||linked?'var(--accent)':'var(--bar-edge)';
       const by=L===3?ry+14:ry;
       pos[t.id]={x0,x1,y:by+barH/2};
@@ -3102,9 +3102,9 @@ function drawMap(){
   let pol='',lab='';
   if(ch){ch.r.forEach(([ni,a,b,pi])=>{if(Y<a||Y>b)return;const n=ch.n[ni],[d,bb]=ch.dp[pi];pol+=`<path d="${d}" data-pn="${esc(n).replace(/"/g,'&quot;')}" data-pa="${a}" data-pb="${b}" fill="hsl(${mapHue(n)} 55% 62% / .42)"/>`;const bw=(bb[2]-bb[0])/k;if(n[0]!=='('&&bw>70&&(bb[3]-bb[1])/k>14){const fs=Math.min(13,Math.max(9,bw/14));lab+=`<text x="${(bb[0]+bb[2])/2}" y="${(bb[1]+bb[3])/2}" font-size="${fs*k}" text-anchor="middle" fill="var(--fg)" fill-opacity=".55" stroke="var(--bg,#fff)" stroke-width="${2.5*k}" stroke-opacity=".7" paint-order="stroke" style="pointer-events:none">${esc(n.length>28?n.slice(0,27)+'…':n)}</text>`}})}
   const r=Math.max(1.8,Math.min(3.6,5.2-Math.log10(vis.length+1)))*k;
-  const dots=vis.map(t=>{const[x,y]=t._mp;const on=sel===t.id;const f=(hiW&&t.w)?'#c2185b':'var(--accent)';const op=on?1:(hiW&&!t.w)?.2:.75;return `<circle data-mid="${t.id}" cx="${x}" cy="${y}" r="${on?r*2.2:r}" fill="${f}" fill-opacity="${op}" stroke="var(--bg,#fff)" stroke-width="${0.5*k}" />`}).join('');
+  const dots=vis.filter(t=>t.id!==mapHL).map(t=>{const[x,y]=t._mp;const on=sel===t.id;const f=(hiW&&t.w)?'#c2185b':'var(--accent)';const op=on?1:(hiW&&!t.w)?.2:.75;return `<circle data-mid="${t.id}" cx="${x}" cy="${y}" r="${on?r*2.2:r}" fill="${f}" fill-opacity="${op}" stroke="var(--bg,#fff)" stroke-width="${0.5*k}" />`}).join('');
   svg.setAttribute('viewBox',[vx,vy,vw,vh].join(' '));
-  let ring='';if(mapHL){const t=byId[mapHL];if(t&&t._mp&&mapVis.includes(t))ring=`<circle cx="${t._mp[0]}" cy="${t._mp[1]}" r="${9*k}" fill="none" stroke="#c2185b" stroke-width="${2.2*k}"/>`}
+  let ring='';if(mapHL){const t=byId[mapHL];if(t&&t._mp&&mapVis.includes(t))ring=`<circle cx="${t._mp[0]}" cy="${t._mp[1]}" r="${11*k}" fill="#c2185b" fill-opacity=".15" stroke="#c2185b" stroke-width="${2.2*k}"/><circle cx="${t._mp[0]}" cy="${t._mp[1]}" r="${4.5*k}" fill="#d50032" stroke="#fff" stroke-width="${1.2*k}"/>`}
   svg.innerHTML=`<rect x="${vx}" y="${vy}" width="${vw}" height="${vh}" fill="var(--band,#eef2f8)" opacity=".55"/><g fill="var(--bg,#fff)" stroke="var(--line,#ccc)" stroke-width="${0.7*k}">${land}</g><g stroke="var(--fg,#333)" stroke-width="${0.45*k}" stroke-opacity=".45">${pol}</g><g>${lab}</g><g>${dots}</g>${ring}`;
 }
 function mapZoom(f,px,py){const v=mapV;if(!v)return;const nh=Math.min(170,Math.max(3,v.h*f));const g=nh/v.h;if(px===undefined){px=v.cx;py=v.cy}mapV={cx:px+(v.cx-px)*g,cy:py+(v.cy-py)*g,h:nh};drawMap()}
@@ -3139,10 +3139,11 @@ document.getElementById('mapfit').addEventListener('click',mapFit);
  const fi=document.getElementById('mapfind'),dl=document.getElementById('mapnames');let dlDone=false;
  fi.addEventListener('focus',()=>{if(dlDone)return;dlDone=true;dl.innerHTML=T.filter(t=>!t.txt).map(t=>`<option value="${esc(t.n).replace(/"/g,'&quot;')}">`).join('')});
  const nrm=x=>String(x||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
- const go=()=>{const q=nrm(fi.value.trim());if(!q)return;const P=T.filter(t=>!t.txt);const t=P.find(t=>nrm(t.n)===q)||P.find(t=>nrm(t.n).startsWith(q))||P.find(t=>nrm(t.n).includes(q));if(!t){fi.setCustomValidity('Not found');fi.reportValidity();setTimeout(()=>fi.setCustomValidity(''),1500);return}
-  if(!mapPos(t)){tip.hidden=false;tip.style.left='10px';tip.style.top='10px';mapPin=t.id;tip.innerHTML=tipHTML(t,true)+'<div class="sub" style="margin-top:4px">No place known for the map.</div>';return}
-  mapSync=false;document.getElementById('mapsync').checked=false;mapY=t.act?Math.min(2026,Math.max(t.b,2000)):Math.round(t.b+(t.e-t.b)*0.6);mapY=Math.max(-3400,Math.min(2026,mapY));mapHL=t.id;mapV={cx:t._mp[0],cy:t._mp[1],h:28};drawMap();
-  const r=box.getBoundingClientRect(),sb=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal;const px=sb.left+(t._mp[0]-vb.x)/vb.width*sb.width,py=sb.top+(t._mp[1]-vb.y)/vb.height*sb.height;mapPin=t.id;tip.innerHTML=tipHTML(t,true);place({clientX:px,clientY:py});box.focus({preventScroll:true})};
+ const go=()=>{const q=nrm(fi.value.trim());if(!q)return;const P=T.filter(t=>!t.txt);const t=P.find(t=>nrm(t.n)===q)||P.find(t=>nrm(t.n).startsWith(q))||P.find(t=>nrm(t.n).includes(q));if(!t){fi.setCustomValidity('Not found');fi.reportValidity();setTimeout(()=>fi.setCustomValidity(''),1500);return}mapGoTo(t,true)};
+ window.mapGoTo=(t,withTip)=>{
+  if(!mapPos(t)){if(!withTip)return;tip.hidden=false;tip.style.left='10px';tip.style.top='10px';mapPin=t.id;tip.innerHTML=tipHTML(t,true)+'<div class="sub" style="margin-top:4px">No place known for the map.</div>';return}
+  mapSync=false;document.getElementById('mapsync').checked=false;mapY=t.act?Math.min(2026,Math.max(t.b,2000)):Math.round(t.b+(t.e-t.b)*0.6);mapY=Math.max(-3400,Math.min(2026,mapY));mapHL=t.id;mapV={cx:t._mp[0],cy:t._mp[1],h:Math.max(55,mapV?Math.min(mapV.h,90):70)};drawMap();
+  const r=box.getBoundingClientRect(),sb=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal;const px=sb.left+(t._mp[0]-vb.x)/vb.width*sb.width,py=sb.top+(t._mp[1]-vb.y)/vb.height*sb.height;if(withTip){mapPin=t.id;tip.innerHTML=tipHTML(t,true);place({clientX:px,clientY:py});box.focus({preventScroll:true})}else{mapPin=null;tip.hidden=true}};
  fi.addEventListener('change',go);fi.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();go()}});
 })();
 window.addEventListener('resize',()=>drawMap());
@@ -3162,8 +3163,8 @@ function showPanel(){
   document.getElementById('zlife').onclick=()=>{const p=Math.max(6,(t.e-t.b)*0.12);animateTo(t.b-p,t.e+p)};
   document.getElementById('unsel').onclick=()=>select(null);
 }
-let selNoZoom=false;
-function select(id,zoom){sel=id;if(id)selSchool=null;showPanel();if(id&&!zoom&&!selNoZoom){const ids=E.filter(e=>e.s===id||e.t===id).map(e=>e.s===id?e.t:e.s);zoom=ids.some(i=>byId[i].e<t0||byId[i].b>t1)}if(zoom&&id){const t=byId[id];const ids=[id,...E.filter(e=>e.s===id||e.t===id).map(e=>e.s===id?e.t:e.s)];const a=Math.min(...ids.map(i=>byId[i].b)),b=Math.max(...ids.map(i=>byId[i].e));const p=Math.max(8,(b-a)*0.08);animateTo(a-p,b+p)}else render()}
+let selNoZoom=false,selFind=false,selFindKeep=false;
+function select(id,zoom){if(!selFindKeep)selFind=false;sel=id;if(id)selSchool=null;showPanel();if(id&&!zoom&&!selNoZoom){const ids=E.filter(e=>e.s===id||e.t===id).map(e=>e.s===id?e.t:e.s);zoom=ids.some(i=>byId[i].e<t0||byId[i].b>t1)}if(zoom&&id){const t=byId[id];const ids=[id,...E.filter(e=>e.s===id||e.t===id).map(e=>e.s===id?e.t:e.s)];const a=Math.min(...ids.map(i=>byId[i].b)),b=Math.max(...ids.map(i=>byId[i].e));const p=Math.max(8,(b-a)*0.08);animateTo(a-p,b+p)}else render()}
 panel.addEventListener('click',e=>{const pb=e.target.closest('[data-per]'),sb=e.target.closest('[data-school]'),zb=e.target.closest('[data-zschool]');if(pb){zoomPeriod(pb.dataset.per);return}if(sb){showSchoolPanel(sb.dataset.school);render();return}if(zb){const[,sc]=schoolOf(zb.dataset.zschool);const pad=Math.max(5,(sc[2]-sc[1])*0.05);animateTo(sc[1]-pad,sc[2]+pad);return}const s=e.target.closest('[data-sel]'),g=e.target.closest('[data-go]');if(s)select(s.dataset.sel,true);if(g)select(g.dataset.go,true)});
 
 // input
@@ -3188,7 +3189,7 @@ document.getElementById('reset').onclick=()=>animateTo(MINY,MAXY);
 slider.addEventListener('input',()=>{const ns=MAXS*Math.pow(MINS/MAXS,slider.value/100),c=(t0+t1)/2;setRange(c-ns/2,c+ns/2)});
 document.getElementById('hiwomen').addEventListener('change',e=>{hiW=e.target.checked;render()});
 document.getElementById('names').innerHTML=T.slice().sort((a,b)=>a.n.localeCompare(b.n)).map(t=>`<option value="${esc(t.n)}"></option>`).join('');
-const findEl=document.getElementById('find');const doFind=()=>{const q=findEl.value.trim().toLowerCase();if(!q)return;const t=T.find(t=>t.n.toLowerCase()===q)||T.find(t=>t.n.toLowerCase().includes(q));if(t){select(t.id,true);findEl.value=''}};findEl.addEventListener('change',doFind);findEl.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();doFind()}});
+const findEl=document.getElementById('find');const doFind=()=>{const nz=x=>String(x||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');const q=nz(findEl.value.trim());if(!q)return;const t=T.find(t=>nz(t.n)===q)||T.find(t=>nz(t.n).startsWith(q))||T.find(t=>nz(t.n).includes(q));if(t){selFind=true;selFindKeep=true;try{select(t.id,true)}finally{selFindKeep=false}findEl.value='';try{if(mapOn&&!t.txt&&window.mapGoTo)window.mapGoTo(t,false)}catch(e){}}};findEl.addEventListener('change',doFind);findEl.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();doFind()}});
 document.getElementById('tscale').addEventListener('change',e=>{warp=e.target.value==='warp';render()});
 document.getElementById('wdlinks').addEventListener('change',e=>{showWD=e.target.checked;render()});
 document.getElementById('order').addEventListener('click',e=>{orderUp=!orderUp;e.currentTarget.textContent=orderUp?'Order: oldest at bottom':'Order: oldest at top';e.currentTarget.setAttribute('aria-pressed',String(orderUp));render()});
@@ -3215,7 +3216,7 @@ T.forEach(t=>{const writes=t.tp.includes('R')||(t.txt&&/torah|testament|quran|ga
 let ilane='all',inorm=false,icell=null;
 const ilaneEl=document.getElementById('ilane'),iplot=document.getElementById('iplot'),ipanel=document.getElementById('ipanel');
 ilaneEl.innerHTML='<option value="all">All traditions</option>'+LANES.map(l=>`<option value="${l[0]}">${l[1]}</option>`).join('');
-const CENTS=[];for(let c=-2800;c<2000;c+=100)CENTS.push(c);
+const CENTS=[];for(let c=-2800;c<=2000;c+=100)CENTS.push(c);
 const yl=v=>v===0?'1 CE':fy(v);
 const act=(t,c)=>{const a=t.txt?t.b:Math.min(t.b+20,t.e);return a<c+100&&t.e>=c};
 const ipool=()=>T.filter(t=>ilane==='all'||t.l===ilane);
@@ -3239,7 +3240,7 @@ function renderIdeas(){
 function neglectHTML(){const ppl=T.filter(t=>!t.txt),inn=id=>E.filter(e=>e.t===id&&e.k!=='parallel').length;const grp=f=>{const g=ppl.filter(f);return{n:g.length,avg:g.length?(g.reduce((a,t)=>a+inn(t.id),0)/g.length):0,none:g.filter(t=>!inn(t.id)).length}};const w=grp(t=>t.w),m=grp(t=>!t.w);
   return `<h3>Who gets answered</h3><p class="sub">Answers recorded in the atlas, per person: women ${w.avg.toFixed(2)} (${w.none} of ${w.n} with none), men ${m.avg.toFixed(2)} (${m.none} of ${m.n} with none). With so few links this mostly shows what the atlas has not recorded yet; as links are added it will show whom each age ignored.</p>`}
 function showIdeasPanel(){
-  if(!icell){ipanel.innerHTML=`<h2>How to read this</h2><p class="sub">A map of what philosophers talked about, century by century.</p><ul class="ul"><li>A darker cell means more thinkers in the atlas worked on that topic in that century.</li><li>Choose a tradition to compare, for example logic in Indian and in European philosophy.</li><li>"Share" divides by everyone active in the century, so busy periods do not dominate.</li><li>Click a cell to see who it counts.</li></ul>${neglectHTML()}<h3>Caution</h3><p class="sub">The atlas has about 200 entries so far, and the topic tags are a first pass, to be checked. For now the map shows the sample, not yet the history.</p>`;return}
+  if(!icell){ipanel.innerHTML=`<h2>How to read this</h2><p class="sub">A map of what philosophers talked about, century by century.</p><ul class="ul"><li>A darker cell means more thinkers in the atlas worked on that topic in that century.</li><li>Choose a tradition to compare, for example logic in Indian and in European philosophy.</li><li>"Share" divides by everyone active in the century, so busy periods do not dominate.</li><li>Click a cell to see who it counts.</li></ul>${neglectHTML()}<h3>Caution</h3><p class="sub">The atlas now has ${T.filter(t=>!t.txt).length.toLocaleString('en')} philosophers and ${T.filter(t=>t.txt).length.toLocaleString('en')} texts, and the table is recomputed from them every time. The topic tags are a first pass, to be checked: many recent entries carry only one or two tags. Coverage is uneven: living philosophers come mostly from English-language indexes and from Greek doctoral theses, so the last column says more about the sources than about the world.</p>`;return}
   const [r,i]=icell,c=CENTS[i],k=TOP[r][0],list=ipool().filter(t=>t.tp.includes(k)&&act(t,c)).sort((a,b)=>a.b-b.b);
   const by={};list.forEach(t=>{const n=LANES.find(l=>l[0]===t.l)[1];by[n]=(by[n]||0)+1});
   ipanel.innerHTML=`<h2>${TOP[r][1]}</h2><p class="sub">${yl(c)} to ${yl(c+100)} · ${list.length} in the atlas${list.length?' · '+Object.entries(by).map(([n,v])=>`${n} ${v}`).join(', '):''}</p>${list.length?`<ul class="links">${list.map(t=>`<li><button type="button" data-tl="${t.id}">${esc(t.n)}</button> <span style="color:var(--muted)">${fl(t)}</span></li>`).join('')}</ul><p class="sub" style="margin-top:10px">Click a name to see them on the timeline.</p>`:'<p class="sub">No one in the atlas yet. That is a gap in the data, not proof that nobody worked on it.</p>'}`;
