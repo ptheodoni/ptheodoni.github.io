@@ -228,11 +228,6 @@ collections:
 
 # These settings control how pages and collections are included in the site
 defaults:
-  # Philosophy Atlas: keep out of the sitemap
-  - scope:
-      path: "philosophy-atlas"
-    values:
-      sitemap: false
   # _posts
   - scope:
       path: ""
